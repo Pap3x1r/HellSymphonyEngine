@@ -1,0 +1,1333 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\GameProject\\NextEngine\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GLRenderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Audio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Audio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelPrototype.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Arrow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Arrow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Arrow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Arrow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Collider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Collider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Bow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Bow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Bow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Bow.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\EnemyAttackCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\EnemyAttackCollider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Collider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Collider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Animation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Animation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Animation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Animation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Sword.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Sword.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\CollisionHandler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\CollisionHandler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Transform.cpp||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Transform.cpp||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Sword.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Sword.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GameEngine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GLRenderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\CombineObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\SimpleObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\CombineObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\SimpleObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelUITest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\DrawableObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Button.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Button.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Audio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Audio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\DrawableObject.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.cpp||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\SquareMeshVbo.cpp||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\PROGRAM FILES\\MICROSOFT VISUAL STUDIO\\2022\\COMMUNITY\\VC\\TOOLS\\MSVC\\14.40.33807\\INCLUDE\\LIST||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\PlayerAttackCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\PlayerAttackCollider.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\PROGRAM FILES\\MICROSOFT VISUAL STUDIO\\2022\\COMMUNITY\\VC\\TOOLS\\MSVC\\14.40.33807\\INCLUDE\\XTREE||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelPrototype.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\EnemyObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\EnemyObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LivingEntity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LivingEntity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelCollisionTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GameEngine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Button.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Button.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelMapEditorTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelCollisionTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelParallax.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelParallax.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\MapLoader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\MapLoader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelMapEditorTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelAnimTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelAnimTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelUITest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\SquareMeshVbo.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.cpp||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\TriangleMeshVbo.cpp||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.cpp||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelTest.cpp||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Physics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Physics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\Resource\\Shader\\fragment.shd||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:Resource\\Shader\\fragment.shd||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\TexturedObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\TexturedObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\Physics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\Physics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\TriangleMeshVbo.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\MeshVbo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GameStateController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\MeshVbo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\LevelTest.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{27F83C21-D849-4121-ACC9-5EABAECE4AC5}|NextEngine\\NextEngine.vcxproj|solutionrelative:NextEngine\\GameStateController.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\dt230\\NextEngine\\NextEngine\\Collision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Player.h",
+              "RelativeDocumentMoniker": "NextEngine\\Player.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Player.h",
+              "RelativeToolTip": "NextEngine\\Player.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T05:46:28.221Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Player.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Player.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Player.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Player.cpp",
+              "RelativeToolTip": "NextEngine\\Player.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:18:58.234Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Sword.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Sword.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Sword.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Sword.cpp",
+              "RelativeToolTip": "NextEngine\\Sword.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T05:47:23.727Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Sword.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Sword.h",
+              "RelativeDocumentMoniker": "NextEngine\\Sword.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Sword.h",
+              "RelativeToolTip": "NextEngine\\Sword.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T05:47:35.364Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LevelPrototype.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelPrototype.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.cpp",
+              "RelativeToolTip": "NextEngine\\LevelPrototype.cpp",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAAD0AAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:06:46.998Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "EnemyAttackCollider.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\EnemyAttackCollider.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.cpp",
+              "RelativeToolTip": "NextEngine\\EnemyAttackCollider.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T09:10:36.583Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "EnemyAttackCollider.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.h",
+              "RelativeDocumentMoniker": "NextEngine\\EnemyAttackCollider.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyAttackCollider.h",
+              "RelativeToolTip": "NextEngine\\EnemyAttackCollider.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T09:11:05.746Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Bow.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Bow.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Bow.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Bow.cpp",
+              "RelativeToolTip": "NextEngine\\Bow.cpp",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAACQAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T10:23:01.807Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Bow.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Bow.h",
+              "RelativeDocumentMoniker": "NextEngine\\Bow.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Bow.h",
+              "RelativeToolTip": "NextEngine\\Bow.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T10:22:51.413Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GLRenderer.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\GLRenderer.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.cpp",
+              "RelativeToolTip": "NextEngine\\GLRenderer.cpp",
+              "ViewState": "AQIAALcAAAAAAAAAAAAlwL8AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:21:28.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Shader.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Shader.h",
+              "RelativeDocumentMoniker": "NextEngine\\Shader.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Shader.h",
+              "RelativeToolTip": "NextEngine\\Shader.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:37:39.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Shader.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Shader.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Shader.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Shader.cpp",
+              "RelativeToolTip": "NextEngine\\Shader.cpp",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAACgAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:37:05.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Audio.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Audio.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Audio.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Audio.cpp",
+              "RelativeToolTip": "NextEngine\\Audio.cpp",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAlwJwAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T13:12:29.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Arrow.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Arrow.h",
+              "RelativeDocumentMoniker": "NextEngine\\Arrow.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Arrow.h",
+              "RelativeToolTip": "NextEngine\\Arrow.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T11:16:58.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Arrow.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Arrow.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Arrow.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Arrow.cpp",
+              "RelativeToolTip": "NextEngine\\Arrow.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T11:19:06.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Collider.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Collider.h",
+              "RelativeDocumentMoniker": "NextEngine\\Collider.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Collider.h",
+              "RelativeToolTip": "NextEngine\\Collider.h",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAADYAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:00:40.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Enemy.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Enemy.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Enemy.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Enemy.cpp",
+              "RelativeToolTip": "NextEngine\\Enemy.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T09:08:50.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Enemy.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Enemy.h",
+              "RelativeDocumentMoniker": "NextEngine\\Enemy.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Enemy.h",
+              "RelativeToolTip": "NextEngine\\Enemy.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T09:04:09.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Collider.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Collider.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Collider.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Collider.cpp",
+              "RelativeToolTip": "NextEngine\\Collider.cpp",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAACMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:01:25.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Animation.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Animation.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Animation.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Animation.cpp",
+              "RelativeToolTip": "NextEngine\\Animation.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T14:54:02.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Animation.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Animation.h",
+              "RelativeDocumentMoniker": "NextEngine\\Animation.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Animation.h",
+              "RelativeToolTip": "NextEngine\\Animation.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T13:22:26.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CollisionHandler.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\CollisionHandler.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.cpp",
+              "RelativeToolTip": "NextEngine\\CollisionHandler.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T12:59:49.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CollisionHandler.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.h",
+              "RelativeDocumentMoniker": "NextEngine\\CollisionHandler.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\CollisionHandler.h",
+              "RelativeToolTip": "NextEngine\\CollisionHandler.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:00:44.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Transform.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Transform.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Transform.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Transform.cpp",
+              "RelativeToolTip": "NextEngine\\Transform.cpp",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAAAE4AAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:39:05.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Transform.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Transform.h",
+              "RelativeDocumentMoniker": "NextEngine\\Transform.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Transform.h",
+              "RelativeToolTip": "NextEngine\\Transform.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:38:59.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\main.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\main.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\main.cpp",
+              "RelativeToolTip": "NextEngine\\main.cpp",
+              "ViewState": "AQIAAKUAAAAAAAAAAAAAALYAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-09T09:20:44.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Level.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Level.h",
+              "RelativeDocumentMoniker": "NextEngine\\Level.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Level.h",
+              "RelativeToolTip": "NextEngine\\Level.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T05:54:42.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Level.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Level.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Level.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Level.cpp",
+              "RelativeToolTip": "NextEngine\\Level.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:22:23.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "InputManager.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\InputManager.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\InputManager.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\InputManager.cpp",
+              "RelativeToolTip": "NextEngine\\InputManager.cpp",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAAAIwAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T13:44:42.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "GameEngine.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\GameEngine.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.cpp",
+              "RelativeToolTip": "NextEngine\\GameEngine.cpp",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACUAAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:06:50.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "GLRenderer.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.h",
+              "RelativeDocumentMoniker": "NextEngine\\GLRenderer.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GLRenderer.h",
+              "RelativeToolTip": "NextEngine\\GLRenderer.h",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAlwBgAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:21:28.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "CombineObject.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\CombineObject.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.cpp",
+              "RelativeToolTip": "NextEngine\\CombineObject.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-21T08:47:24.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "SimpleObject.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.h",
+              "RelativeDocumentMoniker": "NextEngine\\SimpleObject.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.h",
+              "RelativeToolTip": "NextEngine\\SimpleObject.h",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAYAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T05:53:39.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "CombineObject.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.h",
+              "RelativeDocumentMoniker": "NextEngine\\CombineObject.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\CombineObject.h",
+              "RelativeToolTip": "NextEngine\\CombineObject.h",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAAAkAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-21T08:47:23.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "SimpleObject.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\SimpleObject.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\SimpleObject.cpp",
+              "RelativeToolTip": "NextEngine\\SimpleObject.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T05:53:34.647Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "LevelUITest.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelUITest.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.cpp",
+              "RelativeToolTip": "NextEngine\\LevelUITest.cpp",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAAwCsAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:03:09.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "DrawableObject.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\DrawableObject.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.cpp",
+              "RelativeToolTip": "NextEngine\\DrawableObject.cpp",
+              "ViewState": "AQIAAMwAAAAAAAAAAAAlwOAAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:05:32.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Audio.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Audio.h",
+              "RelativeDocumentMoniker": "NextEngine\\Audio.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Audio.h",
+              "RelativeToolTip": "NextEngine\\Audio.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T13:22:14.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Button.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Button.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Button.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Button.cpp",
+              "RelativeToolTip": "NextEngine\\Button.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:04:40.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "DrawableObject.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.h",
+              "RelativeDocumentMoniker": "NextEngine\\DrawableObject.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\DrawableObject.h",
+              "RelativeToolTip": "NextEngine\\DrawableObject.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:05:29.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "SquareMeshVbo.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\SquareMeshVbo.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.cpp",
+              "RelativeToolTip": "NextEngine\\SquareMeshVbo.cpp",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAQwBgAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:36:03.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "list",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\list",
+              "RelativeDocumentMoniker": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\list",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\list",
+              "RelativeToolTip": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\list",
+              "ViewState": "AQIAAHEFAAAAAAAAAAD4v4EFAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-06T07:33:22.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "PlayerAttackCollider.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.h",
+              "RelativeDocumentMoniker": "NextEngine\\PlayerAttackCollider.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.h",
+              "RelativeToolTip": "NextEngine\\PlayerAttackCollider.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T08:04:29.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "PlayerAttackCollider.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\PlayerAttackCollider.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\PlayerAttackCollider.cpp",
+              "RelativeToolTip": "NextEngine\\PlayerAttackCollider.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T08:07:22.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "xtree",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\xtree",
+              "RelativeDocumentMoniker": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\xtree",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\xtree",
+              "RelativeToolTip": "..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\include\\xtree",
+              "ViewState": "AQIAAB0AAAAAAAAAAAD4vzEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-12-06T12:21:36.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "LevelPrototype.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelPrototype.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelPrototype.h",
+              "RelativeToolTip": "NextEngine\\LevelPrototype.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:08:17.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "EnemyObject.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.h",
+              "RelativeDocumentMoniker": "NextEngine\\EnemyObject.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.h",
+              "RelativeToolTip": "NextEngine\\EnemyObject.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T08:56:46.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "EnemyObject.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\EnemyObject.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\EnemyObject.cpp",
+              "RelativeToolTip": "NextEngine\\EnemyObject.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T08:03:11.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "LivingEntity.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.h",
+              "RelativeDocumentMoniker": "NextEngine\\LivingEntity.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.h",
+              "RelativeToolTip": "NextEngine\\LivingEntity.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-06T08:02:55.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "LivingEntity.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LivingEntity.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LivingEntity.cpp",
+              "RelativeToolTip": "NextEngine\\LivingEntity.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-06T08:02:52.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "GameEngine.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.h",
+              "RelativeDocumentMoniker": "NextEngine\\GameEngine.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GameEngine.h",
+              "RelativeToolTip": "NextEngine\\GameEngine.h",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAlwCAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:07:28.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "LevelCollisionTest.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelCollisionTest.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.cpp",
+              "RelativeToolTip": "NextEngine\\LevelCollisionTest.cpp",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAJQAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:04:29.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "Button.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Button.h",
+              "RelativeDocumentMoniker": "NextEngine\\Button.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Button.h",
+              "RelativeToolTip": "NextEngine\\Button.h",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAQwB0AAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:05:03.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "LevelCollisionTest.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelCollisionTest.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelCollisionTest.h",
+              "RelativeToolTip": "NextEngine\\LevelCollisionTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:08:04.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "LevelMapEditorTest.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelMapEditorTest.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.cpp",
+              "RelativeToolTip": "NextEngine\\LevelMapEditorTest.cpp",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwE0AAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:12:39.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "LevelParallax.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelParallax.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelParallax.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelParallax.h",
+              "RelativeToolTip": "NextEngine\\LevelParallax.h",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABYAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:12:26.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "LevelAnimTest.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelAnimTest.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.cpp",
+              "RelativeToolTip": "NextEngine\\LevelAnimTest.cpp",
+              "ViewState": "AQIAABoAAAAAAAAAAAAAwC4AAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:11:52.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "LevelAnimTest.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelAnimTest.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelAnimTest.h",
+              "RelativeToolTip": "NextEngine\\LevelAnimTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:12:00.355Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "LevelMapEditorTest.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelMapEditorTest.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelMapEditorTest.h",
+              "RelativeToolTip": "NextEngine\\LevelMapEditorTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:12:19.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "MapLoader.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.h",
+              "RelativeDocumentMoniker": "NextEngine\\MapLoader.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.h",
+              "RelativeToolTip": "NextEngine\\MapLoader.h",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAADQAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:13:18.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "MapLoader.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\MapLoader.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\MapLoader.cpp",
+              "RelativeToolTip": "NextEngine\\MapLoader.cpp",
+              "ViewState": "AQIAACsBAAAAAAAAAAAlwEABAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-05T13:13:37.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "LevelUITest.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelUITest.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelUITest.h",
+              "RelativeToolTip": "NextEngine\\LevelUITest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-05T13:05:31.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "MeshVbo.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.h",
+              "RelativeDocumentMoniker": "NextEngine\\MeshVbo.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.h",
+              "RelativeToolTip": "NextEngine\\MeshVbo.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:35:32.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "MeshVbo.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\MeshVbo.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\MeshVbo.cpp",
+              "RelativeToolTip": "NextEngine\\MeshVbo.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:35:20.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "TriangleMeshVbo.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\TriangleMeshVbo.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.cpp",
+              "RelativeToolTip": "NextEngine\\TriangleMeshVbo.cpp",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAwCcAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:36:03.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "SquareMeshVbo.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.h",
+              "RelativeDocumentMoniker": "NextEngine\\SquareMeshVbo.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\SquareMeshVbo.h",
+              "RelativeToolTip": "NextEngine\\SquareMeshVbo.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:36:03.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "GameStateController.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.h",
+              "RelativeDocumentMoniker": "NextEngine\\GameStateController.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.h",
+              "RelativeToolTip": "NextEngine\\GameStateController.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:09:09.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "LevelTest.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\LevelTest.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.cpp",
+              "RelativeToolTip": "NextEngine\\LevelTest.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T05:53:48.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "TriangleMeshVbo.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.h",
+              "RelativeDocumentMoniker": "NextEngine\\TriangleMeshVbo.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\TriangleMeshVbo.h",
+              "RelativeToolTip": "NextEngine\\TriangleMeshVbo.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:36:03.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 76,
+              "Title": "Collision.h",
+              "DocumentMoniker": "C:\\dt230\\NextEngine\\NextEngine\\Collision.h",
+              "RelativeDocumentMoniker": "..\\..\\dt230\\NextEngine\\NextEngine\\Collision.h",
+              "ToolTip": "C:\\dt230\\NextEngine\\NextEngine\\Collision.h",
+              "RelativeToolTip": "..\\..\\dt230\\NextEngine\\NextEngine\\Collision.h",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T06:42:29.385Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "GameStateController.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\GameStateController.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\GameStateController.cpp",
+              "RelativeToolTip": "NextEngine\\GameStateController.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T06:08:34.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "fragment.shd",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\Resource\\Shader\\fragment.shd",
+              "RelativeDocumentMoniker": "Resource\\Shader\\fragment.shd",
+              "ToolTip": "C:\\GameProject\\NextEngine\\Resource\\Shader\\fragment.shd",
+              "RelativeToolTip": "Resource\\Shader\\fragment.shd",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-09-23T06:06:18.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "LevelTest.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.h",
+              "RelativeDocumentMoniker": "NextEngine\\LevelTest.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\LevelTest.h",
+              "RelativeToolTip": "NextEngine\\LevelTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T05:53:48.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "TexturedObject.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\TexturedObject.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.cpp",
+              "RelativeToolTip": "NextEngine\\TexturedObject.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-23T05:45:05.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "TexturedObject.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.h",
+              "RelativeDocumentMoniker": "NextEngine\\TexturedObject.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\TexturedObject.h",
+              "RelativeToolTip": "NextEngine\\TexturedObject.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-23T05:45:05.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "Physics.cpp",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Physics.cpp",
+              "RelativeDocumentMoniker": "NextEngine\\Physics.cpp",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Physics.cpp",
+              "RelativeToolTip": "NextEngine\\Physics.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-21T08:41:02.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "Physics.h",
+              "DocumentMoniker": "C:\\GameProject\\NextEngine\\NextEngine\\Physics.h",
+              "RelativeDocumentMoniker": "NextEngine\\Physics.h",
+              "ToolTip": "C:\\GameProject\\NextEngine\\NextEngine\\Physics.h",
+              "RelativeToolTip": "NextEngine\\Physics.h",
+              "ViewState": "AQIAAAkAAAAAAAAAAIBJwB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-09-21T08:41:01.617Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
