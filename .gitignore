@@ -1,0 +1,86 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Project Build Files
+*.vsidx
+*.suo
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.pdb
+*.tlog
+*.idb
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/Browse.VC.db
+.vs/NextEngine/v17/DocumentLayout.json
+.vs/NextEngine/v17/ipch/AutoPCH/1a1127103ae5d230/SQUAREMESHVBO.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/2593fed478e8d89/COMBINEOBJECT.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/5385a34eb14185da/SHADER.ipch
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/Browse.VC.db
+NextEngine/Debug/vc143.pdb
+NextEngine/Debug/vc143.idb
+NextEngine/Debug/NextEngine.tlog/NextEngine.lastbuildstate
+NextEngine/Debug/NextEngine.tlog/link.write.1.tlog
+NextEngine/Debug/NextEngine.tlog/link.secondary.1.tlog
+NextEngine/Debug/NextEngine.tlog/link.read.1.tlog
+NextEngine/Debug/NextEngine.tlog/link.command.1.tlog
+NextEngine/Debug/NextEngine.tlog/CL.write.1.tlog
+NextEngine/Debug/NextEngine.tlog/CL.read.1.tlog
+NextEngine/Debug/NextEngine.tlog/Cl.items.tlog
+NextEngine/Debug/NextEngine.tlog/CL.command.1.tlog
+NextEngine/Debug/NextEngine.log
+NextEngine/Debug/NextEngine.ilk
+NextEngine/Debug/NextEngine.exe.recipe
+Debug/NextEngine.pdb
+Debug/NextEngine.exp
+.vs/NextEngine/v17/ipch/AutoPCH/be2535b7d7c73ae0/CAMERA.ipch
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/Browse.VC.db
+.vs/NextEngine/v17/fileList.bin
+.vs/NextEngine/v17/ipch/AutoPCH/32434b3b9cd2d9d7/LEVELTEST.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/46585d5689b0d35e/SQUAREMESHVBO.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/4c4db8019ce30873/TEXTUREDOBJECT.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/a5a066c9cf8c8d1b/LEVEL.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/bead0dbd25ce0dd7/COMBINEOBJECT.ipch
+.vs/NextEngine/v17/ipch/AutoPCH/d31e812305d3f753/TRIANGLEMESHVBO.ipch
+.vs/NextEngine/v17/Browse.VC.db
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/ipch/AutoPCH/a15a80dddaf22d0e/LEVELANIMTEST.ipch
+.vs/NextEngine/v17/DocumentLayout.json
+.vs/NextEngine/v17/.suo
+.vs/NextEngine/v17/Browse.VC.db
+.vs/NextEngine/v17/DocumentLayout.json
