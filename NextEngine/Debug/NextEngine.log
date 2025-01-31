@@ -1,0 +1,10 @@
+﻿  Arrow.cpp
+  Bow.cpp
+  GameStateController.cpp
+C:\GameProject\NextEngine\NextEngine\LivingEntity.h(19,12): warning C4240: nonstandard extension used: access to 'LivingEntity::status' now defined to be 'public', previously it was defined to be 'private'
+  LevelPrototype.cpp
+C:\GameProject\NextEngine\NextEngine\LivingEntity.h(19,12): warning C4240: nonstandard extension used: access to 'LivingEntity::status' now defined to be 'public', previously it was defined to be 'private'
+C:\GameProject\NextEngine\NextEngine\LevelPrototype.cpp(154,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\GameProject\NextEngine\NextEngine\LevelPrototype.cpp(155,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  NextEngine.vcxproj -> C:\GameProject\NextEngine\Debug\NextEngine.exe

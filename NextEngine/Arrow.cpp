@@ -1,0 +1,83 @@
+#include "Arrow.h"
+
+Arrow::Arrow(float damage_, bool face, float speed) {
+	arrowSpeed = speed;
+	damage = damage_;
+	facingDirection = face;
+	readyToDestroy = false;
+}
+
+void Arrow::selfUpdate(float dt) {
+	timeElapsed += dt;
+
+	if (!getMarkedForDelete()) {
+		if (timeElapsed >= timeToDestroy) {
+			DrawableObject::destroyObject(this);
+		}
+	}
+}
+
+void Arrow::onCollisionEnter(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+	Player* player = dynamic_cast<Player*>(obj);
+
+	if (player) {
+		//cout << "hit player" << endl;
+	}
+}
+
+void Arrow::onCollisionStay(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+	Player* player = dynamic_cast<Player*>(obj);
+
+	if (player) {
+		//cout << "hit player" << endl;
+	}
+}
+
+void Arrow::onCollisionExit(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+}
+
+void Arrow::onTriggerEnter(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+
+	Enemy* enemy = dynamic_cast<Enemy*>(obj);
+
+	if (enemy) {
+		cout << "Arrow hit Enemy for " << damage << " damage." << endl;
+		//DrawableObject::destroyObject(this, objectsListRef);
+		//setReadyToDestroy(true);
+		DrawableObject::destroyObject(this);
+	}
+}
+
+void Arrow::onTriggerStay(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+	/*Enemy* enemy = dynamic_cast<Enemy*>(obj);
+
+	if (enemy) {
+		cout << "hit enemy" << endl;
+		destroyObject(this, objectsListRef);
+	}*/
+}
+
+void Arrow::onTriggerExit(Collider* collider) {
+	DrawableObject* obj = collider->getObject();
+}
+
+void Arrow::setReadyToDestroy(bool value) {
+	readyToDestroy = value;
+}
+
+bool Arrow::getReadyToDestroy() const {
+	return readyToDestroy;
+}
+
+bool Arrow::getFacingDirection() const {
+	return facingDirection;
+}
+
+float Arrow::getArrowSpeed() const {
+	return arrowSpeed;
+}
