@@ -1,6 +1,7 @@
 #pragma once
-#include "Player.h"
 #include "Arrow.h"
+
+class Player;
 
 class Bow {
 	float rapidShotTimer = 0.15f;
@@ -14,8 +15,9 @@ class Bow {
 	float overheatDecreaseRate = 17.5f;
 	bool isOverheat = false;
 
-	bool rapidShotDebugMode = false;
 
+
+	bool rapidShotDebugMode = false;
 
 public:
 	Bow();
@@ -23,7 +25,7 @@ public:
 
 	void setEnableDebug();
 
-	DrawableObject* rapidShot(float damage_, Player* player, float speed);
+	DrawableObject* arrowShot(float damage_, Player* player, float speed);
 
 	bool getRapidShotReady() const;
 	bool getIsOverheat() const;

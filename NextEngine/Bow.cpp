@@ -1,4 +1,5 @@
 #include "Bow.h"
+#include "Player.h"
 
 Bow::Bow() {
 
@@ -41,7 +42,7 @@ void Bow::setEnableDebug() {
 	rapidShotDebugMode = !rapidShotDebugMode;
 }
 
-DrawableObject* Bow::rapidShot(float damage_, Player* player, float speed) {
+DrawableObject* Bow::arrowShot(float damage_, Player* player, float speed) {
 	glm::vec3 playerPos = player->getTransform().getPosition();
 	//Create arrow
 	Arrow* arrow = new Arrow(damage_, player->getFacingRight(), speed);
