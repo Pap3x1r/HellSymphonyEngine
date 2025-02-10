@@ -32,4 +32,6 @@ public:
 	virtual void handleKey(char key);
 	virtual void handleMouse(int type, int x, int y);
 	virtual void handleAnalogStick(int type, float amount);
+
+	virtual void addObject(DrawableObject* obj) override;
 };

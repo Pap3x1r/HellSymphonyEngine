@@ -76,3 +76,7 @@ void Level::updateObjects(list<DrawableObject*>& objectsList) {
 
     handleObjectCollision(objectsList);
 }
+
+void Level::addObject(DrawableObject* obj) {
+    objectsList.push_back(obj);
+}

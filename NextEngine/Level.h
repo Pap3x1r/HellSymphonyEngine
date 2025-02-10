@@ -29,4 +29,5 @@ public:
     virtual void handleAnalogStick(int type, float amount);
 
     virtual void updateObjects(list<DrawableObject*>& objectsList);
+    virtual void addObject(DrawableObject* obj);
 };

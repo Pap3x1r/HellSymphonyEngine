@@ -1,6 +1,14 @@
 #pragma once
 #include "TexturedObject.h"
 #include "Health.h"
+#include "StateMachine.h"
+
+//Movesets
+#include "PlayerMovementState.h"
+#include "PlayerBowState.h"
+
+class Bow;
+class Level;
 
 enum WeaponType {
     None_,
@@ -25,7 +33,11 @@ class Player : public TexturedObject {
 
     bool canMove = true;
 
+    Level* currentLevel;
     Health* health;
+    StateMachine* playerState;
+
+    Bow* bow;
 
 public:
     Player(float hp);
@@ -36,4 +48,11 @@ public:
 
     void setMovementSpeed(float value);
     float getMovementSpeed() const;
+
+    StateMachine* getStateMachine() const;
+
+    void setLevel(Level* newLevel);
+    Level* getLevel() const;
+
+    Bow* getBow() const;
 };

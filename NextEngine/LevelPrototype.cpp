@@ -15,9 +15,6 @@ void LevelPrototype::levelLoad() {
 
 void LevelPrototype::levelInit() {
 
-	Bow* bow_ = new Bow();
-	bow = bow_;
-
 	Sword* sword_ = new Sword();
 	if (sword_) {
 		for (DrawableObject* obj : sword_->getChainAttackList()) {
@@ -29,6 +26,9 @@ void LevelPrototype::levelInit() {
 	Player* player_ = new Player(10);
 	objectsList.push_back(player_);
 	player = player_;
+	player->setLevel(this);
+
+	bow = player->getBow();
 
 	Enemy* enemy_ = new Enemy(10);
 	objectsList.push_back(enemy_);
@@ -48,6 +48,9 @@ void LevelPrototype::levelInit() {
 void LevelPrototype::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	timeK += dt;
+
+	player->getStateMachine()->update(player, dt);
+
 	updateObjects(objectsList);
 
 	for (DrawableObject* obj : objectsList) {
@@ -88,11 +91,11 @@ void LevelPrototype::levelUpdate() {
 
 
 
-	if (timeK > 0.12f) {
+	/*if (timeK > 0.12f) {
 		player->getAnimationComponent()->updateCurrentState();
 		d = 0;
 		timeK = 0;
-	}
+	}*/
 
 	handleObjectCollision(objectsList);
 }
@@ -121,29 +124,44 @@ void LevelPrototype::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
+
+	bool playerIsMoving = false;
+
 	switch (key) {
 	case 'w':
 		player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("up");
 		break;
 	case 's': 
 		player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("down");
 		break;
 	case 'a': 
 		player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd': 
 		player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
 	case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
 	case 'f': bow->setEnableDebug();
+	}
+
+	if (!playerIsMoving) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 	}
 }
 
@@ -158,11 +176,21 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 	GameEngine::getInstance()->getWindowHeight();
 
 	//cout << "X : " << realX << " Y : " << realY << endl;
-	if (bow->getIsOverheat() == false) {
-		if (bow->getRapidShotReady()) {
-			DrawableObject* newArrow = bow->rapidShot(10, player, 25);
-			objectsList.push_back(newArrow);
+
+	//Check player weapon
+	// assume type = bow first
+	if (type == 0) {
+		if (bow->getIsOverheat() == false) {
+			if (bow->getRapidShotReady()) {
+				/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
+				objectsList.push_back(newArrow);*/
+				player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
+			}
 		}
+	}
+	else {
+		DrawableObject* newArrow = bow->arrowShot(100, player, 50);
+		objectsList.push_back(newArrow);
 	}
 	
 
@@ -179,4 +207,6 @@ void LevelPrototype::handleAnalogStick(int type, float amount) {
 	}
 }
 
-
+void LevelPrototype::addObject(DrawableObject* obj) {
+	objectsList.push_back(obj);
+}

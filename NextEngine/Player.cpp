@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Bow.h"
 
 Player::Player(float hp) {
 	health = new Health(hp);
@@ -8,7 +9,6 @@ Player::Player(float hp) {
 	//Anim
 	initAnimation(8, 1);
 	getAnimationComponent()->addState("idle", 0, 8);
-	getAnimationComponent()->setState("idle");
 	//Collider
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.15f, -0.25f);
@@ -17,6 +17,11 @@ Player::Player(float hp) {
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	//StateMachine
+	playerState = new StateMachine();
+	playerState->changeState(PlayerIdleState::getInstance(), this);
+	//Bow
+	bow = new Bow();
 }
 
 Player::~Player() {
@@ -44,4 +49,24 @@ void Player::setMovementSpeed(float value) {
 
 float Player::getMovementSpeed() const {
 	return movementSpeed;
+}
+
+StateMachine* Player::getStateMachine() const {
+	return playerState;
+}
+
+void Player::setLevel(Level* newLevel) {
+	if (!newLevel) {
+		cerr << "Error: setLevel() received a nullptr.";
+		return;
+	}
+	currentLevel = newLevel;
+}
+
+Level* Player::getLevel() const {
+	return currentLevel;
+}
+
+Bow* Player::getBow() const{
+	return bow;
 }
