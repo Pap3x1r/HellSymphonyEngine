@@ -46,10 +46,10 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
         break;
     };
 
-    if (time > 0.12f) {
+    /*if (time > 0.12f) {
         player->getAnimationComponent()->updateCurrentState();
         time = 0;
-    }
+    }*/
 }
 
 void PlayerLightBowAttack::exit(Player* player) {
@@ -61,6 +61,9 @@ void PlayerHeavyBowAttack::enter(Player* player) {
     cout << "Player enters Bow Heavy Attack state.\n";
     player->getAnimationComponent()->setState("HeavyBowAttack");
     currentPhase = STARTUP;
+
+    DrawableObject* newArrow = player->getBow()->arrowShot(100, player, 75);
+    player->getLevel()->addObject(newArrow);
 }
 
 void PlayerHeavyBowAttack::update(Player* player, float dt_) {
@@ -93,10 +96,10 @@ void PlayerHeavyBowAttack::update(Player* player, float dt_) {
         break;
     };
 
-    if (time > 0.12f) {
+    /*if (time > 0.12f) {
         player->getAnimationComponent()->updateCurrentState();
         time = 0;
-    }
+    }*/
 }
 
 void PlayerHeavyBowAttack::exit(Player* player) {

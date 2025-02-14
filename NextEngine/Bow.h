@@ -10,7 +10,7 @@ class Bow {
 
 	float currentRapidOverheat = 0.0f;
 	float maxRapidOverheat = 100.0f;
-	float overheatPerArrow = 5.0f;
+	float overheatPerArrow = 7.5f;
 	float normalDecreaseRate = 25.0f;
 	float overheatDecreaseRate = 17.5f;
 	bool isOverheat = false;

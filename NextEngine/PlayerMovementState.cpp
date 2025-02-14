@@ -14,10 +14,10 @@ void PlayerIdleState::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
-    if (time > 0.12f) {
+    /*if (time > 0.12f) {
         player->getAnimationComponent()->updateCurrentState();
         time = 0;
-    }
+    }*/
 }
 
 void PlayerIdleState::exit(Player* player) {
@@ -34,10 +34,10 @@ void PlayerWalkState::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
-    if (time > 0.12f) {
+    /*if (time > 0.12f) {
         player->getAnimationComponent()->updateCurrentState();
         time = 0;
-    }
+    }*/
 }
 
 void PlayerWalkState::exit(Player* player) {

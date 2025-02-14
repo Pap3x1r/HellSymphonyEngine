@@ -82,10 +82,20 @@ void Animation::setState(string name) {
 	currentState = states[name];
 }
 
-void Animation::updateCurrentState() {
-	if (currentFrame >= currentState.frameCount) {
-		currentFrame = 0;
+void Animation::updateCurrentState(float dt) {
+	static float animationTimer = 0.0f;
+	const float frameDuration = 1.0f / 12.0f; //Based on animation 12 frames per second.
+
+	animationTimer += dt;
+
+	if (animationTimer >= frameDuration) {
+		animationTimer -= frameDuration;
+		currentFrame++;
+
+		if (currentFrame >= currentState.frameCount) {
+			currentFrame = 0;
+		}
+
+		setFrame(currentState.row, currentFrame);
 	}
-	setFrame(currentState.row, currentFrame);
-	currentFrame++;
 }

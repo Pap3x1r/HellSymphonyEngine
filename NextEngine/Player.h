@@ -6,8 +6,10 @@
 //Movesets
 #include "PlayerMovementState.h"
 #include "PlayerBowState.h"
+#include "PlayerSwordState.h"
 
 class Bow;
+class Sword;
 class Level;
 
 enum WeaponType {
@@ -38,6 +40,7 @@ class Player : public TexturedObject {
     StateMachine* playerState;
 
     Bow* bow;
+    Sword* sword;
 
 public:
     Player(float hp);
@@ -51,8 +54,12 @@ public:
 
     StateMachine* getStateMachine() const;
 
+    void setWeaponType(WeaponType newType);
+    WeaponType getWeaponType() const;
+
     void setLevel(Level* newLevel);
     Level* getLevel() const;
 
     Bow* getBow() const;
+    Sword* getSword() const;
 };

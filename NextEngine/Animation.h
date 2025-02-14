@@ -34,7 +34,7 @@ class Animation {
 		//Animator
 		void addState(string name, int row, int frameCount);
 		void setState(string name);
-		void updateCurrentState();
+		void updateCurrentState(float dt);
 
 		//Animation
 		Animation(unsigned int& texture);

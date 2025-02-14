@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bow.h"
+#include "Sword.h"
 
 Player::Player(float hp) {
 	health = new Health(hp);
@@ -22,6 +23,7 @@ Player::Player(float hp) {
 	playerState->changeState(PlayerIdleState::getInstance(), this);
 	//Bow
 	bow = new Bow();
+	sword = new Sword();
 }
 
 Player::~Player() {
@@ -55,6 +57,14 @@ StateMachine* Player::getStateMachine() const {
 	return playerState;
 }
 
+void Player::setWeaponType(WeaponType newType) {
+	currentWeapon = newType;
+}
+
+WeaponType Player::getWeaponType() const {
+	return currentWeapon;
+}
+
 void Player::setLevel(Level* newLevel) {
 	if (!newLevel) {
 		cerr << "Error: setLevel() received a nullptr.";
@@ -69,4 +79,8 @@ Level* Player::getLevel() const {
 
 Bow* Player::getBow() const{
 	return bow;
+}
+
+Sword* Player::getSword() const {
+	return sword;
 }

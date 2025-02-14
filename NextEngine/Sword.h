@@ -14,6 +14,7 @@ class Sword {
 	float attackTimeWindow = 0.5f; //
 
 	bool inChainAttack = false;
+	bool inputBuffer = false;
 
 	//Light attack (left click)
 	list<DrawableObject*> chainAttackList;
@@ -30,6 +31,26 @@ public:
 		attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
 		attack1->setDrawCollider(false);
 		chainAttackList.push_back(attack1);
+
+		PlayerAttackCollider* attack2 = new PlayerAttackCollider();
+		attack2->setDraw(false);
+		attack2->addColliderComponent();
+		attack2->getColliderComponent()->setTrigger(true);
+		attack2->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
+		attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
+		attack2->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
+		attack2->setDrawCollider(false);
+		chainAttackList.push_back(attack2);
+
+		PlayerAttackCollider* attack3 = new PlayerAttackCollider();
+		attack3->setDraw(false);
+		attack3->addColliderComponent();
+		attack3->getColliderComponent()->setTrigger(true);
+		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
+		attack3->getColliderComponent()->setDimension(4.0f, 2.0f); //Set collider dimension
+		attack3->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
+		attack3->setDrawCollider(false);
+		chainAttackList.push_back(attack3);
 	}
 
 	~Sword() {
@@ -48,7 +69,7 @@ public:
 		}
 	}
 
-	void chainAttack() {
+	void chainAttack() { //Unused
 		list<DrawableObject*>::iterator itr = chainAttackList.begin();
 
 		switch (currentChainAttack) {
@@ -65,5 +86,29 @@ public:
 
 	list<DrawableObject*> getChainAttackList() const {
 		return chainAttackList;
+	}
+
+	void setCurrentChainAttack(int i) {
+		currentChainAttack = i;
+	}
+
+	int getCurrentChainAttack() const {
+		return currentChainAttack;
+	}
+
+	void setInChainAttack(bool s) {
+		inChainAttack = s;
+	}
+
+	bool getInChainAttack() const {
+		return inChainAttack;
+	}
+
+	void setInputBuffer(bool s) {
+		inputBuffer = s;
+	}
+
+	bool getInputBuffer() const {
+		return inputBuffer;
 	}
 };
