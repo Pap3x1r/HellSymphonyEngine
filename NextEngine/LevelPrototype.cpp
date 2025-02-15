@@ -14,21 +14,18 @@ void LevelPrototype::levelLoad() {
 }
 
 void LevelPrototype::levelInit() {
-
-	Sword* sword_ = new Sword();
-	if (sword_) {
-		for (DrawableObject* obj : sword_->getChainAttackList()) {
-			objectsList.push_back(obj);
-		}
-	}
-	sword = sword_;
-
 	Player* player_ = new Player(10);
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
 
 	bow = player->getBow();
+	sword = player->getSword();
+	if (sword) {
+		for (DrawableObject* obj : sword->getChainAttackList()) {
+			objectsList.push_back(obj);
+		}
+	}
 
 	Enemy* enemy_ = new Enemy(10);
 	objectsList.push_back(enemy_);
@@ -89,7 +86,7 @@ void LevelPrototype::levelUpdate() {
 	//	}
 	//}
 
-
+	player->getAnimationComponent()->updateCurrentState(dt);
 
 	/*if (timeK > 0.12f) {
 		player->getAnimationComponent()->updateCurrentState();
@@ -127,6 +124,14 @@ void LevelPrototype::handleKey(char key) {
 
 	bool playerIsMoving = false;
 
+	if (sword->getInChainAttack()) {
+		return;
+	}
+
+	if (!playerIsMoving) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+	}
+
 	switch (key) {
 	case 'w':
 		player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
@@ -157,11 +162,10 @@ void LevelPrototype::handleKey(char key) {
 	case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
-	case 'f': bow->setEnableDebug();
-	}
-
-	if (!playerIsMoving) {
-		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+	case 'f': bow->setEnableDebug(); break;
+	case 'h': player->setWeaponType(Bow_); break;
+	case 'j': player->setWeaponType(Sword_); break;
+	case 'k': player->setWeaponType(Shield_); break;
 	}
 }
 
@@ -179,19 +183,60 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 
 	//Check player weapon
 	// assume type = bow first
-	if (type == 0) {
-		if (bow->getIsOverheat() == false) {
-			if (bow->getRapidShotReady()) {
-				/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
-				objectsList.push_back(newArrow);*/
-				player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
+
+	if (player->getWeaponType() == Bow_) {
+		if (type == 0) {
+			if (bow->getIsOverheat() == false) {
+				if (bow->getRapidShotReady()) {
+					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
+					objectsList.push_back(newArrow);*/
+					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
+				}
 			}
 		}
+		else {
+			/*DrawableObject* newArrow = bow->arrowShot(100, player, 50);
+			objectsList.push_back(newArrow);*/
+			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+		}
 	}
-	else {
-		DrawableObject* newArrow = bow->arrowShot(100, player, 50);
-		objectsList.push_back(newArrow);
+	else if (player->getWeaponType() == Sword_) {
+		if (type == 0) {
+			//enter first attack of the chain
+
+			if (sword->getInChainAttack()) {
+				//input buffer
+				sword->setInputBuffer(true);
+				return;
+			}
+
+			switch (sword->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightSwordAttack1::getInstance(), player);
+				break;
+			/*case 1:
+				player->getStateMachine()->changeState(PlayerLightSwordAttack2::getInstance(), player);
+				break;
+			case 2:
+				player->getStateMachine()->changeState(PlayerLightSwordAttack3::getInstance(), player);
+				break;*/
+			}
+
+			
+		}
+		else if (type == 1) {
+			if (sword->getInChainAttack()) {
+				return;
+			}
+
+			player->getStateMachine()->changeState(PlayerHeavySwordAttack::getInstance(), player);
+		}
+
 	}
+	else if (player->getWeaponType() == Shield_) {
+
+	}
+	
 	
 
 	//player->getTransform().setPosition(glm::vec3(realX, realY, 0));

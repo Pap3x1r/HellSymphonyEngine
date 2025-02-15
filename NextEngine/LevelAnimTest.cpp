@@ -37,7 +37,7 @@ void LevelAnimTest::levelUpdate() {
 	timeK += dt;
 	if (timeK > 0.12f) {
 		
-		player->getAnimationComponent()->updateCurrentState();
+		player->getAnimationComponent()->updateCurrentState(dt);
 		d = 0;
 		timeK = 0;
 	}
