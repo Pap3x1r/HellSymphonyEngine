@@ -38,7 +38,7 @@ public:
 		attack2->getColliderComponent()->setTrigger(true);
 		attack2->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
-		attack2->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
+		attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
 
@@ -48,9 +48,19 @@ public:
 		attack3->getColliderComponent()->setTrigger(true);
 		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack3->getColliderComponent()->setDimension(4.0f, 2.0f); //Set collider dimension
-		attack3->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
+		attack3->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
 		attack3->setDrawCollider(false);
 		chainAttackList.push_back(attack3);
+
+		PlayerAttackCollider* heavyAttack = new PlayerAttackCollider();
+		heavyAttack->setDraw(false);
+		heavyAttack->addColliderComponent();
+		heavyAttack->getColliderComponent()->setTrigger(true);
+		heavyAttack->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
+		heavyAttack->getColliderComponent()->setDimension(4.0f, 3.0f); //Set collider dimension
+		heavyAttack->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
+		heavyAttack->setDrawCollider(false);
+		chainAttackList.push_back(heavyAttack);
 	}
 
 	~Sword() {
@@ -110,5 +120,15 @@ public:
 
 	bool getInputBuffer() const {
 		return inputBuffer;
+	}
+
+	DrawableObject* getChainAttackObject(int index) {
+		if (index < 0 || index >= chainAttackList.size()) {
+			return nullptr;
+		}
+
+		auto it = chainAttackList.begin();
+		std::advance(it, index);
+		return *it;
 	}
 };
