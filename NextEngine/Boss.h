@@ -1,10 +1,13 @@
 #pragma once
-#include "Boss.h"
+#include "TexturedObject.h"
+#include "Health.h"
+#include "BossStateMachine.h"
 
 
-class Ziz : public Boss {
+class Boss : public TexturedObject {//abstract
 
 private:
+
     bool isFacingRight = true;
     bool isGrounded = true;
 
@@ -12,18 +15,16 @@ private:
     Health* health;
     BossStateMachine* currentState;
 
-
 public:
-    Ziz();
-    ~Ziz();
+    Boss();
+    ~Boss();
 
     void setLevel(Level* newLevel);
     Level* getLevel() const;
 
-    void setFacingRight(bool value);
+    virtual void setFacingRight(bool value) = 0;
     bool getFacingRight() const;
 
     BossStateMachine* getStateMachine() const;
-    
 
 };
