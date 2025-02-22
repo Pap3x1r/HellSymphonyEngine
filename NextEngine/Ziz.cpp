@@ -4,9 +4,9 @@ Ziz::Ziz() {
 	setName("Ziz");
 	health = new Health(1000);
 	setTexture("../Resource/Texture/Ziz_Idle.png");
-	getTransform().setScale(glm::vec3(10.0f, -10.0f, 1.0f));
+	getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
 	addColliderComponent();
-	getColliderComponent()->setDimension(0.5f, -0.5f);
+	getColliderComponent()->setDimension(0.5f, 0.5f);
 	//getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 	setDrawCollider(true);
 	initAnimation(1, 1);

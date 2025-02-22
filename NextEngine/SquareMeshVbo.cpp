@@ -15,10 +15,11 @@ void SquareMeshVbo::loadData() {
 
 	GLfloat texData[] =
 	{
-	  0.0f, 0.0f,
-	  1.0f, 0.0f,
+	  0.0f, 1.0f,
 	  1.0f, 1.0f,
-	  0.0f, 1.0f
+	  1.0f, 0.0f,
+	  0.0f, 0.0f,
+
 	};
 
 	//Create VBO

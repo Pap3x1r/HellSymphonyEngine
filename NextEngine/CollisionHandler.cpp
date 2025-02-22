@@ -175,11 +175,11 @@ void resolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	glm::vec3 lastPos = obj1->getPhysicsComponent()->getLastPosition();
 
 
-	float halfWidth1 = globalT1.getScale().x * col1->getWidth() / 2.0f;
-	float halfHeight1 = globalT1.getScale().y * col1->getHeight() / 2.0f;
+	float halfWidth1 = abs(globalT1.getScale().x * col1->getWidth() / 2.0f);
+	float halfHeight1 = abs(globalT1.getScale().y * col1->getHeight() / 2.0f);
 
-	float halfWidth2 = globalT2.getScale().x * col2->getWidth() / 2.0f;
-	float halfHeight2 = globalT2.getScale().y * col2->getHeight() / 2.0f;
+	float halfWidth2 = abs(globalT2.getScale().x * col2->getWidth() / 2.0f);
+	float halfHeight2 = abs(globalT2.getScale().y * col2->getHeight() / 2.0f);
 
 	float distX = abs(pos2.x - pos1.x);
 	float distY = abs(pos2.y - pos1.y);
@@ -187,7 +187,7 @@ void resolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	float intersectedX = halfWidth1 + halfWidth2 - distX;
 	float intersectedY = halfHeight1 + halfHeight2 - distY;
 
-	glm::vec3 dir = lastPos - pos2;
+	glm::vec3 dir = (lastPos + col1->getTransform().getPosition()) - pos2;
 	dir.x /= halfWidth1 * 2.0f + halfWidth2 * 2.0f;
 	dir.y /= halfHeight1 * 2.0f + halfHeight2 * 2.0f;
 
@@ -241,6 +241,7 @@ void resolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	//}
 
 	phys1->setVelocity(vel1);
-	t1.setPosition(newPos1);
+	t1.setPosition(newPos1 - col1->getTransform().getPosition());
+	//t1.setPosition(newPos1);
 	phys1->setLastPosition(pos1);
 }
