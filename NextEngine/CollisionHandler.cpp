@@ -40,6 +40,57 @@ bool checkCollisionPoint(Collider* col, Transform& t, glm::vec2 point) {
 	return xAxis && yAxis;
 }
 
+//void updateCollisionState(Collider* col1, Collider* col2, bool collided) {
+//	std::map<Collider*, Collider::CollisionState>& colMap1 = col1->getCollisionMap();
+//	bool found = colMap1.find(col2) != colMap1.end();
+//
+//	// Check if either object is the one we want to debug
+//	bool shouldDebug = false;
+//	std::string obj1Name = col1->getObject()->getName();
+//	std::string obj2Name = col2->getObject()->getName();
+//
+//	/*if (obj1Name == "EnemyAttackCollider") {
+//		shouldDebug = true;
+//	}*/
+//
+//	/*if (obj1Name == "Player" && (obj2Name != "Floor" && obj2Name != "Object")) {
+//		shouldDebug = true;
+//	}*/
+//
+//	Collider::CollisionState oldState = found ? colMap1[col2] : Collider::NONE;
+//
+//	if (collided) {
+//		if (!found) {
+//			colMap1[col2] = Collider::ENTER;
+//			if (shouldDebug) {
+//				cout << obj1Name << " -> " << obj2Name << ": NONE -> ENTER" << endl;
+//			}
+//		}
+//		else {
+//			colMap1[col2] = Collider::STAY;
+//			if (shouldDebug) {
+//				cout << obj1Name << " -> " << obj2Name << ": " << oldState << " -> STAY" << endl;
+//			}
+//		}
+//	}
+//	else {
+//		if (found) {
+//			if (colMap1[col2] == Collider::EXIT) {
+//				colMap1.erase(col2);
+//				if (shouldDebug) {
+//					cout << obj1Name << " -> " << obj2Name << ": EXIT -> REMOVED" << endl;
+//				}
+//			}
+//			else {
+//				colMap1[col2] = Collider::EXIT;
+//				if (shouldDebug) {
+//					cout << obj1Name << " -> " << obj2Name << ": " << oldState << " -> EXIT" << endl;
+//				}
+//			}
+//		}
+//	}
+//}
+
 void updateCollisionState(Collider* col1, Collider* col2, bool collided) {
 	std::map<Collider*, Collider::CollisionState>& colMap1 = col1->getCollisionMap();
 
@@ -117,57 +168,57 @@ void handleObjectCollision(list<DrawableObject*>& objects) {
 	}
 }
 
-void handleObjectCollision(list<DrawableObject*>& objects, void (*triggerFunction)(DrawableObject*, DrawableObject*)) {
-	for (list<DrawableObject*>::iterator i = objects.begin(); i != objects.end(); i++) {
-
-		if ((*i)->getColliderComponent() != nullptr) {
-			(*i)->getColliderComponent()->setCollisionFlag(0);
-		}
-
-		for (list<DrawableObject*>::iterator j = objects.begin(); j != objects.end(); j++) {
-			if (i == j) {
-				continue;
-			}
-
-			DrawableObject* obj1 = *i;
-			DrawableObject* obj2 = *j;
-
-			Collider* col1 = obj1->getColliderComponent();
-			Collider* col2 = obj2->getColliderComponent();
-
-			if (col1 == nullptr || col2 == nullptr) {
-				continue;
-			}
-
-			if (!col1->isEnable() || !col2->isEnable()) {
-				continue;
-			}
-
-			Transform t1 = obj1->getTransform();
-			Transform t2 = obj2->getTransform();
-
-			bool collided = checkCollision(col1, t1, col2, t2);
-
-			if (collided) {
-				//system("cls");
-				//cout << obj1->getName() << " collided with " << obj2->getName() << endl;
-
-				if (col1->isTrigger() || col2->isTrigger()) {
-					//cout << "Trigger collision" << endl;
-					/// Call trigger function
-					triggerFunction(obj1, obj2);
-					continue;
-				}
-
-				resolveCollision(obj1, obj2);
-			}
-			else {
-				//system("cls");
-				//cout << "no collision" << endl;
-			}
-		}
-	}
-}
+//void handleObjectCollision(list<DrawableObject*>& objects, void (*triggerFunction)(DrawableObject*, DrawableObject*)) {
+//	for (list<DrawableObject*>::iterator i = objects.begin(); i != objects.end(); i++) {
+//
+//		if ((*i)->getColliderComponent() != nullptr) {
+//			(*i)->getColliderComponent()->setCollisionFlag(0);
+//		}
+//
+//		for (list<DrawableObject*>::iterator j = objects.begin(); j != objects.end(); j++) {
+//			if (i == j) {
+//				continue;
+//			}
+//
+//			DrawableObject* obj1 = *i;
+//			DrawableObject* obj2 = *j;
+//
+//			Collider* col1 = obj1->getColliderComponent();
+//			Collider* col2 = obj2->getColliderComponent();
+//
+//			if (col1 == nullptr || col2 == nullptr) {
+//				continue;
+//			}
+//
+//			if (!col1->isEnable() || !col2->isEnable()) {
+//				continue;
+//			}
+//
+//			Transform t1 = obj1->getTransform();
+//			Transform t2 = obj2->getTransform();
+//
+//			bool collided = checkCollision(col1, t1, col2, t2);
+//
+//			if (collided) {
+//				//system("cls");
+//				//cout << obj1->getName() << " collided with " << obj2->getName() << endl;
+//
+//				if (col1->isTrigger() || col2->isTrigger()) {
+//					//cout << "Trigger collision" << endl;
+//					/// Call trigger function
+//					triggerFunction(obj1, obj2);
+//					continue;
+//				}
+//
+//				resolveCollision(obj1, obj2);
+//			}
+//			else {
+//				//system("cls");
+//				//cout << "no collision" << endl;
+//			}
+//		}
+//	}
+//}
 
 void resolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	Physics* phys1 = obj1->getPhysicsComponent();

@@ -20,24 +20,37 @@ Collider::Collider(DrawableObject* object, float width, float height) : object(o
 
 void Collider::setEnableCollision(bool value) {
 	if (!value) {
-		// Reset specific states or flags related to collision
-		collisionFlag = 0;  // Reset the collision flag
-
-		// Reset the collision map
-		collisionMap.clear();
-
-		//// Optionally, trigger exit events for the other objects involved in collisions
-		//for (auto& entry : collisionMap) {
-		//	Collider* otherCollider = entry.first;
-		//	if (otherCollider != nullptr) {
-		//		// Example: You might want to call a method on the other object as well
-		//		otherCollider->getObject()->OnTriggerExit(this->object);
-		//	}
-		//}
+		collisionFlag = 0;
+		// Don't clear collision map, just mark all as EXIT
+		for (auto& pair : collisionMap) {
+			pair.second = EXIT;
+		}
 	}
-
 	enableCollision = value;
 }
+
+
+//Old setEnableCollision
+//void Collider::setEnableCollision(bool value) {
+//	if (!value) {
+//		// Reset specific states or flags related to collision
+//		collisionFlag = 0;  // Reset the collision flag
+//
+//		// Reset the collision map
+//		collisionMap.clear();
+//
+//		//// Optionally, trigger exit events for the other objects involved in collisions
+//		//for (auto& entry : collisionMap) {
+//		//	Collider* otherCollider = entry.first;
+//		//	if (otherCollider != nullptr) {
+//		//		// Example: You might want to call a method on the other object as well
+//		//		otherCollider->getObject()->OnTriggerExit(this->object);
+//		//	}
+//		//}
+//	}
+//
+//	enableCollision = value;
+//}
 
 void Collider::setTrigger(bool value) {
 	trigger = value;
