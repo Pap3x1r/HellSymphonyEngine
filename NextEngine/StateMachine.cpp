@@ -9,6 +9,10 @@ StateMachine::~StateMachine() {
 }
 
 void StateMachine::changeState(StateM* newState, Player* player) {
+    if (currentState == newState) {
+        return;
+    }
+
     if (currentState) {
         currentState->exit(player);
     }

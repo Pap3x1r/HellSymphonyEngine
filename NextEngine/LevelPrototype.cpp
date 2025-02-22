@@ -27,6 +27,13 @@ void LevelPrototype::levelInit() {
 		}
 	}
 
+	shield = player->getShield();
+	if (shield) {
+		for (DrawableObject* obj : shield->getChainAttackList()) {
+			objectsList.push_back(obj);
+		}
+	}
+
 	Enemy* enemy_ = new Enemy(10);
 	objectsList.push_back(enemy_);
 	objectsList.push_back(enemy_->getEnemyAttackCollider());
@@ -36,6 +43,7 @@ void LevelPrototype::levelInit() {
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
 	floor->addColliderComponent();
+	floor->setName("Floor");
 	floor->setDrawCollider(true);
 	objectsList.push_back(floor);
 
@@ -77,6 +85,7 @@ void LevelPrototype::levelUpdate() {
 		
 	sword->update(dt, player);
 	bow->update(dt, player);
+	shield->update(dt, player);
 
 	//for (DrawableObject* obj : objectsList) { //Update enemy object
 	//	Enemy* enemy = dynamic_cast<Enemy*>(obj);
@@ -128,10 +137,6 @@ void LevelPrototype::handleKey(char key) {
 		return;
 	}
 
-	if (!playerIsMoving) {
-		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
-	}
-
 	switch (key) {
 	case 'w':
 		player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
@@ -165,7 +170,11 @@ void LevelPrototype::handleKey(char key) {
 	case 'f': bow->setEnableDebug(); break;
 	case 'h': player->setWeaponType(Bow_); break;
 	case 'j': player->setWeaponType(Sword_); break;
-	case 'k': player->setWeaponType(Shield_); break;
+	case 'g': player->setWeaponType(Shield_); break;
+	}
+
+	if (!playerIsMoving) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 	}
 }
 
@@ -234,7 +243,42 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 
 	}
 	else if (player->getWeaponType() == Shield_) {
+		if (type == 0) {
+			//enter first attack of the chain
 
+			if (shield->getInChainAttack()) {
+				//input buffer
+				shield->setInputBuffer(true);
+				return;
+			}
+
+			switch (shield->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightShieldAttack1::getInstance(), player);
+				break;
+				/*case 1:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack2::getInstance(), player);
+					break;
+				case 2:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack3::getInstance(), player);
+					break;*/
+			}
+
+
+		}
+		else if (type == 1) {
+			if (shield->getInChainAttack()) {
+				return;
+			}
+
+			player->getStateMachine()->changeState(PlayerShieldGuard::getInstance(), player);
+		}
+		else if (type == 3) {	
+
+			if (shield->getIsBlocking()) {
+				player->getStateMachine()->changeState(PlayerOffShield::getInstance(), player);
+			}
+		}
 	}
 	
 	

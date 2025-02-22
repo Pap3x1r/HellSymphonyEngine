@@ -149,6 +149,8 @@ void DrawableObject::processCollider() {
 		Collider::CollisionState state = pair.second;
 		switch (state) {
 		case Collider::ENTER:
+			cout << "Col is a trigger: " << col->isTrigger() << endl;
+			cout << "Enter detected" << endl;
 			col->isTrigger() ? onTriggerEnter(col) : onCollisionEnter(col);
 			break;
 		case Collider::STAY:

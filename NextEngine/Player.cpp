@@ -1,10 +1,12 @@
 #include "Player.h"
 #include "Bow.h"
 #include "Sword.h"
+#include "Shield.h"
+#include "EnemyAttackCollider.h"
 
 Player::Player(float hp) {
 	health = new Health(hp);
-
+	setName("Player"); //--new
 	setTexture("../Resource/Texture/dante_idle.png");
 	getTransform().setScale(glm::vec3(4.5f, -4.5f, 1.0f));
 	//Anim
@@ -14,6 +16,7 @@ Player::Player(float hp) {
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.15f, -0.25f);
 	getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
+	//getColliderComponent()->setTrigger(true);
 	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
@@ -24,6 +27,7 @@ Player::Player(float hp) {
 	//Bow
 	bow = new Bow();
 	sword = new Sword();
+	shield = new Shield();
 }
 
 Player::~Player() {
@@ -83,4 +87,12 @@ Bow* Player::getBow() const{
 
 Sword* Player::getSword() const {
 	return sword;
+}
+
+Shield* Player::getShield() const {
+	return shield;
+}
+
+void Player::onTriggerEnter(Collider* collider) {
+	cout << "Player hit" << endl;
 }

@@ -7,9 +7,11 @@
 #include "PlayerMovementState.h"
 #include "PlayerBowState.h"
 #include "PlayerSwordState.h"
+#include "PlayerShieldState.h"
 
 class Bow;
 class Sword;
+class Shield;
 class Level;
 
 enum WeaponType {
@@ -41,10 +43,39 @@ class Player : public TexturedObject {
 
     Bow* bow;
     Sword* sword;
+    Shield* shield;
 
 public:
     Player(float hp);
     ~Player();
+
+    void selfUpdate(float dt_) {
+        if (currentUltimateGauge >= ultimateGaugeMax) {
+            increaseUltimateGauge(1);
+            currentUltimateGauge -= ultimateGaugeMax;
+        }
+    }
+
+    void increaseUltimateGauge(float amount) {
+        currentUltimateGauge += amount;
+    }
+    void setUltimateGauge(float amount) {
+        currentUltimateGauge = amount;
+    }
+    bool getUltimateGauge() const {
+        return currentUltimateGauge;
+    }
+
+    void increaseUltimateSlot(int amount) {
+        currentUltimateSlot += amount;
+    }
+    void setUltimateSlot(int amount) {
+        currentUltimateSlot = amount;
+    }
+    bool getUltimateSlot() const {
+        return currentUltimateSlot;
+    }
+
 
     void setFacingRight(bool value);
     bool getFacingRight() const;
@@ -62,4 +93,7 @@ public:
 
     Bow* getBow() const;
     Sword* getSword() const;
+    Shield* getShield() const;
+
+    void onTriggerEnter(Collider* collider) override;
 };

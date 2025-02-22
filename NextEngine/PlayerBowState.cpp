@@ -24,7 +24,7 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 2.0f) { //this might need to change idk how to calculate dt to real time / frame lol
+        if (time >= 0.0f) { //this might need to change idk how to calculate dt to real time / frame lol
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -32,7 +32,7 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
     case ACTIVE:
         //do something
         //change phase
-        if (time >= 2.0f) {
+        if (time >= 0.0f) {
             currentPhase = RECOVERY;
             time = 0;
         }
@@ -40,7 +40,7 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
     case RECOVERY:
         //do something
         //return to idle
-        if (time >= 2.0f) {
+        if (time >= 0.0f) {
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
         }
         break;

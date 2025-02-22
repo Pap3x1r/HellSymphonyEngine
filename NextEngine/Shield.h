@@ -5,10 +5,12 @@
 
 using namespace std;
 
-class Sword {
+class Shield {
 
 	int currentChainAttack = 0;
-	int maxChainAttack = 5;
+
+	bool isBlocking = false;
+	bool isPerfect = false;
 
 	float attackTimeElapsed = 0.0f; // Do not change
 	float attackTimeWindow = 0.5f; //
@@ -26,7 +28,7 @@ class Sword {
 
 public:
 
-	Sword() {
+	Shield() {
 		PlayerAttackCollider* attack1 = new PlayerAttackCollider(10);
 		attack1->setName("Attack1");
 		attack1->setDraw(false);
@@ -48,31 +50,9 @@ public:
 		attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
-
-		PlayerAttackCollider* attack3 = new PlayerAttackCollider(30);
-		attack3->setName("Attack3");
-		attack3->setDraw(false);
-		attack3->addColliderComponent();
-		attack3->getColliderComponent()->setTrigger(true);
-		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack3->getColliderComponent()->setDimension(4.0f, 2.0f); //Set collider dimension
-		attack3->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
-		attack3->setDrawCollider(false);
-		chainAttackList.push_back(attack3);
-
-		PlayerAttackCollider* heavyAttack = new PlayerAttackCollider(50);
-		heavyAttack->setName("heavyAttack");
-		heavyAttack->setDraw(false);
-		heavyAttack->addColliderComponent();
-		heavyAttack->getColliderComponent()->setTrigger(true);
-		heavyAttack->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		heavyAttack->getColliderComponent()->setDimension(4.0f, 3.0f); //Set collider dimension
-		heavyAttack->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
-		heavyAttack->setDrawCollider(false);
-		chainAttackList.push_back(heavyAttack);
 	}
 
-	~Sword() {
+	~Shield() {
 		for (auto obj : chainAttackList) {
 			delete obj;
 		}
@@ -149,5 +129,21 @@ public:
 		auto it = chainAttackList.begin();
 		std::advance(it, index);
 		return *it;
+	}
+
+	void setIsBlocking(bool s) {
+		isBlocking = s;
+	}
+
+	bool getIsBlocking() const {
+		return isBlocking;
+	}
+
+	void setIsPerfect(bool s) {
+		isPerfect = s;
+	}
+
+	bool getIsPerfect() const {
+		return isPerfect;
 	}
 };

@@ -27,12 +27,13 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
     advance(it, 0);*/
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(0);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
 
     switch (currentPhase) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) {
+        if (time >= 0.333f) { //4 frames
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -49,6 +50,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
 
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
+            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -90,6 +92,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(1);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
 
     switch (currentPhase) {
     case STARTUP:
@@ -112,6 +115,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
 
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
+            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -153,6 +157,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
     DrawableObject* collider = player->getSword()->getChainAttackObject(2);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
 
     switch (currentPhase) {
     case STARTUP:
@@ -175,6 +180,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
             time = 0;
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
+            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -209,6 +215,7 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(3);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
 
     switch (currentPhase) {
     case STARTUP:
@@ -231,6 +238,7 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
             time = 0;
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
+            attackCollider->resetHit();
         }
         break;
     case RECOVERY:

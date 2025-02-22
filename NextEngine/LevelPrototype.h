@@ -5,6 +5,7 @@
 
 #include "Sword.h"
 #include "Bow.h"
+#include "Shield.h"
 
 #include <list>
 
@@ -18,6 +19,7 @@ private:
 	Player* player;
 	Sword* sword;
 	Bow* bow;
+	Shield* shield;
 	int d = 0;
 	int row = 0;
 	int col = 0;

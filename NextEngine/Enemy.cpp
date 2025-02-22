@@ -34,9 +34,12 @@ void Enemy::selfUpdate(float dt) {
 		if (attackCollider->getColliderComponent()->isEnable()) {
 			attackCollider->getColliderComponent()->setEnableCollision(false);
 			attackCollider->setDrawCollider(false);
+			attackCollider->resetHit();
+			//cout << "Disable Enemy Collider" << endl;
 		} else {
 			attackCollider->getColliderComponent()->setEnableCollision(true);
 			attackCollider->setDrawCollider(true);
+			//cout << "Enable Enemy Collider" << endl;
 		}
 	}
 }
