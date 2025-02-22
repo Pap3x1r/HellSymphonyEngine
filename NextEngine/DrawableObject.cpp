@@ -215,7 +215,7 @@ void DrawableObject::drawCollider() {
 
 	//glm::mat4 currentMatrix = this->getTransformMat4();
 	Transform colTransform = collider->getGlobalTransform(this->transform);
-	colTransform.setPosition(colTransform.getPosition() + collider->getOffset());
+	//colTransform.setPosition(colTransform.getPosition() + collider->getOffset());
 	colTransform.scales(collider->getWidth(), collider->getHeight());
 	glm::mat4 currentMatrix = colTransform.getTransformMat4();
 	//glm::mat4 currentMatrix = collider->getGlobalTransform(this->transform).getTransformMat4();
@@ -232,6 +232,11 @@ void DrawableObject::drawCollider() {
 
 void DrawableObject::setActive(bool value) {
 	isActive = value;
+
+	if (collider != nullptr && !isActive) {
+		map<Collider*, Collider::CollisionState>& colMap = collider->getCollisionMap();
+		colMap.clear();
+	}
 }
 
 bool DrawableObject::getIsActive() {

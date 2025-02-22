@@ -68,6 +68,7 @@ public:
             }
         }
         
+        cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
 
         if (time >= 1.50f) {
             time = 0.0f;

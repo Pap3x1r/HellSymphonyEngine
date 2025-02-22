@@ -1,5 +1,6 @@
 #include "Collider.h"
 #include "DrawableObject.h"
+//#include "RayObject.h"
 //#include "CollisionHandler.h"
 
 Collider::Collider(DrawableObject* object) : object(object), width(1), height(1) {
@@ -18,39 +19,22 @@ Collider::Collider(DrawableObject* object, float width, float height) : object(o
 	collisionFlag = 0;
 }
 
-void Collider::setEnableCollision(bool value) {
-	if (!value) {
-		collisionFlag = 0;
-		// Don't clear collision map, just mark all as EXIT
-		for (auto& pair : collisionMap) {
-			pair.second = EXIT;
+Collider::~Collider() {
+	for (pair<Collider*, CollisionState> pair : collisionMap) {
+		Collider* col = pair.first;
+		std::map<Collider*, CollisionState>& otherMap = col->getCollisionMap();
+
+		if (otherMap.count(this) == 0) {
+			continue;
 		}
+
+		otherMap.erase(this);
 	}
-	enableCollision = value;
 }
 
-
-//Old setEnableCollision
-//void Collider::setEnableCollision(bool value) {
-//	if (!value) {
-//		// Reset specific states or flags related to collision
-//		collisionFlag = 0;  // Reset the collision flag
-//
-//		// Reset the collision map
-//		collisionMap.clear();
-//
-//		//// Optionally, trigger exit events for the other objects involved in collisions
-//		//for (auto& entry : collisionMap) {
-//		//	Collider* otherCollider = entry.first;
-//		//	if (otherCollider != nullptr) {
-//		//		// Example: You might want to call a method on the other object as well
-//		//		otherCollider->getObject()->OnTriggerExit(this->object);
-//		//	}
-//		//}
-//	}
-//
-//	enableCollision = value;
-//}
+void Collider::setEnableCollision(bool value) {
+	enableCollision = value;
+}
 
 void Collider::setTrigger(bool value) {
 	trigger = value;
@@ -77,10 +61,6 @@ void Collider::setCollisionFlag(COLLISION_FLAG flag) {
 	this->collisionFlag = flag;
 }
 
-void Collider::setOffset(glm::vec3 offset) {
-	this->transformOffset = offset;
-}
-
 Transform& Collider::getTransform() {
 	return transform;
 }
@@ -89,22 +69,12 @@ Transform Collider::getGlobalTransform(Transform& selfTransform) {
 	return selfTransform.getGlobalTransform(this->transform);
 }
 
-//Transform Collider::getGlobalTransform(Transform& selfTransform) {
-//	// Assuming getGlobalTransform for the Transform class combines local and parent transforms
-//	Transform globalTransform = selfTransform.getGlobalTransform(this->transform);
-//	// Apply the offset to the global transform
-//	globalTransform.setPosition(globalTransform.getPosition() + transformOffset);
-//	return globalTransform;
-//}
-
 float Collider::getWidth() const {
-	//return width * const_cast<Transform*>(&transform)->getScale().x;
-	return width * std::abs(transform.getScale().x);
+	return width * const_cast<Transform*>(&transform)->getScale().x;
 }
 
 float Collider::getHeight() const {
-	//return height * const_cast<Transform*>(&transform)->getScale().y;
-	return height * std::abs(transform.getScale().y);
+	return height * const_cast<Transform*>(&transform)->getScale().y;
 }
 
 std::map<Collider*, Collider::CollisionState>& Collider::getCollisionMap() {
@@ -129,18 +99,6 @@ bool Collider::isTrigger() const {
 
 COLLISION_FLAG Collider::getCollisionFlag() const {
 	return collisionFlag;
-}
-
-glm::vec3 Collider::getOffset() const {
-	return transformOffset;
-}
-
-glm::vec3 Collider::getAdjustedOffset(const Transform& transform) const {
-	glm::vec3 adjustedOffset = transformOffset;
-	glm::vec3 scale = transform.getScale(); // Ensure const correctness
-	if (scale.x < 0) adjustedOffset.x = -transformOffset.x; // Flip for negative X scale
-	if (scale.y < 0) adjustedOffset.y = -transformOffset.y; // Flip for negative Y scale
-	return adjustedOffset;
 }
 
 DrawableObject* Collider::getObject() {

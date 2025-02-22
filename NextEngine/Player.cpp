@@ -8,19 +8,21 @@ Player::Player(float hp) {
 	health = new Health(hp);
 	setName("Player"); //--new
 	setTexture("../Resource/Texture/dante_idle.png");
-	getTransform().setScale(glm::vec3(4.5f, -4.5f, 1.0f));
+	getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
 	//Anim
 	initAnimation(8, 1);
 	getAnimationComponent()->addState("idle", 0, 8);
 	//Collider
 	addColliderComponent();
-	getColliderComponent()->setDimension(0.15f, -0.25f);
-	getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
+	getColliderComponent()->setDimension(0.15f, 0.25f);
+	//getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
+	//getColliderComponent()->getTransform().setPosition(glm::vec3(0.0f, -1.08f, 0.0f));
 	//getColliderComponent()->setTrigger(true);
 	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	//getPhysicsComponent()->setEnableGravity(false);
 	//StateMachine
 	playerState = new StateMachine();
 	playerState->changeState(PlayerIdleState::getInstance(), this);
@@ -38,10 +40,10 @@ void Player::setFacingRight(bool value) {
 	isFacingRight = value;
 
 	if (isFacingRight) {
-		getTransform().setScale(glm::vec3(4.5f, -4.5f, 1.0f));
+		getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
 	}
 	else {
-		getTransform().setScale(glm::vec3(-4.5f, -4.5f, 1.0f));
+		getTransform().setScale(glm::vec3(-4.5f, 4.5f, 1.0f));
 	}
 }
 

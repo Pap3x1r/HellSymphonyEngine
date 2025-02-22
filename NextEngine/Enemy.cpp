@@ -10,7 +10,7 @@ Enemy::Enemy(float damage_) {
 	addColliderComponent();
 	getColliderComponent()->setTrigger(true);
 	getColliderComponent()->setDimension(1.0f, 1.5f);
-	getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	//getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 	setDrawCollider(true);
 	//Physics
 
@@ -19,10 +19,10 @@ Enemy::Enemy(float damage_) {
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(false);
 	attackCollider->addColliderComponent();
-	attackCollider->getColliderComponent()->setEnableCollision(false);
+	attackCollider->setActive(false);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.0f, 1.0f);
-	attackCollider->getColliderComponent()->setOffset(glm::vec3(-1.1f, 0.0f, 0.0f));
+	//attackCollider->getColliderComponent()->setOffset(glm::vec3(-1.1f, 0.0f, 0.0f));
 }
 
 void Enemy::selfUpdate(float dt) {
@@ -31,13 +31,13 @@ void Enemy::selfUpdate(float dt) {
 	if (attackTimeElapsed >= attackTimer) {
 		attackTimeElapsed = 0.0f;
 
-		if (attackCollider->getColliderComponent()->isEnable()) {
-			attackCollider->getColliderComponent()->setEnableCollision(false);
+		if (attackCollider->getIsActive()) {
+			attackCollider->setActive(false);
 			attackCollider->setDrawCollider(false);
 			attackCollider->resetHit();
 			//cout << "Disable Enemy Collider" << endl;
 		} else {
-			attackCollider->getColliderComponent()->setEnableCollision(true);
+			attackCollider->setActive(true);
 			attackCollider->setDrawCollider(true);
 			//cout << "Enable Enemy Collider" << endl;
 		}

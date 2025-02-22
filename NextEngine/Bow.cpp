@@ -59,7 +59,7 @@ DrawableObject* Bow::arrowShot(float damage_, float ultPercentage_,Player* playe
 	arrow->getColliderComponent()->setTrigger(true);
 	arrow->getColliderComponent()->setEnableCollision(true); //Set collision to false at the start
 	arrow->getColliderComponent()->setDimension(0.6f, 0.25f); //Set collider dimension
-	arrow->getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f)); //Set collider offset
+	//arrow->getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f)); //Set collider offset
 	arrow->setDrawCollider(true);
 
 	rapidShotReady = false;

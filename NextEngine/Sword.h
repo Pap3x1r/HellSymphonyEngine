@@ -34,7 +34,7 @@ public:
 		attack1->getColliderComponent()->setTrigger(true);
 		attack1->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack1->getColliderComponent()->setDimension(1.4f, 0.6f); //Set collider dimension
-		attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
+		//attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
 		attack1->setDrawCollider(false);
 		chainAttackList.push_back(attack1);
 
@@ -45,7 +45,7 @@ public:
 		attack2->getColliderComponent()->setTrigger(true);
 		attack2->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
-		attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
+		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
 
@@ -56,7 +56,7 @@ public:
 		attack3->getColliderComponent()->setTrigger(true);
 		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack3->getColliderComponent()->setDimension(4.0f, 2.0f); //Set collider dimension
-		attack3->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
+		//attack3->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
 		attack3->setDrawCollider(false);
 		chainAttackList.push_back(attack3);
 
@@ -67,7 +67,7 @@ public:
 		heavyAttack->getColliderComponent()->setTrigger(true);
 		heavyAttack->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		heavyAttack->getColliderComponent()->setDimension(4.0f, 3.0f); //Set collider dimension
-		heavyAttack->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
+		//heavyAttack->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
 		heavyAttack->setDrawCollider(false);
 		chainAttackList.push_back(heavyAttack);
 	}
@@ -93,9 +93,9 @@ public:
 		if (!playerObject) return;
 
 
-		glm::vec3 newOffset = object->getColliderComponent()->getOffset();
-		newOffset.x = playerObject->getFacingRight() ? glm::abs(newOffset.x) : -glm::abs(newOffset.x);
-		object->getColliderComponent()->setOffset(newOffset);
+		//glm::vec3 newOffset = object->getColliderComponent()->getOffset();
+		//newOffset.x = playerObject->getFacingRight() ? glm::abs(newOffset.x) : -glm::abs(newOffset.x);
+		//object->getColliderComponent()->setOffset(newOffset);
 	}
 
 	void chainAttack() { //Unused

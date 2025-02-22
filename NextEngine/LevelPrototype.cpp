@@ -44,8 +44,8 @@ void LevelPrototype::levelInit() {
 	enemy = enemy_;
 
 	SimpleObject* floor = new SimpleObject();
-	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
-	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
+	floor->getTransform().setPosition(glm::vec3(0.0f, -2.5f, 0.0f));
+	floor->getTransform().setScale(glm::vec3(18.0f, 1.0f, 0.0f));
 	floor->addColliderComponent();
 	floor->setName("Floor");
 	floor->setDrawCollider(true);

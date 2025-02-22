@@ -20,7 +20,6 @@ private:
 	std::map<Collider*, CollisionState> collisionMap;
 	COLLISION_FLAG collisionFlag;
 
-	glm::vec3 transformOffset;
 	Transform transform;
 	float width, height;
 
@@ -34,6 +33,7 @@ public:
 
 	Collider(DrawableObject* object);
 	Collider(DrawableObject* object, float width, float height);
+	~Collider();
 	void setEnableCollision(bool value);
 	void setTrigger(bool value);
 	void setTransform(const Transform& transform);
@@ -41,7 +41,6 @@ public:
 	void setHeight(float height);
 	void setDimension(float width, float height);
 	void setCollisionFlag(COLLISION_FLAG flag);
-	void setOffset(glm::vec3 vec3);
 
 	Transform& getTransform();
 	Transform getGlobalTransform(Transform& selfTransform);
@@ -52,8 +51,6 @@ public:
 	bool isEnable() const;
 	bool isTrigger() const;
 	COLLISION_FLAG getCollisionFlag() const;
-	glm::vec3 getOffset() const;
-	glm::vec3 getAdjustedOffset(const Transform& transform) const;
 
 	DrawableObject* getObject();
 };

@@ -60,7 +60,7 @@ void LevelUITest::levelInit() {
 
     player->addColliderComponent();
     player->getColliderComponent()->setWidth(10);
-    player->getColliderComponent()->setOffset(glm::vec3(0.0f, -5.0f, 0.0f));
+    //player->getColliderComponent()->setOffset(glm::vec3(0.0f, -5.0f, 0.0f));
     player->setDrawCollider(true);
 
     //GameEngine::getInstance()->getRenderer()->setClearColor(0.1, 0.1, 0.1);

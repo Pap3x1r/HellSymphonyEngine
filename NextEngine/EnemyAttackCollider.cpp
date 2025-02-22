@@ -37,7 +37,7 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 				}
 			}
 			else { //is not blocking
-				cout << "Enemy Hit Player for " << damage << " damage." << endl;
+				//cout << "Enemy Hit Player for " << damage << " damage." << endl;
 				hasHit = true;
 			}
 		}
