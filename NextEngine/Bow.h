@@ -25,7 +25,7 @@ public:
 
 	void setEnableDebug();
 
-	DrawableObject* arrowShot(float damage_, Player* player, float speed);
+	DrawableObject* arrowShot(float damage_, float ultPercentage_, Player* player, float speed);
 
 	bool getRapidShotReady() const;
 	bool getIsOverheat() const;

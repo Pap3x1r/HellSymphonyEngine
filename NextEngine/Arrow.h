@@ -7,10 +7,12 @@ class Arrow : public PlayerAttackCollider {
 	bool facingDirection;
 	float timeToDestroy = 5.0f;
 	float timeElapsed = 0.0f;
+	Player* player;
+	float ultGainPercentage;
 
 	bool readyToDestroy;
 public:
-	Arrow(float damage_, bool face, float speed);
+	Arrow(float damage_, float ultGainPercentage_, bool face, float speed, Player* p);
 
 	void selfUpdate(float dt);
 
@@ -26,5 +28,4 @@ public:
 	bool getReadyToDestroy() const;
 	bool getFacingDirection() const;
 	float getArrowSpeed() const;
-
 };

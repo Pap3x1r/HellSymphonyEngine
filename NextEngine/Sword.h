@@ -27,7 +27,7 @@ class Sword {
 public:
 
 	Sword() {
-		PlayerAttackCollider* attack1 = new PlayerAttackCollider(10);
+		PlayerAttackCollider* attack1 = new PlayerAttackCollider(10, 100);
 		attack1->setName("Attack1");
 		attack1->setDraw(false);
 		attack1->addColliderComponent();
@@ -38,7 +38,7 @@ public:
 		attack1->setDrawCollider(false);
 		chainAttackList.push_back(attack1);
 
-		PlayerAttackCollider* attack2 = new PlayerAttackCollider(20);
+		PlayerAttackCollider* attack2 = new PlayerAttackCollider(20, 100);
 		attack2->setName("Attack2");
 		attack2->setDraw(false);
 		attack2->addColliderComponent();
@@ -49,7 +49,7 @@ public:
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
 
-		PlayerAttackCollider* attack3 = new PlayerAttackCollider(30);
+		PlayerAttackCollider* attack3 = new PlayerAttackCollider(30, 100);
 		attack3->setName("Attack3");
 		attack3->setDraw(false);
 		attack3->addColliderComponent();
@@ -60,7 +60,7 @@ public:
 		attack3->setDrawCollider(false);
 		chainAttackList.push_back(attack3);
 
-		PlayerAttackCollider* heavyAttack = new PlayerAttackCollider(50);
+		PlayerAttackCollider* heavyAttack = new PlayerAttackCollider(50, 100);
 		heavyAttack->setName("heavyAttack");
 		heavyAttack->setDraw(false);
 		heavyAttack->addColliderComponent();

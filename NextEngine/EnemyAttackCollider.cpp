@@ -27,10 +27,12 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 			if (player->getShield()->getIsBlocking()) { // is blocking
 				if (player->getShield()->getIsPerfect()) { //is perfectly timed
 					cout << "Player perfect blocked" << endl;
+					player->increaseUltimateGauge(100.0f); //instant fill
 					hasHit = true;
 				}
 				else { //if blocking but not perfectly
 					cout << "Enemy Hit Player for " << damage/2 << " damage and " << damage/2 << "withered damage." << endl;
+					player->increaseUltimateGauge(damage / 2); // increase by withered damage.
 					hasHit = true;
 				}
 			}

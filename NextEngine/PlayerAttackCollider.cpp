@@ -2,10 +2,17 @@
 
 PlayerAttackCollider::PlayerAttackCollider() {
 	damage = 0;
+	ultGainPercentage = 0;
 }
 
 PlayerAttackCollider::PlayerAttackCollider(float damage_) {
 	damage = damage_;
+	ultGainPercentage = 0;
+}
+
+PlayerAttackCollider::PlayerAttackCollider(float damage_, float ultPercentage_) {
+	damage = damage_;
+	ultGainPercentage = ultPercentage_;
 }
 
 void PlayerAttackCollider::onCollisionEnter(Collider* collider) {
@@ -47,6 +54,11 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 		//playerInside = true;
 		if (!hasHit) {
 			cout << "Player Hit Enemy for " << damage << " damage." << endl;
+			if (player) {
+				player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
+				cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
+			}
+
 			hasHit = true;
 		}
 
@@ -59,4 +71,8 @@ void PlayerAttackCollider::onTriggerExit(Collider* collider) {
 
 void PlayerAttackCollider::resetHit() {
 	hasHit = false;
+}
+
+void PlayerAttackCollider::setPlayer(Player* p) {
+	player = p;
 }

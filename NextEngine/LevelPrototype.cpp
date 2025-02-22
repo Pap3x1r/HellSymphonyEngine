@@ -23,6 +23,8 @@ void LevelPrototype::levelInit() {
 	sword = player->getSword();
 	if (sword) {
 		for (DrawableObject* obj : sword->getChainAttackList()) {
+			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+			col->setPlayer(player);
 			objectsList.push_back(obj);
 		}
 	}
@@ -30,6 +32,8 @@ void LevelPrototype::levelInit() {
 	shield = player->getShield();
 	if (shield) {
 		for (DrawableObject* obj : shield->getChainAttackList()) {
+			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+			col->setPlayer(player);
 			objectsList.push_back(obj);
 		}
 	}
@@ -82,7 +86,8 @@ void LevelPrototype::levelUpdate() {
 			arrow->selfUpdate(dt);
 		}
 	}
-		
+	
+	player->selfUpdate(dt);
 	sword->update(dt, player);
 	bow->update(dt, player);
 	shield->update(dt, player);
@@ -203,7 +208,7 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 				}
 			}
 		}
-		else {
+		else if (type == 1) {
 			/*DrawableObject* newArrow = bow->arrowShot(100, player, 50);
 			objectsList.push_back(newArrow);*/
 			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);

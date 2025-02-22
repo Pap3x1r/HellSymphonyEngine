@@ -50,9 +50,28 @@ public:
     ~Player();
 
     void selfUpdate(float dt_) {
-        if (currentUltimateGauge >= ultimateGaugeMax) {
-            increaseUltimateGauge(1);
-            currentUltimateGauge -= ultimateGaugeMax;
+
+        static float time;
+        time += dt_;
+
+        if (currentUltimateSlot < ultimateSlotMax) {
+            if (currentUltimateGauge >= ultimateGaugeMax) {
+                increaseUltimateSlot(1);
+                currentUltimateGauge -= ultimateGaugeMax;
+                cout << "Ultimate Slot is increased by 1, the current is: " << currentUltimateSlot << endl;
+            }
+        }
+        else {
+            //cout << "Ultimate Slot is maxed" << endl;
+            if (currentUltimateGauge > 0.0f) {
+                setUltimateGauge(0.0f); //Prevent excess gauge when ultimate slot is maxed
+            }
+        }
+        
+
+        if (time >= 1.50f) {
+            time = 0.0f;
+            cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;
         }
     }
 

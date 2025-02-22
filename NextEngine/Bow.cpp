@@ -42,10 +42,10 @@ void Bow::setEnableDebug() {
 	rapidShotDebugMode = !rapidShotDebugMode;
 }
 
-DrawableObject* Bow::arrowShot(float damage_, Player* player, float speed) {
+DrawableObject* Bow::arrowShot(float damage_, float ultPercentage_,Player* player, float speed) {
 	glm::vec3 playerPos = player->getTransform().getPosition();
 	//Create arrow
-	Arrow* arrow = new Arrow(damage_, player->getFacingRight(), speed);
+	Arrow* arrow = new Arrow(damage_, ultPercentage_, player->getFacingRight(), speed, player);
 	arrow->setTexture("../Resource/Texture/arrow.png"); //set texture
 	arrow->getTransform().setScale(glm::vec3(2.0f, 2.0f, 1.0f));
 	if (!player->getFacingRight()) {

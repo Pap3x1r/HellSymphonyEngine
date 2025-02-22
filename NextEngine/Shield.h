@@ -29,7 +29,7 @@ class Shield {
 public:
 
 	Shield() {
-		PlayerAttackCollider* attack1 = new PlayerAttackCollider(10);
+		PlayerAttackCollider* attack1 = new PlayerAttackCollider(10, 100); //Change damage and ult gain percentage here
 		attack1->setName("Attack1");
 		attack1->setDraw(false);
 		attack1->addColliderComponent();
@@ -40,7 +40,7 @@ public:
 		attack1->setDrawCollider(false);
 		chainAttackList.push_back(attack1);
 
-		PlayerAttackCollider* attack2 = new PlayerAttackCollider(20);
+		PlayerAttackCollider* attack2 = new PlayerAttackCollider(20, 100);
 		attack2->setName("Attack2");
 		attack2->setDraw(false);
 		attack2->addColliderComponent();

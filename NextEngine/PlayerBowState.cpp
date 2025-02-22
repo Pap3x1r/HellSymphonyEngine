@@ -12,7 +12,7 @@ void PlayerLightBowAttack::enter(Player* player) {
     player->getAnimationComponent()->setState("LightBowAttack");
     currentPhase = STARTUP; //reset back to startup
 
-    DrawableObject* newArrow = player->getBow()->arrowShot(10, player, 25);
+    DrawableObject* newArrow = player->getBow()->arrowShot(10, 100, player, 25); //Change damage and ult gain percentage here
     player->getLevel()->addObject(newArrow);
 }
 
@@ -62,7 +62,7 @@ void PlayerHeavyBowAttack::enter(Player* player) {
     player->getAnimationComponent()->setState("HeavyBowAttack");
     currentPhase = STARTUP;
 
-    DrawableObject* newArrow = player->getBow()->arrowShot(100, player, 75);
+    DrawableObject* newArrow = player->getBow()->arrowShot(100, 600, player, 75); //Change damage and ult gain percentage here
     player->getLevel()->addObject(newArrow);
 }
 

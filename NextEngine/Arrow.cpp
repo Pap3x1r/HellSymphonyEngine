@@ -1,10 +1,12 @@
 #include "Arrow.h"
 
-Arrow::Arrow(float damage_, bool face, float speed) {
+Arrow::Arrow(float damage_, float ultPercentage_, bool face, float speed, Player* p) {
 	arrowSpeed = speed;
 	damage = damage_;
 	facingDirection = face;
 	readyToDestroy = false;
+	player = p;
+	ultGainPercentage = ultPercentage_;
 }
 
 void Arrow::selfUpdate(float dt) {
@@ -46,6 +48,10 @@ void Arrow::onTriggerEnter(Collider* collider) {
 
 	if (enemy) {
 		cout << "Arrow hit Enemy for " << damage << " damage." << endl;
+		if (player) {
+			player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
+			cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
+		}
 		//DrawableObject::destroyObject(this, objectsListRef);
 		//setReadyToDestroy(true);
 		DrawableObject::destroyObject(this);
