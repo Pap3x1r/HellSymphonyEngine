@@ -31,7 +31,7 @@ void GameStateController::loadLevel() {
 			currentLevel = new LevelPrototype();
 			break;
 		case GameState::GS_LEVEL2:
-			currentLevel = new LevelPrototype();
+			currentLevel = new LevelBossTest();
 			break;
 		case GameState::GS_COL_TEST:
 			cout << "in" << endl;
