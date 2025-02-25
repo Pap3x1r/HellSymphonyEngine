@@ -2,6 +2,7 @@
 #include "CollisionHandler.h"
 
 
+
 void LevelBossTest::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
@@ -26,6 +27,13 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
+	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
+
+
+	Gust* gust_ = new Gust();
+	objectsList.push_back(gust_);
+	gust = gust_;
+	gust->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
 
 	SimpleObject* floor = new SimpleObject();
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
@@ -35,6 +43,9 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(floor);
 
 	//cout << "Init Level" << endl;
+
+
+
 }
 
 void LevelBossTest::levelUpdate() {
@@ -42,10 +53,17 @@ void LevelBossTest::levelUpdate() {
 	timeK += dt;
 	updateObjects(objectsList);
 
-	//ziz->getStateMachine()->update(ziz, dt);
+	if (ziz->getStateMachine()) {
+		ziz->getStateMachine()->update(ziz, dt);
+	}
 
 	for (DrawableObject* obj : objectsList) {
+		gust = dynamic_cast<Gust*>(obj);
+		if (gust) {
+			gust->update(dt);
+		}
 
+		
 
 	}
 

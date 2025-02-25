@@ -1,5 +1,6 @@
 #pragma once
 #include "Boss.h"
+#include "ZizIdleState.h"
 
 
 class Ziz : public Boss {

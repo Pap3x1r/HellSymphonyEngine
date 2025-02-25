@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Ziz.h"
 #include "Player.h"
+#include "Gust.h"
 
 #include <list>
 
@@ -15,6 +16,7 @@ private:
 	float dt = 0;
 	Ziz* ziz;
 	Player* player;
+	Gust* gust;
 
 public:
 	virtual void levelLoad();

@@ -14,10 +14,14 @@ Ziz::Ziz() {
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+
+	currentState = new BossStateMachine();
+	currentState->changeState(ZizIdleState::getInstance(), this);
 }
 
 Ziz::~Ziz() {
 	delete health;
+	delete currentLevel;
 }
 
 void Ziz::setLevel(Level* newLevel) {

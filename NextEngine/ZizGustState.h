@@ -4,15 +4,15 @@
 class Ziz;
 
 
-class ZizIdleState : public BossStateM {
+class ZizGustState : public BossStateM {
 private:
-
-    static ZizIdleState* instance;
-    float idleTimer = 0.0f;
-    float idleWaitTime = 5.0f;
+    static ZizGustState* instance;
+    float gustTimer;
+    float gustWaitTime;
 
 public:
-    static ZizIdleState* getInstance();
+    
+    static ZizGustState* getInstance();
 
     void enter(Boss* boss) override;
     void update(Boss* boss, float dt) override;
