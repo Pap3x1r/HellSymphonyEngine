@@ -1,4 +1,6 @@
 #include "Ziz.h"
+#include "Player.h"
+
 
 Ziz::Ziz() {
 	setName("Ziz");
@@ -14,6 +16,7 @@ Ziz::Ziz() {
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	isFacingRight = false;
 
 	currentState = new BossStateMachine();
 	currentState->changeState(ZizIdleState::getInstance(), this);
@@ -53,4 +56,24 @@ bool Ziz::getFacingRight() const {
 
 BossStateMachine* Ziz::getStateMachine() const {
 	return currentState;
+}
+
+DrawableObject* Ziz::createGust() {
+	
+	//Create Gust
+	Gust* gust = new Gust(getFacingRight());
+	gust->setTexture("../Resource/Texture/Tornado.png");
+	gust->getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
+	gust->setDraw(true);
+	gust->getTransform().setPosition(getTransform().getPosition());
+	gust->addColliderComponent();
+	gust->getColliderComponent()->setTrigger(false);
+	gust->getColliderComponent()->setDimension(0.5f, 1.0f);
+	gust->setDrawCollider(true);
+	gust->addPhysicsComponent();
+	gust->getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	gust->getPhysicsComponent()->setEnableGravity(true);
+	
+	
+	return gust;
 }

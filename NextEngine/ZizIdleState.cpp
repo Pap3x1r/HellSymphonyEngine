@@ -1,5 +1,6 @@
 #include "ZizIdleState.h"
 #include "Ziz.h"
+#include "ZizGustState.h"
 
 ZizIdleState* ZizIdleState::instance = nullptr;
 
@@ -31,7 +32,7 @@ void ZizIdleState::update(Boss* boss, float dt) {
     // Ziz Timer for idle
     if (idleTimer >= idleWaitTime) {
         std::cout << "Ziz has idled for 5 seconds, resetting state.\n";
-        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizGustState::getInstance(), ziz);
     }
 
     //std::cout << "Ziz is idling...\n";

@@ -1,6 +1,7 @@
 #include "ZizGustState.h"
 #include "Ziz.h"
 #include "Gust.h"
+#include "Level.h"
 
 ZizGustState* ZizGustState::instance = nullptr;
 
@@ -38,9 +39,12 @@ void ZizGustState::update(Boss* boss, float dt) {
     }
     else if (gustTimer < gustWaitTime + 0.08f) {
         // Active phase - Summon the tornado
-        std::cout << "Tornado summoned!\n";
+        
         //Gust* gust = new Gust(ziz);  // Create a new tornado instance
-        //ziz->getLevel()->addObject(gust);  // Add it to the level or objects list
+        
+        DrawableObject* newGust = ziz->createGust();
+        ziz->getLevel()->addObject(newGust);
+        std::cout << "Tornado summoned!\n";
 
         // Transition back to idle after tornado is summoned
         ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);

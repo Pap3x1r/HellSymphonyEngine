@@ -1,6 +1,8 @@
 #pragma once
 #include "Boss.h"
 #include "ZizIdleState.h"
+#include "ZizGustState.h"
+#include "Gust.h"
 
 
 class Ziz : public Boss {
@@ -23,6 +25,8 @@ public:
 
     void setFacingRight(bool value);
     bool getFacingRight() const;
+
+    DrawableObject* createGust();
 
     BossStateMachine* getStateMachine() const;
     

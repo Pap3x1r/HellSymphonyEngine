@@ -8,6 +8,7 @@ class EnemyAttackCollider : public TexturedObject {
 	bool hasHit = false;
 	bool playerInside = false;
 public:
+	EnemyAttackCollider();
 	EnemyAttackCollider(float damage_);
 
 	void onCollisionEnter(Collider* collider) override;

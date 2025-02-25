@@ -1,6 +1,11 @@
 #include "EnemyAttackCollider.h"
 #include "Shield.h"
 
+EnemyAttackCollider::EnemyAttackCollider() {
+	damage = 0.0f;
+	setName("EnemyAttackCollider");
+}
+
 EnemyAttackCollider::EnemyAttackCollider(float damage_) {
 	damage = damage_;
 	setName("EnemyAttackCollider");

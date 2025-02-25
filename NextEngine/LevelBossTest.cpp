@@ -23,7 +23,7 @@ void LevelBossTest::levelInit() {
 	ziz->setLevel(this);
 	ziz->getTransform().setPosition(glm::vec3(5.0f,2.0f,0.0f));
 
-	Player* player_ = new Player(10);
+	Player* player_ = new Player(100);
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
@@ -58,7 +58,8 @@ void LevelBossTest::levelUpdate() {
 	}
 
 	for (DrawableObject* obj : objectsList) {
-		gust = dynamic_cast<Gust*>(obj);
+		
+		Gust* gust = dynamic_cast<Gust*>(obj);
 		if (gust) {
 			gust->update(dt);
 		}
@@ -137,6 +138,8 @@ void LevelBossTest::handleKey(char key) {
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("right");
 			break;
+		
+			
 
 		default:
 			break;
@@ -192,4 +195,8 @@ void LevelBossTest::handleAnalogStick(int type, float amount) {
 			player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt_, 0, 0));
 		}
 	}
+}
+
+void LevelBossTest::addObject(DrawableObject* obj) {
+	objectsList.push_back(obj);
 }
