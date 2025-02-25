@@ -59,12 +59,12 @@ void Gust::onCollision(Player* player) {
 }
 
 void Gust::checkOffMap() {
-    if (getTransform().getPosition().x > 8.0f || getTransform().getPosition().x < -8.0f) {
+    if (getTransform().getPosition().x > 6.0f || getTransform().getPosition().x < -8.0f) {
         // Off-screen, delete the tornado
         cout << "Tornado went off-screen, deleting.\n";
         getColliderComponent()->setEnableCollision(false);
         
         DrawableObject::destroyObject(this);
-        delete this;
+        //delete this;
     }
 }
