@@ -21,8 +21,8 @@ StormRise::StormRise() {
 	isActive = false;
 	speed = 5.0f;
 	damage = 10.0f;
-	countdownTimer = 3.0f;
-	activeTimer = 2.0f;
+	countdownTimer = 0.08f * 24;
+	activeTimer = 0.08f * 4;
 }
 
 StormRise::StormRise(float cdTimer) {
@@ -31,8 +31,8 @@ StormRise::StormRise(float cdTimer) {
 	isActive = false;
 	speed = 5.0f;
 	damage = 10.0f;
-	countdownTimer = cdTimer;
-	activeTimer = 2.0f;
+	countdownTimer = 0.08f * 24;
+	activeTimer = 0.08f * 4;
 }
 
 void StormRise::update(float dt) {
@@ -43,8 +43,9 @@ void StormRise::update(float dt) {
 		countdownTimer -= dt;
 		//cout << "Counting Down: " << countdownTimer << endl;
 
-		if (countdownTimer <= 0.0f) {
+		if ((countdownTimer <= 0.0f) && (!isActive)) {
 			isActive = true;
+			setTexture("../Resource/Ziz/StormRiseProjectile_2.png");
 		}
 	}
 
@@ -80,20 +81,20 @@ void StormRise::onCollisionEnter(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Player* player = dynamic_cast<Player*>(obj);
 
-	if (player) {
+	/*if (player) {
 		playerIsInside = true;
 		cout << "Player Entered" << endl;
-	}
+	}*/
 }
 
 void StormRise::onCollisionStay(Collider* collider) {
-	/*DrawableObject* obj = collider->getObject();
+	DrawableObject* obj = collider->getObject();
 	Player* player = dynamic_cast<Player*>(obj);
 
 	if (player) {
 
-		playerIsInside = true;
-		if (!hasHit) {
+		//playerIsInside = true;
+		if (!hasHit && isActive) {
 
 			if (player->getShield()->getIsBlocking()) { // is blocking
 				if (player->getShield()->getIsPerfect()) { //is perfectly timed
@@ -113,18 +114,13 @@ void StormRise::onCollisionStay(Collider* collider) {
 			}
 		}
 
-	}*/
+	}
 	
 }
 
 void StormRise::onCollisionExit(Collider* collider){
 	DrawableObject* obj = collider->getObject();
-	Player* player = dynamic_cast<Player*>(obj);
-
-	if (player) {
-		playerIsInside = false;
-		cout << "Player Exited" << endl;
-	}
+	
 }
 
 void StormRise::onTriggerEnter(Collider* collider) {

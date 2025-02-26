@@ -75,6 +75,7 @@ DrawableObject* Ziz::createGust() {
 	gust->getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
 	gust->setDraw(true);
 	gust->getTransform().setPosition(getTransform().getPosition());
+
 	gust->addColliderComponent();
 	gust->getColliderComponent()->setTrigger(false);
 	gust->getColliderComponent()->setDimension(0.5f, 1.0f);
@@ -87,3 +88,23 @@ DrawableObject* Ziz::createGust() {
 	return gust;
 }
 
+
+DrawableObject* Ziz::createStormRise() {
+	StormRise* stormRise = new StormRise(3.0f);
+	stormRise->setTexture("../Resource/Ziz/StormRiseProjectile.png");
+	stormRise->getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
+	stormRise->setDraw(true);
+	stormRise->getTransform().setPosition(getTransform().getPosition());
+
+	stormRise->addColliderComponent();
+	stormRise->getColliderComponent()->setTrigger(false);
+	stormRise->getColliderComponent()->setDimension(0.5f, 0.15f);
+	stormRise->getColliderComponent()->getTransform().translate(glm::vec3(0.0f, 0.1f, 0.0f));
+	stormRise->setDrawCollider(true);
+	stormRise->addPhysicsComponent();
+	stormRise->getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	stormRise->getPhysicsComponent()->setEnableGravity(true);
+	stormRise->setPlayer(player);
+
+	return stormRise;
+}

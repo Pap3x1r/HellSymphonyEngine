@@ -1,5 +1,8 @@
 #pragma once
 #include "BossStateM.h"
+#include "Ziz.h"
+#include "Gust.h"
+#include "Level.h"
 
 class Ziz;
 
@@ -7,9 +10,9 @@ class Ziz;
 class ZizGustState : public BossStateM {
 private:
     static ZizGustState* instance;
-    float gustTimer;
-    float gustWaitTime;
-    float gustRecoveryTime;
+    float timer;
+    float startupTimer;
+    float recoveryTimer;
 
 public:
     
