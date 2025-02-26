@@ -16,6 +16,8 @@ void PlayerLightSwordAttack1::enter(Player* player) {
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(1);
     player->getSword()->setInChainAttack(true); //Player is in chain attack
+
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
 void PlayerLightSwordAttack1::update(Player* player, float dt_) {

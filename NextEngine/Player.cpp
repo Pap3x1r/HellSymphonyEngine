@@ -59,6 +59,14 @@ float Player::getMovementSpeed() const {
 	return movementSpeed;
 }
 
+void Player::setJumpPower(float value) {
+	jumpingPower = value;
+}
+
+float Player::getJumpPower() const {
+	return jumpingPower;
+}
+
 StateMachine* Player::getStateMachine() const {
 	return playerState;
 }

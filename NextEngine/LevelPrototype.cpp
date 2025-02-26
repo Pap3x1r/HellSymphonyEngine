@@ -138,32 +138,34 @@ void LevelPrototype::handleKey(char key) {
 
 	bool playerIsMoving = false;
 
-	if (sword->getInChainAttack()) {
+	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding()) { //Prevent returning back to idle
 		return;
 	}
 
 	switch (key) {
 	case 'w':
-		player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
+		//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("up");
 		break;
 	case 's': 
-		player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
+		//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("down");
 		break;
 	case 'a': 
-		player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
+		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd': 
-		player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
+		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		playerIsMoving = true;
@@ -175,12 +177,20 @@ void LevelPrototype::handleKey(char key) {
 	case 'f': bow->setEnableDebug(); break;
 	case 'h': player->setWeaponType(Bow_); break;
 	case 'j': player->setWeaponType(Sword_); break;
-	case 'g': player->setWeaponType(Shield_); break;
-	}
-
-	if (!playerIsMoving) {
+	case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
+	case 'I': //No Movement Input -> Idle
 		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+		player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+		break;
+	case 'S': //Spacebar -> Jump
+		player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		break;
 	}
+	
+
+	/*if (!playerIsMoving) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+	}*/
 }
 
 void LevelPrototype::handleMouse(int type, int x, int y) {

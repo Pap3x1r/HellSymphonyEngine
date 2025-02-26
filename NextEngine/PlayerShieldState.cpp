@@ -16,6 +16,8 @@ void PlayerLightShieldAttack1::enter(Player* player) {
     time = 0.0f;
     player->getShield()->setCurrentChainAttack(1);
     player->getShield()->setInChainAttack(true); //Player is in chain attack
+
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
 void PlayerLightShieldAttack1::update(Player* player, float dt_) {
@@ -43,7 +45,6 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
         //change phase
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
-
         if (time >= 0.333f) {
             currentPhase = RECOVERY;
             time = 0;
@@ -57,7 +58,6 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
         //do something
         //return to idle
         //allows 
-
         if (player->getShield()->getInputBuffer()) { //Ready for next attack
             player->getStateMachine()->changeState(PlayerLightShieldAttack2::getInstance(), player); //enter next phase
             player->getShield()->setInputBuffer(false); //remove input
@@ -75,6 +75,8 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
 
 void PlayerLightShieldAttack1::exit(Player* player) {
     cout << "Player exits Shield Light Attack 1 state.\n";
+    player->getShield()->setCurrentChainAttack(0);
+    player->getShield()->setInChainAttack(false); // no longer in chain attack
 }
 
 //Light Shield Attack 2
@@ -144,6 +146,7 @@ void PlayerShieldGuard::enter(Player* player) {
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setIsBlocking(true);
+    player->getShield()->setIsHolding(true);
 }
 
 void PlayerShieldGuard::update(Player* player, float dt_) {
@@ -236,6 +239,9 @@ void PlayerOffShield::update(Player* player, float dt_) {
 
         if (time >= 0.083f) {
             time = 0;
+            player->getShield()->setCurrentChainAttack(0);
+            player->getShield()->setInChainAttack(false); // no longer in chain attack
+            player->getShield()->setIsHolding(false);
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player); //from off shield to idle
         }
     }

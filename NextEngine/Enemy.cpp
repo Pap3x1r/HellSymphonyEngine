@@ -11,6 +11,7 @@ Enemy::Enemy(float damage_) {
 	getColliderComponent()->setTrigger(true);
 	getColliderComponent()->setDimension(1.0f, 1.5f);
 	//getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	//getTransform().setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	setDrawCollider(true);
 	//Physics
 
@@ -27,6 +28,8 @@ Enemy::Enemy(float damage_) {
 
 void Enemy::selfUpdate(float dt) {
 	attackTimeElapsed += dt;
+
+	attackCollider->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 1.1f, getTransform().getPosition().y, getTransform().getPosition().z));
 
 	if (attackTimeElapsed >= attackTimer) {
 		attackTimeElapsed = 0.0f;

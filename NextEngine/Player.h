@@ -22,8 +22,8 @@ enum WeaponType {
 };
 
 class Player : public TexturedObject {
-    float movementSpeed = 10.0f;
-    float jumpingPower = 16.0f;
+    float movementSpeed = 5.0f;
+    float jumpingPower = 0.5f;
 
     bool isFacingRight = true;
     bool isGrounded = true;
@@ -68,7 +68,7 @@ public:
             }
         }
         
-        cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
+        //cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
 
         if (time >= 1.50f) {
             time = 0.0f;
@@ -102,6 +102,9 @@ public:
 
     void setMovementSpeed(float value);
     float getMovementSpeed() const;
+
+    void setJumpPower(float value);
+    float getJumpPower() const;
 
     StateMachine* getStateMachine() const;
 

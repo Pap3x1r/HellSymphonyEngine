@@ -34,6 +34,7 @@ public:
 		attack1->getColliderComponent()->setTrigger(true);
 		attack1->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack1->getColliderComponent()->setDimension(1.4f, 0.6f); //Set collider dimension
+		attack1->getTransform().setPosition(glm::vec3(0.85f, -1.0f, 0.0f));
 		//attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
 		attack1->setDrawCollider(false);
 		chainAttackList.push_back(attack1);
@@ -45,6 +46,7 @@ public:
 		attack2->getColliderComponent()->setTrigger(true);
 		attack2->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
+		attack2->getTransform().setPosition(glm::vec3(1.55f, -1.0f, 0.0f));
 		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
@@ -56,6 +58,7 @@ public:
 		attack3->getColliderComponent()->setTrigger(true);
 		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		attack3->getColliderComponent()->setDimension(4.0f, 2.0f); //Set collider dimension
+		attack3->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
 		//attack3->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
 		attack3->setDrawCollider(false);
 		chainAttackList.push_back(attack3);
@@ -67,6 +70,7 @@ public:
 		heavyAttack->getColliderComponent()->setTrigger(true);
 		heavyAttack->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
 		heavyAttack->getColliderComponent()->setDimension(4.0f, 3.0f); //Set collider dimension
+		heavyAttack->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
 		//heavyAttack->getColliderComponent()->setOffset(glm::vec3(2.05f, -1.0f, 0.0f)); //Set collider offset
 		heavyAttack->setDrawCollider(false);
 		chainAttackList.push_back(heavyAttack);
@@ -84,18 +88,51 @@ public:
 
 		for (auto obj : chainAttackList) {
 			//obj->getTransform().setPosition(glm::vec3(playerPos.x + 0.85f, playerPos.y - 1.0f, playerPos.z));
-			obj->getTransform().setPosition(playerPos);
-			flipOffset(obj, playerObject);
+			if (obj->getName() == "Attack1") {
+				obj->getTransform().setPosition(playerPos + attack1Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "Attack2") {
+				obj->getTransform().setPosition(playerPos + attack2Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "Attack3") {
+				obj->getTransform().setPosition(playerPos + attack3Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "heavyAttack") {
+				obj->getTransform().setPosition(playerPos + heavyAttackOffset);
+				flipOffset(obj, playerObject);
+			}
 		}
 	}
 
-	void flipOffset(DrawableObject* object, Player* playerObject) {
+	void flipOffset(DrawableObject* obj, Player* playerObject) {
 		if (!playerObject) return;
+		if (playerObject->getFacingRight()) return;
 
+		glm::vec3 newPos = playerObject->getTransform().getPosition();
 
-		//glm::vec3 newOffset = object->getColliderComponent()->getOffset();
-		//newOffset.x = playerObject->getFacingRight() ? glm::abs(newOffset.x) : -glm::abs(newOffset.x);
-		//object->getColliderComponent()->setOffset(newOffset);
+		if (obj->getName() == "Attack1") {
+			newPos.x = newPos.x - attack1Offset.x;
+			newPos.y = newPos.y + attack1Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "Attack2") {
+			newPos.x = newPos.x - attack2Offset.x;
+			newPos.y = newPos.y + attack2Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "Attack3") {
+			newPos.x = newPos.x - attack3Offset.x;
+			newPos.y = newPos.y + attack3Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "heavyAttack") {
+			newPos.x = newPos.x - heavyAttackOffset.x;
+			newPos.y = newPos.y + heavyAttackOffset.y;
+			obj->getTransform().setPosition(newPos);
+		}
 	}
 
 	void chainAttack() { //Unused

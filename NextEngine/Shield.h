@@ -9,8 +9,9 @@ class Shield {
 
 	int currentChainAttack = 0;
 
-	bool isBlocking = false;
-	bool isPerfect = false;
+	bool isHolding = false; //True at the start, false at the end of shield animation
+	bool isBlocking = false; //Only true when shield is fully up
+	bool isPerfect = false; //Only true when shield is fully up and the time window is perfect
 
 	float attackTimeElapsed = 0.0f; // Do not change
 	float attackTimeWindow = 0.5f; //
@@ -63,19 +64,51 @@ public:
 		glm::vec3 playerPos = playerObject->getTransform().getPosition();
 
 		for (auto obj : chainAttackList) {
-			//obj->getTransform().setPosition(glm::vec3(playerPos.x + 0.85f, playerPos.y - 1.0f, playerPos.z));
-			obj->getTransform().setPosition(playerPos);
-			flipOffset(obj, playerObject);
+			if (obj->getName() == "Attack1") {
+				obj->getTransform().setPosition(playerPos + attack1Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "Attack2") {
+				obj->getTransform().setPosition(playerPos + attack2Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "Attack3") {
+				obj->getTransform().setPosition(playerPos + attack3Offset);
+				flipOffset(obj, playerObject);
+			}
+			else if (obj->getName() == "heavyAttack") {
+				obj->getTransform().setPosition(playerPos + heavyAttackOffset);
+				flipOffset(obj, playerObject);
+			}
 		}
 	}
 
-	void flipOffset(DrawableObject* object, Player* playerObject) {
+	void flipOffset(DrawableObject* obj, Player* playerObject) {
 		if (!playerObject) return;
+		if (playerObject->getFacingRight()) return;
 
+		glm::vec3 newPos = playerObject->getTransform().getPosition();
 
-		//glm::vec3 newOffset = object->getColliderComponent()->getOffset();
-		//newOffset.x = playerObject->getFacingRight() ? glm::abs(newOffset.x) : -glm::abs(newOffset.x);
-		//object->getColliderComponent()->setOffset(newOffset);
+		if (obj->getName() == "Attack1") {
+			newPos.x = newPos.x - attack1Offset.x;
+			newPos.y = newPos.y + attack1Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "Attack2") {
+			newPos.x = newPos.x - attack2Offset.x;
+			newPos.y = newPos.y + attack2Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "Attack3") {
+			newPos.x = newPos.x - attack3Offset.x;
+			newPos.y = newPos.y + attack3Offset.y;
+			obj->getTransform().setPosition(newPos);
+		}
+		else if (obj->getName() == "heavyAttack") {
+			newPos.x = newPos.x - heavyAttackOffset.x;
+			newPos.y = newPos.y + heavyAttackOffset.y;
+			obj->getTransform().setPosition(newPos);
+		}
 	}
 
 	void chainAttack() { //Unused
@@ -129,6 +162,14 @@ public:
 		auto it = chainAttackList.begin();
 		std::advance(it, index);
 		return *it;
+	}
+
+	void setIsHolding(bool s) {
+		isHolding = s;
+	}
+
+	bool getIsHolding() const {
+		return isHolding;
 	}
 
 	void setIsBlocking(bool s) {
