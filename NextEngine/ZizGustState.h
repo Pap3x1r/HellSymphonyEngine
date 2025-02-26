@@ -9,6 +9,7 @@ private:
     static ZizGustState* instance;
     float gustTimer;
     float gustWaitTime;
+    float gustRecoveryTime;
 
 public:
     

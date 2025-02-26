@@ -5,7 +5,7 @@
 Ziz::Ziz() {
 	setName("Ziz");
 	health = new Health(1000);
-	setTexture("../Resource/Texture/Ziz_Idle.png");
+	setTexture("../Resource/Ziz/Idle.png");
 	getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.5f, 0.5f);
@@ -25,6 +25,7 @@ Ziz::Ziz() {
 Ziz::~Ziz() {
 	delete health;
 	delete currentLevel;
+	delete currentState;
 }
 
 void Ziz::setLevel(Level* newLevel) {
@@ -54,6 +55,14 @@ bool Ziz::getFacingRight() const {
 	return isFacingRight;
 }
 
+void Ziz::setPlayer(Player* playr) {
+	player = playr;
+}
+
+Player* Ziz::getPlayer() {
+	return player;
+}
+
 BossStateMachine* Ziz::getStateMachine() const {
 	return currentState;
 }
@@ -77,3 +86,4 @@ DrawableObject* Ziz::createGust() {
 	
 	return gust;
 }
+

@@ -9,7 +9,7 @@ private:
 
     static ZizIdleState* instance;
     float idleTimer = 0.0f;
-    float idleWaitTime = 5.0f;
+    float idleWaitTime = 3.0f;
 
 public:
     static ZizIdleState* getInstance();

@@ -17,11 +17,7 @@ void LevelBossTest::levelLoad() {
 
 void LevelBossTest::levelInit() {
 
-	Ziz* ziz_ = new Ziz();
-	objectsList.push_back(ziz_);
-	ziz = ziz_;
-	ziz->setLevel(this);
-	ziz->getTransform().setPosition(glm::vec3(5.0f,2.0f,0.0f));
+	
 
 	Player* player_ = new Player(100);
 	objectsList.push_back(player_);
@@ -29,11 +25,24 @@ void LevelBossTest::levelInit() {
 	player->setLevel(this);
 	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
 
+	Ziz* ziz_ = new Ziz();
+	objectsList.push_back(ziz_);
+	ziz = ziz_;
+	ziz->setLevel(this);
+	ziz->getTransform().setPosition(glm::vec3(5.0f, 2.0f, 0.0f));
+	ziz->setPlayer(player);
 
-	Gust* gust_ = new Gust();
+
+	/*Gust* gust_ = new Gust();
 	objectsList.push_back(gust_);
 	gust = gust_;
-	gust->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+	gust->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));*/
+
+	StormRise* stormRise_ = new StormRise();
+	objectsList.push_back(stormRise_);
+	stormRise = stormRise_;
+	stormRise->getTransform().setPosition(glm::vec3(0.0f,-2.0f,0.0f));
+	stormRise->setPlayer(player);
 
 	SimpleObject* floor = new SimpleObject();
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
@@ -62,6 +71,11 @@ void LevelBossTest::levelUpdate() {
 		Gust* gust = dynamic_cast<Gust*>(obj);
 		if (gust) {
 			gust->update(dt);
+		}
+
+		StormRise* stormRise = dynamic_cast<StormRise*>(obj);
+		if (stormRise) {
+			stormRise->update(dt);
 		}
 
 		
@@ -109,7 +123,7 @@ void LevelBossTest::handleKey(char key) {
 			break;
 
 		case 'e':
-			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1;
+			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
 			break;
 
 		case 'w':
@@ -138,11 +152,18 @@ void LevelBossTest::handleKey(char key) {
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("right");
 			break;
+		case 'g':
+			cout << "Spawned Storm Rise" << endl;
+			StormRise* stormRise_ = new StormRise();
+			objectsList.push_back(stormRise_);
+			stormRise = stormRise_;
+			stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+			stormRise->setPlayer(player);
+			break;
 		
 			
 
-		default:
-			break;
+		
 
 	}
 }

@@ -1,12 +1,11 @@
 #include "Gust.h"
-#include "Player.h"
 
 
 Gust::Gust() {
    
 
     setName("Gust");
-    setTexture("../Resource/Texture/Tornado.png");
+    setTexture("../Resource/Ziz/Tornado.png");
     getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
     addColliderComponent();
     

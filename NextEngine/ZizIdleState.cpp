@@ -19,7 +19,7 @@ void ZizIdleState::enter(Boss* boss) {
     ziz->getAnimationComponent()->setState("idle");
     ziz->getPhysicsComponent()->setVelocity(glm::vec2(0, 0));
     idleTimer = 0.0f;
-
+    ziz->setTexture("../Resource/Ziz/Idle.png");
     std::cout << "Ziz entered Idle State.\n";
 }
 
@@ -32,7 +32,7 @@ void ZizIdleState::update(Boss* boss, float dt) {
     // Ziz Timer for idle
     if (idleTimer >= idleWaitTime) {
         std::cout << "Ziz has idled for 5 seconds, resetting state.\n";
-        ziz->getStateMachine()->changeState(ZizGustState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
     }
 
     //std::cout << "Ziz is idling...\n";

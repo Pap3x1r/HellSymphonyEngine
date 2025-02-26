@@ -2,7 +2,9 @@
 #include "Boss.h"
 #include "ZizIdleState.h"
 #include "ZizGustState.h"
+#include "ZizStormRiseState.h"
 #include "Gust.h"
+#include "StormRise.h"
 
 
 class Ziz : public Boss {
@@ -14,6 +16,7 @@ private:
     Level* currentLevel;
     Health* health;
     BossStateMachine* currentState;
+    Player* player;
 
 
 public:
@@ -27,8 +30,11 @@ public:
     bool getFacingRight() const;
 
     DrawableObject* createGust();
+    DrawableObject* createStormRise();
 
     BossStateMachine* getStateMachine() const;
+    void setPlayer(Player* playr);
+    Player* getPlayer();
     
 
 };

@@ -4,6 +4,7 @@
 #include "Ziz.h"
 #include "Player.h"
 #include "Gust.h"
+#include "StormRise.h"
 
 #include <list>
 
@@ -17,6 +18,7 @@ private:
 	Ziz* ziz;
 	Player* player;
 	Gust* gust;
+	StormRise* stormRise;
 
 public:
 	virtual void levelLoad();

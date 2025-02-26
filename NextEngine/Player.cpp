@@ -16,13 +16,13 @@ Player::Player(float hp) {
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.15f, 0.25f);
 	//getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
-	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, 1.0f, 0.0f));
+	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, -1.0f, 0.0f));
 	//getColliderComponent()->setTrigger(true);
 	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
-	getPhysicsComponent()->setEnableGravity(false);
+	getPhysicsComponent()->setEnableGravity(true);
 	//StateMachine
 	playerState = new StateMachine();
 	playerState->changeState(PlayerIdleState::getInstance(), this);
