@@ -38,11 +38,11 @@ void LevelBossTest::levelInit() {
 	gust = gust_;
 	gust->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));*/
 
-	StormRise* stormRise_ = new StormRise();
+	/*StormRise* stormRise_ = new StormRise();
 	objectsList.push_back(stormRise_);
 	stormRise = stormRise_;
 	stormRise->getTransform().setPosition(glm::vec3(0.0f,-2.0f,0.0f));
-	stormRise->setPlayer(player);
+	stormRise->setPlayer(player);*/
 
 	SimpleObject* floor = new SimpleObject();
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
@@ -127,38 +127,47 @@ void LevelBossTest::handleKey(char key) {
 			break;
 
 		case 'w':
-			player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
+			//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("up");
 			break;
 		case 's':
-			player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
+			//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("down");
 			break;
 		case 'a':
-			player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
+			player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+			//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 			player->setFacingRight(false);
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("left");
 			break;
 		case 'd':
-			player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+			//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 			player->setFacingRight(true);
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("right");
 			break;
+		case 'I': //No Movement Input -> Idle
+			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+			break;
+		case 'S': //Spacebar -> Jump
+			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+			break;
 		case 'g':
-			cout << "Spawned Storm Rise" << endl;
+			/*cout << "Spawned Storm Rise" << endl;
 			StormRise* stormRise_ = new StormRise();
 			objectsList.push_back(stormRise_);
 			stormRise = stormRise_;
 			stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
-			stormRise->setPlayer(player);
+			stormRise->setPlayer(player);*/
 			break;
 		
 			
