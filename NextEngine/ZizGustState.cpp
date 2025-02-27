@@ -20,8 +20,9 @@ void ZizGustState::enter(Boss* boss) {
     recoveryTimer = startupTimer + 0.08f * 10; //10 frame recovery
 
     ziz->setTexture("../Resource/Ziz/Gust_1.png");
+    ziz->facePlayer();
 
-    std::cout << "Ziz entered Gust State, preparing to summon a tornado.\n";
+    //std::cout << "Ziz entered Gust State, preparing to summon a tornado.\n";
 }
 
 void ZizGustState::update(Boss* boss, float dt) {
@@ -31,23 +32,24 @@ void ZizGustState::update(Boss* boss, float dt) {
     timer += dt;
 
     if (timer < startupTimer) {
-        std::cout << "Ziz is preparing the tornado...\n";
+        //std::cout << "Ziz is preparing the tornado...\n";
     }
     else if (timer >= startupTimer && timer < recoveryTimer) {
         if (timer - dt < startupTimer) {  // Ensures this runs only once
             DrawableObject* newGust = ziz->createGust();
             ziz->getLevel()->addObject(newGust);
-            std::cout << "Tornado summoned!\n";
+            //std::cout << "Tornado summoned!\n";
             ziz->setTexture("../Resource/Ziz/Gust_2(V2).png");
+            //std::cout << "Ziz is recovering...\n";
         }
-        std::cout << "Ziz is recovering...\n";
+        
     }
     else {
-        std::cout << "Ziz finished recovering from the tornado.\n";
+        //std::cout << "Ziz finished recovering from the tornado.\n";
         ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
     }
 }
 
 void ZizGustState::exit(Boss* boss) {
-    std::cout << "Ziz exiting Gust State.\n";
+    //std::cout << "Ziz exiting Gust State.\n";
 }

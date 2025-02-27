@@ -20,6 +20,7 @@ void ZizStormRiseState::enter(Boss* boss) {
     ziz->setTexture("../Resource/Ziz/StormRise.png");
     DrawableObject* newStormRise = ziz->createStormRise();
     ziz->getLevel()->addObject(newStormRise);
+    ziz->facePlayer();
     std::cout << "StormRise summoned\n";
     
 

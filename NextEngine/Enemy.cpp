@@ -1,7 +1,16 @@
 #include "Enemy.h"
 #include "EnemyAttackCollider.h"
 
+Enemy::Enemy() {
+	cout << "Enemy Default Constructor" << endl;
+	/*glm::vec3 currentPos = getTransform().getPosition();
+	getTransform().setPosition(currentPos.x + 2.0f, currentPos.y - 1.6f);
+	setDraw(true);*/
+	
+}
+
 Enemy::Enemy(float damage_) {
+	cout << "Enemy Overloaded Constructor" << endl;
 	damage = damage_;
 	glm::vec3 currentPos = getTransform().getPosition();
 	getTransform().setPosition(currentPos.x + 2.0f, currentPos.y - 1.6f);

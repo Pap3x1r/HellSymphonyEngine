@@ -6,6 +6,10 @@
 #include "Gust.h"
 #include "StormRise.h"
 
+#include "Sword.h"
+#include "Bow.h"
+#include "Shield.h"
+
 #include <list>
 
 

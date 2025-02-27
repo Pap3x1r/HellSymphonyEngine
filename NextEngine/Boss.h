@@ -2,9 +2,10 @@
 #include "TexturedObject.h"
 #include "Health.h"
 #include "BossStateMachine.h"
+#include "Enemy.h"
 
 
-class Boss : public TexturedObject {//abstract
+class Boss : public Enemy {//abstract
 
 private:
 

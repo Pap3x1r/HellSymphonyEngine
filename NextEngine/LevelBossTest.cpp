@@ -25,11 +25,29 @@ void LevelBossTest::levelInit() {
 	player->setLevel(this);
 	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
 
+
+
+	if (player->getSword()) {
+		for (DrawableObject* obj : player->getSword()->getChainAttackList()) {
+			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+			col->setPlayer(player);
+			objectsList.push_back(obj);
+		}
+	}
+
+	if (player->getShield()) {
+		for (DrawableObject* obj : player->getShield()->getChainAttackList()) {
+			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+			col->setPlayer(player);
+			objectsList.push_back(obj);
+		}
+	}
+
+
 	Ziz* ziz_ = new Ziz();
 	objectsList.push_back(ziz_);
 	ziz = ziz_;
 	ziz->setLevel(this);
-	ziz->getTransform().setPosition(glm::vec3(5.0f, 2.0f, 0.0f));
 	ziz->setPlayer(player);
 
 
@@ -66,6 +84,11 @@ void LevelBossTest::levelUpdate() {
 		ziz->getStateMachine()->update(ziz, dt);
 	}
 
+	if (player->getStateMachine()) {
+		player->getStateMachine()->update(player, dt);
+	}
+		
+
 	for (DrawableObject* obj : objectsList) {
 		
 		Gust* gust = dynamic_cast<Gust*>(obj);
@@ -78,11 +101,28 @@ void LevelBossTest::levelUpdate() {
 			stormRise->update(dt);
 		}
 
+		Arrow* arrow = dynamic_cast<Arrow*>(obj);
+		if (arrow) {
+			if (arrow->getFacingDirection()) {
+				arrow->getTransform().translate(glm::vec3(arrow->getArrowSpeed() * dt, 0, 0));
+			}
+			else {
+				arrow->getTransform().translate(glm::vec3(-arrow->getArrowSpeed() * dt, 0, 0));
+			}
+
+			arrow->selfUpdate(dt);
+		}
+
 		
 
 	}
 
-	
+	player->selfUpdate(dt);
+	player->getSword()->update(dt, player);
+	player->getBow()->update(dt, player);
+	player->getShield()->update(dt, player);
+
+	player->getAnimationComponent()->updateCurrentState(dt);
 
 	handleObjectCollision(objectsList);
 
@@ -112,6 +152,10 @@ void LevelBossTest::handleKey(char key) {
 	speed *= dt;
 	bool playerIsMoving = false;
 
+	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding()) { //Prevent returning back to idle
+		return;
+	}
+
 	switch (key) {
 
 		case 'q': 
@@ -123,9 +167,8 @@ void LevelBossTest::handleKey(char key) {
 			break;
 
 		case 'e':
-			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1;
 			break;
-
 		case 'w':
 			//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
@@ -154,6 +197,10 @@ void LevelBossTest::handleKey(char key) {
 			playerIsMoving = true;
 			//player->getAnimationComponent()->setState("right");
 			break;
+		case 'f': player->getBow()->setEnableDebug(); break;
+		case 'h': player->setWeaponType(Bow_); break;
+		case 'j': player->setWeaponType(Sword_); break;
+		case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
 		case 'I': //No Movement Input -> Idle
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
@@ -161,13 +208,14 @@ void LevelBossTest::handleKey(char key) {
 		case 'S': //Spacebar -> Jump
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
 			break;
-		case 'g':
+		case 'l':
 			/*cout << "Spawned Storm Rise" << endl;
 			StormRise* stormRise_ = new StormRise();
 			objectsList.push_back(stormRise_);
 			stormRise = stormRise_;
 			stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
 			stormRise->setPlayer(player);*/
+			
 			break;
 		
 			
@@ -178,35 +226,107 @@ void LevelBossTest::handleKey(char key) {
 }
 
 void LevelBossTest::handleMouse(int type, int x, int y) {
-	//float realX, realY;
+	float realX, realY;
 
-	//// Calculate Real X Y 
-	//realX = x;
-	//realY = y;
+	// Calculate Real X Y 
+	realX = x;
+	realY = y;
 
-	//GameEngine::getInstance()->getWindowWidth();
-	//GameEngine::getInstance()->getWindowHeight();
+	GameEngine::getInstance()->getWindowWidth();
+	GameEngine::getInstance()->getWindowHeight();
 
-	////cout << "X : " << realX << " Y : " << realY << endl;
+	//cout << "X : " << realX << " Y : " << realY << endl;
 
-	////Check player weapon
-	//// assume type = bow first
-	//if (type == 0) {
-	//	if (bow->getIsOverheat() == false) {
-	//		if (bow->getRapidShotReady()) {
-	//			/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
-	//			objectsList.push_back(newArrow);*/
-	//			player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
-	//		}
-	//	}
-	//}
-	//else {
-	//	DrawableObject* newArrow = bow->arrowShot(100, player, 50);
-	//	objectsList.push_back(newArrow);
-	//}
+	//Check player weapon
+	// assume type = bow first
+
+	if (player->getWeaponType() == Bow_) {
+		if (type == 0) {
+			if (player->getBow()->getIsOverheat() == false) {
+				if (player->getBow()->getRapidShotReady()) {
+					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
+					objectsList.push_back(newArrow);*/
+					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
+				}
+			}
+		}
+		else if (type == 1) {
+			/*DrawableObject* newArrow = bow->arrowShot(100, player, 50);
+			objectsList.push_back(newArrow);*/
+			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+		}
+	}
+	else if (player->getWeaponType() == Sword_) {
+		if (type == 0) {
+			//enter first attack of the chain
+
+			if (player->getSword()->getInChainAttack()) {
+				//input buffer
+				player->getSword()->setInputBuffer(true);
+				return;
+			}
+
+			switch (player->getSword()->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightSwordAttack1::getInstance(), player);
+				break;
+				/*case 1:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack2::getInstance(), player);
+					break;
+				case 2:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack3::getInstance(), player);
+					break;*/
+			}
 
 
-	//player->getTransform().setPosition(glm::vec3(realX, realY, 0));
+		}
+		else if (type == 1) {
+			if (player->getSword()->getInChainAttack()) {
+				return;
+			}
+
+			player->getStateMachine()->changeState(PlayerHeavySwordAttack::getInstance(), player);
+		}
+
+	}
+	else if (player->getWeaponType() == Shield_) {
+		if (type == 0) {
+			//enter first attack of the chain
+
+			if (player->getShield()->getInChainAttack()) {
+				//input buffer
+				player->getShield()->setInputBuffer(true);
+				return;
+			}
+
+			switch (player->getShield()->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightShieldAttack1::getInstance(), player);
+				break;
+				/*case 1:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack2::getInstance(), player);
+					break;
+				case 2:
+					player->getStateMachine()->changeState(PlayerLightSwordAttack3::getInstance(), player);
+					break;*/
+			}
+
+
+		}
+		else if (type == 1) {
+			if (player->getShield()->getInChainAttack()) {
+				return;
+			}
+
+			player->getStateMachine()->changeState(PlayerShieldGuard::getInstance(), player);
+		}
+		else if (type == 3) {
+
+			if (player->getShield()->getIsBlocking()) {
+				player->getStateMachine()->changeState(PlayerOffShield::getInstance(), player);
+			}
+		}
+	}
 }
 
 void LevelBossTest::handleAnalogStick(int type, float amount) {

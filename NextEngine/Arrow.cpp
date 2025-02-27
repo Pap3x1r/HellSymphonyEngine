@@ -1,4 +1,5 @@
 #include "Arrow.h"
+#include "Ziz.h"
 
 Arrow::Arrow(float damage_, float ultPercentage_, bool face, float speed, Player* p) {
 	arrowSpeed = speed;
@@ -12,19 +13,32 @@ Arrow::Arrow(float damage_, float ultPercentage_, bool face, float speed, Player
 void Arrow::selfUpdate(float dt) {
 	timeElapsed += dt;
 
-	if (!getMarkedForDelete()) {
+	if ((getTransform().getPosition().x > 8.0f) || (getTransform().getPosition().x < -8.0f)) {
+		cout << "delete Arrow" << endl;
+		DrawableObject::destroyObject(this);
+	}
+
+	/*if (!getMarkedForDelete()) {
 		if (timeElapsed >= timeToDestroy) {
 			DrawableObject::destroyObject(this);
 		}
-	}
+	}*/
 }
 
 void Arrow::onCollisionEnter(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
-	Player* player = dynamic_cast<Player*>(obj);
 
-	if (player) {
-		//cout << "hit player" << endl;
+	Enemy* enemy = dynamic_cast<Enemy*>(obj);
+
+	if (enemy) {
+		cout << "Arrow hit Enemy for " << damage << " damage." << endl;
+		if (player) {
+			player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
+			cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
+		}
+		//DrawableObject::destroyObject(this, objectsListRef);
+		//setReadyToDestroy(true);
+		DrawableObject::destroyObject(this);
 	}
 }
 

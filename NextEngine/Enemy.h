@@ -12,6 +12,7 @@ class Enemy : public TexturedObject {
 	EnemyAttackCollider* attackCollider;
 
 public:
+	Enemy();
 	Enemy(float damage_);
 	void selfUpdate(float dt);
 	DrawableObject* getEnemyAttackCollider();

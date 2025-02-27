@@ -26,19 +26,17 @@ Gust::Gust() {
 }
 
 Gust::Gust(bool facingRight) {
-  
-
 
     isMovingRight = facingRight;
-    speed = 3.0f;  // Adjust speed of the tornado
+    speed = 3.0f; 
     hasHit = false;
     damage = 10;
-
-
-    cout << "Gust from Ziz created and moving\n";
+    //cout << "Gust from Ziz created and moving\n";
 }
 
 void Gust::update(float dt) {
+
+
     // Move the tornado in the direction Ziz is facing
     if (isMovingRight) {
         getTransform().translate(glm::vec3(speed * dt, 0, 0));  // Moving right
@@ -56,7 +54,7 @@ void Gust::onCollisionEnter(Collider* collider) {
     Player* player = dynamic_cast<Player*>(obj);
 
     if (player) {
-        cout << "onCollisionEnter fired" << endl;
+        //cout << "onCollisionEnter fired" << endl;
         //playerInside = true;
         if (!hasHit) {
 
@@ -121,7 +119,7 @@ void Gust::onTriggerEnter(Collider* collider) {
     Player* player = dynamic_cast<Player*>(obj);
 
     if (player) {
-        cout << "onTriggerEnter fired" << endl;
+        //cout << "onTriggerEnter fired" << endl;
         //playerInside = true;
         if (!hasHit) {
 

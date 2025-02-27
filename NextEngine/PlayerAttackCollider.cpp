@@ -20,7 +20,7 @@ void PlayerAttackCollider::onCollisionEnter(Collider* collider) {
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
 	if (enemy) {
-		cout << "hit enemy" << endl;
+		cout << "hit enemy attack" << endl;
 	}
 }
 

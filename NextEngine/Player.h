@@ -74,7 +74,7 @@ public:
 
         if (time >= 1.50f) {
             time = 0.0f;
-            cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;
+            //cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;
         }
     }
 

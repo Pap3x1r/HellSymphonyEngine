@@ -1,5 +1,6 @@
 #pragma once
 #include "Boss.h"
+#include "Player.h"
 #include "ZizIdleState.h"
 #include "ZizGustState.h"
 #include "ZizStormRiseState.h"
@@ -33,6 +34,7 @@ public:
     DrawableObject* createStormRise();
 
     BossStateMachine* getStateMachine() const;
+    void facePlayer();
     void setPlayer(Player* playr);
     Player* getPlayer();
     

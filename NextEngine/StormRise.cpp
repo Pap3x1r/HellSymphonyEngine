@@ -13,7 +13,7 @@ StormRise::StormRise() {
 	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, 0.1f, 0.0f));
 	setDrawCollider(true);
 	addPhysicsComponent();
-	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.1f));
 	getPhysicsComponent()->setEnableGravity(true);
 
 	playerIsInside = false;
@@ -38,6 +38,7 @@ StormRise::StormRise(float cdTimer) {
 void StormRise::update(float dt) {
 
 	//cout << "Player inside: " << playerIsInside << endl;
+	
 
 	if (!isActive) {
 		countdownTimer -= dt;

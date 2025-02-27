@@ -8,6 +8,7 @@ Boss::Boss() {
 	currentLevel = nullptr;
 	//StateMachine
 	currentState = nullptr;
+	cout << "Boss Parent Created" << endl;
 }
 
 Boss::~Boss() {

@@ -15,12 +15,10 @@ void ZizIdleState::enter(Boss* boss) {
     Ziz* ziz = dynamic_cast<Ziz*>(boss);
     if (!ziz) return;
 
-    
-    ziz->getAnimationComponent()->setState("idle");
-    ziz->getPhysicsComponent()->setVelocity(glm::vec2(0, 0));
     idleTimer = 0.0f;
     ziz->setTexture("../Resource/Ziz/Idle.png");
-    std::cout << "Ziz entered Idle State.\n";
+    ziz->facePlayer();
+    //std::cout << "Ziz entered Idle State.\n";
 }
 
 void ZizIdleState::update(Boss* boss, float dt) {
@@ -31,13 +29,13 @@ void ZizIdleState::update(Boss* boss, float dt) {
 
     // Ziz Timer for idle
     if (idleTimer >= idleWaitTime) {
-        std::cout << "Ziz has idled, resetting state.\n";
-        ziz->getStateMachine()->changeState(ZizGustState::getInstance(), ziz);
+        //std::cout << "Ziz has idled, resetting state.\n";
+        ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
     }
 
     //std::cout << "Ziz is idling...\n";
 }
 
 void ZizIdleState::exit(Boss* boss) {
-    std::cout << "Ziz exiting Idle State.\n";
+    //std::cout << "Ziz exiting Idle State.\n";
 }
