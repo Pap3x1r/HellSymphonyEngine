@@ -41,4 +41,5 @@ class Animation {
 		void render(glm::mat4 globalModelTransform, Transform& transform);
 		void setFrame(int row, int column);
 		void setDimension(int row, int col);
+		void setTexture(unsigned int newTexture);
 };

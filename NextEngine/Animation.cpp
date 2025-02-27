@@ -99,3 +99,7 @@ void Animation::updateCurrentState(float dt) {
 		setFrame(currentState.row, currentFrame);
 	}
 }
+
+void Animation::setTexture(unsigned int newTexture) {
+	texture = newTexture;
+}

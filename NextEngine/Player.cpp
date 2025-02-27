@@ -3,15 +3,25 @@
 #include "Sword.h"
 #include "Shield.h"
 #include "EnemyAttackCollider.h"
+#include "GameEngine.h"
 
 Player::Player(float hp) {
 	health = new Health(hp);
 	setName("Player"); //--new
+
+	texturePaths = { //vector holding paths (might create something that automatically load files into map for easier use)
+		"../Resource/Texture/dante_idle.png", //path
+		"../Resource/Texture/dante_walking_sword.png"
+	};
+	
+	GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
+
 	setTexture("../Resource/Texture/dante_idle.png");
 	getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
 	//Anim
 	initAnimation(8, 1);
-	getAnimationComponent()->addState("idle", 0, 8);
+	getAnimationComponent()->addState("idle", 0, 8); 
+	getAnimationComponent()->addState("walkingSword", 0, 8);
 	//Collider
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.15f, 0.25f);

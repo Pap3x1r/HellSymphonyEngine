@@ -18,7 +18,26 @@ TexturedObject::~TexturedObject() {
 }
 
 void TexturedObject::setTexture(string path) {
+	if (texture != 0) {
+		glDeleteTextures(1, &texture);
+	}
 	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+
+	if (animation != nullptr) {
+		animation->setTexture(texture);
+	}
+}
+
+void TexturedObject::setTexture(string path, int row, int col) {
+	if (texture != 0) {
+		glDeleteTextures(1, &texture);
+	}
+	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+
+	if (animation != nullptr) {
+		animation->setDimension(col, row); // switch because row and col is switched.
+		animation->setTexture(texture);
+	}
 }
 
 void TexturedObject::render(glm::mat4 globalModelTransform) {

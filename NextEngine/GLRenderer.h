@@ -41,6 +41,8 @@ protected:
     Camera camera;
     bool isViewportEnabled;
     float zoomRatio = 3;
+
+    map<string, GLuint> textureCache;
 public:
 
     GLRenderer(int w, int h);
@@ -81,6 +83,8 @@ public:
 
     void drawCameraOutline();
     
+    void clearTextureCache();
+    void preloadTextures(const vector<string>& texturePaths);
 };
 
 #endif

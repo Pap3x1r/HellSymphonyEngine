@@ -23,6 +23,7 @@ public:
 	TexturedObject(std::string name);
 	~TexturedObject();
 	void setTexture(std::string path);
+	void setTexture(string path, int row, int col);
 	void initAnimation(int row, int column);
 	void render(glm::mat4 globalModelTransform);
 	Animation* getAnimationComponent();

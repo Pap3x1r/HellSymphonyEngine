@@ -45,6 +45,8 @@ class Player : public TexturedObject {
     Sword* sword;
     Shield* shield;
 
+    vector<string> texturePaths;
+
 public:
     Player(float hp);
     ~Player();

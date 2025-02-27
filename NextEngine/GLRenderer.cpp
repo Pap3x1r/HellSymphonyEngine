@@ -300,6 +300,11 @@ GLuint GLRenderer::getScaleYUniformId() {
 GLuint GLRenderer::LoadTexture(string path) {
     glActiveTexture(GL_TEXTURE0);
 
+    if (textureCache.find(path) != textureCache.end()) {
+        return textureCache[path]; //Reused texture
+    }
+
+
     // Load the image using SDL_Image
     SDL_Surface* image = IMG_Load(path.c_str());
     if (image == NULL) {
@@ -414,4 +419,17 @@ void GLRenderer::toggleViewport() {
 
 glm::vec3 GLRenderer::camPos() {
     return camera.getPosition();
+}
+
+void GLRenderer::clearTextureCache() {
+    for (auto& pair : textureCache) {
+        glDeleteTextures(1, &pair.second);
+    }
+    textureCache.clear();
+}
+
+void GLRenderer::preloadTextures(const vector<string>& texturePaths) {
+    for (const auto& path : texturePaths) {
+        LoadTexture(path); // This will automatically cache them
+    }
 }
