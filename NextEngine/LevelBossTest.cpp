@@ -91,9 +91,9 @@ void LevelBossTest::levelUpdate() {
 	updateObjects(objectsList);
 
 	tempx2 = tempx;
-	tempx = ziz->getTransform().getPosition().x;
+	tempx = ziz->getTransform().getPosition().y;
 	if (tempx2 != tempx) {
-		//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
+		//cout << "Ziz Y: " << ziz->getTransform().getPosition().y << endl;
 	}
 	//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
 
