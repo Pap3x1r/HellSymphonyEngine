@@ -1,5 +1,6 @@
 #include "LevelBossTest.h"
 #include "CollisionHandler.h"
+#include "Bow.h"
 
 
 
@@ -25,8 +26,10 @@ void LevelBossTest::levelInit() {
 	player = player_;
 	player->setLevel(this);
 	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
+	objectsList.push_back(player->getGroundChecker());
 
 
+	
 
 	if (player->getSword()) {
 		for (DrawableObject* obj : player->getSword()->getChainAttackList()) {
@@ -71,6 +74,7 @@ void LevelBossTest::levelInit() {
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
 	floor->addColliderComponent();
+	floor->setName("Floor");
 	floor->setDrawCollider(true);
 	objectsList.push_back(floor);
 
@@ -168,80 +172,94 @@ void LevelBossTest::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
+
 	bool playerIsMoving = false;
 
-	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding()) { //Prevent returning back to idle
+	//Jump -> higher priority
+
+	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 		return;
 	}
 
 	switch (key) {
-
-		case 'q': 
-			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; 
-			break;
-
-		case 'r':
-			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
-			break;
-
-		case 'e':
-			GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1;
-			break;
-		case 'w':
-			//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
-			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-			playerIsMoving = true;
-			//player->getAnimationComponent()->setState("up");
-			break;
-		case 's':
-			//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
-			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-			playerIsMoving = true;
-			//player->getAnimationComponent()->setState("down");
-			break;
-		case 'a':
-			player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
-			//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
-			player->setFacingRight(false);
-			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-			playerIsMoving = true;
-			//player->getAnimationComponent()->setState("left");
-			break;
-		case 'd':
-			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
-			//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
-			player->setFacingRight(true);
-			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-			playerIsMoving = true;
-			//player->getAnimationComponent()->setState("right");
-			break;
-		case 'f': player->getBow()->setEnableDebug(); break;
-		case 'h': player->setWeaponType(Bow_); break;
-		case 'j': player->setWeaponType(Sword_); break;
-		case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
-		case 'I': //No Movement Input -> Idle
-			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
-			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
-			break;
-		case 'S': //Spacebar -> Jump
+	case 'w':
+		//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
+		if (player->getIsGrounded()) {
+			player->setIsGrounded(false);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
-			break;
-		case 'l':
-			/*cout << "Spawned Storm Rise" << endl;
-			StormRise* stormRise_ = new StormRise();
-			objectsList.push_back(stormRise_);
-			stormRise = stormRise_;
-			stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
-			stormRise->setPlayer(player);*/
-			
-			break;
-		
-			
+		}
+		//player->getAnimationComponent()->setState("up");
+		break;
+	case 's':
+		//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
+		/*player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;*/
+		//player->getAnimationComponent()->setState("down");
+		break;
+	case 'a':
+		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
+		player->setFacingRight(false);
 
-		
+		if (player->getIsGrounded()) { // only change when walking on ground
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
 
+		playerIsMoving = true;
+		//player->getAnimationComponent()->setState("left");
+		break;
+	case 'd':
+		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
+		player->setFacingRight(true);
+
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
+
+		playerIsMoving = true;
+		//player->getAnimationComponent()->setState("right");
+		break;
+	case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
+	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
+	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
+	case 'f': player->getBow()->setEnableDebug(); break;
+	case 'h': player->setWeaponType(Bow_); break;
+	case 'j': player->setWeaponType(Sword_); break;
+	case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
+	case 'I': //No Movement Input -> Idle
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+		}
+		player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+		break;
+	case 'S': //Spacebar -> Jump
+		if (player->getIsGrounded()) {
+			player->setIsGrounded(false);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		}
+		break;
+	case 'l':
+		/*cout << "Spawned Storm Rise" << endl;
+		StormRise* stormRise_ = new StormRise();
+		objectsList.push_back(stormRise_);
+		stormRise = stormRise_;
+		stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
+		stormRise->setPlayer(player);*/
+
+		break;
 	}
+
+
+	/*if (!playerIsMoving) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+	}*/
 }
+
+
+
 
 void LevelBossTest::handleMouse(int type, int x, int y) {
 	float realX, realY;

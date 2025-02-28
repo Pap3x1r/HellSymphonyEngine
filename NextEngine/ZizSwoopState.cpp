@@ -1,5 +1,4 @@
 #include "ZizSwoopState.h"
-#include <time.h>
 
 ZizSwoopState* ZizSwoopState::instance = nullptr;
 
@@ -44,6 +43,10 @@ void ZizSwoopState::enter(Boss* boss) {
 	swoopTimer = 0;
 
 
+	startPosUp = ziz->getTransform().getPosition();
+	endPosUp = glm::vec3(ziz->getTransform().getPosition().x, ziz->getTransform().getPosition().y + 5.0f, 0.0f);
+
+
 	attackCollider = new EnemyAttackCollider(5);
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
@@ -63,7 +66,7 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 	if (ziz) {
 		if (!hasFlew) {
 			if (!isOffScreen) {
-				ziz->getTransform().translate(glm::vec3(0.0f, 0.005f, 0.0f));
+				ziz->getTransform().translate(glm::vec3(0.0f, 20.0f * dt, 0.0f));
 				if (ziz->getTransform().getPosition().y > 9.0f) {
 					isOffScreen = true;
 					if (!hasFlew) {
@@ -143,12 +146,7 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 					}
 				}
-
-
 			}
-
-			
-
 		}
 	}
 	

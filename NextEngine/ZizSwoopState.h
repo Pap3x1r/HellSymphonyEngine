@@ -30,6 +30,10 @@ private:
     glm::vec3 startPos;
     glm::vec3 newPos;
 
+    glm::vec3 endPosUp;
+    glm::vec3 startPosUp;
+    glm::vec3 newPosUp;
+
 
     Ziz* ziz;
     EnemyAttackCollider* attackCollider;
@@ -43,3 +47,6 @@ public:
     void exit(Boss* boss) override;
 
 };
+
+
+
