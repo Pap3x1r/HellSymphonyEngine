@@ -47,3 +47,46 @@ public:
     void update(Player* player, float dt_) override;
     void exit(Player* player) override;
 };
+
+//Walk
+class PlayerSmallBowUlt : public StateM {
+    float time;
+
+    static PlayerSmallBowUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerSmallBowUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerSmallBowUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};
+
+class PlayerBigBowUlt : public StateM {
+    float time;
+
+    static PlayerBigBowUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerBigBowUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerBigBowUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};

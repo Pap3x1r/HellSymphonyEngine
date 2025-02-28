@@ -22,10 +22,19 @@ void LevelPrototype::levelInit() {
 	objectsList.push_back(player->getGroundChecker()); // Add groundChecker
 
 	bow = player->getBow();
+	if (bow) {
+		for (DrawableObject* obj : bow->getChainAttackList()) {
+			BowUltimateCollider* col = dynamic_cast<BowUltimateCollider*>(obj);
+			col->setPlayer(player);
+			objectsList.push_back(obj);
+		}
+	}
+
 	sword = player->getSword();
 	if (sword) {
 		for (DrawableObject* obj : sword->getChainAttackList()) {
 			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+			//cout << col->getName() << endl;
 			col->setPlayer(player);
 			objectsList.push_back(obj);
 		}
@@ -88,6 +97,11 @@ void LevelPrototype::levelUpdate() {
 
 			arrow->selfUpdate(dt);
 		}
+
+		BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(obj);
+		if (attackCollider) {
+			attackCollider->update(dt);
+		}
 	}
 	
 	player->selfUpdate(dt);
@@ -143,7 +157,7 @@ void LevelPrototype::handleKey(char key) {
 
 	//Jump -> higher priority
 
-	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding() || bow->getIsShooting()) { //Prevent returning back to idle
+	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding() || bow->getIsShooting() || player->getIsDashing()) { //Prevent returning back to idle
 		return;
 	}
 
@@ -157,13 +171,13 @@ void LevelPrototype::handleKey(char key) {
 		}
 		//player->getAnimationComponent()->setState("up");
 		break;
-	case 's': 
+	case 's':
 		//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
 		/*player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		playerIsMoving = true;*/
 		//player->getAnimationComponent()->setState("down");
 		break;
-	case 'a': 
+	case 'a':
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
@@ -175,7 +189,7 @@ void LevelPrototype::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("left");
 		break;
-	case 'd': 
+	case 'd':
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
@@ -187,7 +201,51 @@ void LevelPrototype::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
-	case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
+	case 'q':
+		if (player->getWeaponType() == Bow_) {
+			//cout << "works" << endl;
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Sword_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Shield_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
+				}
+			}
+		}
+		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
 	case 'f': bow->setEnableDebug(); break;
@@ -207,8 +265,17 @@ void LevelPrototype::handleKey(char key) {
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
 		}
 		break;
+	case 'P':
+		if (player->getCanDash()) {
+			player->setMovementSpeed(player->getMovementSpeed() * 4);
+			player->setIsDashing(true);
+			player->setCanDash(false);
+		}
+		break;
+	case 't':
+		player->increaseUltimateSlot(1);
+		break;
 	}
-	
 
 	/*if (!playerIsMoving) {
 		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
@@ -229,6 +296,10 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 
 	//Check player weapon
 	// assume type = bow first
+
+	if (player->getIsDashing()) { //Prevent returning
+		return;
+	}
 
 	if (player->getWeaponType() == Bow_) {
 		if (type == 0) {

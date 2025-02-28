@@ -93,7 +93,7 @@ void LevelBossTest::levelUpdate() {
 	tempx2 = tempx;
 	tempx = ziz->getTransform().getPosition().x;
 	if (tempx2 != tempx) {
-		//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
+		cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
 	}
 	//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
 

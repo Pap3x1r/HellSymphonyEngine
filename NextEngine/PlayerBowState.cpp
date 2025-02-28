@@ -5,6 +5,8 @@
 
 PlayerLightBowAttack* PlayerLightBowAttack::instance = nullptr;
 PlayerHeavyBowAttack* PlayerHeavyBowAttack::instance = nullptr;
+PlayerSmallBowUlt* PlayerSmallBowUlt::instance = nullptr;
+PlayerBigBowUlt* PlayerBigBowUlt::instance = nullptr;
 
 //Bow Light Attack
 void PlayerLightBowAttack::enter(Player* player) {
@@ -112,5 +114,141 @@ void PlayerHeavyBowAttack::update(Player* player, float dt_) {
 
 void PlayerHeavyBowAttack::exit(Player* player) {
     cout << "Player exits Bow Heavy Attack state.\n";
+    player->getBow()->setIsShooting(false);
+}
+
+//Bow Small Ult
+void PlayerSmallBowUlt::enter(Player* player) {
+    cout << "Player enters Bow Small Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png", 1, 17, 0);
+    player->getAnimationComponent()->setState("smallUltBow");
+    currentPhase = STARTUP;
+    time = 0.0f;
+    player->getBow()->setIsShooting(true);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+}
+
+void PlayerSmallBowUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getBow()->getChainAttackObject(0);
+    BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 1.167f) {
+            currentPhase = ACTIVE;
+            time = 0;
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+        if (time >= 0.0f) {
+            currentPhase = RECOVERY;
+            time = 0;
+            attackCollider->resetHit();
+            attackCollider->setEnable(true);
+            if (player->getFacingRight()) {
+                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+            }
+            else {
+                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+            }
+
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
+            //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here
+            //player->getLevel()->addObject(newArrow);
+        }
+        break;
+    case RECOVERY:
+        //do something
+        //return to idle
+        if (time >= 0.25f) {
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerSmallBowUlt::exit(Player* player) {
+    cout << "Player exits Bow Small Ult state.\n";
+    player->getBow()->setIsShooting(false);
+}
+
+//Bow Big Ultimate
+void PlayerBigBowUlt::enter(Player* player) {
+    cout << "Player enters Bow Big Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png", 1, 19, 0);
+    player->getAnimationComponent()->setState("bigUltBow");
+    currentPhase = STARTUP;
+    time = 0.0f;
+    player->getBow()->setIsShooting(true);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+}
+
+void PlayerBigBowUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getBow()->getChainAttackObject(1);
+    BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 1.333f) {
+            currentPhase = ACTIVE;
+            time = 0;
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+        if (time >= 0.0f) {
+            currentPhase = RECOVERY;
+            time = 0;
+            attackCollider->resetHit();
+            attackCollider->setEnable(true);
+            if (player->getFacingRight()) {
+                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+            }
+            else {
+                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+            }
+
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
+            //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here
+            //player->getLevel()->addObject(newArrow);
+        }
+        break;
+    case RECOVERY:
+        //do something
+        //return to idle
+        if (time >= 0.25f) {
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerBigBowUlt::exit(Player* player) {
+    cout << "Player exits Bow Big Ult state.\n";
     player->getBow()->setIsShooting(false);
 }

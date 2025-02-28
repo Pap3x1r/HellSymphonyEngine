@@ -21,8 +21,8 @@ class Shield {
 
 	glm::vec3 attack1Offset = { 0.85f, -1.0f, 0.0f };
 	glm::vec3 attack2Offset = { 1.55f, -1.0f, 0.0f };
-	glm::vec3 attack3Offset = { 2.05f, -1.0f, 0.0f };
-	glm::vec3 heavyAttackOffset = { 2.05f, -1.0f, 0.0f };
+	glm::vec3 smallUltOffset = { 0.0f, -1.0f, 0.0f };
+	glm::vec3 bigUltOffset = { 0.0f, -1.0f, 0.0f };
 
 	//Light attack (left click)
 	list<DrawableObject*> chainAttackList;
@@ -51,6 +51,28 @@ public:
 		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack2->setDrawCollider(false);
 		chainAttackList.push_back(attack2);
+
+		PlayerAttackCollider* attack3 = new PlayerAttackCollider(100, 0);
+		attack3->setName("SmallUlt");
+		attack3->setDraw(false);
+		attack3->addColliderComponent();
+		attack3->getColliderComponent()->setTrigger(true);
+		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
+		attack3->getColliderComponent()->setDimension(3.0f, 3.0f); //Set collider dimension
+		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
+		attack3->setDrawCollider(false);
+		chainAttackList.push_back(attack3);
+
+		PlayerAttackCollider* attack4 = new PlayerAttackCollider(200, 0);
+		attack4->setName("BigUlt");
+		attack4->setDraw(false);
+		attack4->addColliderComponent();
+		attack4->getColliderComponent()->setTrigger(true);
+		attack4->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
+		attack4->getColliderComponent()->setDimension(3.0f, 3.0f); //Set collider dimension
+		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
+		attack4->setDrawCollider(false);
+		chainAttackList.push_back(attack4);
 	}
 
 	~Shield() {
@@ -72,12 +94,12 @@ public:
 				obj->getTransform().setPosition(playerPos + attack2Offset);
 				flipOffset(obj, playerObject);
 			}
-			else if (obj->getName() == "Attack3") {
-				obj->getTransform().setPosition(playerPos + attack3Offset);
+			else if (obj->getName() == "SmallUlt") {
+				obj->getTransform().setPosition(playerPos + smallUltOffset);
 				flipOffset(obj, playerObject);
 			}
-			else if (obj->getName() == "heavyAttack") {
-				obj->getTransform().setPosition(playerPos + heavyAttackOffset);
+			else if (obj->getName() == "BigUlt") {
+				obj->getTransform().setPosition(playerPos + bigUltOffset);
 				flipOffset(obj, playerObject);
 			}
 		}
@@ -99,14 +121,14 @@ public:
 			newPos.y = newPos.y + attack2Offset.y;
 			obj->getTransform().setPosition(newPos);
 		}
-		else if (obj->getName() == "Attack3") {
-			newPos.x = newPos.x - attack3Offset.x;
-			newPos.y = newPos.y + attack3Offset.y;
+		else if (obj->getName() == "SmallUlt") {
+			newPos.x = newPos.x - smallUltOffset.x;
+			newPos.y = newPos.y + smallUltOffset.y;
 			obj->getTransform().setPosition(newPos);
 		}
-		else if (obj->getName() == "heavyAttack") {
-			newPos.x = newPos.x - heavyAttackOffset.x;
-			newPos.y = newPos.y + heavyAttackOffset.y;
+		else if (obj->getName() == "BigUlt") {
+			newPos.x = newPos.x - bigUltOffset.x;
+			newPos.y = newPos.y + bigUltOffset.y;
 			obj->getTransform().setPosition(newPos);
 		}
 	}

@@ -1,5 +1,6 @@
 #pragma once
 #include "Arrow.h"
+#include "BowUltimateCollider.h"
 
 class Player;
 
@@ -19,8 +20,12 @@ class Bow {
 
 	bool rapidShotDebugMode = false;
 
+	list<DrawableObject*> chainAttackList;
+
 public:
+
 	Bow();
+
 	void update(float dt, Player* player);
 
 	void setEnableDebug();
@@ -37,4 +42,18 @@ public:
 
 	bool getRapidShotReady() const;
 	bool getIsOverheat() const;
+
+	list<DrawableObject*> getChainAttackList() const {
+		return chainAttackList;
+	}
+
+	DrawableObject* getChainAttackObject(int index) {
+		if (index < 0 || index >= chainAttackList.size()) {
+			return nullptr;
+		}
+
+		auto it = chainAttackList.begin();
+		std::advance(it, index);
+		return *it;
+	}
 };

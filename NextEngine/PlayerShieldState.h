@@ -91,3 +91,45 @@ public:
     void update(Player* player, float dt_) override;
     void exit(Player* player) override;
 };
+
+class PlayerSmallShieldUlt : public StateM {
+    float time;
+
+    static PlayerSmallShieldUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerSmallShieldUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerSmallShieldUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};
+
+class PlayerBigShieldUlt : public StateM {
+    float time;
+
+    static PlayerBigShieldUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerBigShieldUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerBigShieldUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};

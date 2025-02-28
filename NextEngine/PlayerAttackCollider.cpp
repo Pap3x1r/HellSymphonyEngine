@@ -3,16 +3,19 @@
 PlayerAttackCollider::PlayerAttackCollider() {
 	damage = 0;
 	ultGainPercentage = 0;
+	player = nullptr;
 }
 
 PlayerAttackCollider::PlayerAttackCollider(float damage_) {
 	damage = damage_;
 	ultGainPercentage = 0;
+	player = nullptr;
 }
 
 PlayerAttackCollider::PlayerAttackCollider(float damage_, float ultPercentage_) {
 	damage = damage_;
 	ultGainPercentage = ultPercentage_;
+	player = nullptr;
 }
 
 void PlayerAttackCollider::onCollisionEnter(Collider* collider) {
@@ -71,6 +74,7 @@ void PlayerAttackCollider::onTriggerExit(Collider* collider) {
 
 void PlayerAttackCollider::resetHit() {
 	hasHit = false;
+	//cout << "hasHit has been resetted" << endl;
 }
 
 void PlayerAttackCollider::setPlayer(Player* p) {

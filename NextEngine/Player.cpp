@@ -62,6 +62,7 @@ Player::Player(float hp) {
 	getAnimationComponent()->addState("lightAttack3Sword", 0, 4);
 	getAnimationComponent()->addState("heavyAttackSword", 0, 7);
 	getAnimationComponent()->addState("smallUltSword", 0, 10);
+	getAnimationComponent()->addState("bigUltSword", 0, 19);
 	//Shield States
 	getAnimationComponent()->addState("idleShield", 0, 8);
 	getAnimationComponent()->addState("walkingShield", 0, 8);

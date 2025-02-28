@@ -24,11 +24,15 @@ enum WeaponType {
 
 class Player : public TexturedObject {
     float movementSpeed = 5.0f;
+    float minMovementSpeed = 5.0f;
+    float maxMovementSpeed = 20.0f;
     float jumpingPower = 0.5f;
 
     bool isFacingRight = true;
     bool isGrounded = false;
     
+    bool isInvincible = false;
+
     WeaponType currentWeapon = WeaponType::None_;
 
     float ultimateGaugeMax = 100.0f;
@@ -37,6 +41,11 @@ class Player : public TexturedObject {
     int currentUltimateSlot = 0;
 
     bool canMove = true;
+
+    bool canDash = true;
+    bool isDashing = true;
+    float dashCooldown = 1.0f;
+    float dashTimer = 0.0f;
 
     Level* currentLevel;
     Health* health;
@@ -73,9 +82,40 @@ public:
             if (currentUltimateGauge > 0.0f) {
                 setUltimateGauge(0.0f); //Prevent excess gauge when ultimate slot is maxed
             }
+
+            if (currentUltimateSlot > ultimateSlotMax) {
+                currentUltimateSlot = ultimateSlotMax;
+            }
         }
 
-        if (isGrounded == false) {
+        if (isDashing) {
+            if (isFacingRight) {
+                getPhysicsComponent()->setVelocity(glm::vec2(movementSpeed, 0.0f));
+            }
+            else {
+                getPhysicsComponent()->setVelocity(glm::vec2(-movementSpeed, 0.0f));
+            }
+
+            if (movementSpeed > minMovementSpeed) {
+                movementSpeed -= 40 * dt_;
+            }
+            
+            if (movementSpeed <= minMovementSpeed) {
+                movementSpeed = minMovementSpeed;
+                isDashing = false;
+                dashTimer = 0.0f;
+            }
+
+            //cout << "Player movement speed: " << movementSpeed << endl;
+        }
+        else {
+            dashTimer += dt_;
+            if (dashTimer >= dashCooldown) {
+                canDash = true;
+            }
+        }
+
+        if (isGrounded == false && !isDashing) {
             if (getPhysicsComponent()->getVelocity().y > velocityThreshold) {
                 getStateMachine()->changeState(PlayerJumpUpState::getInstance(), this);
             }
@@ -84,6 +124,7 @@ public:
             }
         }
         
+
         //Set groundChecker position
         groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z));
         //groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 2.0f, getTransform().getPosition().z)); //test pos
@@ -95,7 +136,27 @@ public:
         if (time >= 1.50f) {
             time = 0.0f;
             //cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;
+            //cout << "Player ultimate slot: " << currentUltimateSlot << endl;
         }
+    }
+
+
+    void setInvincible(bool value) {
+        isInvincible = value;
+    }
+
+    void setCanDash(bool value) {
+        canDash = value;
+    }
+    bool getCanDash() const {
+        return canDash;
+    }
+
+    void setIsDashing(bool value) {
+        isDashing = value;
+    }
+    bool getIsDashing() const {
+        return isDashing;
     }
 
     void increaseUltimateGauge(float amount) {
@@ -104,7 +165,7 @@ public:
     void setUltimateGauge(float amount) {
         currentUltimateGauge = amount;
     }
-    bool getUltimateGauge() const {
+    float getUltimateGauge() const {
         return currentUltimateGauge;
     }
 
@@ -114,8 +175,11 @@ public:
     void setUltimateSlot(int amount) {
         currentUltimateSlot = amount;
     }
-    bool getUltimateSlot() const {
+    int getUltimateSlot() const {
         return currentUltimateSlot;
+    }
+    int getUltimateSlotMax() const {
+        return ultimateSlotMax;
     }
 
     void setIsGrounded(bool value) {

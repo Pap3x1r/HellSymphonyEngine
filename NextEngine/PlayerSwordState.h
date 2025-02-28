@@ -92,3 +92,47 @@ public:
     void update(Player* player, float dt_) override;
     void exit(Player* player) override;
 };
+
+//Small Sword Ult
+class PlayerSmallSwordUlt : public StateM {
+    float time;
+
+    static PlayerSmallSwordUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerSmallSwordUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerSmallSwordUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};
+
+//Big Sword Ult
+class PlayerBigSwordUlt : public StateM {
+    float time;
+
+    static PlayerBigSwordUlt* instance;
+
+    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    Phase currentPhase;
+public:
+    static PlayerBigSwordUlt* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerBigSwordUlt();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};

@@ -7,6 +7,8 @@ PlayerLightShieldAttack1* PlayerLightShieldAttack1::instance = nullptr;
 PlayerLightShieldAttack2* PlayerLightShieldAttack2::instance = nullptr;
 PlayerShieldGuard* PlayerShieldGuard::instance = nullptr;
 PlayerOffShield* PlayerOffShield::instance = nullptr;
+PlayerSmallShieldUlt* PlayerSmallShieldUlt::instance = nullptr;
+PlayerBigShieldUlt* PlayerBigShieldUlt::instance = nullptr;
 
 //Light Shield Attack 1
 void PlayerLightShieldAttack1::enter(Player* player) {
@@ -39,20 +41,21 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
         if (time >= 0.833f) {
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
+
         if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
 
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -105,13 +108,15 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
         if (time >= 0.25f) {
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
+
 
         if (time >= 0.167f) {
             currentPhase = RECOVERY;
@@ -119,7 +124,6 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
 
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -268,4 +272,122 @@ void PlayerOffShield::update(Player* player, float dt_) {
 void PlayerOffShield::exit(Player* player) {
     player->getAnimationComponent()->setLoop(true);
     cout << "Player exits Off Shield state.\n";
+}
+
+//Small Shield Ult
+void PlayerSmallShieldUlt::enter(Player* player) {
+    cout << "Player enters Shield Small Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_smallUlt_shield.png", 1, 11, 0);
+    player->getAnimationComponent()->setState("smallUltShield");
+    currentPhase = STARTUP;
+    time = 0.0f;
+    player->getShield()->setInChainAttack(true); //Player is in chain attack
+}
+
+void PlayerSmallShieldUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getShield()->getChainAttackObject(2);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 0.25f) {
+            currentPhase = ACTIVE;
+            time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true); //Enable once after startup
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+
+        if (time >= 0.167f) {
+            currentPhase = RECOVERY;
+            time = 0;
+
+            collider->setDrawCollider(false); //Close when active end
+            collider->getColliderComponent()->setEnableCollision(false);
+        }
+        break;
+    case RECOVERY:
+        if (time >= 0.5f) { //time's up
+            player->getShield()->setInChainAttack(false); // no longer in chain attack
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerSmallShieldUlt::exit(Player* player) {
+    cout << "Player exits Shield Small Ult state.\n";
+}
+
+//Light Shield Attack 2
+void PlayerBigShieldUlt::enter(Player* player) {
+    cout << "Player enters Shield Big Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 23, 0);
+    player->getAnimationComponent()->setState("bigUltShield");
+    currentPhase = STARTUP;
+    time = 0.0f;
+    player->getShield()->setInChainAttack(true); //Player is in chain attack
+}
+
+void PlayerBigShieldUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getShield()->getChainAttackObject(3);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 1.25f) {
+            currentPhase = ACTIVE;
+            time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+
+        if (time >= 0.167f) {
+            currentPhase = RECOVERY;
+            time = 0;
+
+            collider->setDrawCollider(false);
+            collider->getColliderComponent()->setEnableCollision(false);
+        }
+        break;
+    case RECOVERY:
+        if (time >= 0.5f) { //time's up
+            player->getShield()->setInChainAttack(false); // no longer in chain attack
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerBigShieldUlt::exit(Player* player) {
+    cout << "Player exits Shield Big Ult state.\n";
 }

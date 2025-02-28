@@ -7,6 +7,8 @@ PlayerLightSwordAttack1* PlayerLightSwordAttack1::instance = nullptr;
 PlayerLightSwordAttack2* PlayerLightSwordAttack2::instance = nullptr;
 PlayerLightSwordAttack3* PlayerLightSwordAttack3::instance = nullptr;
 PlayerHeavySwordAttack* PlayerHeavySwordAttack::instance = nullptr;
+PlayerSmallSwordUlt* PlayerSmallSwordUlt::instance = nullptr;
+PlayerBigSwordUlt* PlayerBigSwordUlt::instance = nullptr;
 
 //Light Sword Attack 1
 void PlayerLightSwordAttack1::enter(Player* player) {
@@ -17,8 +19,12 @@ void PlayerLightSwordAttack1::enter(Player* player) {
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(1);
     player->getSword()->setInChainAttack(true); //Player is in chain attack
-
-    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+    if (player->getFacingRight()) {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
+    else {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
 }
 
 void PlayerLightSwordAttack1::update(Player* player, float dt_) {
@@ -36,24 +42,24 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.167f) { //4 frames
+        if (time >= 0.083f) { //2 frames
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
 
-        if (time >= 0.25f) {
+        if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
-
+            player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -67,7 +73,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.083f) { //time's up
+        if (time >= 0.25f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -89,6 +95,12 @@ void PlayerLightSwordAttack2::enter(Player* player) {
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(2);
     player->getSword()->setInChainAttack(true); //Player is in chain attack
+    if (player->getFacingRight()) {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
+    else {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
 }
 
 void PlayerLightSwordAttack2::update(Player* player, float dt_) {
@@ -102,24 +114,24 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.167f) {
+        if (time >= 0.083f) {
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
 
         if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
-
+            player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -129,7 +141,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.0f) { //time's up
+        if (time >= 0.083f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -156,6 +168,12 @@ void PlayerLightSwordAttack3::enter(Player* player) {
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(3);
     player->getSword()->setInChainAttack(true); //Player is in chain attack
+    if (player->getFacingRight()) {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
+    else {
+        player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
+    }
 }
 
 void PlayerLightSwordAttack3::update(Player* player, float dt_) {
@@ -171,21 +189,21 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
         if (time >= 0.0f) {
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
 
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
-
         if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
+            player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
@@ -211,8 +229,11 @@ void PlayerLightSwordAttack3::exit(Player* player) {
 //Heavy Sword Attack
 void PlayerHeavySwordAttack::enter(Player* player) {
     cout << "Player enters Sword Heavy Attack state.\n";
-    player->getAnimationComponent()->setState("HeavySwordAttack");
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_heavyAttack_sword.png", 1, 7, 0);
+    player->getAnimationComponent()->setState("heavyAttackSword");
     currentPhase = STARTUP;
+    player->getSword()->setInChainAttack(true); //Player is in chain attack
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
 void PlayerHeavySwordAttack::update(Player* player, float dt_) {
@@ -226,30 +247,29 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 2.0f) {
+        if (time >= 0.25f) {
             currentPhase = ACTIVE;
             time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
 
-        collider->setDrawCollider(true);
-        collider->getColliderComponent()->setEnableCollision(true);
-
-        if (time >= 1.0f) {
+        if (time >= 0.083f) {
             currentPhase = RECOVERY;
             time = 0;
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
-            attackCollider->resetHit();
         }
         break;
     case RECOVERY:
         //do something
         //return to idle
-        if (time >= 0.166f) {
+        if (time >= 0.25f) {
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
         }
         break;
@@ -263,4 +283,132 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
 
 void PlayerHeavySwordAttack::exit(Player* player) {
     cout << "Player exits Sword Heavy Attack state.\n";
+    player->getSword()->setInChainAttack(false);
+}
+
+////Small Sword Ult
+void PlayerSmallSwordUlt::enter(Player* player) {
+    cout << "Player enters Sword Small Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_smallUlt_sword.png", 1, 10, 0);
+    player->getAnimationComponent()->setState("smallUltSword");
+    currentPhase = STARTUP;
+    player->getSword()->setInChainAttack(true); //Player is in chain attack
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+}
+
+void PlayerSmallSwordUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getSword()->getChainAttackObject(4);
+    cout << collider->getName() << endl;
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 0.5f) {
+            currentPhase = ACTIVE;
+            time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
+            if (player->getFacingRight()) {
+                player->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + 4.0f, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
+            }
+            else {
+                player->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - 4.0f, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
+            }
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+
+        if (time >= 0.167f) {
+            currentPhase = RECOVERY;
+            time = 0;
+            collider->setDrawCollider(false);
+            collider->getColliderComponent()->setEnableCollision(false);
+        }
+        break;
+    case RECOVERY:
+        //do something
+        //return to idle
+        if (time >= 0.167f) {
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerSmallSwordUlt::exit(Player* player) {
+    cout << "Player exits Sword Small Ult state.\n";
+    player->getSword()->setInChainAttack(false); //Player is in chain attack
+}
+
+////BigSwordUlt
+void PlayerBigSwordUlt::enter(Player* player) {
+    cout << "Player enters Sword Big Ult state.\n";
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUlt_sword.png", 1, 19, 0);
+    player->getAnimationComponent()->setState("bigUltSword");
+    currentPhase = STARTUP;
+    player->getSword()->setInChainAttack(true); //Player is in chain attack
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+}
+
+void PlayerBigSwordUlt::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+    DrawableObject* collider = player->getSword()->getChainAttackObject(5);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+
+    switch (currentPhase) {
+    case STARTUP:
+        //do something
+        //change phase
+        if (time >= 1.5f) {
+            currentPhase = ACTIVE;
+            time = 0;
+            attackCollider->resetHit();
+            collider->setDrawCollider(true);
+            collider->getColliderComponent()->setEnableCollision(true);
+        }
+        break;
+    case ACTIVE:
+        //do something
+        //change phase
+
+        if (time >= 0.083f) {
+            currentPhase = RECOVERY;
+            time = 0;
+            collider->setDrawCollider(false);
+            collider->getColliderComponent()->setEnableCollision(false);
+        }
+        break;
+    case RECOVERY:
+        //do something
+        //return to idle
+        if (time >= 0.0f) {
+            player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+        }
+        break;
+    };
+
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerBigSwordUlt::exit(Player* player) {
+    cout << "Player exits Sword Big Ult state.\n";
+    player->getSword()->setInChainAttack(false); //Player is in chain attack
 }
