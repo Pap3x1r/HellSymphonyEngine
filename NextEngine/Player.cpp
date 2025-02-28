@@ -8,6 +8,7 @@
 Player::Player(float hp) {
 	health = new Health(hp);
 	setName("Player"); //--new
+	setTag(Tag::Player);
 
 	texturePaths = { //vector holding paths (might create something that automatically load files into map for easier use)
 		"../Resource/Texture/dante_idle.png", //path
@@ -40,6 +41,8 @@ Player::Player(float hp) {
 	bow = new Bow();
 	sword = new Sword();
 	shield = new Shield();
+	//GroundChecker
+	groundChecker = new GroundChecker();
 }
 
 Player::~Player() {
@@ -81,6 +84,10 @@ StateMachine* Player::getStateMachine() const {
 	return playerState;
 }
 
+GroundChecker* Player::getGroundChecker() const {
+	return groundChecker;
+}
+
 void Player::setWeaponType(WeaponType newType) {
 	currentWeapon = newType;
 }
@@ -113,6 +120,42 @@ Shield* Player::getShield() const {
 	return shield;
 }
 
-void Player::onTriggerEnter(Collider* collider) {
-	cout << "Player hit" << endl;
-}
+//void Player::onCollisionEnter(Collider* collider) {
+//	DrawableObject* obj = collider->getObject();
+//
+//	if (obj->getName() == "Floor") {
+//		cout << "player hit the floor" << endl;
+//	}
+//
+//	cout << "player hit the floor" << endl;
+//}
+//
+//void Player::onCollisionStay(Collider* collider) {
+//	DrawableObject* obj = collider->getObject();
+//
+//	if (obj->getName() == "Floor") {
+//		cout << "player hit the floor" << endl;
+//	}
+//
+//	cout << "player hit the floor" << endl;
+//}
+//
+//void Player::onTriggerEnter(Collider* collider) {
+//	DrawableObject* obj = collider->getObject();
+//
+//	if (obj->getName() == "Floor") {
+//		cout << "player hit the floor" << endl;
+//	}
+//
+//	cout << "player hit the floor" << endl;
+//}
+//
+//void Player::onTriggerStay(Collider* collider) {
+//	DrawableObject* obj = collider->getObject();
+//
+//	if (obj->getName() == "Floor") {
+//		cout << "player hit the floor" << endl;
+//	}
+//
+//	cout << "player hit the floor" << endl;
+//}

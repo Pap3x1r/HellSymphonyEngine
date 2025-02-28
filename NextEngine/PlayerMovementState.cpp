@@ -7,8 +7,21 @@ PlayerWalkState* PlayerWalkState::instance = nullptr;
 //Idle
 void PlayerIdleState::enter(Player* player) {
     //cout << "Player enters Idle state.\n";
-    player->setTexture("../Resource/Texture/dante_idle.png", 1, 8);
-    player->getAnimationComponent()->setState("idle");
+
+    switch (player->getWeaponType()) {
+    case None_:
+        break;
+    case Sword_:
+        player->setTexture("../Resource/Texture/dante_idle.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("idle");
+        break;
+    case Shield_:
+        break;
+    case Bow_:
+        break;
+    default:
+        cerr << "Weapon Type does not match any types" << endl;
+    }
 }
 
 void PlayerIdleState::update(Player* player, float dt_) {
@@ -29,9 +42,19 @@ void PlayerIdleState::exit(Player* player) {
 void PlayerWalkState::enter(Player* player) {
     //cout << "Player enters Walk state.\n";
 
-    if (player->getWeaponType() == Sword_) {
-        player->setTexture("../Resource/Texture/dante_walking_sword.png", 1, 8); //set new texture ("path", row, column)
+    switch (player->getWeaponType()) {
+    case None_:
+        break;
+    case Sword_:
+        player->setTexture("../Resource/Texture/dante_walking_sword.png", 1, 8, 0); //set new texture ("path", row, column)
         player->getAnimationComponent()->setState("walkingSword"); //set state
+        break;
+    case Shield_:
+        break;
+    case Bow_:
+        break;
+    default:
+        cerr << "Weapon Type does not match any types" << endl;
     }
 }
 

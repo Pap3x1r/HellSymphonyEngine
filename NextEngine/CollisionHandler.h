@@ -12,6 +12,7 @@ bool checkCollisionPoint(Collider* col, Transform& t, glm::vec2 point);
 void updateCollisionState(Collider* col1, Collider* col2, bool collided);
 void handleObjectCollision(list<DrawableObject*>& objects);
 void resolveCollision(DrawableObject* obj1, DrawableObject* obj2);
+bool shouldIgnoreCollision(DrawableObject* obj1, DrawableObject* obj2);
 
 template <class T>
 void swapVariable(T& a, T& b) {

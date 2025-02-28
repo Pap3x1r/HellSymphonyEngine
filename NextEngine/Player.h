@@ -1,5 +1,6 @@
 #pragma once
 #include "TexturedObject.h"
+#include "GroundChecker.h"
 #include "Health.h"
 #include "StateMachine.h"
 
@@ -44,8 +45,11 @@ class Player : public TexturedObject {
     Bow* bow;
     Sword* sword;
     Shield* shield;
+    
+    GroundChecker* groundChecker;
 
     vector<string> texturePaths;
+
 
 public:
     Player(float hp);
@@ -70,7 +74,13 @@ public:
             }
         }
         
+        //Set groundChecker position
+        //groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z)); perfect pos
+        groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 2.0f, getTransform().getPosition().z)); //test pos
+
         //cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
+
+        //cout << "Player (x,y) velocity: (" << getPhysicsComponent()->getVelocity().x << " , " << getPhysicsComponent()->getVelocity().y << ")" << endl;
 
         if (time >= 1.50f) {
             time = 0.0f;
@@ -110,6 +120,8 @@ public:
 
     StateMachine* getStateMachine() const;
 
+    GroundChecker* getGroundChecker() const;
+
     void setWeaponType(WeaponType newType);
     WeaponType getWeaponType() const;
 
@@ -120,5 +132,9 @@ public:
     Sword* getSword() const;
     Shield* getShield() const;
 
+    /*void onCollisionEnter(Collider* collider) override;
+    void onCollisionStay(Collider* collider) override;
+
     void onTriggerEnter(Collider* collider) override;
+    void onTriggerStay(Collider* collider) override;*/
 };

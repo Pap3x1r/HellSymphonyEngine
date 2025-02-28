@@ -77,7 +77,7 @@ void Animation::addState(string name, int row, int frameCount) {
 void Animation::setState(string name) {
 	State nextState = states[name];
 	if (nextState.name != currentState.name) {
-		currentFrame = 0;
+		currentFrame = startingFrame;
 	}
 	currentState = states[name];
 }
@@ -93,7 +93,7 @@ void Animation::updateCurrentState(float dt) {
 		currentFrame++;
 
 		if (currentFrame >= currentState.frameCount) {
-			currentFrame = 0;
+			currentFrame = startingFrame;
 		}
 
 		setFrame(currentState.row, currentFrame);
@@ -102,4 +102,8 @@ void Animation::updateCurrentState(float dt) {
 
 void Animation::setTexture(unsigned int newTexture) {
 	texture = newTexture;
+}
+
+void Animation::setStartingFrame(int frame) {
+	startingFrame = frame;
 }

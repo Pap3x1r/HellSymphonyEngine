@@ -85,6 +85,7 @@ public:
     
     void clearTextureCache();
     void preloadTextures(const vector<string>& texturePaths);
+    void loadTextureFromDir(const std::string& dir);
 };
 
 #endif

@@ -29,6 +29,7 @@ DrawableObject::DrawableObject() {
 
 	this->name = "Object";
 	this->transform = Transform();
+	tag = Tag::Default;
 	physics = nullptr;
 	collider = nullptr;
 

@@ -3,6 +3,8 @@
 #include "gtc/type_ptr.hpp"
 #include "SDL_surface.h"
 #include "SDL_image.h"
+#include <filesystem>	
+#include <fstream>
 
 using namespace std;
 GLRenderer::GLRenderer(int w, int h) : winWidth(w), winHeight(h), camera(Camera()) {}
@@ -431,5 +433,22 @@ void GLRenderer::clearTextureCache() {
 void GLRenderer::preloadTextures(const vector<string>& texturePaths) {
     for (const auto& path : texturePaths) {
         LoadTexture(path); // This will automatically cache them
+    }
+}
+
+void GLRenderer::loadTextureFromDir(const std::string& dir) {
+    //This loop through every file paths in directory and put inside map and vector
+    for (const auto& paths : std::filesystem::directory_iterator(dir)) {
+        if (paths.is_regular_file()) {
+            std::string filePath = paths.path().string();
+            std::string fileName = paths.path().filename().string();
+
+            //Music music = loadMusic(filePath); // Add current music as cache file to access later using name
+            //v_music.push_back({ fileName, music });
+            //std::cout << "Successfully added " << fileName << " to map and vector at index: " << v_music.size() - 1 << std::endl;
+        }
+        else {
+            std::cerr << "Error: path is not a file. Path:" << paths.path().string() << std::endl;
+        }
     }
 }

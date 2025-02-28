@@ -22,6 +22,7 @@ class Animation {
 		unordered_map<string, State> states;
 		State currentState;
 		int currentFrame;
+		int startingFrame;
 
 		// Animation
 		unsigned int& texture;
@@ -42,4 +43,5 @@ class Animation {
 		void setFrame(int row, int column);
 		void setDimension(int row, int col);
 		void setTexture(unsigned int newTexture);
+		void setStartingFrame(int frame);
 };

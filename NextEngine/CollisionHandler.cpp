@@ -87,6 +87,10 @@ void handleObjectCollision(list<DrawableObject*>& objects) {
 			DrawableObject* obj1 = *i;
 			DrawableObject* obj2 = *j;
 
+			if (shouldIgnoreCollision(obj1, obj2)) {
+				continue;
+			}
+
 			Collider* col1 = obj1->getColliderComponent();
 			Collider* col2 = obj2->getColliderComponent();
 
@@ -244,4 +248,15 @@ void resolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	t1.setPosition(newPos1 - col1->getTransform().getPosition());
 	//t1.setPosition(newPos1);
 	phys1->setLastPosition(pos1);
+}
+
+bool shouldIgnoreCollision(DrawableObject* obj1, DrawableObject* obj2) {
+	Tag tag1 = obj1->getTag();
+	Tag tag2 = obj2->getTag();
+
+	if ((tag1 == Tag::Player && tag2 == Tag::GroundChecker) || (tag1 == Tag::GroundChecker && tag2 == Tag::Player)) {
+		return true;
+	}
+
+	return false;
 }

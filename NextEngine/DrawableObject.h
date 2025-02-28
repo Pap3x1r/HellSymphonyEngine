@@ -10,6 +10,16 @@ using namespace std;
 
 class Collider; // forward declaration
 
+enum class Tag {
+	Player,
+	PlayerAttack,
+	Enemy,
+	EnemyAttack,
+	Floor,
+	GroundChecker,
+	Default
+};
+
 class DrawableObject {
 private:
 	bool canDrawCollider;
@@ -19,8 +29,10 @@ private:
 	bool isActive;
 	bool isMarkedForDelete;
 
+
 protected:
 	string name;
+	Tag tag;
 	Transform transform;
 	Physics* physics;
 	Collider* collider;
@@ -36,6 +48,14 @@ protected:
 public:
 	string getName();
 	void setName(string name);
+
+	Tag getTag() const {
+		return tag;
+	}
+
+	void setTag(Tag newTag) {
+		tag = newTag;
+	}
 
 	Transform& getTransform();
 	glm::mat4 getTransformMat4();

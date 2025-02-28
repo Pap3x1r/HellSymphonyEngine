@@ -28,13 +28,14 @@ void TexturedObject::setTexture(string path) {
 	}
 }
 
-void TexturedObject::setTexture(string path, int row, int col) {
+void TexturedObject::setTexture(string path, int row, int col, int startFrame) {
 	if (texture != 0) {
 		glDeleteTextures(1, &texture);
 	}
 	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
 
 	if (animation != nullptr) {
+		animation->setStartingFrame(startFrame);
 		animation->setDimension(col, row); // switch because row and col is switched.
 		animation->setTexture(texture);
 	}

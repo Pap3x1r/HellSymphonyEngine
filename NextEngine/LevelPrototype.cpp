@@ -19,6 +19,8 @@ void LevelPrototype::levelInit() {
 	player = player_;
 	player->setLevel(this);
 
+	objectsList.push_back(player->getGroundChecker()); // Add groundChecker
+
 	bow = player->getBow();
 	sword = player->getSword();
 	if (sword) {
@@ -48,6 +50,7 @@ void LevelPrototype::levelInit() {
 	floor->getTransform().setScale(glm::vec3(18.0f, 1.0f, 0.0f));
 	floor->addColliderComponent();
 	floor->setName("Floor");
+	floor->setTag(Tag::Floor);
 	floor->setDrawCollider(true);
 	objectsList.push_back(floor);
 
@@ -137,6 +140,8 @@ void LevelPrototype::handleKey(char key) {
 	speed *= dt;
 
 	bool playerIsMoving = false;
+
+	//Jump -> higher priority
 
 	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding()) { //Prevent returning back to idle
 		return;
