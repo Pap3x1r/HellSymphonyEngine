@@ -27,6 +27,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	recoveryTimer = 0.08f * 8;
 	beforeSwoopTimer = 0.08f * 3;
 	warningTimer = 2.0f + beforeSwoopTimer;
+	swoopTimer = 0;
 
 	//choose direction
 	swoopDirection = (rand() % 2 == 0) ? -1 : 1;
@@ -40,7 +41,7 @@ void ZizSwoopState::enter(Boss* boss) {
 		startPos = glm::vec3(10.5f, 0.0f, 0.0f);
 		endPos = glm::vec3(-4.5f, 0.0f, 0.0f);
 	}
-	swoopTimer = 0;
+	
 
 
 	startPosUp = ziz->getTransform().getPosition();
