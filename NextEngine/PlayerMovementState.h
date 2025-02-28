@@ -39,3 +39,39 @@ public:
     void update(Player* player, float dt_) override;
     void exit(Player* player) override;
 };
+
+//JumpUp
+class PlayerJumpUpState : public StateM {
+    float time;
+    static PlayerJumpUpState* instance;
+public:
+    static PlayerJumpUpState* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerJumpUpState();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};
+
+//FallDown
+class PlayerFallDownState : public StateM {
+    float time;
+    static PlayerFallDownState* instance;
+public:
+    static PlayerFallDownState* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerFallDownState();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};

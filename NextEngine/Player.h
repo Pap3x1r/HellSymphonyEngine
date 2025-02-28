@@ -50,6 +50,7 @@ class Player : public TexturedObject {
 
     vector<string> texturePaths;
 
+    float velocityThreshold = 0.02f;
 
 public:
     Player(float hp);
@@ -71,6 +72,15 @@ public:
             //cout << "Ultimate Slot is maxed" << endl;
             if (currentUltimateGauge > 0.0f) {
                 setUltimateGauge(0.0f); //Prevent excess gauge when ultimate slot is maxed
+            }
+        }
+
+        if (isGrounded == false) {
+            if (getPhysicsComponent()->getVelocity().y > velocityThreshold) {
+                getStateMachine()->changeState(PlayerJumpUpState::getInstance(), this);
+            }
+            else if (getPhysicsComponent()->getVelocity().y < -velocityThreshold) {
+                getStateMachine()->changeState(PlayerFallDownState::getInstance(), this);
             }
         }
         

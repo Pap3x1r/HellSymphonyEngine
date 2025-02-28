@@ -150,21 +150,28 @@ void LevelPrototype::handleKey(char key) {
 	switch (key) {
 	case 'w':
 		//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		playerIsMoving = true;
+		if (player->getIsGrounded()) {
+			player->setIsGrounded(false);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		}
 		//player->getAnimationComponent()->setState("up");
 		break;
 	case 's': 
 		//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		playerIsMoving = true;
+		/*player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		playerIsMoving = true;*/
 		//player->getAnimationComponent()->setState("down");
 		break;
 	case 'a': 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+
+		if (player->getIsGrounded()) { // only change when walking on ground
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
+
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("left");
 		break;
@@ -172,7 +179,11 @@ void LevelPrototype::handleKey(char key) {
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
+
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
@@ -184,7 +195,9 @@ void LevelPrototype::handleKey(char key) {
 	case 'j': player->setWeaponType(Sword_); break;
 	case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
 	case 'I': //No Movement Input -> Idle
-		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+		}
 		player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 		break;
 	case 'S': //Spacebar -> Jump

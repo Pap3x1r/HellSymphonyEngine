@@ -12,7 +12,8 @@ Player::Player(float hp) {
 
 	texturePaths = { //vector holding paths (might create something that automatically load files into map for easier use)
 		"../Resource/Texture/dante_idle.png", //path
-		"../Resource/Texture/dante_walking_sword.png"
+		"../Resource/Texture/dante_walking_sword.png",
+		"../Resource/Texture/dante_jumping_sword.png",
 	};
 	
 	GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
@@ -23,6 +24,9 @@ Player::Player(float hp) {
 	initAnimation(8, 1);
 	getAnimationComponent()->addState("idle", 0, 8); 
 	getAnimationComponent()->addState("walkingSword", 0, 8);
+	getAnimationComponent()->addState("jumpingSword", 0, 1);
+	getAnimationComponent()->addState("fallingSword", 0, 1);
+
 	//Collider
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.15f, 0.25f);
