@@ -27,7 +27,7 @@ class Player : public TexturedObject {
     float jumpingPower = 0.5f;
 
     bool isFacingRight = true;
-    bool isGrounded = true;
+    bool isGrounded = false;
     
     WeaponType currentWeapon = WeaponType::None_;
 
@@ -75,8 +75,8 @@ public:
         }
         
         //Set groundChecker position
-        //groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z)); perfect pos
-        groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 2.0f, getTransform().getPosition().z)); //test pos
+        groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z));
+        //groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 2.0f, getTransform().getPosition().z)); //test pos
 
         //cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
 
@@ -108,6 +108,12 @@ public:
         return currentUltimateSlot;
     }
 
+    void setIsGrounded(bool value) {
+        isGrounded = value;
+    }
+    bool getIsGrounded() const {
+        return isGrounded;
+    }
 
     void setFacingRight(bool value);
     bool getFacingRight() const;

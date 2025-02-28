@@ -188,7 +188,11 @@ void LevelPrototype::handleKey(char key) {
 		player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 		break;
 	case 'S': //Spacebar -> Jump
-		player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		if (player->getIsGrounded()) {
+			player->setIsGrounded(false);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		}
 		break;
 	}
 	

@@ -43,6 +43,7 @@ Player::Player(float hp) {
 	shield = new Shield();
 	//GroundChecker
 	groundChecker = new GroundChecker();
+	groundChecker->setPlayer(this);
 }
 
 Player::~Player() {

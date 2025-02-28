@@ -1,4 +1,5 @@
 #include "GroundChecker.h"
+#include "Player.h"
 
 GroundChecker::GroundChecker() {
     setName("GroundChecker");
@@ -13,11 +14,15 @@ GroundChecker::GroundChecker() {
     setDrawCollider(true);
 }
 
+void GroundChecker::setPlayer(Player* player_) {
+    player = player_;
+}
+
 void GroundChecker::onCollisionEnter(Collider* collider) {
     DrawableObject* obj = collider->getObject();
 
     if (obj->getName() == "Floor") {
-        cout << "player hit the floor" << endl;
+        player->setIsGrounded(true);
     }
 
     //cout << "collisionEnter player hit the floor" << endl;
@@ -27,27 +32,27 @@ void GroundChecker::onCollisionStay(Collider* collider) {
     DrawableObject* obj = collider->getObject();
 
     if (obj->getName() == "Floor") {
-        cout << "player hit the floor" << endl;
+        //player->setIsGrounded(true);
     }
 
     //cout << "collisionStay player hit the floor" << endl;
 }
 
-void GroundChecker::onTriggerEnter(Collider* collider) {
-    DrawableObject* obj = collider->getObject();
-
-    if (obj->getName() == "Floor") {
-        cout << "player hit the floor" << endl;
-    }
-
-    //cout << "triggerEnter player hit the floor" << endl;
-}
-void GroundChecker::onTriggerStay(Collider* collider) {
-    DrawableObject* obj = collider->getObject();
-
-    if (obj->getName() == "Floor") {
-        cout << "player hit the floor" << endl;
-    }
-
-    //cout << "triggerStay player hit the floor" << endl;
-}
+//void GroundChecker::onTriggerEnter(Collider* collider) {
+//    DrawableObject* obj = collider->getObject();
+//
+//    if (obj->getName() == "Floor") {
+//        cout << "player hit the floor" << endl;
+//    }
+//
+//    //cout << "triggerEnter player hit the floor" << endl;
+//}
+//void GroundChecker::onTriggerStay(Collider* collider) {
+//    DrawableObject* obj = collider->getObject();
+//
+//    if (obj->getName() == "Floor") {
+//        cout << "player hit the floor" << endl;
+//    }
+//
+//    //cout << "triggerStay player hit the floor" << endl;
+//}
