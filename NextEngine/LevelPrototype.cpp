@@ -143,7 +143,7 @@ void LevelPrototype::handleKey(char key) {
 
 	//Jump -> higher priority
 
-	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding()) { //Prevent returning back to idle
+	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding() || bow->getIsShooting()) { //Prevent returning back to idle
 		return;
 	}
 

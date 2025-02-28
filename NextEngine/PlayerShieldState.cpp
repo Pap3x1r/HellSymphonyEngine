@@ -11,7 +11,8 @@ PlayerOffShield* PlayerOffShield::instance = nullptr;
 //Light Shield Attack 1
 void PlayerLightShieldAttack1::enter(Player* player) {
     cout << "Player enters Shield Light Attack 1 state.\n";
-    player->getAnimationComponent()->setState("LightShieldAttack1");
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_lightAttack1_shield.png", 1, 16, 0);
+    player->getAnimationComponent()->setState("lightAttack1Shield");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setCurrentChainAttack(1);
@@ -35,7 +36,7 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) {
+        if (time >= 0.833f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -45,7 +46,7 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
         //change phase
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
-        if (time >= 0.333f) {
+        if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
 
@@ -82,7 +83,8 @@ void PlayerLightShieldAttack1::exit(Player* player) {
 //Light Shield Attack 2
 void PlayerLightShieldAttack2::enter(Player* player) {
     cout << "Player enters Shield Light Attack 2 state.\n";
-    player->getAnimationComponent()->setState("LightShieldAttack2");
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_lightAttack2_shield.png", 1, 11, 0);
+    player->getAnimationComponent()->setState("lightAttack2Shield");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setCurrentChainAttack(2);
@@ -100,7 +102,7 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) {
+        if (time >= 0.25f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -111,7 +113,7 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
 
-        if (time >= 0.333f) {
+        if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
 
@@ -121,7 +123,7 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
         }
         break;
     case RECOVERY:
-        if (time >= 0.333f) { //time's up
+        if (time >= 0.5f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getShield()->setCurrentChainAttack(0);
             player->getShield()->setInChainAttack(false); // no longer in chain attack
@@ -142,7 +144,9 @@ void PlayerLightShieldAttack2::exit(Player* player) {
 //Shield Guard
 void PlayerShieldGuard::enter(Player* player) {
     cout << "Player enters Shield Guard state.\n";
-    player->getAnimationComponent()->setState("ShieldGuard");
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_holding_shield.png", 1, 2, 0);
+    player->getAnimationComponent()->setState("holdShield");
+    player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setIsBlocking(true);
@@ -157,7 +161,7 @@ void PlayerShieldGuard::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.0f) {
+        if (time >= 0.083f) {
             currentPhase = ACTIVE;
             time = 0;
             player->getShield()->setIsPerfect(true);
@@ -188,6 +192,7 @@ void PlayerShieldGuard::update(Player* player, float dt_) {
 
 void PlayerShieldGuard::exit(Player* player) {
     cout << "Player exits Shield Guard state.\n";
+    player->getAnimationComponent()->setLoop(true);
     player->getShield()->setIsBlocking(false);
 }
 
@@ -208,7 +213,9 @@ void PlayerShieldGuard::changeState(int phase) {
 //Player off shield
 void PlayerOffShield::enter(Player* player) {
     cout << "Player enters Off Shield state.\n";
-    player->getAnimationComponent()->setState("OffShield");
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_off_shield.png", 1, 3, 0);
+    player->getAnimationComponent()->setState("offShield");
+    player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
     time = 0.0f;
 }
@@ -230,14 +237,14 @@ void PlayerOffShield::update(Player* player, float dt_) {
         //do something
         //change phase
 
-        if (time >= 0.083) {
+        if (time >= 0.0f) {
             currentPhase = RECOVERY;
             time = 0;
         }
         break;
     case RECOVERY:
 
-        if (time >= 0.083f) {
+        if (time >= 0.25f) {
             time = 0;
             player->getShield()->setCurrentChainAttack(0);
             player->getShield()->setInChainAttack(false); // no longer in chain attack
@@ -259,5 +266,6 @@ void PlayerOffShield::update(Player* player, float dt_) {
 }
 
 void PlayerOffShield::exit(Player* player) {
+    player->getAnimationComponent()->setLoop(true);
     cout << "Player exits Off Shield state.\n";
 }

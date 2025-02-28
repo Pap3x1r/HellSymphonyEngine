@@ -15,7 +15,7 @@ class Bow {
 	float overheatDecreaseRate = 17.5f;
 	bool isOverheat = false;
 
-
+	bool isShooting = false;
 
 	bool rapidShotDebugMode = false;
 
@@ -24,6 +24,14 @@ public:
 	void update(float dt, Player* player);
 
 	void setEnableDebug();
+
+	void setIsShooting(bool value) {
+		isShooting = value;
+	}
+
+	bool getIsShooting() const {
+		return isShooting;
+	}
 
 	DrawableObject* arrowShot(float damage_, float ultPercentage_, Player* player, float speed);
 

@@ -11,7 +11,8 @@ PlayerHeavySwordAttack* PlayerHeavySwordAttack::instance = nullptr;
 //Light Sword Attack 1
 void PlayerLightSwordAttack1::enter(Player* player) {
     cout << "Player enters Sword Light Attack 1 state.\n";
-    player->getAnimationComponent()->setState("LightSwordAttack1");
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack1_sword.png", 1, 6, 0);
+    player->getAnimationComponent()->setState("lightAttack1Sword");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(1);
@@ -35,7 +36,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) { //4 frames
+        if (time >= 0.167f) { //4 frames
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -46,7 +47,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
 
-        if (time >= 0.333f) {
+        if (time >= 0.25f) {
             currentPhase = RECOVERY;
             time = 0;
 
@@ -66,7 +67,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.333f) { //time's up
+        if (time >= 0.083f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -82,7 +83,8 @@ void PlayerLightSwordAttack1::exit(Player* player) {
 //Light Sword Attack 2
 void PlayerLightSwordAttack2::enter(Player* player) {
     cout << "Player enters Sword Light Attack 2 state.\n";
-    player->getAnimationComponent()->setState("LightSwordAttack2");
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png", 1, 4, 0);
+    player->getAnimationComponent()->setState("lightAttack2Sword");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(2);
@@ -100,7 +102,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) {
+        if (time >= 0.167f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -111,7 +113,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
 
-        if (time >= 0.333f) {
+        if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
 
@@ -127,7 +129,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.333f) { //time's up
+        if (time >= 0.0f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -148,7 +150,8 @@ void PlayerLightSwordAttack2::exit(Player* player) {
 //Light Sword Attack 3
 void PlayerLightSwordAttack3::enter(Player* player) {
     cout << "Player enters Sword Light Attack 3 state.\n";
-    player->getAnimationComponent()->setState("LightSwordAttack3");
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png", 1, 4, 0);
+    player->getAnimationComponent()->setState("lightAttack3Sword");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getSword()->setCurrentChainAttack(3);
@@ -165,7 +168,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.333f) {
+        if (time >= 0.0f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -177,7 +180,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
         collider->setDrawCollider(true);
         collider->getColliderComponent()->setEnableCollision(true);
 
-        if (time >= 0.333f) {
+        if (time >= 0.167f) {
             currentPhase = RECOVERY;
             time = 0;
             collider->setDrawCollider(false);
@@ -187,7 +190,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
         break;
     case RECOVERY:
 
-        if (time >= 0.333f) { //time's up
+        if (time >= 0.167f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack

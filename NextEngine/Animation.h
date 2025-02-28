@@ -23,6 +23,7 @@ class Animation {
 		State currentState;
 		int currentFrame;
 		int startingFrame;
+		bool loop = true;
 
 		// Animation
 		unsigned int& texture;
@@ -44,4 +45,7 @@ class Animation {
 		void setDimension(int row, int col);
 		void setTexture(unsigned int newTexture);
 		void setStartingFrame(int frame);
+		void setLoop(bool value) {
+			loop = value;
+		}
 };

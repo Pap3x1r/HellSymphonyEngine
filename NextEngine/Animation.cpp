@@ -93,7 +93,12 @@ void Animation::updateCurrentState(float dt) {
 		currentFrame++;
 
 		if (currentFrame >= currentState.frameCount) {
-			currentFrame = startingFrame;
+			if (loop) {
+				currentFrame = startingFrame;
+			}
+			else {
+				currentFrame = currentState.frameCount - 1;
+			}
 		}
 
 		setFrame(currentState.row, currentFrame);

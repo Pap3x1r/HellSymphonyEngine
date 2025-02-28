@@ -41,6 +41,20 @@ void TexturedObject::setTexture(string path, int row, int col, int startFrame) {
 	}
 }
 
+void TexturedObject::setTexture(string path, int row, int col, int startFrame, bool loop) {
+	if (texture != 0) {
+		glDeleteTextures(1, &texture);
+	}
+	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+
+	if (animation != nullptr) {
+		animation->setStartingFrame(startFrame);
+		animation->setDimension(col, row); // switch because row and col is switched.
+		animation->setTexture(texture);
+		animation->setLoop(loop);
+	}
+}
+
 void TexturedObject::render(glm::mat4 globalModelTransform) {
 	if (animation != nullptr) {
 		animation->render(globalModelTransform, this->transform);

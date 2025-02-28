@@ -14,12 +14,16 @@ void PlayerIdleState::enter(Player* player) {
     case None_:
         break;
     case Sword_:
-        player->setTexture("../Resource/Texture/dante_idle.png", 1, 8, 0);
-        player->getAnimationComponent()->setState("idle");
+        player->setTexture("../Resource/Texture/Dante/DanteSword/dante_idle_sword.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("idleSword");
         break;
     case Shield_:
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_idle_shield.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("idleShield");
         break;
     case Bow_:
+        player->setTexture("../Resource/Texture/Dante/DanteBow/dante_idle_bow.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("idleBow");
         break;
     default:
         cerr << "Weapon Type does not match any types" << endl;
@@ -48,12 +52,16 @@ void PlayerWalkState::enter(Player* player) {
     case None_:
         break;
     case Sword_:
-        player->setTexture("../Resource/Texture/dante_walking_sword.png", 1, 8, 0); //set new texture ("path", row, column)
+        player->setTexture("../Resource/Texture/Dante/DanteSword/dante_walking_sword.png", 1, 8, 0); //set new texture ("path", row, column)
         player->getAnimationComponent()->setState("walkingSword"); //set state
         break;
     case Shield_:
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_walking_shield.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("walkingShield");
         break;
     case Bow_:
+        player->setTexture("../Resource/Texture/Dante/DanteBow/dante_walking_bow.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("walkingBow");
         break;
     default:
         cerr << "Weapon Type does not match any types" << endl;
@@ -82,12 +90,16 @@ void PlayerJumpUpState::enter(Player* player) {
     case None_:
         break;
     case Sword_:
-        player->setTexture("../Resource/Texture/dante_jumping_sword.png", 1, 2, 0); //set new texture ("path", row, column, starting anim)
+        player->setTexture("../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png", 1, 2, 0); //set new texture ("path", row, column, starting anim)
         player->getAnimationComponent()->setState("jumpingSword"); //set state
         break;
     case Shield_:
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_jumping_shield.png", 1, 2, 0);
+        player->getAnimationComponent()->setState("jumpingShield");
         break;
     case Bow_:
+        player->setTexture("../Resource/Texture/Dante/DanteBow/dante_jumping_bow.png", 1, 2, 0);
+        player->getAnimationComponent()->setState("jumpingBow");
         break;
     default:
         cerr << "Weapon Type does not match any types" << endl;
@@ -116,12 +128,16 @@ void PlayerFallDownState::enter(Player* player) {
     case None_:
         break;
     case Sword_:
-        player->setTexture("../Resource/Texture/dante_jumping_sword.png", 1, 2, 1); //set new texture ("path", row, column)
+        player->setTexture("../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png", 1, 2, 1); //set new texture ("path", row, column)
         player->getAnimationComponent()->setState("fallingSword"); //set state
         break;
     case Shield_:
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_falling_shield.png", 1, 1, 0);
+        player->getAnimationComponent()->setState("fallingShield");
         break;
     case Bow_:
+        player->setTexture("../Resource/Texture/Dante/DanteBow/dante_falling_bow.png", 1, 1, 0);
+        player->getAnimationComponent()->setState("fallingBow");
         break;
     default:
         cerr << "Weapon Type does not match any types" << endl;
