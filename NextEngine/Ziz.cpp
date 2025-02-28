@@ -11,7 +11,7 @@ Ziz::Ziz() {
 	//Collider
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.5f, 0.5f);
-	getTransform().setPosition(glm::vec3(2.0f, 3.0f, 0.0f));
+	getTransform().setPosition(glm::vec3(2.0f, 0.0f, 0.0f));
 	setDrawCollider(true);
 	getColliderComponent()->setTrigger(false);
 	//Animation
@@ -133,4 +133,9 @@ DrawableObject* Ziz::createStormRise() {
 	stormRise->setPlayer(player);
 
 	return stormRise;
+}
+
+DrawableObject* Ziz::createSwoopWarning(int side) {
+	SwoopWarning* warning = new SwoopWarning(side);
+	return warning;
 }

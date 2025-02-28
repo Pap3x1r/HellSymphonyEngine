@@ -3,6 +3,7 @@
 
 
 
+
 void LevelBossTest::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
@@ -62,12 +63,17 @@ void LevelBossTest::levelInit() {
 	stormRise->getTransform().setPosition(glm::vec3(0.0f,-2.0f,0.0f));
 	stormRise->setPlayer(player);*/
 
+
+	/*SwoopWarning* warning = new SwoopWarning();
+	objectsList.push_back(warning);*/
+
 	SimpleObject* floor = new SimpleObject();
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
 	floor->addColliderComponent();
 	floor->setDrawCollider(true);
 	objectsList.push_back(floor);
+
 
 	//cout << "Init Level" << endl;
 
@@ -79,6 +85,13 @@ void LevelBossTest::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	timeK += dt;
 	updateObjects(objectsList);
+
+	tempx2 = tempx;
+	tempx = ziz->getTransform().getPosition().y;
+	if (tempx2 != tempx) {
+		cout << "Ziz y: " << ziz->getTransform().getPosition().y << endl;
+	}
+	//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
 
 	if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, dt);
@@ -111,6 +124,11 @@ void LevelBossTest::levelUpdate() {
 			}
 
 			arrow->selfUpdate(dt);
+		}
+
+		SwoopWarning* swoopWarning = dynamic_cast<SwoopWarning*>(obj);
+		if (swoopWarning) {
+			swoopWarning->update(dt);
 		}
 
 		

@@ -17,7 +17,7 @@ void ZizGustState::enter(Boss* boss) {
 
     timer = 0.0f;
     startupTimer = 0.08f * 8; //8 frames startup
-    recoveryTimer = startupTimer + 0.08f * 10; //10 frame recovery
+    recoveryTimer = startupTimer + 0.08f * 20; //10 frame recovery
 
     ziz->setTexture("../Resource/Ziz/Gust_1.png");
     ziz->facePlayer();
@@ -41,6 +41,10 @@ void ZizGustState::update(Boss* boss, float dt) {
             //std::cout << "Tornado summoned!\n";
             ziz->setTexture("../Resource/Ziz/Gust_2(V2).png");
             //std::cout << "Ziz is recovering...\n";
+        }
+
+        if (timer >= startupTimer + (0.08f * 10) && timer < recoveryTimer) {
+            ziz->setTexture("../Resource/Ziz/Gust_3.png");
         }
         
     }

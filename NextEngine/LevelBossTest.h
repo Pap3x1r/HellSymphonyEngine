@@ -10,6 +10,8 @@
 #include "Bow.h"
 #include "Shield.h"
 
+#include "SwoopWarning.h"
+
 #include <list>
 
 
@@ -23,6 +25,9 @@ private:
 	Player* player;
 	Gust* gust;
 	StormRise* stormRise;
+
+	int tempx;
+	int tempx2;
 
 public:
 	virtual void levelLoad();

@@ -6,6 +6,7 @@
 #include "ZizStormRiseState.h"
 #include "Gust.h"
 #include "StormRise.h"
+#include "SwoopWarning.h"
 
 
 class Ziz : public Boss {
@@ -32,11 +33,13 @@ public:
 
     DrawableObject* createGust();
     DrawableObject* createStormRise();
+    DrawableObject* createSwoopWarning(int side);
 
     BossStateMachine* getStateMachine() const;
     void facePlayer();
     void setPlayer(Player* playr);
     Player* getPlayer();
+
     
 
 };
