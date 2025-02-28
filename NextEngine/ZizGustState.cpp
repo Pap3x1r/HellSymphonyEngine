@@ -12,8 +12,7 @@ ZizGustState* ZizGustState::getInstance() {
 }
 
 void ZizGustState::enter(Boss* boss) {
-    Ziz* ziz = dynamic_cast<Ziz*>(boss);
-    if (!ziz) return;
+    ziz = dynamic_cast<Ziz*>(boss);
 
     timer = 0.0f;
     startupTimer = 0.08f * 8; //8 frames startup
@@ -26,8 +25,6 @@ void ZizGustState::enter(Boss* boss) {
 }
 
 void ZizGustState::update(Boss* boss, float dt) {
-    Ziz* ziz = dynamic_cast<Ziz*>(boss);
-    if (!ziz) return;
 
     timer += dt;
 

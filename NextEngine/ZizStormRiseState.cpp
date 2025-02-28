@@ -1,4 +1,5 @@
 #include "ZizStormRiseState.h"
+#include "ZizGroundSlamState.h"
 
 ZizStormRiseState* ZizStormRiseState::instance = nullptr;
 
@@ -55,7 +56,7 @@ void ZizStormRiseState::update(Boss* boss, float dt) {
     }
     else {
         std::cout << "Ziz finished recovering from the tornado.\n";
-        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
     }
     
 }

@@ -14,6 +14,8 @@ private:
     float startupTimer;
     float recoveryTimer;
 
+    Ziz* ziz;
+
 public:
     
     static ZizGustState* getInstance();

@@ -1,4 +1,5 @@
 #include "ZizSwoopState.h"
+#include "ZizClawSlashState.h"
 
 ZizSwoopState* ZizSwoopState::instance = nullptr;
 
@@ -16,7 +17,7 @@ void ZizSwoopState::enter(Boss* boss) {
 
 	
 	ziz->setTexture("../Resource/Ziz/Swoop_1.png");
-	ziz->getPhysicsComponent()->setEnableGravity(false);
+	//ziz->getPhysicsComponent()->setEnableGravity(false);
 	isOffScreen = false;
 	hasFlew = false;
 	isDisplayingWarning = false;
@@ -41,6 +42,8 @@ void ZizSwoopState::enter(Boss* boss) {
 		startPos = glm::vec3(10.5f, 0.0f, 0.0f);
 		endPos = glm::vec3(-4.5f, 0.0f, 0.0f);
 	}
+
+	newSwoopWarning = ziz->createSwoopWarning(swoopDirection);
 	
 
 
@@ -86,7 +89,7 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 				
 				//cout << "BWT: " << beforeWarningTimer << endl;
 				if (beforeWarningTimer <= 0) {
-					DrawableObject* newSwoopWarning = ziz->createSwoopWarning(swoopDirection);
+					
 					ziz->getLevel()->addObject(newSwoopWarning);
 					ziz->facePlayer();
 					hasDisplayedWarning = true;
@@ -143,8 +146,9 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 				else {
 					recoveryTimer -= dt;
 					if (recoveryTimer <= 0) {
-						ziz->getPhysicsComponent()->setEnableGravity(true);
-						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+						//ziz->getPhysicsComponent()->setEnableGravity(true);
+						DrawableObject::destroyObject(attackCollider);
+						ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
 					}
 				}
 			}

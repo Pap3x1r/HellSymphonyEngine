@@ -17,6 +17,7 @@ void ZizWingSpanState::enter(Boss* boss) {
 
 
 	ziz->setTexture("../Resource/Ziz/WingSpan_1.png");
+	ziz->facePlayer();
 
 
 	isCurling = false;

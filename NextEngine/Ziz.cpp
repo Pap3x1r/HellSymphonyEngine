@@ -14,21 +14,21 @@ Ziz::Ziz() {
 	getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
 	getTransform().setPosition(glm::vec3(2.0f, 0.05, 0.0f));
 	setDrawCollider(true);
-	getColliderComponent()->setTrigger(false);
+	getColliderComponent()->setTrigger(true);
 	//Animation
 	//initAnimation(1, 1);
 	//getAnimationComponent()->addState("idle", 0, 1);
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
-	getPhysicsComponent()->setEnableGravity(true);
+	getPhysicsComponent()->setEnableGravity(false);
 	setTag(Tag::Enemy);
 
 	//other
 	isFacingRight = false;
 
 	currentState = new BossStateMachine();
-	currentState->changeState(ZizIdleState::getInstance(), this);
+	
 }
 
 Ziz::~Ziz() {
@@ -73,9 +73,14 @@ void Ziz::facePlayer() {
 	if (player) {
 		float playerX = player->getTransform().getPosition().x;
 		float zizX = getTransform().getPosition().x;
+
+		
 		isFacingRight = playerX > zizX;
+		
 		setFacingRight(isFacingRight);
 	}
+
+	
 	
 }
 
@@ -114,6 +119,7 @@ DrawableObject* Ziz::createGust() {
 	
 	
 	return gust;
+	
 }
 
 
@@ -140,4 +146,8 @@ DrawableObject* Ziz::createStormRise() {
 DrawableObject* Ziz::createSwoopWarning(int side) {
 	SwoopWarning* warning = new SwoopWarning(side);
 	return warning;
+}
+
+void Ziz::setIdleState(){
+	currentState->changeState(ZizIdleState::getInstance(), this);
 }

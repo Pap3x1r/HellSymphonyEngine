@@ -40,6 +40,9 @@ public:
     void setPlayer(Player* playr);
     Player* getPlayer();
 
+
+    void setIdleState();
+
     
 
 };

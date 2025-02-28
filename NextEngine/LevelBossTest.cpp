@@ -28,8 +28,13 @@ void LevelBossTest::levelInit() {
 	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
 	objectsList.push_back(player->getGroundChecker());
 
-
-	
+	if (player->getBow()) {
+		for (DrawableObject* obj : player->getBow()->getChainAttackList()) {
+			BowUltimateCollider* col = dynamic_cast<BowUltimateCollider*>(obj);
+			col->setPlayer(player);
+			objectsList.push_back(obj);
+		}
+	}
 
 	if (player->getSword()) {
 		for (DrawableObject* obj : player->getSword()->getChainAttackList()) {
@@ -53,6 +58,7 @@ void LevelBossTest::levelInit() {
 	ziz = ziz_;
 	ziz->setLevel(this);
 	ziz->setPlayer(player);
+	ziz->setIdleState();
 
 
 	/*Gust* gust_ = new Gust();
@@ -81,6 +87,7 @@ void LevelBossTest::levelInit() {
 
 	//cout << "Init Level" << endl;
 
+	
 
 
 }
@@ -93,9 +100,11 @@ void LevelBossTest::levelUpdate() {
 	tempx2 = tempx;
 	tempx = ziz->getTransform().getPosition().y;
 	if (tempx2 != tempx) {
-		cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
+		//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
 	}
 	//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
+	/*float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
+	cout << "Distance: " << distance << endl;*/
 
 	if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, dt);
@@ -135,6 +144,10 @@ void LevelBossTest::levelUpdate() {
 			swoopWarning->update(dt);
 		}
 
+		BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(obj);
+		if (attackCollider) {
+			attackCollider->update(dt);
+		}
 		
 
 	}
@@ -221,7 +234,51 @@ void LevelBossTest::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
-	case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
+	case 'q':
+		if (player->getWeaponType() == Bow_) {
+			//cout << "works" << endl;
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Sword_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Shield_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
+				}
+			}
+		}
+		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
 	case 'f': player->getBow()->setEnableDebug(); break;
@@ -241,7 +298,18 @@ void LevelBossTest::handleKey(char key) {
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
 		}
 		break;
+	case 'P':
+		if (player->getCanDash()) {
+			player->setMovementSpeed(player->getMovementSpeed() * 4);
+			player->setIsDashing(true);
+			player->setCanDash(false);
+		}
+		break;
+	case 't':
+		player->increaseUltimateSlot(1);
+		break;
 	case 'l':
+		cout << "L" << endl;
 		/*cout << "Spawned Storm Rise" << endl;
 		StormRise* stormRise_ = new StormRise();
 		objectsList.push_back(stormRise_);

@@ -74,7 +74,9 @@ void Gust::onCollisionEnter(Collider* collider) {
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
                 hasHit = true;
             }
+            cout << "delete Gust" << endl;
             DrawableObject::destroyObject(this);
+            
         }
     }
 }

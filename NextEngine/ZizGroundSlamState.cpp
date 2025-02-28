@@ -20,7 +20,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
 
 	cout << "Entering GroundSlam" << endl;
 	ziz->facePlayer();
-	ziz->getPhysicsComponent()->setEnablePhysics(false);
+	//ziz->getPhysicsComponent()->setEnablePhysics(false);
 
 	player = ziz->getPlayer();
 	if (player) {
@@ -150,7 +150,7 @@ void ZizGroundSlamState::update(Boss * boss, float dt){
 			else if (hasSlammed) {
 				recoveryTimer -= dt;
 				if (recoveryTimer <= 0) {
-					ziz->getPhysicsComponent()->setEnableGravity(true);
+					//ziz->getPhysicsComponent()->setEnableGravity(true);
 					ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 					DrawableObject::destroyObject(attackCollider);
 				}

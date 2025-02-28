@@ -25,6 +25,7 @@ private:
     float beforeSwoopTimer;
     const float swoopDuration = 0.5f;
     float t;
+    DrawableObject* newSwoopWarning;
 
     glm::vec3 endPos;
     glm::vec3 startPos;

@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-#include "Player.h"
+//#include "Player.h"
 #include "PlayerAttackCollider.h"
 
 class Sword {

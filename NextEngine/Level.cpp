@@ -61,20 +61,23 @@ void Level::handleAnalogStick(int type, float amount) {
 }
 
 void Level::updateObjects(list<DrawableObject*>& objectsList) {
-    for (std::list<DrawableObject*>::iterator itr = objectsList.begin(); itr != objectsList.end(); itr++) {
-        DrawableObject* obj = *itr;
-        if (obj->getMarkedForDelete()) {
-            itr = objectsList.erase(itr);
-            itr--;
-            continue;
-        }
-
+    for (DrawableObject* obj : objectsList) {
         if (obj->getIsActive()) {
             obj->update();
         }
     }
 
     handleObjectCollision(objectsList);
+
+    for (std::list<DrawableObject*>::iterator itr = objectsList.begin(); itr != objectsList.end(); itr++) {
+        DrawableObject* obj = *itr;
+        if (obj->getMarkedForDelete()) {
+            delete obj;
+            itr = objectsList.erase(itr);
+            itr--;
+            continue;
+        }
+    }
 }
 
 void Level::addObject(DrawableObject* obj) {
