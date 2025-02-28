@@ -2,6 +2,7 @@
 #include "BossStateM.h"
 #include "Ziz.h"
 #include "Level.h"
+#include "EnemyAttackCollider.h"
 
 class Ziz;
 
@@ -15,11 +16,23 @@ private:
     bool isOffScreen;
     bool isDisplayingWarning;
     bool hasDisplayedWarning;
+    bool hasReachedTarget;
     
-    float beforeWarningTimer = 1.0f;
+    float beforeWarningTimer;
+    float warningTimer;
+    float swoopTimer;
+    float recoveryTimer;
+    float beforeSwoopTimer;
+    const float swoopDuration = 0.5f;
+    float t;
+
+    glm::vec3 endPos;
+    glm::vec3 startPos;
+    glm::vec3 newPos;
 
 
     Ziz* ziz;
+    EnemyAttackCollider* attackCollider;
 
 public:
 

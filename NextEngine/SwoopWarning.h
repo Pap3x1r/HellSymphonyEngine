@@ -24,13 +24,9 @@ class SwoopWarning : public TexturedObject {
 			getTransform().setScale(glm::vec3(2.0f, 12.0f, 1.0f));
 		}
 
-		~SwoopWarning() {
-
-		}
-
 		void update(float dt) {
 			timer -= dt;
-			cout << "Timer: " << timer << endl;
+			//cout << "Timer: " << timer << endl;
 			if (timer <= 0) {
 				DrawableObject::destroyObject(this);
 			}
