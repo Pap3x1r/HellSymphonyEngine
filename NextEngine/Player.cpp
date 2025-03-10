@@ -95,7 +95,7 @@ Player::Player(float hp) {
 	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
-	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
+	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -3.0f));
 	getPhysicsComponent()->setEnableGravity(true);
 	//StateMachine
 	playerState = new StateMachine();
