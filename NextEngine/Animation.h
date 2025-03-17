@@ -32,6 +32,8 @@ class Animation {
 		float offsetX;
 		float offsetY;
 
+		float animationTimer = 0.0f;
+
 	public:
 		//Animator
 		void addState(string name, int row, int frameCount);

@@ -78,12 +78,13 @@ void Animation::setState(string name) {
 	State nextState = states[name];
 	if (nextState.name != currentState.name) {
 		currentFrame = startingFrame;
+		animationTimer = 0.0f;
+		setFrame(currentState.row, currentFrame);
 	}
 	currentState = states[name];
 }
 
 void Animation::updateCurrentState(float dt) {
-	static float animationTimer = 0.0f;
 	const float frameDuration = 1.0f / 12.0f; //Based on animation 12 frames per second.
 
 	animationTimer += dt;
