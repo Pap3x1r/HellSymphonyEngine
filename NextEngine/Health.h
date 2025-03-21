@@ -4,22 +4,22 @@
 class Health {
     float realHealth;
     float currentHealth;
-    float maxHealth;
+    float maxHealth = 100.0f;
     float witherHealth;
     float witherRecoverRate;
-    float witherDecreasePercent;
+    float witherDecreasePercent = 0.0f;
 
     bool destroyOnDead;
 
 public:
     Health(float health, float wither)
     {
-        realHealth = currentHealth = maxHealth = health;
+        realHealth = currentHealth = health;
         witherHealth = wither;
     }
 
     Health(float health) {
-        realHealth = currentHealth = maxHealth = health;
+        realHealth = currentHealth = health;
         witherHealth = 0;
     }
 
@@ -38,6 +38,16 @@ public:
         if (witherHealth < 0)
         {
             witherHealth = 0;
+        }
+
+
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        }
+
+        if (currentHealth + witherHealth > maxHealth) //Adjust wither health if currentHealth exceeds max
+        {
+            witherHealth = maxHealth - currentHealth;
         }
 
         if (recovering)
@@ -64,11 +74,6 @@ public:
             }
         }
 
-        if (currentHealth + witherHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-
         return currentHealth;
     }
 
@@ -83,24 +88,54 @@ public:
 
     void takeDamage(float amount)
     {
-        if (witherHealth > 0)
-        {
-            witherHealth -= amount * (witherDecreasePercent / 100.0f);
+        float decreaseAmount = amount * (witherDecreasePercent / 100.0f);
+
+        if (decreaseAmount > witherHealth) {
+            witherHealth = 0;  // Prevent negative wither health
+        }
+        else {
+            witherHealth -= decreaseAmount;
         }
 
         currentHealth -= amount;
+
+        if (currentHealth < 0) {
+            currentHealth = 0;
+        }
+
+        // Prevent total health (current + wither) exceeds maxHealth
+        if (currentHealth + witherHealth > maxHealth) {
+            witherHealth = maxHealth - currentHealth;
+        }
     }
     
     void takeDamage(float amount, float witherPercent)
-    {
-        if (witherHealth > 0)
-        {
-            witherHealth -= amount * (witherDecreasePercent / 100.0f);
+    {   
+
+        float decreaseAmount = amount * (witherDecreasePercent / 100.0f);
+
+        if (decreaseAmount > witherHealth) {
+            witherHealth = 0;  // Prevent negative wither health
+        }
+        else {
+            witherHealth -= decreaseAmount;
         }
 
-        witherHealth += amount * (witherPercent / 100.0f);
+        // Convert part of damage into wither health
+        float witherGain = amount * (witherPercent / 100.0f);
+        witherHealth += witherGain;
 
-        currentHealth -= amount * ((100.0f - witherPercent) / 100.0f);
+        // Take full damage to real health
+        currentHealth -= amount;
+
+        // Prevent negative health
+        if (currentHealth < 0) {
+            currentHealth = 0;
+        }
+
+        if (currentHealth + witherHealth > maxHealth) {
+            witherHealth = maxHealth - currentHealth;
+        }
     }
 
     void heal(float amount)

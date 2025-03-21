@@ -20,6 +20,9 @@ private:
 	Sword* sword;
 	Bow* bow;
 	Shield* shield;
+	//UI
+	SimpleObject* playerHealthBar;
+	SimpleObject* witherHealthBar;
 	int d = 0;
 	int row = 0;
 	int col = 0;

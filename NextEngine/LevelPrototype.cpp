@@ -66,6 +66,20 @@ void LevelPrototype::levelInit() {
 	floor->setDrawCollider(true);
 	objectsList.push_back(floor);
 
+	SimpleObject* witherHealthBar_ = new SimpleObject();
+	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
+	witherHealthBar_->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
+	witherHealthBar_->getTransform().setPosition(glm::vec3(-5.7f, -4.0f, 0.0f));
+	objectsList.push_back(witherHealthBar_);
+	witherHealthBar = witherHealthBar_;
+
+	SimpleObject* healthBar = new SimpleObject();
+	healthBar->setColor(0.0f, 1.0f, 0.0f);
+	healthBar->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
+	healthBar->getTransform().setPosition(glm::vec3(-5.7f, -4.0f, 0.0f));
+	objectsList.push_back(healthBar);
+	playerHealthBar = healthBar;
+
 	//cout << "Init Level" << endl;
 }
 
@@ -106,7 +120,28 @@ void LevelPrototype::levelUpdate() {
 			attackCollider->update(dt);
 		}
 	}
-	
+
+	float originalWidth = 4.5f;
+	float baseX = -5.7f;
+
+	float healthPercentage = player->getHealth()->getCurrentHP() / player->getHealth()->getMaxHP();
+	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
+
+	//cout << "healthPercentage: " << healthPercentage << endl;
+	cout << "totalHealthPercentage: " << totalHealthPercentage << endl;
+
+	float healthWidth = healthPercentage * originalWidth;
+	float witherWidth = totalHealthPercentage * originalWidth;
+
+	float healthX = baseX - (originalWidth - healthWidth) / 2.0f;
+	float witherX = baseX - (originalWidth - witherWidth) / 2.0f;
+
+	playerHealthBar->getTransform().setScale(glm::vec3(healthWidth, playerHealthBar->getTransform().getScale().y, playerHealthBar->getTransform().getScale().z));
+	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, -4.0f, 0.0f));
+
+	witherHealthBar->getTransform().setScale(glm::vec3(witherWidth, witherHealthBar->getTransform().getScale().y, witherHealthBar->getTransform().getScale().z));
+	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, -4.0f, 0.0f));
+
 	player->selfUpdate(dt);
 	sword->update(dt, player);
 	bow->update(dt, player);
