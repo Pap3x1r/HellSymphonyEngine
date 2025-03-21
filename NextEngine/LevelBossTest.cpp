@@ -21,7 +21,7 @@ void LevelBossTest::levelInit() {
 
 	
 
-	Player* player_ = new Player(100);
+	Player* player_ = new Player(100, 0, 3);
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);

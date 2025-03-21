@@ -17,6 +17,7 @@ class GameEngine {
 	GameStateController* stateController;
 	Time* time;
 	InputManager* inputHandler;
+	vector<string> texturePaths;
 
 	GameEngine();
 public:

@@ -355,6 +355,8 @@ GLuint GLRenderer::LoadTexture(string path) {
     // Free the image memory
     SDL_FreeSurface(image);
 
+    //textureCache[path] = texture;
+
     // Return the texture ID
     return texture;
 }

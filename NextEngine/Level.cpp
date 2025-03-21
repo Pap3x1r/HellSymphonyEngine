@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Player.h"
 #include "CollisionHandler.h"
 
 
@@ -83,3 +84,4 @@ void Level::updateObjects(list<DrawableObject*>& objectsList) {
 void Level::addObject(DrawableObject* obj) {
     objectsList.push_back(obj);
 }
+

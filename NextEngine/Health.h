@@ -5,16 +5,22 @@ class Health {
     float realHealth;
     float currentHealth;
     float maxHealth;
-    float witherHealth = 0;
+    float witherHealth;
     float witherRecoverRate;
     float witherDecreasePercent;
 
     bool destroyOnDead;
 
 public:
-    Health(int hp)
+    Health(float health, float wither)
     {
-        realHealth = currentHealth = maxHealth;
+        realHealth = currentHealth = maxHealth = health;
+        witherHealth = wither;
+    }
+
+    Health(float health) {
+        realHealth = currentHealth = maxHealth = health;
+        witherHealth = 0;
     }
 
     // Update is called once per frame
@@ -69,6 +75,10 @@ public:
     void setHP(float value)
     {
         currentHealth = value;
+    }
+
+    void setWitherHP(float value) {
+        witherHealth = value;
     }
 
     void takeDamage(float amount)
@@ -134,4 +144,5 @@ public:
     float getRealHP() { return realHealth; }
     float getCurrentHP() { return currentHealth; }
     float getMaxHP() { return maxHealth; }
+    float getWitherHP() { return witherHealth; }
 };

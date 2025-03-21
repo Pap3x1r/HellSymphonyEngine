@@ -1,6 +1,8 @@
 #include "LevelPrototype.h"
 #include "CollisionHandler.h"
 
+#include <fstream>
+
 void LevelPrototype::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
@@ -14,7 +16,8 @@ void LevelPrototype::levelLoad() {
 }
 
 void LevelPrototype::levelInit() {
-	Player* player_ = new Player(10);
+	Player* player_ = loadPlayerData("../Resource/Saves/PlayerData/playerData.txt");
+	//Player* player_ = new Player(100, 0, 3);
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
@@ -246,8 +249,14 @@ void LevelPrototype::handleKey(char key) {
 			}
 		}
 		break;
-	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
+	case 'r': 
+		savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
+		break;
+	case 'e': 
+		savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+		break;
 	case 'f': bow->setEnableDebug(); break;
 	case 'h': player->setWeaponType(Bow_); break;
 	case 'j': player->setWeaponType(Sword_); break;
@@ -406,4 +415,71 @@ void LevelPrototype::handleAnalogStick(int type, float amount) {
 
 void LevelPrototype::addObject(DrawableObject* obj) {
 	objectsList.push_back(obj);
+}
+
+Player* LevelPrototype::getPlayer() const {
+	return player;
+}
+
+void LevelPrototype::savePlayerData(const Player* player, const std::string& filename) {
+	ofstream outFile(filename);
+	if (!outFile) {
+		cerr << "Error opening file for writing!" << endl;
+		return;
+	}
+
+	// Save player data with descriptions and line breaks
+	outFile << "Player Health: " << getPlayer()->getHealth()->getCurrentHP() << endl;
+	outFile << "Player Wither Health: " << getPlayer()->getHealth()->getWitherHP() << endl;
+	outFile << "Player Lives: " << getPlayer()->getLives() << endl;
+
+	outFile.close();
+}
+
+Player* LevelPrototype::loadPlayerData(const string& filepath) {
+	ifstream inFile(filepath);
+	if (!inFile) {
+		cerr << "Error opening file for reading! Using default values.\n";
+		return new Player(100, 0, 3);
+	}
+
+	string line;
+
+	float hp = 100.0f;
+	float wither = 0.0f;
+	int lives = 3;
+
+	auto extractValue = [&inFile](const string& label, auto& value) {
+		string line;
+		if (getline(inFile, line)) {
+			size_t pos = line.find(label);
+			if (pos != string::npos) {
+				try {
+					value = stof(line.substr(pos + label.length()));  // Convert to float or int
+				}
+				catch (...) {
+					cerr << "Error reading " << label << endl;
+				}
+			}
+		}
+	};
+
+	extractValue("Player Health:", hp);
+	extractValue("Player Wither Health:", wither);
+	extractValue("Player Lives:", lives);
+
+
+	inFile.close();
+	cout << "Data loaded from text file.\n";
+
+	cout << "Player health: " << hp << endl;
+	cout << "Player wither health: " << wither << endl;
+	cout << "Player lives: " << lives << endl;
+
+	Player* player_ = new Player(hp, wither, lives);
+	/*player_->getHealth()->setHP(hp);
+	player_->getHealth()->setWitherHP(wither);
+	player_->setLives(lives);*/
+
+	return player_;
 }

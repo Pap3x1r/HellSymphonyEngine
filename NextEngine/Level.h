@@ -7,12 +7,13 @@
 #include "Button.h"
 #include "PlayerObject.h"
 #include "EnemyObject.h"
+#include "Player.h"
 
 class Level
 {
 private:
     list<DrawableObject*> objectsList;
-    PlayerObject* player;
+    Player* player;
     EnemyObject* enemy;
     TexturedObject* background;
 

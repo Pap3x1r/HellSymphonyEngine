@@ -23,6 +23,8 @@ enum WeaponType {
 };
 
 class Player : public TexturedObject {
+    int playerLives = 3;
+
     float movementSpeed = 5.0f;
     float minMovementSpeed = 5.0f;
     float maxMovementSpeed = 20.0f;
@@ -62,7 +64,7 @@ class Player : public TexturedObject {
     float velocityThreshold = 0.02f;
 
 public:
-    Player(float hp);
+    Player(float currentHealth, float witherHealth, int life);
     ~Player();
 
     void selfUpdate(float dt_) {
@@ -140,6 +142,13 @@ public:
         }
     }
 
+    void setLives(int value) {
+        playerLives = value;
+    }
+
+    int getLives() const {
+        return playerLives;
+    }
 
     void setInvincible(bool value) {
         isInvincible = value;
@@ -207,6 +216,8 @@ public:
 
     void setLevel(Level* newLevel);
     Level* getLevel() const;
+
+    Health* getHealth() const;
 
     Bow* getBow() const;
     Sword* getSword() const;

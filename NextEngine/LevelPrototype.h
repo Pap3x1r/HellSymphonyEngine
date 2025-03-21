@@ -36,4 +36,7 @@ public:
 	virtual void handleAnalogStick(int type, float amount);
 
 	virtual void addObject(DrawableObject* obj) override;
+	Player* getPlayer() const;
+	void savePlayerData(const Player* player, const std::string& filename);
+	Player* loadPlayerData(const string& filepath);
 };
