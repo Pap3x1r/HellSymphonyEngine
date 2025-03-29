@@ -163,6 +163,21 @@ float Ziz::getCurrentHealth() {
 	return health->getCurrentHP();
 }
 
+void Ziz::changePhase() {
+	currentState->changeState(ZizIdleState::getInstance(), this);
+	cout << "Interrupted, no Issue" << endl;
+
+	if (currentPhase == zizPhase::firstPhase) {
+		currentPhase = zizPhase::secondPhase;
+		cout << "Changed Phase to second" << endl;
+	}
+	else {
+		currentPhase = zizPhase::firstPhase;
+		cout << "Changed Phase to first" << endl;
+	}
+	
+}
+
 
 zizPhase Ziz::getPhase() const {
 	return currentPhase;

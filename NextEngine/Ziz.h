@@ -54,6 +54,7 @@ public:
     float getCurrentHealth();
 
     void setIdleState();
+    void changePhase();
 
     
 

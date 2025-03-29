@@ -237,6 +237,10 @@ void LevelBossTest::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
+	case 'm':
+		//cout << "M pressed" << endl;
+		ziz->changePhase();
+		break;
 	case 'q':
 		if (player->getWeaponType() == Bow_) {
 			//cout << "works" << endl;

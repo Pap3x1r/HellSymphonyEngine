@@ -39,8 +39,8 @@ void ZizIdleState::update(Boss* boss, float dt) {
     // Ziz Timer for idle
     if (idleTimer >= idleWaitTime) {
         //cout << "Ziz has idled, resetting state.\n";
-        ziz->getStateMachine()->changeState(ZizChompState::getInstance(), ziz);
-        //pickState();
+        //ziz->getStateMachine()->changeState(ZizChompState::getInstance(), ziz);
+        pickState();
     }
 
     //cout << "Ziz is idling...\n";
