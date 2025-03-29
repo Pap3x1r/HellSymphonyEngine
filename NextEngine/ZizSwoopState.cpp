@@ -33,12 +33,12 @@ void ZizSwoopState::enter(Boss* boss) {
 	//choose direction
 	swoopDirection = (rand() % 2 == 0) ? -1 : 1;
 	if (swoopDirection == -1) {
-		cout << "Ziz go from left to right" << endl;
+		//cout << "Ziz go from left to right" << endl;
 		startPos = glm::vec3(-10.5f, 0.0f, 0.0f);
 		endPos = glm::vec3(4.5f, 0.0f, 0.0f);
 	}
 	else if (swoopDirection == 1) {
-		cout << "Ziz go from right to left" << endl;
+		//cout << "Ziz go from right to left" << endl;
 		startPos = glm::vec3(10.5f, 0.0f, 0.0f);
 		endPos = glm::vec3(-4.5f, 0.0f, 0.0f);
 	}
@@ -62,7 +62,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	
 	ziz->getLevel()->addObject(attackCollider);
 
-	cout << "Ziz entered swoop" << endl;
+	//cout << "Ziz entered swoop" << endl;
 }
 
 void ZizSwoopState::update(Boss* boss, float dt) {
@@ -158,5 +158,5 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 }
 
 void ZizSwoopState::exit(Boss* boss) {
-	std::cout << "Ziz exiting Swoop State." << endl;
+	//std::cout << "Ziz exiting Swoop State." << endl;
 }

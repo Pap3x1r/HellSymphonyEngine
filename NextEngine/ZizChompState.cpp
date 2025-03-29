@@ -13,7 +13,7 @@ ZizChompState* ZizChompState::getInstance() {
 void ZizChompState::enter(Boss* boss) {
 	ziz = dynamic_cast<Ziz*>(boss);
 	if (ziz) {
-		cout << "Found Ziz" << endl;
+		//cout << "Found Ziz" << endl;
 	}
 	ziz->setTexture("../Resource/Ziz/Gust_2.png");
 	findPlayer();
@@ -56,7 +56,7 @@ void ZizChompState::enter(Boss* boss) {
 	attackCollider2->getColliderComponent()->setDimension(1.0f, 3.0f);
 	attackCollider2->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + attackOffSet, ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 
-	cout << "Ziz Ready to ClawSlash" << endl;
+	//cout << "Ziz Ready to ClawSlash" << endl;
 
 }
 
@@ -85,7 +85,7 @@ void ZizChompState::update(Boss* boss, float dt) {
 				if (startUpTimer1 <= 0) {
 					isPreparing = false;
 					isChomping = true;
-					cout << "About to Slash" << endl;
+					//cout << "About to Slash" << endl;
 					ziz->setTexture("../Resource/Ziz/ClawSlash_1.png");
 					ziz->getLevel()->addObject(attackCollider1);
 					attackCollider1->setActive(true);
@@ -98,7 +98,7 @@ void ZizChompState::update(Boss* boss, float dt) {
 				if (startUpTimer2 <= 0) {
 					isPreparing = false;
 					isChomping = true;
-					cout << "About to Slash" << endl;
+					//cout << "About to Slash" << endl;
 					ziz->setTexture("../Resource/Ziz/ClawSlash_2.png");
 					ziz->getLevel()->addObject(attackCollider2);
 					attackCollider2->setActive(true);
@@ -118,7 +118,7 @@ void ZizChompState::update(Boss* boss, float dt) {
 				if (activeTimer1 <= 0) {
 					isChomping = false;
 					hasChomped = true;
-					cout << "finish slashing" << endl;
+					//cout << "finish slashing" << endl;
 					DrawableObject::destroyObject(attackCollider1);
 				}
 				break;
@@ -130,7 +130,7 @@ void ZizChompState::update(Boss* boss, float dt) {
 				if (activeTimer2 <= 0) {
 					isChomping = false;
 					hasChomped = true;
-					cout << "finish slashing" << endl;
+					//cout << "finish slashing" << endl;
 					DrawableObject::destroyObject(attackCollider2);
 				}
 				break;

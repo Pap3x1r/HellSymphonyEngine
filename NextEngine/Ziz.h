@@ -50,6 +50,8 @@ public:
 
     zizPhase getPhase() const;
 
+    void phaseChangeTracker();
+    float getCurrentHealth();
 
     void setIdleState();
 

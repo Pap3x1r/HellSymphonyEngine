@@ -13,7 +13,7 @@ ZizClawSlashState* ZizClawSlashState::getInstance() {
 void ZizClawSlashState::enter(Boss* boss) {
 	ziz = dynamic_cast<Ziz*>(boss);
 	if (ziz) {
-		cout << "Found Ziz" << endl;
+		//cout << "Found Ziz" << endl;
 	}
 	ziz->setTexture("../Resource/Ziz/Gust_2.png");
 	findPlayer();
@@ -69,7 +69,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 	attackCollider3->getColliderComponent()->setDimension(3.0f, 3.0f);
 	attackCollider3->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + attackOffSet, ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 
-	cout << "Ziz Ready to ClawSlash" << endl;
+	//cout << "Ziz Ready to ClawSlash" << endl;
 
 }
 
@@ -98,7 +98,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (startUpTimer1 <= 0) {
 						isPreparing = false;
 						isSlashing = true;
-						cout << "About to Slash" << endl;
+						//cout << "About to Slash" << endl;
 						ziz->setTexture("../Resource/Ziz/ClawSlash_1.png");
 						ziz->getLevel()->addObject(attackCollider1);
 						attackCollider1->setActive(true);
@@ -111,7 +111,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (startUpTimer2 <= 0) {
 						isPreparing = false;
 						isSlashing = true;
-						cout << "About to Slash" << endl;
+						//cout << "About to Slash" << endl;
 						ziz->setTexture("../Resource/Ziz/ClawSlash_2.png");
 						ziz->getLevel()->addObject(attackCollider2);
 						attackCollider2->setActive(true);
@@ -124,7 +124,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (startUpTimer3 <= 0) {
 						isPreparing = false;
 						isSlashing = true;
-						cout << "About to Slash" << endl;
+						//cout << "About to Slash" << endl;
 						ziz->setTexture("../Resource/Ziz/ClawSlash_3.png");
 						ziz->getLevel()->addObject(attackCollider3);
 						attackCollider3->setActive(true);
@@ -144,7 +144,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (activeTimer1 <= 0) {
 						isSlashing = false;
 						hasSlashed = true;
-						cout << "finish slashing" << endl;
+						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider1);
 					}
 					break;
@@ -156,7 +156,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (activeTimer2 <= 0) {
 						isSlashing = false;
 						hasSlashed = true;
-						cout << "finish slashing" << endl;
+						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider2);
 					}
 					break;
@@ -168,7 +168,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					if (activeTimer3 <= 0) {
 						isSlashing = false;
 						hasSlashed = true;
-						cout << "finish slashing" << endl;
+						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider3);
 					}
 					break;

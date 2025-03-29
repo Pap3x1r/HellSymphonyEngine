@@ -18,13 +18,13 @@ void ZizGroundSlamState::enter(Boss* boss) {
 
 	ziz->setTexture("../Resource/Ziz/Swoop_1.png");
 
-	cout << "Entering GroundSlam" << endl;
+	//cout << "Entering GroundSlam" << endl;
 	ziz->facePlayer();
 	//ziz->getPhysicsComponent()->setEnablePhysics(false);
 
 	player = ziz->getPlayer();
 	if (player) {
-		cout << "Found Player" << endl;
+		//cout << "Found Player" << endl;
 	}
 
 	
@@ -56,7 +56,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
 		faceDirection = 1;
 	}
 	
-	cout << "EndPosOffSet: " << abs(ziz->getTransform().getPosition().x - targetPos.x) << endl;
+	//cout << "EndPosOffSet: " << abs(ziz->getTransform().getPosition().x - targetPos.x) << endl;
 
 	attackCollider = new EnemyAttackCollider(5);
 	attackCollider->setDraw(false);
@@ -68,7 +68,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
 	attackCollider->getTransform().setPosition(glm::vec3(targetPos.x, player->getTransform().getPosition().y - 1.0f, 0.0f));
 	ziz->getLevel()->addObject(attackCollider);
 
-	cout << "Too Close: " << tooClose << ", way Too close: " << wayTooClose << endl;
+	//cout << "Too Close: " << tooClose << ", way Too close: " << wayTooClose << endl;
 	
 
 
@@ -82,7 +82,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
 	recoveryTimer = 0.08f * 24;
 
 
-	cout << "Ziz Going to fly" << endl;
+	//cout << "Ziz Going to fly" << endl;
 }
 
 void ZizGroundSlamState::update(Boss * boss, float dt){
@@ -120,7 +120,7 @@ void ZizGroundSlamState::update(Boss * boss, float dt){
 				if (inAirTimer <= 0) {
 					
 					ziz->setTexture("../Resource/Ziz/GroundSlam_2.png");
-					cout << "Ziz gonna Slam" << endl;
+					//cout << "Ziz gonna Slam" << endl;
 					isSlamming = true;
 				}
 			}

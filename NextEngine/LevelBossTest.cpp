@@ -106,7 +106,7 @@ void LevelBossTest::levelUpdate() {
 	/*float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
 	cout << "Distance: " << distance << endl;*/
 
-	cout << ziz->getPhase() << endl;
+	//cout << ziz->getCurrentHealth() << endl;
 
 	if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, dt);

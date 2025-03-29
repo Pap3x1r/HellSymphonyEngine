@@ -153,6 +153,16 @@ void Ziz::setIdleState(){
 	currentState->changeState(ZizIdleState::getInstance(), this);
 }
 
+void Ziz::phaseChangeTracker() {
+	if (this->health->getCurrentHP() < this->health->getRealHP()/2) {//if current health = half of realHP
+		currentPhase = zizPhase::secondPhase;
+	}
+}
+
+float Ziz::getCurrentHealth() {
+	return health->getCurrentHP();
+}
+
 
 zizPhase Ziz::getPhase() const {
 	return currentPhase;
