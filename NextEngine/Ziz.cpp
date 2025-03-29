@@ -5,6 +5,7 @@
 Ziz::Ziz() {
 	setName("Ziz");
 	health = new Health(1000);
+	currentPhase = firstPhase;
 
 	setTexture("../Resource/Ziz/Idle.png");
 	getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
@@ -150,4 +151,9 @@ DrawableObject* Ziz::createSwoopWarning(int side) {
 
 void Ziz::setIdleState(){
 	currentState->changeState(ZizIdleState::getInstance(), this);
+}
+
+
+zizPhase Ziz::getPhase() const {
+	return currentPhase;
 }

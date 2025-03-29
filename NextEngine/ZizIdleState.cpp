@@ -5,6 +5,7 @@
 #include "ZizGroundSlamState.h"
 #include "ZizWingSpanState.h"
 #include "ZizClawSlashState.h"
+#include "ZizChompState.h"
 
 ZizIdleState* ZizIdleState::instance = nullptr;
 
@@ -38,8 +39,8 @@ void ZizIdleState::update(Boss* boss, float dt) {
     // Ziz Timer for idle
     if (idleTimer >= idleWaitTime) {
         //std::cout << "Ziz has idled, resetting state.\n";
-        //ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
-        pickState();
+        ziz->getStateMachine()->changeState(ZizChompState::getInstance(), ziz);
+        //pickState();
     }
 
     //std::cout << "Ziz is idling...\n";

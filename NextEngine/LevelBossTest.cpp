@@ -106,6 +106,8 @@ void LevelBossTest::levelUpdate() {
 	/*float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
 	cout << "Distance: " << distance << endl;*/
 
+	cout << ziz->getPhase() << endl;
+
 	if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, dt);
 	}
@@ -113,7 +115,8 @@ void LevelBossTest::levelUpdate() {
 	if (player->getStateMachine()) {
 		player->getStateMachine()->update(player, dt);
 	}
-		
+	
+
 
 	for (DrawableObject* obj : objectsList) {
 		
