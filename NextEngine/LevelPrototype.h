@@ -7,6 +7,8 @@
 #include "Bow.h"
 #include "Shield.h"
 
+#include "QTEManager.h"
+
 #include <list>
 
 class LevelPrototype : public Level
@@ -22,6 +24,7 @@ private:
 	Shield* shield;
 	//UI
 	SimpleObject* playerHealthBar;
+	SimpleObject* playerUltimateBar;
 	SimpleObject* witherHealthBar;
 	int d = 0;
 	int row = 0;
@@ -42,4 +45,5 @@ public:
 	Player* getPlayer() const;
 	void savePlayerData(const Player* player, const std::string& filename);
 	Player* loadPlayerData(const string& filepath);
+	void Phase1QTE();
 };

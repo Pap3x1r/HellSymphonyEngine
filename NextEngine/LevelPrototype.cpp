@@ -2,6 +2,7 @@
 #include "CollisionHandler.h"
 
 #include <fstream>
+static bool qteStarted = false;
 
 void LevelPrototype::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -69,16 +70,23 @@ void LevelPrototype::levelInit() {
 	SimpleObject* witherHealthBar_ = new SimpleObject();
 	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
 	witherHealthBar_->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
-	witherHealthBar_->getTransform().setPosition(glm::vec3(-5.7f, -4.0f, 0.0f));
+	witherHealthBar_->getTransform().setPosition(glm::vec3(-4.0f, -4.0f, 0.0f));
 	objectsList.push_back(witherHealthBar_);
 	witherHealthBar = witherHealthBar_;
 
 	SimpleObject* healthBar = new SimpleObject();
 	healthBar->setColor(0.0f, 1.0f, 0.0f);
 	healthBar->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
-	healthBar->getTransform().setPosition(glm::vec3(-5.7f, -4.0f, 0.0f));
+	healthBar->getTransform().setPosition(glm::vec3(-4.0f, -4.0f, 0.0f));
 	objectsList.push_back(healthBar);
 	playerHealthBar = healthBar;
+
+	SimpleObject* ultimateBar = new SimpleObject();
+	ultimateBar->setColor(235.0f / 255.0f, 168.0f / 255.0f, 52.0f / 255.0f);
+	ultimateBar->getTransform().setScale(glm::vec3(2.5f, 0.18f, 0.0f));
+	ultimateBar->getTransform().setPosition(glm::vec3(-4.0f, -3.65f, 0.0f));
+	objectsList.push_back(ultimateBar);
+	playerUltimateBar = ultimateBar;
 
 	//cout << "Init Level" << endl;
 }
@@ -86,10 +94,15 @@ void LevelPrototype::levelInit() {
 void LevelPrototype::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	timeK += dt;
-
 	player->getStateMachine()->update(player, dt);
 
 	updateObjects(objectsList);
+
+	if (qteStarted) {
+		qteStarted = false;
+		QTEManager* qteManager = QTEManager::getInstance();
+		qteManager->startQTE({ 'S', 'P' }, 999999999.0f);
+	}
 
 	for (DrawableObject* obj : objectsList) {
 
@@ -121,26 +134,44 @@ void LevelPrototype::levelUpdate() {
 		}
 	}
 
-	float originalWidth = 4.5f;
-	float baseX = -5.7f;
+	float healthOriginalWidth = 4.5f;
+	float healthBaseX = -5.7f;
 
+	//Health Bar
 	float healthPercentage = player->getHealth()->getCurrentHP() / player->getHealth()->getMaxHP();
-	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
+	healthPercentage = glm::clamp(healthPercentage, 0.0f, 1.0f);
 
-	//cout << "healthPercentage: " << healthPercentage << endl;
-	cout << "totalHealthPercentage: " << totalHealthPercentage << endl;
+	float healthWidth = healthPercentage * healthOriginalWidth;
 
-	float healthWidth = healthPercentage * originalWidth;
-	float witherWidth = totalHealthPercentage * originalWidth;
-
-	float healthX = baseX - (originalWidth - healthWidth) / 2.0f;
-	float witherX = baseX - (originalWidth - witherWidth) / 2.0f;
+	float healthX = healthBaseX - (healthOriginalWidth * 0.5f) + (healthWidth * 0.5f);
 
 	playerHealthBar->getTransform().setScale(glm::vec3(healthWidth, playerHealthBar->getTransform().getScale().y, playerHealthBar->getTransform().getScale().z));
 	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, -4.0f, 0.0f));
 
+	//Wither Health Bar
+	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
+	totalHealthPercentage = glm::clamp(totalHealthPercentage, 0.0f, 1.0f);
+
+	float witherWidth = totalHealthPercentage * healthOriginalWidth;
+
+	float witherX = healthBaseX - (healthOriginalWidth * 0.5f) + (witherWidth * 0.5f);
+
 	witherHealthBar->getTransform().setScale(glm::vec3(witherWidth, witherHealthBar->getTransform().getScale().y, witherHealthBar->getTransform().getScale().z));
 	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, -4.0f, 0.0f));
+
+	//Ultimate Bar
+	float ultimateOriginalWidth = 2.5f;
+	float ultimateBaseX = -6.7f;
+
+	float ultimatePercentage = (player->getUltimateSlot() * 100.0f + player->getUltimateGauge()) / (player->getUltimateSlotMax() * 100.0f);
+	ultimatePercentage = glm::clamp(ultimatePercentage, 0.0f, 1.0f);
+
+	float ultimateWidth = ultimatePercentage * ultimateOriginalWidth;
+
+	float ultimateX = ultimateBaseX - (ultimateOriginalWidth * 0.5f) + (ultimateWidth * 0.5f);
+
+	playerUltimateBar->getTransform().setScale(glm::vec3(ultimateWidth, playerUltimateBar->getTransform().getScale().y, playerUltimateBar->getTransform().getScale().z));
+	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, -3.65f, 0.0f));
 
 	player->selfUpdate(dt);
 	sword->update(dt, player);
@@ -193,9 +224,16 @@ void LevelPrototype::handleKey(char key) {
 
 	bool playerIsMoving = false;
 
+	QTEManager* qteManager = QTEManager::getInstance();
+	if (key != 'I') {
+		qteManager->handleInput(key);
+	}
 	//Jump -> higher priority
 
 	if (sword->getInChainAttack() || shield->getInChainAttack() || shield->getIsHolding() || bow->getIsShooting() || player->getIsDashing()) { //Prevent returning back to idle
+		if (!player->getIsDashing()) {
+			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+		}
 		return;
 	}
 
@@ -289,8 +327,9 @@ void LevelPrototype::handleKey(char key) {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 		break;
 	case 'e': 
-		savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
-		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+		//savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
+		//GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+		qteStarted = true;
 		break;
 	case 'f': bow->setEnableDebug(); break;
 	case 'h': player->setWeaponType(Bow_); break;
@@ -341,7 +380,7 @@ void LevelPrototype::handleMouse(int type, int x, int y) {
 	//Check player weapon
 	// assume type = bow first
 
-	if (player->getIsDashing()) { //Prevent returning
+	if (player->getIsDashing() || !player->getIsGrounded()) { //Prevent returning
 		return;
 	}
 
