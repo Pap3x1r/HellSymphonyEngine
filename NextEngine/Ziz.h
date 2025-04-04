@@ -8,12 +8,20 @@
 #include "StormRise.h"
 #include "SwoopWarning.h"
 
+enum zizPhase {
+    none,
+    firstPhase,
+    secondPhase
+};
 
 class Ziz : public Boss {
 
 private:
     bool isFacingRight = true;
     bool isGrounded = true;
+    
+
+    zizPhase currentPhase = zizPhase::firstPhase;
 
     Level* currentLevel;
     Health* health;
@@ -40,8 +48,13 @@ public:
     void setPlayer(Player* playr);
     Player* getPlayer();
 
+    zizPhase getPhase() const;
+
+    void phaseChangeTracker();
+    float getCurrentHealth();
 
     void setIdleState();
+    void changePhase();
 
     
 

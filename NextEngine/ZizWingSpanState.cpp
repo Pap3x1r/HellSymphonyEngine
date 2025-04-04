@@ -41,7 +41,7 @@ void ZizWingSpanState::enter(Boss* boss) {
 	ziz->getLevel()->addObject(attackCollider);
 
 
-	cout << "Ziz entered wing span" << endl;
+	//cout << "Ziz entered wing span" << endl;
 }
 	
 void ZizWingSpanState::update(Boss* boss, float dt) {

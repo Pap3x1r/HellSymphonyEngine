@@ -5,6 +5,7 @@
 Ziz::Ziz() {
 	setName("Ziz");
 	health = new Health(1000);
+	currentPhase = firstPhase;
 
 	setTexture("../Resource/Ziz/Idle.png");
 	getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
@@ -150,4 +151,34 @@ DrawableObject* Ziz::createSwoopWarning(int side) {
 
 void Ziz::setIdleState(){
 	currentState->changeState(ZizIdleState::getInstance(), this);
+}
+
+void Ziz::phaseChangeTracker() {
+	if (this->health->getCurrentHP() < this->health->getRealHP()/2) {//if current health = half of realHP
+		currentPhase = zizPhase::secondPhase;
+	}
+}
+
+float Ziz::getCurrentHealth() {
+	return health->getCurrentHP();
+}
+
+void Ziz::changePhase() {
+	currentState->changeState(ZizIdleState::getInstance(), this);
+	cout << "Interrupted, no Issue" << endl;
+
+	if (currentPhase == zizPhase::firstPhase) {
+		currentPhase = zizPhase::secondPhase;
+		cout << "Changed Phase to second" << endl;
+	}
+	else {
+		currentPhase = zizPhase::firstPhase;
+		cout << "Changed Phase to first" << endl;
+	}
+	
+}
+
+
+zizPhase Ziz::getPhase() const {
+	return currentPhase;
 }
