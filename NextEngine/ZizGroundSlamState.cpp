@@ -48,11 +48,11 @@ void ZizGroundSlamState::enter(Boss* boss) {
 
 
 	if (player->getTransform().getPosition().x > ziz->getTransform().getPosition().x) {
-		endPos = glm::vec3(player->getTransform().getPosition().x - endPosOffset, ziz->getTransform().getPosition().y, 0.0f);
+		endPos = glm::vec3(player->getTransform().getPosition().x - endPosOffset, 0.05f, 0.0f);
 		faceDirection = -1;
 	}
 	else if (player->getTransform().getPosition().x < ziz->getTransform().getPosition().x) {
-		endPos = glm::vec3(player->getTransform().getPosition().x + endPosOffset, ziz->getTransform().getPosition().y, 0.0f);
+		endPos = glm::vec3(player->getTransform().getPosition().x + endPosOffset, 0.05f, 0.0f);
 		faceDirection = 1;
 	}
 	
@@ -65,7 +65,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
 	attackCollider->setActive(false);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.0f, 1.0f);
-	attackCollider->getTransform().setPosition(glm::vec3(targetPos.x, player->getTransform().getPosition().y - 1.0f, 0.0f));
+	attackCollider->getTransform().setPosition(glm::vec3(targetPos.x, -1.9f, 0.0f));
 	ziz->getLevel()->addObject(attackCollider);
 
 	//cout << "Too Close: " << tooClose << ", way Too close: " << wayTooClose << endl;
@@ -160,5 +160,5 @@ void ZizGroundSlamState::update(Boss * boss, float dt){
 }
 
 void ZizGroundSlamState::exit(Boss* boss) {
-
+	DrawableObject::destroyObject(attackCollider);
 }

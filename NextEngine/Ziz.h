@@ -19,6 +19,7 @@ class Ziz : public Boss {
 private:
     bool isFacingRight = true;
     bool isGrounded = true;
+    bool hasTransformed = false;
     
 
     zizPhase currentPhase = zizPhase::firstPhase;
@@ -55,6 +56,7 @@ public:
 
     void setIdleState();
     void changePhase();
+    void interruptPhaseChange();
 
     Health* getHealth() const;
 

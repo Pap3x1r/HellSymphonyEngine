@@ -1,6 +1,14 @@
 #include "BossStateMachine.h"
 #include "BossStateM.h"
 #include "Boss.h"
+#include "ZizIdleState.h"
+#include "ZizGustState.h"
+#include "ZizSwoopState.h"
+#include "ZizGroundSlamState.h"
+#include "ZizWingSpanState.h"
+#include "ZizClawSlashState.h"
+#include "ZizChompState.h"
+#include "ZizTransitionState.h"
 
 BossStateMachine::BossStateMachine() {}
 
@@ -13,6 +21,28 @@ void BossStateMachine::changeState(BossStateM* newState, Boss* boss) {
         currentState->exit(boss);
     }
     currentState = newState;
+    if (currentState) {
+        currentState->enter(boss);
+    }
+}
+
+void BossStateMachine::interrupt(Boss* boss) {
+    if (currentState) {
+
+
+        if (currentState == ZizGroundSlamState::getInstance()) {
+            cout << "Interrupted from GroundSlam" << endl;
+            boss->getTransform().setPosition(boss->getTransform().getPosition().x, 0.05f);
+        }
+
+        if (currentState == ZizSwoopState::getInstance()) {
+            cout << "Interrupted from Swoop" << endl;
+            boss->getTransform().setPosition(boss->getTransform().getPosition().x, 0.05f);
+        }
+
+        currentState->exit(boss);
+    }
+    currentState = ZizTransitionState::getInstance();
     if (currentState) {
         currentState->enter(boss);
     }

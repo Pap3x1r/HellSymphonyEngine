@@ -115,7 +115,12 @@ void LevelBossTest::levelUpdate() {
 	if (player->getStateMachine()) {
 		player->getStateMachine()->update(player, dt);
 	}
+
+	//cout << "Ziz y: " << ziz->getTransform().getPosition().y << endl;
 	
+	if (ziz) {
+		ziz->phaseChangeTracker();
+	}
 
 
 	for (DrawableObject* obj : objectsList) {
@@ -161,6 +166,7 @@ void LevelBossTest::levelUpdate() {
 	player->getShield()->update(dt, player);
 
 	player->getAnimationComponent()->updateCurrentState(dt);
+	ziz->getAnimationComponent()->updateCurrentState(dt);
 
 	handleObjectCollision(objectsList);
 
@@ -239,7 +245,7 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'm':
 		//cout << "M pressed" << endl;
-		ziz->changePhase();
+		ziz->interruptPhaseChange();
 		break;
 	case 'q':
 		if (player->getWeaponType() == Bow_) {

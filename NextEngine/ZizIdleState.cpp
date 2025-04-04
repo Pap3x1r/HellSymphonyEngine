@@ -1,11 +1,6 @@
 #include "ZizIdleState.h"
 #include "Ziz.h"
-#include "ZizGustState.h"
-#include "ZizSwoopState.h"
-#include "ZizGroundSlamState.h"
-#include "ZizWingSpanState.h"
-#include "ZizClawSlashState.h"
-#include "ZizChompState.h"
+
 
 ZizIdleState* ZizIdleState::instance = nullptr;
 
@@ -25,8 +20,11 @@ void ZizIdleState::enter(Boss* boss) {
         //cout << "found Player" << endl;
     }
 
-    idleTimer = 0.0f;
-    ziz->setTexture("../Resource/Ziz/Idle.png");
+    idleTimer = 0.08f * 10;
+    //ziz->setTexture("../Resource/Ziz/Idle.png");
+
+    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Idle.png", 1, 10, 0);
+    ziz->getAnimationComponent()->setState("idle");
     ziz->facePlayer();
     //cout << "Ziz entered Idle State.\n";
 }
@@ -34,16 +32,13 @@ void ZizIdleState::enter(Boss* boss) {
 void ZizIdleState::update(Boss* boss, float dt) {
     if (!ziz) return;
 
-    idleTimer += dt;
-
-    // Ziz Timer for idle
-    if (idleTimer >= idleWaitTime) {
-        //cout << "Ziz has idled, resetting state.\n";
+    if (idleTimer > 0) {
+        idleTimer -= dt;
+    }
+    else {
         ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-        //pickState();
     }
 
-    //cout << "Ziz is idling...\n";
 }
 
 void ZizIdleState::exit(Boss* boss) {

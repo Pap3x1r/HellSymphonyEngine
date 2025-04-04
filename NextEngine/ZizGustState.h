@@ -6,13 +6,14 @@
 
 class Ziz;
 
-
 class ZizGustState : public BossStateM {
 private:
     static ZizGustState* instance;
     float timer;
     float startupTimer;
+    float activeTimer;
     float recoveryTimer;
+    int currentState;
 
     Ziz* ziz;
 

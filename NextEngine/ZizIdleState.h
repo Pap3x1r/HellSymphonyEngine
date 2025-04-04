@@ -2,6 +2,12 @@
 #include "BossStateM.h"
 #include "Ziz.h"
 #include "Player.h"
+#include "ZizGustState.h"
+#include "ZizSwoopState.h"
+#include "ZizGroundSlamState.h"
+#include "ZizWingSpanState.h"
+#include "ZizClawSlashState.h"
+#include "ZizChompState.h"
 
 class Ziz;
 
@@ -10,8 +16,7 @@ class ZizIdleState : public BossStateM {
 private:
 
     static ZizIdleState* instance;
-    float idleTimer = 0.0f;
-    float idleWaitTime = 1.0f;
+    float idleTimer;
 
     Ziz* ziz;
     Player* player;

@@ -16,9 +16,15 @@ Ziz::Ziz() {
 	getTransform().setPosition(glm::vec3(2.0f, 0.05, 0.0f));
 	setDrawCollider(true);
 	getColliderComponent()->setTrigger(true);
+
+
 	//Animation
-	//initAnimation(1, 1);
-	//getAnimationComponent()->addState("idle", 0, 1);
+	initAnimation(10,1);
+	getAnimationComponent()->addState("idle", 0, 10);
+	getAnimationComponent()->addState("gust", 0, 20);
+
+
+	
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
@@ -155,7 +161,12 @@ void Ziz::setIdleState(){
 
 void Ziz::phaseChangeTracker() {
 	if (this->health->getCurrentHP() < this->health->getRealHP()/2) {//if current health = half of realHP
-		currentPhase = zizPhase::secondPhase;
+		if (hasTransformed == false) {
+			cout << "half Health" << endl;
+			interruptPhaseChange();
+			hasTransformed = true;
+		}
+		//currentPhase = zizPhase::secondPhase;
 	}
 }
 
@@ -168,8 +179,6 @@ Health* Ziz::getHealth() const {
 }
 
 void Ziz::changePhase() {
-	currentState->changeState(ZizIdleState::getInstance(), this);
-	cout << "Interrupted, no Issue" << endl;
 
 	if (currentPhase == zizPhase::firstPhase) {
 		currentPhase = zizPhase::secondPhase;
@@ -180,6 +189,10 @@ void Ziz::changePhase() {
 		cout << "Changed Phase to first" << endl;
 	}
 	
+}
+
+void Ziz::interruptPhaseChange() {
+	getStateMachine()->interrupt(this);
 }
 
 
