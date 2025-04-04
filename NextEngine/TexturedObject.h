@@ -9,7 +9,8 @@
 
 
 class TexturedObject : public DrawableObject
-{
+{	
+	glm::vec3 spriteOffset;
 	unsigned int texture;
 	Animation* animation; // Might use vector in the future to support multiple animation state
 	/*bool animated = false;
@@ -30,4 +31,5 @@ public:
 	Animation* getAnimationComponent();
 	bool isAnimated();
 	//void setFrame(float row, float column);
+	void setSpriteOffset(glm::vec3 vector3);
 };

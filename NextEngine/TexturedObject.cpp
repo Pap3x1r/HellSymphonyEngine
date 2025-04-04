@@ -86,6 +86,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 	vector <glm::mat4> matrixStack;
 
 	glm::mat4 currentMatrix = this->getTransformMat4();
+	currentMatrix = glm::translate(currentMatrix, spriteOffset);
 
 	if (squareMesh != nullptr) {
 
@@ -111,6 +112,9 @@ bool TexturedObject::isAnimated() {
 	return animation != nullptr;
 }
 
+void TexturedObject::setSpriteOffset(glm::vec3 vector3) {
+	spriteOffset = vector3;
+}
 //void TexturedObject::addAnimation(int rowCount, int colCount) {
 //	animated = true;
 //	this->rowCount = rowCount;

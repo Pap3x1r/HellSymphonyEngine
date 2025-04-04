@@ -27,6 +27,11 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 
 	if (player) {
 		//playerInside = true;
+
+		if (player->getInvincible() || player->getIsDashing()) {
+			return;
+		}
+
 		if (!hasHit) {
 
 			if (player->getShield()->getIsBlocking()) { // is blocking

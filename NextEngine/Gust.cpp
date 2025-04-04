@@ -52,8 +52,12 @@ void Gust::onCollisionEnter(Collider* collider) {
     Player* player = dynamic_cast<Player*>(obj);
 
     if (player) {
-        //cout << "onCollisionEnter fired" << endl;
         //playerInside = true;
+
+        if (player->getInvincible() || player->getIsDashing()) {
+            return;
+        }
+
         if (!hasHit) {
 
             if (player->getShield()->getIsBlocking()) { // is blocking
@@ -64,18 +68,18 @@ void Gust::onCollisionEnter(Collider* collider) {
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+                    player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
                     hasHit = true;
                 }
             }
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
+                player->getHealth()->takeDamage(damage);
                 hasHit = true;
             }
-            cout << "delete Gust" << endl;
-            DrawableObject::destroyObject(this);
-            
         }
+
     }
 }
 
@@ -84,8 +88,12 @@ void Gust::onCollisionStay(Collider* collider) {
     Player* player = dynamic_cast<Player*>(obj);
 
     if (player) {
-        
         //playerInside = true;
+
+        if (player->getInvincible() || player->getIsDashing()) {
+            return;
+        }
+
         if (!hasHit) {
 
             if (player->getShield()->getIsBlocking()) { // is blocking
@@ -96,15 +104,16 @@ void Gust::onCollisionStay(Collider* collider) {
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+                    player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
                     hasHit = true;
                 }
             }
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
+                player->getHealth()->takeDamage(damage);
                 hasHit = true;
             }
-            DrawableObject::destroyObject(this);
         }
 
     }
@@ -119,8 +128,12 @@ void Gust::onTriggerEnter(Collider* collider) {
     Player* player = dynamic_cast<Player*>(obj);
 
     if (player) {
-        //cout << "onTriggerEnter fired" << endl;
         //playerInside = true;
+
+        if (player->getInvincible() || player->getIsDashing()) {
+            return;
+        }
+
         if (!hasHit) {
 
             if (player->getShield()->getIsBlocking()) { // is blocking
@@ -131,16 +144,18 @@ void Gust::onTriggerEnter(Collider* collider) {
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+                    player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
                     hasHit = true;
                 }
             }
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
+                player->getHealth()->takeDamage(damage);
                 hasHit = true;
             }
-            DrawableObject::destroyObject(this);
         }
+
     }
 }
 

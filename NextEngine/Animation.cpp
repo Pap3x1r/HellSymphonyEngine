@@ -39,6 +39,7 @@ void Animation::render(glm::mat4 globalModelTransform, Transform& transform) {
 	vector <glm::mat4> matrixStack;
 
 	glm::mat4 currentMatrix = transform.getTransformMat4();
+	currentMatrix = glm::translate(currentMatrix, animOffset);
 
 	if (squareMesh != nullptr) {
 
@@ -112,4 +113,8 @@ void Animation::setTexture(unsigned int newTexture) {
 
 void Animation::setStartingFrame(int frame) {
 	startingFrame = frame;
+}
+
+void Animation::setAnimOffset(glm::vec3 vector3) {
+	animOffset = vector3;
 }

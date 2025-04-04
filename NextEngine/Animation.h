@@ -34,6 +34,8 @@ class Animation {
 
 		float animationTimer = 0.0f;
 
+		glm::vec3 animOffset = { 0.0f,0.0f,0.0f };
+
 	public:
 		//Animator
 		void addState(string name, int row, int frameCount);
@@ -47,7 +49,15 @@ class Animation {
 		void setDimension(int row, int col);
 		void setTexture(unsigned int newTexture);
 		void setStartingFrame(int frame);
+
+		void setAnimOffset(glm::vec3 offset);
 		void setLoop(bool value) {
 			loop = value;
+		}
+		void setOffsetX(float offset) {
+			offsetX = offset;
+		}
+		void setOffsetY(float offset) {
+			offsetY = offset;
 		}
 };

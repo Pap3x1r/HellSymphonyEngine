@@ -25,6 +25,11 @@ private:
 	Player* player;
 	Gust* gust;
 	StormRise* stormRise;
+	//UI
+	SimpleObject* playerHealthBar;
+	SimpleObject* playerUltimateBar;
+	SimpleObject* witherHealthBar;
+	SimpleObject* bossHealthBar;
 
 	int tempx;
 	int tempx2;

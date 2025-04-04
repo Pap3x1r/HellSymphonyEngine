@@ -112,9 +112,13 @@ void StormRise::onCollisionStay(Collider* collider) {
 	Player* player = dynamic_cast<Player*>(obj);
 
 	if (player) {
+		//playerInside = true;
 
-		//playerIsInside = true;
-		if (!hasHit && isActive) {
+		if (player->getInvincible() || player->getIsDashing()) {
+			return;
+		}
+
+		if (!hasHit) {
 
 			if (player->getShield()->getIsBlocking()) { // is blocking
 				if (player->getShield()->getIsPerfect()) { //is perfectly timed
@@ -124,12 +128,14 @@ void StormRise::onCollisionStay(Collider* collider) {
 				}
 				else { //if blocking but not perfectly
 					cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+					player->getHealth()->takeDamage(damage, 30);
 					player->increaseUltimateGauge(damage / 2); // increase by withered damage.
 					hasHit = true;
 				}
 			}
 			else { //is not blocking
 				cout << "Enemy Hit Player for " << damage << " damage." << endl;
+				player->getHealth()->takeDamage(damage);
 				hasHit = true;
 			}
 		}

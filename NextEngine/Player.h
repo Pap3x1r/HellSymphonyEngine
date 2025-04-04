@@ -34,6 +34,7 @@ class Player : public TexturedObject {
     bool isGrounded = false;
     
     bool isInvincible = false;
+    float invincibleTimer = 0.0f;
 
     WeaponType currentWeapon = WeaponType::None_;
 
@@ -71,6 +72,15 @@ public:
 
         static float time;
         time += dt_;
+
+        if (isInvincible) {
+            invincibleTimer -= dt_;
+
+            if (invincibleTimer <= 0) {
+                invincibleTimer = 0;
+                isInvincible = false;
+            }
+        }
 
         if (currentUltimateSlot < ultimateSlotMax) {
             if (currentUltimateGauge >= ultimateGaugeMax) {
@@ -150,8 +160,17 @@ public:
         return playerLives;
     }
 
-    void setInvincible(bool value) {
+    void setInvincibleBool(bool value) {
         isInvincible = value;
+    }
+
+    void setInvincibleFloat(float value) {
+        isInvincible = true;
+        invincibleTimer = value;
+    }
+
+    bool getInvincible() const {
+        return isInvincible;
     }
 
     void setCanDash(bool value) {
