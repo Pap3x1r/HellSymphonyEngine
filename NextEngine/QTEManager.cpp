@@ -59,6 +59,7 @@
         for (char key : inputs) {
             cout << key << " ";
         }
+        cout << endl;
 
         isActive = false;
     }
@@ -77,8 +78,7 @@
         for (char key : inputs) {
             cout << key << " ";
         }
-
-
         cout << endl;
+
         isActive = false;
     }

@@ -34,5 +34,6 @@ public:
     void startQTE(const vector<char>& sequence, float timeLimit);
     void handleInput(char key);
     void update();
-    bool isActiveQTE() const { return isActive; }
+    bool getActive() const { return isActive; }
+    void setActive(bool value) { isActive = value; }
 };

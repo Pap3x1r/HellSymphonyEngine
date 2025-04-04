@@ -22,6 +22,7 @@ private:
 	Sword* sword;
 	Bow* bow;
 	Shield* shield;
+	QTEManager* qteManager;
 	//UI
 	SimpleObject* playerHealthBar;
 	SimpleObject* playerUltimateBar;
