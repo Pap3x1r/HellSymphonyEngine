@@ -18,7 +18,8 @@ private:
     bool isPreparing;
     bool isStartingUp;
 
-    float attackOffSet;
+    float attackOffSet1;
+    float attackOffSet2;
 
     float startUpTimer;
 

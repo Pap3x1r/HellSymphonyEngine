@@ -16,7 +16,9 @@ void ZizTransitionState::enter(Boss* boss) {
     if (!ziz) return;
 
     ziz->setTexture("../Resource/Ziz/Idle.png");
-    transitionTimer = 0.08 * 15;
+    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Transform.png", 1, 10, 0);
+    ziz->getAnimationComponent()->setState("transform");
+    transitionTimer = 0.08 * 20;
     transforming = true;
     transformed = false;
     bufferTimer = 0.08 * 36;
@@ -44,7 +46,7 @@ void ZizTransitionState::update(Boss* boss, float dt) {
         bufferTimer -= dt;
         if (bufferTimer < 0) {
             ziz->changePhase();
-            ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+            ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
         }
     }
     

@@ -16,6 +16,8 @@ void ZizClawSlashState::enter(Boss* boss) {
 		//cout << "Found Ziz" << endl;
 	}
 	ziz->setTexture("../Resource/Ziz/Gust_2.png");
+	ziz->setTexture("../Resource/Texture/Ziz/Ziz_Clawslash.png", 1, 44, 0);
+	ziz->getAnimationComponent()->setState("clawslash");
 	findPlayer();
 
     slashCount = 0;
@@ -26,19 +28,19 @@ void ZizClawSlashState::enter(Boss* boss) {
 
     attackOffSet = 1.0f;
 
-    startUpTimer = 1.0f;
+    startUpTimer = 0.08f * 10;
 
     startUpTimer1 = 0.08f * 6;
-    activeTimer1 = 0.08f * 2;
-    pauseTimer1 = 0.08f * 3;
+    activeTimer1 = 0.08f * 3;
+    pauseTimer1 = 0.08f * 0;
 
     startUpTimer2 = 0.08f * 2;
-    activeTimer2 = 0.08f * 2;
-    pauseTimer2 = 0.08f * 3;
+    activeTimer2 = 0.08f * 3;
+    pauseTimer2 = 0.08f * 0;
 
-    startUpTimer3 = 0.08f * 2;
-    activeTimer3 = 0.08f * 3;
-    pauseTimer3 = 0.08f * 6;
+    startUpTimer3 = 0.08f * 4;
+    activeTimer3 = 0.08f * 6;
+    pauseTimer3 = 0.08f * 0;
 
     recoveryTimer = 0.08f * 12;
 
@@ -84,7 +86,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 			if (startUpTimer <= 0) {
 				isPreparing = true;
 				isStartingUp = false;
-				ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
+				//ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
 			}
 		}
 		
@@ -99,7 +101,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						isPreparing = false;
 						isSlashing = true;
 						//cout << "About to Slash" << endl;
-						ziz->setTexture("../Resource/Ziz/ClawSlash_1.png");
+						//ziz->setTexture("../Resource/Ziz/ClawSlash_1.png");
 						ziz->getLevel()->addObject(attackCollider1);
 						attackCollider1->setActive(true);
 					}
@@ -112,7 +114,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						isPreparing = false;
 						isSlashing = true;
 						//cout << "About to Slash" << endl;
-						ziz->setTexture("../Resource/Ziz/ClawSlash_2.png");
+						//ziz->setTexture("../Resource/Ziz/ClawSlash_2.png");
 						ziz->getLevel()->addObject(attackCollider2);
 						attackCollider2->setActive(true);
 					}
@@ -125,7 +127,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						isPreparing = false;
 						isSlashing = true;
 						//cout << "About to Slash" << endl;
-						ziz->setTexture("../Resource/Ziz/ClawSlash_3.png");
+						//ziz->setTexture("../Resource/Ziz/ClawSlash_3.png");
 						ziz->getLevel()->addObject(attackCollider3);
 						attackCollider3->setActive(true);
 					}
@@ -139,7 +141,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				case 0:
 					activeTimer1 -= dt;
 
-					ziz->getTransform().translate(glm::vec3(25.0f * facingDirection * dt, 0.0f, 0.0f));
+					ziz->getTransform().translate(glm::vec3(15.0f * facingDirection * dt, 0.0f, 0.0f));
 					attackCollider1->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f,0.0f));
 					if (activeTimer1 <= 0) {
 						isSlashing = false;
@@ -151,7 +153,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				case 1:
 					activeTimer2 -= dt;
 
-					ziz->getTransform().translate(glm::vec3(25.0f * facingDirection * dt, 0.0f, 0.0f));
+					ziz->getTransform().translate(glm::vec3(15.0f * facingDirection * dt, 0.0f, 0.0f));
 					attackCollider2->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 					if (activeTimer2 <= 0) {
 						isSlashing = false;
@@ -163,7 +165,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				case 2:
 					activeTimer3 -= dt;
 
-					ziz->getTransform().translate(glm::vec3(15.0f * facingDirection * dt, 0.0f, 0.0f));
+					ziz->getTransform().translate(glm::vec3(10.0f * facingDirection * dt, 0.0f, 0.0f));
 					attackCollider3->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 					if (activeTimer3 <= 0) {
 						isSlashing = false;
@@ -183,7 +185,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				if (pauseTimer1 <= 0) {
 					isPreparing = true;
 					hasSlashed = false;
-					ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
+					//ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
 					slashCount++;
 					findPlayer();
 				}
@@ -194,7 +196,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				if (pauseTimer2 <= 0) {
 					isPreparing = true;
 					hasSlashed = false;
-					ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
+					//ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
 					slashCount++;
 					findPlayer();
 				}
@@ -205,7 +207,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 				if (pauseTimer3 <= 0) {
 					isPreparing = true;
 					hasSlashed = false;
-					ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
+					//ziz->setTexture("../Resource/Ziz/ClawSlash_4.png");
 					slashCount++;
 				}
 				break;
@@ -217,6 +219,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 	else {
 		// **Recovery Phase**
 		recoveryTimer -= dt;
+		cout << "recovering" << endl;
 		if (recoveryTimer <= 0) {
 			ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 		}
@@ -226,7 +229,9 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 }
 
 void ZizClawSlashState::exit(Boss* boss) {
-
+	DrawableObject::destroyObject(attackCollider1);
+	DrawableObject::destroyObject(attackCollider2);
+	DrawableObject::destroyObject(attackCollider3);
 }
 
 void ZizClawSlashState::findPlayer() {

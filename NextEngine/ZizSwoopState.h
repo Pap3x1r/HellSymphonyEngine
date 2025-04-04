@@ -18,6 +18,7 @@ private:
     bool hasDisplayedWarning;
     bool hasReachedTarget;
     
+    float flyUpTimer;
     float beforeWarningTimer;
     float warningTimer;
     float swoopTimer;

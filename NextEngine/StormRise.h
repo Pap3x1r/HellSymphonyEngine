@@ -12,15 +12,20 @@ private:
     bool playerIsInside;
     bool hasHit;
     bool isActive;
+    bool isBuffering;
+    bool isRecovering;
+    bool canAnim;
     float speed;
     float damage;
     float countdownTimer;
     float activeTimer;
+    float recoveryTimer;
+    float bufferTimer;
     Player* player;
 
 public:
-    StormRise(); //constructor for spawning directly for testing
-    StormRise(float cdTimer); //constructor for when ziz summons attack in actual game
+    
+    StormRise();
     void update(float dt);
     void onCollisionEnter(Collider* collider) override;
     void onCollisionStay(Collider* collider) override;
@@ -29,4 +34,6 @@ public:
     void onTriggerStay(Collider* collider) override;
     void onTriggerExit(Collider* collider) override;
     void setPlayer(Player* playr);
+    bool getCanAnim();
+    void setAnimStorm();
 };

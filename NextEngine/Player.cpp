@@ -96,7 +96,7 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
-	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -3.0f));
+	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -20.0f));
 	getPhysicsComponent()->setEnableGravity(true);
 	//StateMachine
 	playerState = new StateMachine();

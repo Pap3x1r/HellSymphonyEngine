@@ -18,45 +18,32 @@ void ZizStormRiseState::enter(Boss* boss) {
     
 
     
-    ziz->setTexture("../Resource/Ziz/StormRise.png");
+    //ziz->setTexture("../Resource/Ziz/StormRise.png");
     DrawableObject* newStormRise = ziz->createStormRise();
+    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Stormrise.png", 1, 37, 0);
+    ziz->getAnimationComponent()->setState("stormrise");
+
+
     ziz->getLevel()->addObject(newStormRise);
     ziz->facePlayer();
-    //cout << "StormRise summoned\n";
+
+
+
     
-
-    //cout << "Ziz summoned stormrise." << endl;
-
-    timer = 0.0f;
-    startupTimer = 0.08f * 24;
-    recoveryTimer = startupTimer + 0.08f * 16;
+    startupTimer = 0.08f * 37;
+    //recoveryTimer = startupTimer + 0.08f * 13;
 }
 
 void ZizStormRiseState::update(Boss* boss, float dt) {
     Ziz* ziz = dynamic_cast<Ziz*>(boss);
     if (!ziz) return;
 
-    timer += dt;
 
-    if (timer < startupTimer) {
-        //cout << "Ziz summoned...\n";
-
-        if (timer >= 0.08f * 8 && timer - dt < 0.08f * 8) {
-            ziz->setTexture("../Resource/Ziz/StormRise_2.png");
-            //cout << "Ziz charging\n";
-        }
-
-    }
-    else if (timer >= startupTimer && timer < recoveryTimer) {
-        if (timer - dt < startupTimer) {  // Ensures this runs only once
-            ziz->setTexture("../Resource/Ziz/WingSpan_3.png");
-            //cout << "Ziz is recovering...\n";
-        }
-        
+    if (startupTimer > 0) {
+        startupTimer -= dt;
     }
     else {
-        //cout << "Ziz finished recovering from the tornado.\n";
-        ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
     }
     
 }

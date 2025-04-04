@@ -10,7 +10,6 @@ class Ziz;
 class ZizStormRiseState : public BossStateM {
 private:
     static ZizStormRiseState* instance;
-    float timer;
     float startupTimer;
     float recoveryTimer;
 

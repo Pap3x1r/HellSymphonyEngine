@@ -22,7 +22,17 @@ Ziz::Ziz() {
 	initAnimation(10,1);
 	getAnimationComponent()->addState("idle", 0, 10);
 	getAnimationComponent()->addState("gust", 0, 20);
-
+	getAnimationComponent()->addState("stormrise", 0, 37);
+	getAnimationComponent()->addState("flyup",0, 7);
+	getAnimationComponent()->addState("swoop", 0, 1);
+	getAnimationComponent()->addState("groundslamstartup", 0, 8);
+	getAnimationComponent()->addState("groundslaminair", 0, 6);
+	getAnimationComponent()->addState("groundslamslamming", 0, 2);
+	getAnimationComponent()->addState("groundslamrecovery", 0, 10);
+	getAnimationComponent()->addState("clawslash", 0, 44);
+	getAnimationComponent()->addState("wingspan", 0, 22);
+	getAnimationComponent()->addState("transform", 0, 10);
+	getAnimationComponent()->addState("chomp", 0, 32);
 
 	
 	//Physics
@@ -104,15 +114,15 @@ DrawableObject* Ziz::createGust() {
 	
 	//Create Gust
 	Gust* gust = new Gust(getFacingRight());
-	gust->setTexture("../Resource/Texture/Tornado.png");
-	gust->getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
+	gust->setTexture("../Resource/Texture/Ziz/Ziz_Aircutter.png");
+	gust->getTransform().setScale(glm::vec3(1.0f, 2.0f, 1.0f));
 	gust->setDraw(true);
 	//-1.25
 	if (isFacingRight) {
-		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x + 1.5f, -1.2f, 1.0f));
+		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x + 1.5f, -1.5f, 1.0f));
 	}
 	else {
-		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 1.5f, -1.2f, 1.0f));
+		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 1.5f, -1.5f, 1.0f));
 	}
 	
 
@@ -131,21 +141,10 @@ DrawableObject* Ziz::createGust() {
 
 
 DrawableObject* Ziz::createStormRise() {
-	StormRise* stormRise = new StormRise(3.0f);
-	stormRise->setTexture("../Resource/Ziz/StormRiseProjectile.png");
-	stormRise->getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
-	stormRise->setDraw(true);
-	stormRise->getTransform().setPosition(glm::vec3(getTransform().getPosition().x,-2.4f,1.0f));
-
-	stormRise->addColliderComponent();
-	stormRise->getColliderComponent()->setTrigger(false);
-	stormRise->getColliderComponent()->setDimension(0.5f, 0.15f);
-	stormRise->getColliderComponent()->getTransform().translate(glm::vec3(0.0f, 0.1f, 0.0f));
-	stormRise->setDrawCollider(true);
-	stormRise->addPhysicsComponent();
-	stormRise->getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.1f));
-	stormRise->getPhysicsComponent()->setEnableGravity(true);
+	StormRise* stormRise = new StormRise();
+	
 	stormRise->setPlayer(player);
+	
 
 	return stormRise;
 }

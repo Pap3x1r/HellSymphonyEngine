@@ -1,4 +1,5 @@
 #pragma once
+
 #include "BossStateM.h"
 #include "Ziz.h"
 #include "Level.h"
@@ -8,44 +9,38 @@
 class Ziz;
 
 class ZizGroundSlamState : public BossStateM {
-	private:
-		static ZizGroundSlamState* instance;
+private:
+    static ZizGroundSlamState* instance;
 
-		bool hasFlew;
-		bool isAtMaxAlt;
-		bool hasSlammed;
-		bool isSlamming;
-		bool tooClose;
-		bool wayTooClose;
-		int faceDirection; //-1 for facing left, 1 for facing right
+    Ziz* ziz = nullptr;
+    Player* player = nullptr;
+    EnemyAttackCollider* attackCollider = nullptr;
 
+    // Phase control
+    bool hasLaunched = false;
+    bool peakReached = false;
+    bool isDescending = false;
+    bool hasImpacted = false;
+    bool tooClose = false;
+    bool wayTooClose = false;
 
-		Ziz* ziz;
-		Player* player;
-		EnemyAttackCollider* attackCollider;
-		glm::vec3 targetPos;
-		glm::vec3 endPos;
-		glm::vec3 startPos;
-		glm::vec3 newPos;
+    // Timers
+    float startupTime = 0.0f;
+    float hoverTime = 0.0f;
+    float slamTimer = 0.0f;
+    float descendTime = 0.0f;
+    float recoverTime = 0.0f;
 
-		float inAirTimer;
-		float slamTimer;
-		const float slamDuration = 0.08f * 3;
-		float t;
-		float endPosOffset;
+    // Movement points
+    glm::vec3 startupPosition;
+    glm::vec3 midairTarget;
+    glm::vec3 slamStartPos;
+    glm::vec3 impactPosition;
 
-		float recoveryTimer;
+public:
+    static ZizGroundSlamState* getInstance();
 
-	public:
-		
-		
-		static ZizGroundSlamState* getInstance();
-
-		void enter(Boss* boss) override;
-
-		void update(Boss* boss, float dt) override;
-
-		void exit(Boss* boss) override;
-
+    void enter(Boss* boss) override;
+    void update(Boss* boss, float dt) override;
+    void exit(Boss* boss) override;
 };
-

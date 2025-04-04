@@ -17,6 +17,8 @@ void ZizSwoopState::enter(Boss* boss) {
 
 	
 	ziz->setTexture("../Resource/Ziz/Swoop_1.png");
+	ziz->setTexture("../Resource/Texture/Ziz/Ziz_Flyup.png", 1, 7, 0);
+	ziz->getAnimationComponent()->setState("flyup");
 	//ziz->getPhysicsComponent()->setEnableGravity(false);
 	isOffScreen = false;
 	hasFlew = false;
@@ -24,6 +26,8 @@ void ZizSwoopState::enter(Boss* boss) {
 	hasDisplayedWarning = false;
 	hasReachedTarget = false;
 
+
+	flyUpTimer = 0.08f * 7;
 	beforeWarningTimer = 1.0f;
 	recoveryTimer = 0.08f * 8;
 	beforeSwoopTimer = 0.08f * 3;
@@ -70,16 +74,18 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 	if (ziz) {
 		if (!hasFlew) {
 			if (!isOffScreen) {
-				ziz->getTransform().translate(glm::vec3(0.0f, 20.0f * dt, 0.0f));
-				if (ziz->getTransform().getPosition().y > 9.0f) {
+
+				if (flyUpTimer > 0) {
+					flyUpTimer -= dt;
+				}
+				else {
+					ziz->getTransform().setPosition(glm::vec3(0.0f, 9.0f,1.0f));
 					isOffScreen = true;
 					if (!hasFlew) {
 						hasFlew = true;
-						//cout << "Ziz flew" << endl;
-
-
 					}
 				}
+
 			}
 			
 		}
@@ -96,7 +102,6 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					isDisplayingWarning = true;
 				}
 
-				
 			}
 
 			if (isOffScreen && hasDisplayedWarning && isDisplayingWarning) {
@@ -104,7 +109,8 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 				if (warningTimer <= 0) {
 					isDisplayingWarning = false;
 					//cout << "Warning done" << endl;
-					ziz->setTexture("../Resource/Ziz/Swoop_2 v2.png");
+					ziz->setTexture("../Resource/Texture/Ziz/Ziz_Swoop.png", 1, 1, 0);
+					ziz->getAnimationComponent()->setState("swoop");
 					switch (swoopDirection) {
 					case -1:
 						ziz->getTransform().setPosition(glm::vec3(-10.5f, 0.0f, 0.0f));
@@ -148,7 +154,8 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					if (recoveryTimer <= 0) {
 						//ziz->getPhysicsComponent()->setEnableGravity(true);
 						DrawableObject::destroyObject(attackCollider);
-						ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
+						//ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
+						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 					}
 				}
 			}
@@ -159,4 +166,5 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 
 void ZizSwoopState::exit(Boss* boss) {
 	//std::cout << "Ziz exiting Swoop State." << endl;
+	DrawableObject::destroyObject(attackCollider);
 }

@@ -23,10 +23,10 @@ private:
     
 
     zizPhase currentPhase = zizPhase::firstPhase;
-
+    BossStateMachine* currentState;
     Level* currentLevel;
     Health* health;
-    BossStateMachine* currentState;
+    
     Player* player;
 
 
@@ -43,6 +43,8 @@ public:
     DrawableObject* createGust();
     DrawableObject* createStormRise();
     DrawableObject* createSwoopWarning(int side);
+
+    
 
     BossStateMachine* getStateMachine() const;
     void facePlayer();

@@ -5,7 +5,7 @@ Gust::Gust() {
    
 
     setName("Gust");
-    setTexture("../Resource/Ziz/Tornado.png");
+    setTexture("../Resource/Texture/Ziz_Aircutter.png");
     getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
     addColliderComponent();
     
@@ -28,15 +28,13 @@ Gust::Gust() {
 Gust::Gust(bool facingRight) {
 
     isMovingRight = facingRight;
-    speed = 3.0f; 
+    speed = 5.0f; 
     hasHit = false;
     damage = 10;
     //cout << "Gust from Ziz created and moving\n";
 }
 
 void Gust::update(float dt) {
-
-
     // Move the tornado in the direction Ziz is facing
     if (isMovingRight) {
         getTransform().translate(glm::vec3(speed * dt, 0, 0));  // Moving right

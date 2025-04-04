@@ -28,7 +28,7 @@ class Player : public TexturedObject {
     float movementSpeed = 5.0f;
     float minMovementSpeed = 5.0f;
     float maxMovementSpeed = 20.0f;
-    float jumpingPower = 0.5f;
+    float jumpingPower = 1.0f;
 
     bool isFacingRight = true;
     bool isGrounded = false;

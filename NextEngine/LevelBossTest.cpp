@@ -1,6 +1,7 @@
 #include "LevelBossTest.h"
 #include "CollisionHandler.h"
 #include "Bow.h"
+#include "ZizGroundSlamState.h"
 
 
 
@@ -25,7 +26,7 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
-	player->getTransform().setPosition(glm::vec3(-5.0,2.0f,0.0f));
+	player->getTransform().setPosition(glm::vec3(-5.0,-0.8f,0.0f));
 	objectsList.push_back(player->getGroundChecker());
 
 	if (player->getBow()) {
@@ -116,7 +117,7 @@ void LevelBossTest::levelUpdate() {
 		player->getStateMachine()->update(player, dt);
 	}
 
-	//cout << "Ziz y: " << ziz->getTransform().getPosition().y << endl;
+	//cout << "player y: " << player->getTransform().getPosition().y << endl;
 	
 	if (ziz) {
 		ziz->phaseChangeTracker();
@@ -133,6 +134,10 @@ void LevelBossTest::levelUpdate() {
 		StormRise* stormRise = dynamic_cast<StormRise*>(obj);
 		if (stormRise) {
 			stormRise->update(dt);
+			if (stormRise->getCanAnim()) {
+				stormRise->getAnimationComponent()->updateCurrentState(dt);
+			}
+			
 		}
 
 		Arrow* arrow = dynamic_cast<Arrow*>(obj);
@@ -167,6 +172,7 @@ void LevelBossTest::levelUpdate() {
 
 	player->getAnimationComponent()->updateCurrentState(dt);
 	ziz->getAnimationComponent()->updateCurrentState(dt);
+	
 
 	handleObjectCollision(objectsList);
 

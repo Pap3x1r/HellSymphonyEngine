@@ -7,54 +7,36 @@ StormRise::StormRise() {
 	setName("StormRise");
 	setTexture("../Resource/Ziz/StormRiseProjectile.png");
 	getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
+	setDraw(true);
+	getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -2.4f, 1.0f));
 	addColliderComponent();
-
+	getColliderComponent()->setTrigger(true);
 	getColliderComponent()->setDimension(0.5f, 0.15f);
-	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, 0.1f, 0.0f));
 	setDrawCollider(true);
-	addPhysicsComponent();
-	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.1f));
-	getPhysicsComponent()->setEnableGravity(true);
+	
 
+	//getColliderComponent()->setDimension(1.0f, 1.0f);
+	
+	canAnim = false;
 	playerIsInside = false;
 	hasHit = false;
 	isActive = false;
-	speed = 5.0f;
+	isBuffering = false;
+	isRecovering = false;
+	speed = 4.0f;
 	damage = 10.0f;
 	countdownTimer = 0.08f * 24;
-	activeTimer = 0.08f * 4;
-}
-
-StormRise::StormRise(float cdTimer) {
-	playerIsInside = false;
-	hasHit = false;
-	isActive = false;
-	speed = 5.0f;
-	damage = 10.0f;
-	countdownTimer = 0.08f * 24;
-	activeTimer = 0.08f * 4;
+	bufferTimer = 0.08f * 0;
+	activeTimer = 0.08f * 24;
+	recoveryTimer = 0.08f * 7;
 }
 
 void StormRise::update(float dt) {
-
-	//cout << "Player inside: " << playerIsInside << endl;
-	
-
-	if (!isActive) {
+	if (!isActive && !isBuffering) {
 		countdownTimer -= dt;
-		//cout << "Counting Down: " << countdownTimer << endl;
 
-		if ((countdownTimer <= 0.0f) && (!isActive)) {
-			isActive = true;
-			setTexture("../Resource/Ziz/StormRiseProjectile_2.png");
-		}
-	}
-
-
-	if (!isActive) {
 		if (player) {
 			glm::vec3 playerPosition = player->getTransform().getPosition();
-
 			glm::vec3 currentPosition = getTransform().getPosition();
 
 			if (currentPosition.x < playerPosition.x) {
@@ -66,15 +48,52 @@ void StormRise::update(float dt) {
 
 			getTransform().setPosition(currentPosition);
 		}
-	}
-	else if (isActive) {
-		activeTimer -= dt;
-		//cout << "Active Timer Countdown: " << activeTimer << endl;
-		if (activeTimer <= 0.0f) {
-			DrawableObject::destroyObject(this);
+
+		if (countdownTimer <= 0.0f) {
+			isBuffering = true;
+			//cout << "buffering" << endl;
 		}
 	}
 
+
+	// Buffer phase
+	if (isBuffering == true && isActive == false) {
+		bufferTimer -= dt;
+
+		if (bufferTimer <= 0.0f) {
+			setAnimStorm();
+			isBuffering = false;
+			canAnim = true;
+			isActive = true;
+		}
+	}
+
+	// Active phase
+	if (isActive == true) {
+		activeTimer -= dt;
+
+		if (activeTimer < 0) {
+			isRecovering = true;
+			
+		}
+	}
+
+
+	if (isRecovering == true) {
+		recoveryTimer -= dt;
+		//cout << "recoveryTimer : " << recoveryTimer << endl;;
+		if (recoveryTimer <= 0) {
+			DrawableObject::destroyObject(this);
+		}
+	}
+}
+
+void StormRise::setAnimStorm() {
+	initAnimation(31, 1);
+	getAnimationComponent()->addState("stormcaller", 0, 31);
+	setTexture("../Resource/Texture/Ziz/Ziz_Stormcaller.png", 1, 31, 0);
+	getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
+	getAnimationComponent()->setState("stormcaller");
 }
 
 
@@ -138,5 +157,9 @@ void StormRise::onTriggerExit(Collider* collider) {
 
 void StormRise::setPlayer(Player* playr) {
 	player = playr;
+}
+
+bool StormRise::getCanAnim() {
+	return canAnim;
 }
 

@@ -53,3 +53,7 @@ void BossStateMachine::update(Boss* boss, float dt) {
         currentState->update(boss, dt);
     }
 }
+
+BossStateM* BossStateMachine::getCurrentState() {
+    return currentState;
+}
