@@ -1,4 +1,5 @@
 #include "PlayerAttackCollider.h"
+#include "Ziz.h"
 
 PlayerAttackCollider::PlayerAttackCollider() {
 	damage = 0;
@@ -53,13 +54,20 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
+	DrawableObject* obj2 = collider->getObject();
+	Ziz* ziz = dynamic_cast<Ziz*>(obj2);
+
 	if (enemy) {
 		//playerInside = true;
 		if (!hasHit) {
-			cout << "Player Hit Enemy for " << damage << " damage." << endl;
+			//cout << "Player Hit Enemy test for " << damage << " damage." << endl;
 			if (player) {
 				player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
-				cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
+				//cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
+			}
+
+			if (ziz) {
+				ziz->getHealth()->takeDamage(damage);
 			}
 
 			hasHit = true;

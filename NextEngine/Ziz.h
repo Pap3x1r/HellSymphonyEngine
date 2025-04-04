@@ -56,6 +56,8 @@ public:
     void setIdleState();
     void changePhase();
 
+    Health* getHealth() const;
+
     
 
 };

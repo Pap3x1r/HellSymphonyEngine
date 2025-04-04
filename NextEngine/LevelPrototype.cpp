@@ -327,9 +327,9 @@ void LevelPrototype::handleKey(char key) {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 		break;
 	case 'e': 
-		//savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
-		//GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
-		qteStarted = true;
+		savePlayerData(getPlayer(), "../Resource/Saves/PlayerData/playerData.txt");
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+		//qteStarted = true;
 		break;
 	case 'f': bow->setEnableDebug(); break;
 	case 'h': player->setWeaponType(Bow_); break;

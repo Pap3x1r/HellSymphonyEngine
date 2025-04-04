@@ -316,14 +316,7 @@ void LevelBossTest::handleKey(char key) {
 		player->increaseUltimateSlot(1);
 		break;
 	case 'l':
-		cout << "L" << endl;
-		/*cout << "Spawned Storm Rise" << endl;
-		StormRise* stormRise_ = new StormRise();
-		objectsList.push_back(stormRise_);
-		stormRise = stormRise_;
-		stormRise->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));
-		stormRise->setPlayer(player);*/
-
+		cout << "Ziz Health: "  << ziz->getCurrentHealth() << endl;
 		break;
 	}
 

@@ -163,6 +163,10 @@ float Ziz::getCurrentHealth() {
 	return health->getCurrentHP();
 }
 
+Health* Ziz::getHealth() const {
+	return health;
+}
+
 void Ziz::changePhase() {
 	currentState->changeState(ZizIdleState::getInstance(), this);
 	cout << "Interrupted, no Issue" << endl;
