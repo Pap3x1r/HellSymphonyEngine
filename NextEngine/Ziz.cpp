@@ -43,6 +43,7 @@ Ziz::Ziz() {
 
 	//other
 	isFacingRight = false;
+	dead = false;
 
 	currentState = new BossStateMachine();
 	
@@ -167,6 +168,12 @@ void Ziz::phaseChangeTracker() {
 		}
 		//currentPhase = zizPhase::secondPhase;
 	}
+
+	if (this->health->getCurrentHP() <= 0) {
+		dead = true;
+		interruptDeath();
+		cout << "ziz is dead" << endl;
+	}
 }
 
 float Ziz::getCurrentHealth() {
@@ -192,6 +199,10 @@ void Ziz::changePhase() {
 
 void Ziz::interruptPhaseChange() {
 	getStateMachine()->interrupt(this);
+}
+
+void Ziz::interruptDeath() {
+	getStateMachine()->interruptDeath(this);
 }
 
 

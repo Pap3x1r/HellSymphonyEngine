@@ -367,7 +367,7 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'm':
 		//cout << "M pressed" << endl;
-		ziz->interruptPhaseChange();
+		ziz->interruptDeath();
 		break;
 	case 'q':
 		if (player->getWeaponType() == Bow_) {

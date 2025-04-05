@@ -20,6 +20,7 @@ private:
     bool isFacingRight = true;
     bool isGrounded = true;
     bool hasTransformed = false;
+    bool dead;
     
 
     zizPhase currentPhase = zizPhase::firstPhase;
@@ -59,6 +60,7 @@ public:
     void setIdleState();
     void changePhase();
     void interruptPhaseChange();
+    void interruptDeath();
 
     Health* getHealth() const;
 
