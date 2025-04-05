@@ -31,6 +31,8 @@ private:
 	SimpleObject* witherHealthBar;
 	SimpleObject* bossHealthBar;
 
+	float playerTimeScale = 1.0f;
+
 	int tempx;
 	int tempx2;
 

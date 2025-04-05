@@ -176,6 +176,16 @@ void DrawableObject::update() {
 	updateBehavior();
 }
 
+void DrawableObject::update(float dt) {
+	processCollider();
+
+	if (physics != nullptr) {
+		physics->update(this->transform, dt);
+	}
+
+	updateBehavior();
+}
+
 void DrawableObject::setDrawCollider(bool value) {
 	canDrawCollider = value;
 }
@@ -227,7 +237,7 @@ void DrawableObject::drawCollider() {
 		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
 		glUniform3f(colorId, 0, 1, 0);
 		glUniform1i(renderModeId, 0);
-		squareBorderMesh->render();
+		//squareBorderMesh->render();
 	}
 }
 

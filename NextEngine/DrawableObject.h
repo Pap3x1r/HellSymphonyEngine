@@ -70,6 +70,7 @@ public:
 
 	virtual void updateBehavior();
 	virtual void update();
+	void update(float dt);
 
 	DrawableObject();
 	DrawableObject(string name);

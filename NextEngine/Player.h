@@ -24,6 +24,7 @@ enum WeaponType {
 
 class Player : public TexturedObject {
     int playerLives = 3;
+    bool isDead = false;
 
     float movementSpeed = 5.0f;
     float minMovementSpeed = 5.0f;
@@ -69,6 +70,7 @@ public:
     ~Player();
 
     void selfUpdate(float dt_) {
+        if (isDead) return;
 
         static float time;
         time += dt_;
@@ -154,6 +156,14 @@ public:
 
     void setLives(int value) {
         playerLives = value;
+    }
+
+    void setIsDead(bool value) {
+        isDead = value;
+    }
+
+    bool getIsDead() const {
+        return isDead;
     }
 
     int getLives() const {

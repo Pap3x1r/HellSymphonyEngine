@@ -120,7 +120,7 @@ void PlayerHeavyBowAttack::exit(Player* player) {
 //Bow Small Ult
 void PlayerSmallBowUlt::enter(Player* player) {
     cout << "Player enters Bow Small Ult state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png", 1, 17, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png", 1, 13, 0);
     player->getAnimationComponent()->setState("smallUltBow");
     currentPhase = STARTUP;
     time = 0.0f;
@@ -139,7 +139,7 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 1.167f) {
+        if (time >= 0.75f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -147,7 +147,7 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
     case ACTIVE:
         //do something
         //change phase
-        if (time >= 0.0f) {
+        if (time >= 0.083f) {
             currentPhase = RECOVERY;
             time = 0;
             attackCollider->resetHit();
@@ -188,7 +188,7 @@ void PlayerSmallBowUlt::exit(Player* player) {
 //Bow Big Ultimate
 void PlayerBigBowUlt::enter(Player* player) {
     cout << "Player enters Bow Big Ult state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png", 1, 19, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png", 1, 18, 0);
     player->getAnimationComponent()->setState("bigUltBow");
     currentPhase = STARTUP;
     time = 0.0f;

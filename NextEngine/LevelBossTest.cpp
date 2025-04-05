@@ -20,6 +20,10 @@ void LevelBossTest::levelLoad() {
 
 void LevelBossTest::levelInit() {
 
+	TexturedObject* background = new TexturedObject("background");
+	background->setTexture("../Resource/Texture/Lust_Alpha.png");
+	background->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	objectsList.push_back(background);
 	
 
 	Player* player_ = new Player(100, 0, 3);
@@ -28,6 +32,11 @@ void LevelBossTest::levelInit() {
 	player->setLevel(this);
 	player->getTransform().setPosition(glm::vec3(-5.0,-0.8f,0.0f));
 	objectsList.push_back(player->getGroundChecker());
+
+	player->setWeaponType(Sword_);
+	player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+
+	playerTimeScale = 1.0f;
 
 	if (player->getBow()) {
 		for (DrawableObject* obj : player->getBow()->getChainAttackList()) {
@@ -78,11 +87,12 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(warning);*/
 
 	SimpleObject* floor = new SimpleObject();
-	floor->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
+	floor->getTransform().setPosition(glm::vec3(0.0f, -3.7f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
 	floor->addColliderComponent();
 	floor->setName("Floor");
-	floor->setDrawCollider(true);
+	//floor->setDrawCollider(true);
+	floor->setDraw(false);
 	objectsList.push_back(floor);
 
 
@@ -122,6 +132,7 @@ void LevelBossTest::levelInit() {
 
 void LevelBossTest::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
+	float playerDT = dt * playerTimeScale;
 	timeK += dt;
 	updateObjects(objectsList);
 
@@ -137,11 +148,11 @@ void LevelBossTest::levelUpdate() {
 	//cout << ziz->getCurrentHealth() << endl;
 
 	if (ziz->getStateMachine()) {
-		ziz->getStateMachine()->update(ziz, dt);
+		ziz->getStateMachine()->update(ziz, playerDT);
 	}
 
 	if (player->getStateMachine()) {
-		player->getStateMachine()->update(player, dt);
+		player->getStateMachine()->update(player, playerDT);
 	}
 
 	//cout << "player y: " << player->getTransform().getPosition().y << endl;
@@ -191,6 +202,28 @@ void LevelBossTest::levelUpdate() {
 		
 
 	}
+
+
+
+	if (player->getHealth()->getCurrentHP() <= 0) {
+		player->setIsDead(true);
+		player->setTexture("../Resource/Texture/Dante/dante_Death.png", 1, 1, 0);
+		player->getAnimationComponent()->setState("death");
+		float xDiff = player->getTransform().getPosition().x - ziz->getTransform().getPosition().x;
+		if (xDiff >= 0) {
+			//vel+
+			player->getPhysicsComponent()->setVelocity(glm::vec2(1.5 * playerTimeScale, 0.8f * playerTimeScale));
+		}
+		else {
+			player->getPhysicsComponent()->setVelocity(glm::vec2(-1.5 * playerTimeScale, 0.8f * playerTimeScale));
+		}
+
+		float targetScale = 0.0f;
+		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
+		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
+		playerTimeScale = newScale;
+	}
+
 
 	float healthOriginalWidth = 4.5f;
 	float healthBaseX = -5.7f;
@@ -246,13 +279,13 @@ void LevelBossTest::levelUpdate() {
 	bossHealthBar->getTransform().setScale(glm::vec3(bossHealthWidth, bossHealthBar->getTransform().getScale().y, bossHealthBar->getTransform().getScale().z));
 	bossHealthBar->getTransform().setPosition(glm::vec3(bossHealthX, 4.0f, 0.0f));
 
-	player->selfUpdate(dt);
-	player->getSword()->update(dt, player);
-	player->getBow()->update(dt, player);
-	player->getShield()->update(dt, player);
+	player->selfUpdate(playerDT);
+	player->getSword()->update(playerDT, player);
+	player->getBow()->update(playerDT, player);
+	player->getShield()->update(playerDT, player);
 
-	player->getAnimationComponent()->updateCurrentState(dt);
-	ziz->getAnimationComponent()->updateCurrentState(dt);
+	player->getAnimationComponent()->updateCurrentState(playerDT);
+	ziz->getAnimationComponent()->updateCurrentState(playerDT);
 	
 
 	handleObjectCollision(objectsList);
@@ -285,6 +318,8 @@ void LevelBossTest::handleKey(char key) {
 	bool playerIsMoving = false;
 
 	//Jump -> higher priority
+
+	if (player->getIsDead() && key != 'r') return;
 
 	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 		return;
@@ -381,10 +416,22 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
-	case 'f': player->getBow()->setEnableDebug(); break;
-	case 'h': player->setWeaponType(Bow_); break;
-	case 'j': player->setWeaponType(Sword_); break;
-	case 'g': player->setWeaponType(Shield_); cout << "Works" << endl; break;
+	case 'f': //player->getBow()->setEnableDebug(); break;
+		player->getHealth()->takeDamage(99);
+		//player->increaseUltimateSlot(1);
+		break;
+	case 'h': 
+		player->setWeaponType(Bow_); 
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		break;
+	case 'j':
+		player->setWeaponType(Sword_); 
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		break;
+	case 'g': 
+		player->setWeaponType(Shield_);
+		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		break;
 	case 'I': //No Movement Input -> Idle
 		if (player->getIsGrounded()) {
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
@@ -436,6 +483,8 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 
 	//Check player weapon
 	// assume type = bow first
+
+	if (player->getIsDead()) return;
 
 	if (player->getWeaponType() == Bow_) {
 		if (type == 0) {

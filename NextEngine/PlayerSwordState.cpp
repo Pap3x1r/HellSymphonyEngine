@@ -42,7 +42,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.083f) { //2 frames
+        if (time >= 0.167f) { //2 frames
             currentPhase = ACTIVE;
             time = 0;
             attackCollider->resetHit();
@@ -73,7 +73,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.25f) { //time's up
+        if (time >= 0.167f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -89,7 +89,7 @@ void PlayerLightSwordAttack1::exit(Player* player) {
 //Light Sword Attack 2
 void PlayerLightSwordAttack2::enter(Player* player) {
     cout << "Player enters Sword Light Attack 2 state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png", 1, 4, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png", 1, 5, 0);
     player->getAnimationComponent()->setState("lightAttack2Sword");
     currentPhase = STARTUP;
     time = 0.0f;
@@ -141,7 +141,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
             return;
         }
 
-        if (time >= 0.083f) { //time's up
+        if (time >= 0.167f) { //time's up
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -162,7 +162,7 @@ void PlayerLightSwordAttack2::exit(Player* player) {
 //Light Sword Attack 3
 void PlayerLightSwordAttack3::enter(Player* player) {
     cout << "Player enters Sword Light Attack 3 state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png", 1, 4, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png", 1, 5, 0);
     player->getAnimationComponent()->setState("lightAttack3Sword");
     currentPhase = STARTUP;
     time = 0.0f;
@@ -186,7 +186,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 0.0f) {
+        if (time >= 0.083f) {
             currentPhase = ACTIVE;
             time = 0;
             attackCollider->resetHit();
@@ -294,6 +294,7 @@ void PlayerSmallSwordUlt::enter(Player* player) {
     currentPhase = STARTUP;
     player->getSword()->setInChainAttack(true); //Player is in chain attack
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.2f, 0.0f, 0.0f));
 }
 
 void PlayerSmallSwordUlt::update(Player* player, float dt_) {
@@ -351,16 +352,18 @@ void PlayerSmallSwordUlt::update(Player* player, float dt_) {
 void PlayerSmallSwordUlt::exit(Player* player) {
     cout << "Player exits Sword Small Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 ////BigSwordUlt
 void PlayerBigSwordUlt::enter(Player* player) {
     cout << "Player enters Sword Big Ult state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUlt_sword.png", 1, 19, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUlt_sword.png", 1, 25, 0);
     player->getAnimationComponent()->setState("bigUltSword");
     currentPhase = STARTUP;
     player->getSword()->setInChainAttack(true); //Player is in chain attack
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.125f, -0.165f, 0.0f));
 }
 
 void PlayerBigSwordUlt::update(Player* player, float dt_) {
@@ -374,7 +377,7 @@ void PlayerBigSwordUlt::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 1.5f) {
+        if (time >= 2.0f) {
             currentPhase = ACTIVE;
             time = 0;
             attackCollider->resetHit();
@@ -411,4 +414,5 @@ void PlayerBigSwordUlt::update(Player* player, float dt_) {
 void PlayerBigSwordUlt::exit(Player* player) {
     cout << "Player exits Sword Big Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }

@@ -59,11 +59,11 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	getAnimationComponent()->addState("fallingSword", 0, 1);
 	getAnimationComponent()->addState("dashSword", 0, 1);
 	getAnimationComponent()->addState("lightAttack1Sword", 0, 6);
-	getAnimationComponent()->addState("lightAttack2Sword", 0, 4);
-	getAnimationComponent()->addState("lightAttack3Sword", 0, 4);
+	getAnimationComponent()->addState("lightAttack2Sword", 0, 5);
+	getAnimationComponent()->addState("lightAttack3Sword", 0, 5);
 	getAnimationComponent()->addState("heavyAttackSword", 0, 7);
 	getAnimationComponent()->addState("smallUltSword", 0, 10);
-	getAnimationComponent()->addState("bigUltSword", 0, 19);
+	getAnimationComponent()->addState("bigUltSword", 0, 25);
 	//Shield States
 	getAnimationComponent()->addState("idleShield", 0, 8);
 	getAnimationComponent()->addState("walkingShield", 0, 8);
@@ -85,7 +85,9 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	getAnimationComponent()->addState("lightAttackBow", 0, 8);
 	getAnimationComponent()->addState("heavyAttackBow", 0, 16);
 	getAnimationComponent()->addState("smallUltBow", 0, 17);
-	getAnimationComponent()->addState("bigUltBow", 0, 19);
+	getAnimationComponent()->addState("bigUltBow", 0, 18);
+	//Death
+	getAnimationComponent()->addState("death", 0, 1);
 
 	//Collider
 	addColliderComponent();
@@ -93,7 +95,7 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	//getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
 	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, -1.0f, 0.0f));
 	//getColliderComponent()->setTrigger(true);
-	setDrawCollider(true);
+	//setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -20.0f));

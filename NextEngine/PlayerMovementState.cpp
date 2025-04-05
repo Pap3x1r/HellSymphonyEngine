@@ -104,6 +104,8 @@ void PlayerJumpUpState::enter(Player* player) {
     default:
         cerr << "Weapon Type does not match any types" << endl;
     }
+
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, -0.165f, 0.0f));
 }
 
 void PlayerJumpUpState::update(Player* player, float dt_) {
@@ -118,6 +120,7 @@ void PlayerJumpUpState::update(Player* player, float dt_) {
 
 void PlayerJumpUpState::exit(Player* player) {
     //cout << "Player exits Jump Up state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 //Fall Down
@@ -142,6 +145,8 @@ void PlayerFallDownState::enter(Player* player) {
     default:
         cerr << "Weapon Type does not match any types" << endl;
     }
+
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, -0.165f, 0.0f));
 }
 
 void PlayerFallDownState::update(Player* player, float dt_) {
@@ -156,4 +161,5 @@ void PlayerFallDownState::update(Player* player, float dt_) {
 
 void PlayerFallDownState::exit(Player* player) {
     //cout << "Player exits Fall Down state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }

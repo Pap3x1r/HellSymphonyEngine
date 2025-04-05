@@ -78,6 +78,33 @@ void Physics::update(Transform& transform) {
 	transform.translate(velocityVec);
 }
 
+void Physics::update(Transform& transform, float dt) {
+	if (!enablePhysics) {
+		return;
+	}
+
+	if (enableGravity) {
+		applyGravity();
+	}
+
+	velocity += acceleration;
+	acceleration *= (1.0f - drag);
+	force = mass * (velocity / dt);
+
+	if (abs(force.x) < 0.05f) {
+		force.x = 0.0f;
+	}
+	if (abs(force.y) < 0.05f) {
+		force.y = 0.0f;
+	}
+
+	glm::vec3 velocityVec = glm::vec3(velocity.x, velocity.y, 0.0f);
+	//velocityVec *= CONST_DELTA_TIME; // for testing, change later
+	velocityVec *= dt;
+	lastPos = transform.getPosition();
+	transform.translate(velocityVec);
+}
+
 glm::vec3 Physics::getLastPosition() {
 	return lastPos;
 }

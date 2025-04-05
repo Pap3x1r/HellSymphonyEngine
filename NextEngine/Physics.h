@@ -32,6 +32,7 @@ class Physics {
 		void setDrag(float drag);
 		void applyGravity();
 		void update(Transform& transform);
+		void update(Transform& transform, float dt);
 
 		glm::vec3 getLastPosition();
 		glm::vec2 getVelocity();
