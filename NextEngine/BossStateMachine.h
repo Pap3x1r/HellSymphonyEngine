@@ -14,5 +14,6 @@ public:
     void changeState(BossStateM* newState, Boss* boss);
     void update(Boss* boss, float dt);
     void interrupt(Boss* boss);
+    void interruptDeath(Boss* boss);
     BossStateM* getCurrentState();
 };

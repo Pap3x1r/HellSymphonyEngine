@@ -224,6 +224,14 @@ void LevelBossTest::levelUpdate() {
 		playerTimeScale = newScale;
 	}
 
+	if (ziz->getHealth()->getCurrentHP() <= 0) {
+		player->setIsDead(true);
+		float targetScale = 0.0f;
+		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
+		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
+		playerTimeScale = newScale;
+	}
+
 
 	float healthOriginalWidth = 4.5f;
 	float healthBaseX = -5.7f;
@@ -415,8 +423,8 @@ void LevelBossTest::handleKey(char key) {
 		}
 		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
-	case 'f': //player->getBow()->setEnableDebug(); break;
+	//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
+	//case 'f': //player->getBow()->setEnableDebug(); break;
 		player->getHealth()->takeDamage(99);
 		//player->increaseUltimateSlot(1);
 		break;
@@ -452,12 +460,12 @@ void LevelBossTest::handleKey(char key) {
 			player->setCanDash(false);
 		}
 		break;
-	case 't':
-		player->increaseUltimateSlot(1);
-		break;
-	case 'l':
-		cout << "Ziz Health: "  << ziz->getCurrentHealth() << endl;
-		break;
+	////case 't':
+	//	player->increaseUltimateSlot(1);
+	//	break;
+	////case 'l':
+	//	cout << "Ziz Health: "  << ziz->getCurrentHealth() << endl;
+	//	break;
 	}
 
 

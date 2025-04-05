@@ -48,6 +48,10 @@ void BossStateMachine::interrupt(Boss* boss) {
     }
 }
 
+void BossStateMachine::interruptDeath(Boss* boss) {
+
+}
+
 void BossStateMachine::update(Boss* boss, float dt) {
     if (currentState) {
         currentState->update(boss, dt);

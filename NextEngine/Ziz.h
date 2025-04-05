@@ -4,6 +4,7 @@
 #include "ZizIdleState.h"
 #include "ZizGustState.h"
 #include "ZizStormRiseState.h"
+#include "ZizDeathState.h"
 #include "Gust.h"
 #include "StormRise.h"
 #include "SwoopWarning.h"

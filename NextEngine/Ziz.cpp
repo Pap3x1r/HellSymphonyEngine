@@ -4,7 +4,7 @@
 
 Ziz::Ziz() {
 	setName("Ziz");
-	health = new Health(1000);
+	health = new Health(2000);
 	currentPhase = firstPhase;
 
 	setTexture("../Resource/Ziz/Idle.png");
