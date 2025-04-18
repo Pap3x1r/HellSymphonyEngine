@@ -25,9 +25,12 @@ public:
     virtual void levelFree();
     virtual void levelUnload();
 
+    virtual void isReceivingNoInputs();
+
     virtual void handleKey(char key);
     virtual void handleMouse(int type, int x, int y);
-    virtual void handleAnalogStick(int type, float amount);
+    virtual void handleControllerButton(SDL_GameControllerButton button);
+    virtual void handleAnalogStick(int type, char key);
 
     virtual void updateObjects(list<DrawableObject*>& objectsList);
     virtual void addObject(DrawableObject* obj);

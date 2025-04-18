@@ -277,7 +277,7 @@ void LevelBossTest::levelUpdate() {
 	float bossHealthBaseX = 0.0f;
 
 	float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
-	cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
+	//cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
 	bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
 
 	float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
@@ -316,6 +316,15 @@ void LevelBossTest::levelFree() {
 void LevelBossTest::levelUnload() {
 	GameEngine::getInstance()->clearMesh();
 	//cout << "Unload Level" << endl;
+}
+
+void LevelBossTest::isReceivingNoInputs() {
+	cout << "not receieving input" << endl;
+
+	if (player->getIsGrounded()) {
+		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+	}
+	player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
 void LevelBossTest::handleKey(char key) {
@@ -441,6 +450,7 @@ void LevelBossTest::handleKey(char key) {
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		break;
 	case 'I': //No Movement Input -> Idle
+		
 		if (player->getIsGrounded()) {
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 		}
@@ -474,7 +484,131 @@ void LevelBossTest::handleKey(char key) {
 	}*/
 }
 
+void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
+	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
+	float speed = 20.0f;
+	speed *= dt;
 
+	bool playerIsMoving = false;
+	if (player->getIsDead()) return;
+
+
+	
+
+	switch (button){
+
+	case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+			return;
+		}
+		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
+		player->setFacingRight(false);
+
+		if (player->getIsGrounded()) { // only change when walking on ground
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
+
+		playerIsMoving = true;
+		//player->getAnimationComponent()->setState("left");
+		break;
+
+	case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+			return;
+		}
+		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
+		player->setFacingRight(true);
+
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+		}
+
+		playerIsMoving = true;
+		//player->getAnimationComponent()->setState("right");
+		break;
+	case SDL_CONTROLLER_BUTTON_X:
+		if (player->getWeaponType() == Bow_) {
+			if (player->getBow()->getIsOverheat() == false) {
+				if (player->getBow()->getRapidShotReady()) {
+					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
+					objectsList.push_back(newArrow);*/
+					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Sword_) {
+			if (player->getSword()->getInChainAttack()) {
+				//input buffer
+				player->getSword()->setInputBuffer(true);
+				return;
+			}
+
+			switch (player->getSword()->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightSwordAttack1::getInstance(), player);
+				break;
+				
+			}
+
+
+		}
+		else if (player->getWeaponType() == Shield_) {
+
+			if (player->getShield()->getInChainAttack()) {
+				player->getShield()->setInputBuffer(true);
+				return;
+			}
+
+			switch (player->getShield()->getCurrentChainAttack()) {
+			case 0:
+				player->getStateMachine()->changeState(PlayerLightShieldAttack1::getInstance(), player);
+				break;
+				
+			}
+		}
+
+
+		break;
+	case SDL_CONTROLLER_BUTTON_Y:
+		if (player->getWeaponType() == Bow_) {
+			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+		}
+		else if (player->getWeaponType() == Sword_) {
+			if (player->getSword()->getInChainAttack()) {
+				return;
+			}
+			player->getStateMachine()->changeState(PlayerHeavySwordAttack::getInstance(), player);
+		}
+		else if (player->getWeaponType() == Shield_) {
+			if (player->getShield()->getInChainAttack()) {
+				return;
+			}
+
+			player->getStateMachine()->changeState(PlayerShieldGuard::getInstance(), player);
+		}
+		break;
+
+	case SDL_CONTROLLER_BUTTON_A:
+		if (player->getIsGrounded()) {
+			player->setIsGrounded(false);
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
+		}
+		break;
+	case SDL_CONTROLLER_BUTTON_B:
+		if (player->getCanDash()) {
+			player->setMovementSpeed(player->getMovementSpeed() * 4);
+			player->setIsDashing(true);
+			player->setCanDash(false);
+		}
+		break;
+
+	default:
+		break;
+	}
+}
 
 
 void LevelBossTest::handleMouse(int type, int x, int y) {
@@ -583,20 +717,51 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	}
 }
 
-void LevelBossTest::handleAnalogStick(int type, float amount) {
+void LevelBossTest::handleAnalogStick(int type, char key) {
 	float dt_ = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt_;
+	bool playerIsMoving = false;
+
+	if (player->getIsDead()) return;
+
+
+	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+		return;
+	}
+	
 
 	if (type == 0) {//x axis
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		if (amount < -0.05f) {
+		switch (key) {
+		case 'l':
+			//cout << "Tilt Left" << endl;
+			player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+			//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 			player->setFacingRight(false);
-			player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt_, 0, 0));
-		}
-		else if (amount > 0.05f) {
+
+			if (player->getIsGrounded()) { // only change when walking on ground
+				player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+			}
+
+			playerIsMoving = true;
+			//player->getAnimationComponent()->setState("left");
+
+			break;
+		case  'r':
+			//cout << "Tilt Right" << endl;
+			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+			//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 			player->setFacingRight(true);
-			player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt_, 0, 0));
+
+			if (player->getIsGrounded()) {
+				player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
+			}
+
+			playerIsMoving = true;
+			//player->getAnimationComponent()->setState("right");
+
+			break;
+
 		}
 	}
 }

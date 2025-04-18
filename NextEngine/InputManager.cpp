@@ -2,7 +2,7 @@
 
 
 
-InputManager::InputManager() : mouseX(0), mouseY(0), controller(nullptr) {
+InputManager::InputManager() : mouseX(0), mouseY(0), controller(nullptr), leftTrigger(0.0f), rightTrigger(0.0f) {
     // Initialize SDL controller subsystem
     SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
     if (SDL_NumJoysticks() > 0) {
@@ -82,13 +82,27 @@ void InputManager::updateInput() {
 
         if (event.type == SDL_CONTROLLERAXISMOTION) {
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
-                analogStick.first = event.caxis.value/32768.0f; // Capture left stick x-axis
+                analogStick.first = event.caxis.value / 32768.0f; // Capture left stick x-axis
             }
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
                 analogStick.second = event.caxis.value / 32768.0f; // Capture left stick y-axis
             }
-            
-            
+            if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+                // Normalize the trigger value to 0.0f - 1.0f range
+                leftTrigger = static_cast<float>(event.caxis.value) / 32767.0f;
+                // You might want to clamp the value to ensure it's within the range
+                if (leftTrigger < 0.0f) leftTrigger = 0.0f;
+                if (leftTrigger > 1.0f) leftTrigger = 1.0f;
+                // std::cout << "L2 Trigger Value: " << leftTrigger << std::endl; // For debugging
+            }
+            if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+                // Normalize the trigger value to 0.0f - 1.0f range
+                rightTrigger = static_cast<float>(event.caxis.value) / 32767.0f;
+                // You might want to clamp the value to ensure it's within the range
+                if (rightTrigger < 0.0f) rightTrigger = 0.0f;
+                if (rightTrigger > 1.0f) rightTrigger = 1.0f;
+                // std::cout << "R2 Trigger Value: " << rightTrigger << std::endl; // For debugging
+            }
         }
     }
 
@@ -145,6 +159,14 @@ float InputManager::getControllerAnalogStickY() {
     return analogStick.second;
 }
 
+float InputManager::getControllerLeftTrigger(){
+    return leftTrigger;
+}
+
+float InputManager::getControllerRightTrigger(){
+    return rightTrigger;
+}
+
 
 int InputManager::getMouseX() const {
     return mouseX;
@@ -152,4 +174,16 @@ int InputManager::getMouseX() const {
 
 int InputManager::getMouseY() const {
     return mouseY;
+}
+
+bool InputManager::isMovementInputIdle() {
+    return !(getButton(SDLK_a) ||
+        getButton(SDLK_d) ||
+        getButton(SDLK_w) ||
+        getButton(SDLK_s) ||
+        getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) ||
+        getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) ||
+        getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_UP) ||
+        getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) ||
+        (getControllerAnalogStickX() > 0.15) || (getControllerAnalogStickX() < -0.15)   );
 }

@@ -69,10 +69,18 @@ void GameStateController::handleKeyLevel(char key) {
 	currentLevel->handleKey(key);
 }
 
+void GameStateController::handleNotReceivingInputs() {
+	currentLevel->isReceivingNoInputs();
+}
+
+void GameStateController::handleControllerButtonLevel(SDL_GameControllerButton button) {
+	currentLevel->handleControllerButton(button);
+}
+
 void GameStateController::handleMouseLevel(int type, int x, int y) {
 	currentLevel->handleMouse(type, x, y);
 }
 
-void GameStateController::handleAnalogLevel(int type, float amount) {
-	currentLevel->handleAnalogStick(type, amount);
+void GameStateController::handleAnalogLevel(int type, char key) {
+	currentLevel->handleAnalogStick(type, key);
 }

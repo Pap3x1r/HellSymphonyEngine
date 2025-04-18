@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameStateList.h"
+#include "InputManager.h"
 
 class Level;
 
@@ -23,6 +24,8 @@ public:
 	void freelevel();
 	void unloadLevel();
 	void handleKeyLevel(char key);
+	void handleControllerButtonLevel(SDL_GameControllerButton button);
 	void handleMouseLevel(int type, int x, int y);
-	void handleAnalogLevel(int type, float amount);
+	void handleAnalogLevel(int type, char key);
+	void handleNotReceivingInputs();
 };

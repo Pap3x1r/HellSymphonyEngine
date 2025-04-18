@@ -219,7 +219,7 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 	else {
 		// **Recovery Phase**
 		recoveryTimer -= dt;
-		cout << "recovering" << endl;
+		//cout << "recovering" << endl;
 		if (recoveryTimer <= 0) {
 			ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 		}

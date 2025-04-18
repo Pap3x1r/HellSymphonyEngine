@@ -38,6 +38,10 @@ void Level::levelUnload() {
     //cout << "Unload Level" << endl;
 }
 
+void Level::isReceivingNoInputs() {
+    /// Will be implemented in inherited level when used ///
+}
+
 void Level::handleKey(char key) {
     /// Will be implemented in inherited level when used ///
 }
@@ -46,7 +50,11 @@ void Level::handleMouse(int type, int x, int y) {
     /// Will be implemented in inherited level when used ///
 }
 
-void Level::handleAnalogStick(int type, float amount) {
+void Level::handleControllerButton(SDL_GameControllerButton button) {
+    /// Will be implemented in inherited level when used ///
+}
+
+void Level::handleAnalogStick(int type, char key) {
 
     /// Usage ///
     /*

@@ -36,8 +36,13 @@ public:
     float getControllerAnalogStickX();
     float getControllerAnalogStickY();
 
+    float getControllerLeftTrigger();
+    float getControllerRightTrigger();
+
     int getMouseX() const;
     int getMouseY() const;
+
+    bool isMovementInputIdle();                 // Is Receiving Input
 
 
 private:
@@ -47,6 +52,9 @@ private:
     int mouseX, mouseY;                                    // Mouse position
     SDL_GameController* controller;                        // Controller pointer
     std::pair<float, float> analogStick;                   // Analog Stick
+    float leftTrigger;
+    float rightTrigger;
+    
 };
 
 #endif
