@@ -12,7 +12,16 @@ PlayerBigSwordUlt* PlayerBigSwordUlt::instance = nullptr;
 
 //Light Sword Attack 1
 void PlayerLightSwordAttack1::enter(Player* player) {
+    if (player->getFacingRight()) {
+        player->getTransform().setScale(glm::vec3(6.26f, 4.5f, 1.0f));
+       
+    }
+    else {
+        player->getTransform().setScale(glm::vec3(-6.26f, 4.5f, 1.0f));
+    }
+    
     cout << "Player enters Sword Light Attack 1 state.\n";
+    
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack1_sword.png", 1, 6, 0);
     player->getAnimationComponent()->setState("lightAttack1Sword");
     currentPhase = STARTUP;
@@ -25,6 +34,7 @@ void PlayerLightSwordAttack1::enter(Player* player) {
     else {
         player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
     }
+
 }
 
 void PlayerLightSwordAttack1::update(Player* player, float dt_) {
@@ -74,10 +84,19 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
         }
 
         if (time >= 0.167f) { //time's up
+            if (player->getFacingRight()) {
+                player->getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
+            }
+            else {
+                player->getTransform().setScale(glm::vec3(-4.5f, 4.5f, 1.0f));
+            }
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
+            
         }
+        
+        
         break;
     };
 }
@@ -88,6 +107,12 @@ void PlayerLightSwordAttack1::exit(Player* player) {
 
 //Light Sword Attack 2
 void PlayerLightSwordAttack2::enter(Player* player) {
+    if (player->getFacingRight()) {
+        player->getTransform().setScale(glm::vec3(6.26f, 4.5f, 1.0f));
+    }
+    else {
+        player->getTransform().setScale(glm::vec3(-6.26f, 4.5f, 1.0f));
+    }
     cout << "Player enters Sword Light Attack 2 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png", 1, 5, 0);
     player->getAnimationComponent()->setState("lightAttack2Sword");
@@ -142,6 +167,12 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
         }
 
         if (time >= 0.167f) { //time's up
+            if (player->getFacingRight()) {
+                player->getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
+            }
+            else {
+                player->getTransform().setScale(glm::vec3(-4.5f, 4.5f, 1.0f));
+            }
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack
@@ -161,6 +192,12 @@ void PlayerLightSwordAttack2::exit(Player* player) {
 
 //Light Sword Attack 3
 void PlayerLightSwordAttack3::enter(Player* player) {
+    if (player->getFacingRight()) {
+        player->getTransform().setScale(glm::vec3(6.26f, 4.5f, 1.0f));
+    }
+    else {
+        player->getTransform().setScale(glm::vec3(-6.26f, 4.5f, 1.0f));
+    }
     cout << "Player enters Sword Light Attack 3 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png", 1, 5, 0);
     player->getAnimationComponent()->setState("lightAttack3Sword");
@@ -209,6 +246,12 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
     case RECOVERY:
 
         if (time >= 0.167f) { //time's up
+            if (player->getFacingRight()) {
+                player->getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));
+            }
+            else {
+                player->getTransform().setScale(glm::vec3(-4.5f, 4.5f, 1.0f));
+            }
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
             player->getSword()->setInChainAttack(false); // no longer in chain attack

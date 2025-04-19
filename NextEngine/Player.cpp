@@ -95,7 +95,7 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	//getColliderComponent()->setOffset(glm::vec3(0.0f, -1.08f, 0.0f));
 	getColliderComponent()->getTransform().translate(glm::vec3(0.0f, -1.0f, 0.0f));
 	//getColliderComponent()->setTrigger(true);
-	//setDrawCollider(true);
+	setDrawCollider(true);
 	//Physics
 	addPhysicsComponent();
 	getPhysicsComponent()->setGravity(glm::vec2(0.0f, -20.0f));
