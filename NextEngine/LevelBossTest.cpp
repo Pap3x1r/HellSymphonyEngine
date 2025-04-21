@@ -136,6 +136,9 @@ void LevelBossTest::levelUpdate() {
 	timeK += dt;
 	updateObjects(objectsList);
 
+	ImGui::SetWindowSize(ImVec2(400, 300));
+	ImGui::Begin("Debug Panel");
+
 	tempx2 = tempx;
 	tempx = ziz->getTransform().getPosition().y;
 	if (tempx2 != tempx) {
@@ -160,6 +163,7 @@ void LevelBossTest::levelUpdate() {
 	if (ziz) {
 		ziz->phaseChangeTracker();
 	}
+
 
 
 	for (DrawableObject* obj : objectsList) {
@@ -298,6 +302,7 @@ void LevelBossTest::levelUpdate() {
 
 	handleObjectCollision(objectsList);
 
+	ImGui::End();
 }
 
 void LevelBossTest::levelDraw() {
@@ -768,4 +773,8 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 
 void LevelBossTest::addObject(DrawableObject* obj) {
 	objectsList.push_back(obj);
+}
+
+void LevelBossTest::addPlayerToDebug(Player* player) {
+
 }

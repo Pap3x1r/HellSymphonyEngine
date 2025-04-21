@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <unordered_map>
 #include <iostream>
+#include <imgui_impl_sdl2.h>
 
 class InputManager {
 public:

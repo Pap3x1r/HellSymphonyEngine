@@ -116,6 +116,123 @@ Player::~Player() {
 	delete health;
 }
 
+void Player::selfUpdate(float dt_) {
+	if (isDead) return;
+
+	static float time;
+	time += dt_;
+
+	if (isInvincible) {
+		invincibleTimer -= dt_;
+
+		if (invincibleTimer <= 0) {
+			invincibleTimer = 0;
+			isInvincible = false;
+		}
+	}
+
+	if (currentUltimateSlot < ultimateSlotMax) {
+		if (currentUltimateGauge >= ultimateGaugeMax) {
+			increaseUltimateSlot(1);
+			currentUltimateGauge -= ultimateGaugeMax;
+			cout << "Ultimate Slot is increased by 1, the current is: " << currentUltimateSlot << endl;
+		}
+	}
+	else {
+		//cout << "Ultimate Slot is maxed" << endl;
+		if (currentUltimateGauge > 0.0f) {
+			setUltimateGauge(0.0f); //Prevent excess gauge when ultimate slot is maxed
+		}
+
+		if (currentUltimateSlot > ultimateSlotMax) {
+			currentUltimateSlot = ultimateSlotMax;
+		}
+	}
+
+	if (isDashing) {
+		if (isFacingRight) {
+			getPhysicsComponent()->setVelocity(glm::vec2(movementSpeed, 0.0f));
+		}
+		else {
+			getPhysicsComponent()->setVelocity(glm::vec2(-movementSpeed, 0.0f));
+		}
+
+		if (movementSpeed > minMovementSpeed) {
+			movementSpeed -= 40 * dt_;
+		}
+
+		if (movementSpeed <= minMovementSpeed) {
+			movementSpeed = minMovementSpeed;
+			isDashing = false;
+			dashTimer = 0.0f;
+		}
+
+		//cout << "Player movement speed: " << movementSpeed << endl;
+	}
+	else {
+		dashTimer += dt_;
+		if (dashTimer >= dashCooldown) {
+			canDash = true;
+		}
+	}
+
+	if (isGrounded == false && !isDashing) {
+		if (getPhysicsComponent()->getVelocity().y > velocityThreshold) {
+			getStateMachine()->changeState(PlayerJumpUpState::getInstance(), this);
+		}
+		else if (getPhysicsComponent()->getVelocity().y < -velocityThreshold) {
+			getStateMachine()->changeState(PlayerFallDownState::getInstance(), this);
+		}
+	}
+
+
+	//Set groundChecker position
+	groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z));
+	//groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 2.0f, getTransform().getPosition().z)); //test pos
+
+	//cout << "Player position x: " << getTransform().getPosition().x << " y: " << getTransform().getPosition().y << endl;
+
+	//cout << "Player (x,y) velocity: (" << getPhysicsComponent()->getVelocity().x << " , " << getPhysicsComponent()->getVelocity().y << ")" << endl;
+
+	if (time >= 1.50f) {
+		time = 0.0f;
+		//cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;
+		//cout << "Player ultimate slot: " << currentUltimateSlot << endl;
+	}
+
+	const char* weaponNames[] = { "None", "Sword", "Bow", "Shield" };
+
+	int weaponIndex = static_cast<int>(currentWeapon);
+
+	if (ImGui::TreeNode("Player Object")) {
+		//Health
+		if (ImGui::TreeNode("Health")) {
+			ImGui::SliderFloat("Current Health:", health->getCurrentHPAddress(), 0, health->getMaxHP());
+			ImGui::TreePop();
+		}
+
+		//Ultimate
+		if (ImGui::TreeNode("Ultimate")) {
+			ImGui::SliderFloat("Ultimate Gauge:", &currentUltimateGauge, 0, ultimateGaugeMax);
+			ImGui::SliderInt("Ultimate Slot:", &currentUltimateSlot, 0, ultimateSlotMax);
+			ImGui::TreePop();
+		}
+
+		//General
+		if (ImGui::TreeNode("General")) {
+			ImGui::Checkbox("Can Jump", &isGrounded);
+			ImGui::Checkbox("Can Dash", &canDash);
+			if (ImGui::Combo("Weapon Type", &weaponIndex, weaponNames, IM_ARRAYSIZE(weaponNames))) {
+				currentWeapon = static_cast<WeaponType>(weaponIndex);
+			}
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+
+}
+
 void Player::setFacingRight(bool value) {
 	isFacingRight = value;
 

@@ -104,6 +104,8 @@ void InputManager::updateInput() {
                 // std::cout << "R2 Trigger Value: " << rightTrigger << std::endl; // For debugging
             }
         }
+
+        ImGui_ImplSDL2_ProcessEvent(&event);
     }
 
     // Update mouse position

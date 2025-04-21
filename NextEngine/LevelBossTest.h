@@ -52,4 +52,6 @@ public:
 	
 
 	virtual void addObject(DrawableObject* obj) override;
+	
+	void addPlayerToDebug(Player* player);
 };

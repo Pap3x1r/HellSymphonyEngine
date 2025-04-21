@@ -9,6 +9,10 @@
 #include "EnemyObject.h"
 #include "Player.h"
 
+//imgui.h
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+
 class Level
 {
 private:
@@ -34,4 +38,6 @@ public:
 
     virtual void updateObjects(list<DrawableObject*>& objectsList);
     virtual void addObject(DrawableObject* obj);
+    
+    virtual void renderGUI();
 };

@@ -93,3 +93,8 @@ void Level::addObject(DrawableObject* obj) {
     objectsList.push_back(obj);
 }
 
+void Level::renderGUI() {
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+

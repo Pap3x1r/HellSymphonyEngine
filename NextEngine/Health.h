@@ -178,6 +178,7 @@ public:
 
     float getRealHP() { return realHealth; }
     float getCurrentHP() { return currentHealth; }
+    float* getCurrentHPAddress() { return &currentHealth; }
     float getMaxHP() { return maxHealth; }
     float getWitherHP() { return witherHealth; }
 };
