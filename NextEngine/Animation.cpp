@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "TexturedObject.h"
 
 using namespace std;
 
@@ -23,6 +24,8 @@ void Animation::render(glm::mat4 globalModelTransform, Transform& transform) {
 	GLuint scaleXId = GameEngine::getInstance()->getRenderer()->getScaleXUniformId();
 	GLuint scaleYId = GameEngine::getInstance()->getRenderer()->getScaleYUniformId();
 
+	GLuint hitEffectStrengthId = GameEngine::getInstance()->getRenderer()->getHitEffectUniformId();
+
 	if (modelMatixId == -1) {
 		cout << "Error: Can't perform transformation " << endl;
 		return;
@@ -35,6 +38,8 @@ void Animation::render(glm::mat4 globalModelTransform, Transform& transform) {
 		cout << "Error: Can't set offsetXId in TexturedObject " << endl;
 		return;
 	}
+
+	glUniform1f(hitEffectStrengthId, parent->getHitEffectStrength());
 
 	vector <glm::mat4> matrixStack;
 

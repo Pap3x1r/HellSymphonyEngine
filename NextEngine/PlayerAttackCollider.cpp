@@ -68,11 +68,11 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 
 			if (ziz) {
 				ziz->getHealth()->takeDamage(damage);
+				ziz->setHitEffectStrength(1.0f);
 			}
 
 			hasHit = true;
 		}
-
 	}
 }
 

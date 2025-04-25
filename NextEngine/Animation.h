@@ -6,6 +6,8 @@
 #include <string>
 #include <unordered_map>
 
+class TexturedObject;
+
 using namespace std;
 
 struct State {
@@ -36,6 +38,8 @@ class Animation {
 
 		glm::vec3 animOffset = { 0.0f,0.0f,0.0f };
 
+		TexturedObject* parent = nullptr;
+
 	public:
 		//Animator
 		void addState(string name, int row, int frameCount);
@@ -59,5 +63,8 @@ class Animation {
 		}
 		void setOffsetY(float offset) {
 			offsetY = offset;
+		}
+		void setParent(TexturedObject* obj) {
+			parent = obj;
 		}
 };

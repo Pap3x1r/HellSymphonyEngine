@@ -56,6 +56,13 @@ void TexturedObject::setTexture(string path, int row, int col, int startFrame, b
 }
 
 void TexturedObject::render(glm::mat4 globalModelTransform) {
+	if (hitEffectStrength > 0.0f) {
+		hitEffectStrength -= 5.0f * GameEngine::getInstance()->getTime()->getDeltaTime();
+		if (hitEffectStrength < 0.0f) {
+			hitEffectStrength = 0.0f;
+		}
+	}
+
 	if (animation != nullptr) {
 		animation->render(globalModelTransform, this->transform);
 		return;
@@ -65,10 +72,14 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 
 	GLuint modelMatixId = GameEngine::getInstance()->getRenderer()->getModelMatrixAttrId();
 	GLuint renderModeId = GameEngine::getInstance()->getRenderer()->getModeUniformId();
+	GLuint colorUniformId = GameEngine::getInstance()->getRenderer()->getColorUniformId();
 	/*GLuint offsetXId = GameEngine::getInstance()->getRenderer()->getOffsetXUniformId();
 	GLuint offsetYId = GameEngine::getInstance()->getRenderer()->getOffsetYUniformId();*/
 	GLuint scaleXId = GameEngine::getInstance()->getRenderer()->getScaleXUniformId();
 	GLuint scaleYId = GameEngine::getInstance()->getRenderer()->getScaleYUniformId();
+
+	GLuint hitEffectStrengthId = GameEngine::getInstance()->getRenderer()->getHitEffectUniformId();
+
 
 	if (modelMatixId == -1) {
 		cout << "Error: Can't perform transformation " << endl;
@@ -83,6 +94,14 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 		return;
 	}*/
 
+	/*if (hitEffectStrength > 0.0f) {
+		hitEffectStrength -= 0.2f * GameEngine::getInstance()->getTime()->getDeltaTime();
+	}*/
+
+	glUniform1f(hitEffectStrengthId, hitEffectStrength);
+	glUniform4f(colorUniformId, 1.0f, 1.0f, 1.0f, 1.0f);
+
+
 	vector <glm::mat4> matrixStack;
 
 	glm::mat4 currentMatrix = this->getTransformMat4();
@@ -92,7 +111,13 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 
 		currentMatrix = globalModelTransform * currentMatrix;
 		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
+		if (isAnimated()) {
+			glUniform1i(renderModeId, 2);
+		}
+		else {
+			glUniform1i(renderModeId, 1);
+		}
+
 		glBindTexture(GL_TEXTURE_2D, texture);
 		squareMesh->render();
 
@@ -102,6 +127,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 void TexturedObject::initAnimation(int rowCount, int colCount) {
 	animation = new Animation(texture);
 	animation->setDimension(rowCount, colCount);
+	animation->setParent(this);
 }
 
 Animation* TexturedObject::getAnimationComponent() {
@@ -125,3 +151,11 @@ void TexturedObject::setSpriteOffset(glm::vec3 vector3) {
 //	offsetX = (1.0f / this->rowCount) * row;
 //	offsetY = (1.0f / this->colCount) * column;
 //}
+
+void TexturedObject::setHitEffectStrength(float value) {
+	hitEffectStrength = value;
+}
+
+float TexturedObject::getHitEffectStrength() {
+	return hitEffectStrength;
+}

@@ -29,6 +29,8 @@ protected:
     GLuint scaleXUniformId = -1;
     GLuint scaleYUniformId = -1;
 
+    GLint hitEffectStrengthUniformId = -1;
+
     GLuint gProgramId;
     int gPos2DLocation;
     int gTex2DLocation;
@@ -69,6 +71,8 @@ public:
     GLuint getOffsetYUniformId();
     GLuint getScaleXUniformId();
     GLuint getScaleYUniformId();
+
+    GLuint getHitEffectUniformId();
 
     GLuint LoadTexture(string path);
     void setViewMatrix(const glm::mat4& viewMatrix);

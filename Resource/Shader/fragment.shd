@@ -6,7 +6,9 @@ uniform float offsetX;
 uniform float offsetY;
 uniform float scaleX;
 uniform float scaleY;
- 
+
+uniform float hitEffectStrength;
+
 in vec3 OutColor;
 in vec2 TexCoord;
  
@@ -24,8 +26,14 @@ void main()
     else
     {
 		vec2 FTexCoord = vec2 ((TexCoord.x * scaleX) + offsetX, (TexCoord.y * scaleY) + offsetY);
-    	finalColor = texture(ourTexture, FTexCoord);
- 
+    	vec4 textureColor = texture(ourTexture, FTexCoord);
+	
+		if (textureColor.a < 0.01) {
+			discard;
+		}
+
+		vec4 redColor = vec4(1.0, 0.0, 0.0, 1.0);
+		finalColor = mix(textureColor, redColor, hitEffectStrength);
  
     }
 }

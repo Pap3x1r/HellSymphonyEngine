@@ -73,6 +73,12 @@ bool GLRenderer::initialize(string vertexShaderFile, string fragmentShaderFile) 
         return false;
     }
 
+    hitEffectStrengthUniformId = glGetUniformLocation(gProgramId, "hitEffectStrength");
+    if (hitEffectStrengthUniformId == -1) {
+        cout << "hitEffectStrength is not a valid GLSL uniform variable" << endl;
+        return false;
+    }
+
     //Setting color uniform id
     colorUniformId = glGetUniformLocation(gProgramId, "color");
     if (colorUniformId == -1) {
@@ -116,6 +122,7 @@ bool GLRenderer::initialize(string vertexShaderFile, string fragmentShaderFile) 
         cout << "scaleYUniformId is not a valid glsl uniform variable" << endl;
         return false;
     }
+   
 
     glEnableVertexAttribArray(gPos2DLocation);
     glEnableVertexAttribArray(gTex2DLocation);
@@ -269,6 +276,10 @@ GLuint GLRenderer::getScaleXUniformId() {
 
 GLuint GLRenderer::getScaleYUniformId() {
     return this->scaleYUniformId;
+}
+
+GLuint GLRenderer::getHitEffectUniformId() {
+    return this->hitEffectStrengthUniformId;
 }
 
 //GLuint GLRenderer::LoadTexture(string path) {

@@ -13,6 +13,7 @@ class TexturedObject : public DrawableObject
 	glm::vec3 spriteOffset;
 	unsigned int texture;
 	Animation* animation; // Might use vector in the future to support multiple animation state
+	float hitEffectStrength = 0;
 	/*bool animated = false;
 	int rowCount;
 	int colCount;
@@ -32,4 +33,6 @@ public:
 	bool isAnimated();
 	//void setFrame(float row, float column);
 	void setSpriteOffset(glm::vec3 vector3);
+	void setHitEffectStrength(float value);
+	float getHitEffectStrength();
 };
