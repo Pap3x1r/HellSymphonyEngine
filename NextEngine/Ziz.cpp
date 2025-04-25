@@ -2,6 +2,7 @@
 #include "Ziz.h"
 
 
+
 Ziz::Ziz() {
 	setName("Ziz");
 	health = new Health(2000);
@@ -203,6 +204,79 @@ void Ziz::interruptPhaseChange() {
 
 void Ziz::interruptDeath() {
 	getStateMachine()->interruptDeath(this);
+}
+
+void Ziz::startShake(float duration, float intensity) {
+	isShaking = true;
+	shakeDuration = duration;
+	shakeTimer = 0.0f;
+	shakeIntensity = intensity;
+	shakeOffsetX = std::uniform_real_distribution<>(-intensity, intensity);
+	shakeOffsetY = std::uniform_real_distribution<>(-intensity, intensity);
+}
+
+void Ziz::updateShake(float deltaTime) {
+	if (isShaking) {
+		shakeTimer += deltaTime;
+		if (shakeTimer < shakeDuration) {
+			GameEngine* engine = GameEngine::getInstance();
+			if (engine) {
+				GLRenderer* renderer = engine->getRenderer();
+				if (renderer) {
+					// Get the current window dimensions
+					int windowWidth = engine->getWindowWidth();
+					int windowHeight = engine->getWindowHeight();
+
+					// Apply a small random offset to the viewport origin
+					float offsetX = shakeOffsetX(gen) * windowWidth; // Scale by window dimensions
+					float offsetY = shakeOffsetY(gen) * windowHeight;
+
+					renderer->setViewPort(static_cast<int>(offsetX), static_cast<int>(offsetY), windowWidth, windowHeight);
+				}
+				else {
+					std::cerr << "Error: Could not get GLRenderer in Ziz::updateShake()" << std::endl;
+				}
+			}
+			else {
+				std::cerr << "Error: Could not get GameEngine in Ziz::updateShake()" << std::endl;
+			}
+		}
+		else {
+			stopShake();
+			// Reset the viewport to the original dimensions (0, 0, width, height)
+			GameEngine* engine = GameEngine::getInstance();
+			if (engine && engine->getRenderer()) {
+				engine->getRenderer()->setViewPort(0, 0, engine->getWindowWidth(), engine->getWindowHeight());
+			}
+		}
+	}
+}
+
+void Ziz::stopShake() {
+	isShaking = false;
+	shakeTimer = 0.0f;
+}
+
+
+
+
+
+void Ziz::resetCam() {
+	GameEngine* engine = GameEngine::getInstance();
+	if (engine) {
+		GLRenderer* renderer = engine->getRenderer();
+		if (renderer) {
+			
+			renderer->setViewPort(0.0f,0.0f, 1600.0f, 900.0f);
+			
+		}
+		else {
+			std::cerr << "Error: Could not get GLRenderer instance in handleKey." << std::endl;
+		}
+	}
+	else {
+		std::cerr << "Error: Could not get GameEngine instance in handleKey." << std::endl;
+	}
 }
 
 

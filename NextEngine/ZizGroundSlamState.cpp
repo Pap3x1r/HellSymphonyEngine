@@ -104,6 +104,7 @@ void ZizGroundSlamState::update(Boss* boss, float dt) {
 
         if (t >= 0.8f && !attackCollider->getIsActive()) {
             attackCollider->setActive(true);
+            ziz->startShake(0.2f, 0.005f);
             // Optional effects: camera shake, flash, etc.
         }
 

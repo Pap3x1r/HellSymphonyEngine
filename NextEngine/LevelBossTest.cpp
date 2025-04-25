@@ -2,6 +2,11 @@
 #include "CollisionHandler.h"
 #include "Bow.h"
 #include "ZizGroundSlamState.h"
+#include "GameEngine.h" // Include GameEngine header
+#include "GLRenderer.h" // Include GLRenderer header
+#include <iostream>
+#include <random>
+using namespace std;
 
 
 
@@ -162,6 +167,7 @@ void LevelBossTest::levelUpdate() {
 	
 	if (ziz) {
 		ziz->phaseChangeTracker();
+		ziz->updateShake(dt);
 	}
 
 
@@ -475,12 +481,14 @@ void LevelBossTest::handleKey(char key) {
 			player->setCanDash(false);
 		}
 		break;
-	////case 't':
-	//	player->increaseUltimateSlot(1);
-	//	break;
-	////case 'l':
-	//	cout << "Ziz Health: "  << ziz->getCurrentHealth() << endl;
-	//	break;
+	case 't':
+		cout << "shaking" << endl;
+		ziz->startShake(0.2f, 0.005f);
+		break;
+		
+	case 'l':
+		ziz->resetCam();
+		break;
 	}
 
 
