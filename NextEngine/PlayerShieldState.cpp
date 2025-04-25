@@ -148,6 +148,7 @@ void PlayerLightShieldAttack2::exit(Player* player) {
 //Shield Guard
 void PlayerShieldGuard::enter(Player* player) {
     cout << "Player enters Shield Guard state.\n";
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, 0.0f));
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_holding_shield.png", 1, 2, 0);
     player->getAnimationComponent()->setState("holdShield");
     player->getAnimationComponent()->setLoop(false);

@@ -633,6 +633,10 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 
 	if (player->getIsDead()) return;
 
+	if (!player->getIsGrounded()) { //Prevent air attack
+		return;
+	}
+
 	if (player->getWeaponType() == Bow_) {
 		if (type == 0) {
 			if (player->getBow()->getIsOverheat() == false) {
