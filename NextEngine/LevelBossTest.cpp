@@ -634,6 +634,9 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		if (player->getIsDashing() == true) { //Prevent air attack
 			return;
 		}
+		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+			return;
+		}
 
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);

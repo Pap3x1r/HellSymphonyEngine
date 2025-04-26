@@ -5,14 +5,19 @@ StormRise::StormRise() {
 	
 
 	setName("StormRise");
-	setTexture("../Resource/Ziz/StormRiseProjectile.png");
-	getTransform().setScale(glm::vec3(2.5f, 2.5f, 1.0f));
+	//setTexture("../Resource/Ziz/StormRiseProjectile.png");
+	getTransform().setScale(glm::vec3(3.0f, 6.0f, 1.0f));
 	setDraw(true);
-	getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -2.4f, 1.0f));
+	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, 0.15f, 1.0f));
 	addColliderComponent();
 	getColliderComponent()->setTrigger(true);
-	getColliderComponent()->setDimension(0.5f, 0.15f);
+	getColliderComponent()->setDimension(0.5f, 1.0f);
 	setDrawCollider(true);
+	initAnimation(43, 1);
+	getAnimationComponent()->addState("stormcaller", 0, 43);
+	setTexture("../Resource/Texture/FinalZiz/VFX/StormCaller.png", 1, 43, 0);
+	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
+	getAnimationComponent()->setState("stormcaller");
 	
 
 	//getColliderComponent()->setDimension(1.0f, 1.0f);
@@ -26,9 +31,9 @@ StormRise::StormRise() {
 	speed = 4.0f;
 	damage = 10.0f;
 	countdownTimer = 0.08f * 24;
-	bufferTimer = 0.08f * 0;
-	activeTimer = 0.08f * 24;
-	recoveryTimer = 0.08f * 7;
+	bufferTimer = 0.08f * 1;
+	activeTimer = 0.08f * 27;
+	recoveryTimer = 0.08f * 5;
 }
 
 void StormRise::update(float dt) {
@@ -36,13 +41,15 @@ void StormRise::update(float dt) {
 		countdownTimer -= dt;
 
 		if (player) {
-			glm::vec3 playerPosition = player->getTransform().getPosition();
+			
 			glm::vec3 currentPosition = getTransform().getPosition();
 
-			if (currentPosition.x < playerPosition.x) {
+			float playerPositionX = player->getTransform().getPosition().x;
+
+			if (currentPosition.x < playerPositionX) {
 				currentPosition.x += speed * dt;
 			}
-			else if (currentPosition.x > playerPosition.x) {
+			else if (currentPosition.x > playerPositionX) {
 				currentPosition.x -= speed * dt;
 			}
 
@@ -61,7 +68,7 @@ void StormRise::update(float dt) {
 		bufferTimer -= dt;
 
 		if (bufferTimer <= 0.0f) {
-			setAnimStorm();
+			//setAnimStorm();
 			isBuffering = false;
 			canAnim = true;
 			isActive = true;
@@ -89,10 +96,10 @@ void StormRise::update(float dt) {
 }
 
 void StormRise::setAnimStorm() {
-	initAnimation(31, 1);
-	getAnimationComponent()->addState("stormcaller", 0, 31);
-	setTexture("../Resource/Texture/Ziz/Ziz_Stormcaller.png", 1, 31, 0);
-	getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
+	initAnimation(43, 1);
+	getAnimationComponent()->addState("stormcaller", 0, 43);
+	setTexture("../Resource/Texture/FinalZiz/VFX/StormCaller.png", 1, 43, 0);
+	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
 	getAnimationComponent()->setState("stormcaller");
 }
 
@@ -119,25 +126,27 @@ void StormRise::onCollisionStay(Collider* collider) {
 		}
 
 		if (!hasHit) {
-
-			if (player->getShield()->getIsBlocking()) { // is blocking
-				if (player->getShield()->getIsPerfect()) { //is perfectly timed
-					cout << "Player perfect blocked" << endl;
-					player->increaseUltimateGauge(100.0f); //instant fill
-					hasHit = true;
+			if (isActive == true) {
+				if (player->getShield()->getIsBlocking()) { // is blocking
+					if (player->getShield()->getIsPerfect()) { //is perfectly timed
+						cout << "Player perfect blocked" << endl;
+						player->increaseUltimateGauge(100.0f); //instant fill
+						hasHit = true;
+					}
+					else { //if blocking but not perfectly
+						cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+						player->getHealth()->takeDamage(damage, 30);
+						player->increaseUltimateGauge(damage / 2); // increase by withered damage.
+						hasHit = true;
+					}
 				}
-				else { //if blocking but not perfectly
-					cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
-					player->getHealth()->takeDamage(damage, 30);
-					player->increaseUltimateGauge(damage / 2); // increase by withered damage.
+				else { //is not blocking
+					cout << "Enemy Hit Player for " << damage << " damage." << endl;
+					player->getHealth()->takeDamage(damage);
 					hasHit = true;
 				}
 			}
-			else { //is not blocking
-				cout << "Enemy Hit Player for " << damage << " damage." << endl;
-				player->getHealth()->takeDamage(damage);
-				hasHit = true;
-			}
+			
 		}
 
 	}

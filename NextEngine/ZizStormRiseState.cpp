@@ -20,7 +20,7 @@ void ZizStormRiseState::enter(Boss* boss) {
     
     //ziz->setTexture("../Resource/Ziz/StormRise.png");
     DrawableObject* newStormRise = ziz->createStormRise();
-    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Stormrise.png", 1, 37, 0);
+    ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_StormRise-Sheet.png", 1, 57, 0);
     ziz->getAnimationComponent()->setState("stormrise");
 
 
@@ -30,7 +30,7 @@ void ZizStormRiseState::enter(Boss* boss) {
 
 
     
-    startupTimer = 0.08f * 37;
+    startupTimer = 0.08f * 57;
     //recoveryTimer = startupTimer + 0.08f * 13;
 }
 

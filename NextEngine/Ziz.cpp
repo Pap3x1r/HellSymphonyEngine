@@ -23,7 +23,7 @@ Ziz::Ziz() {
 	initAnimation(10,1);
 	getAnimationComponent()->addState("idle", 0, 10);
 	getAnimationComponent()->addState("gust", 0, 20);
-	getAnimationComponent()->addState("stormrise", 0, 37);
+	getAnimationComponent()->addState("stormrise", 0, 57);
 	getAnimationComponent()->addState("flyup",0, 7);
 	getAnimationComponent()->addState("swoop", 0, 1);
 	getAnimationComponent()->addState("groundslamstartup", 0, 8);
@@ -149,6 +149,8 @@ DrawableObject* Ziz::createStormRise() {
 	StormRise* stormRise = new StormRise();
 	
 	stormRise->setPlayer(player);
+	stormRise->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, 0.15f, 1.0f));
+	
 	
 
 	return stormRise;

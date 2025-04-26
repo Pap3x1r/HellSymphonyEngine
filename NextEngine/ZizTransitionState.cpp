@@ -22,6 +22,7 @@ void ZizTransitionState::enter(Boss* boss) {
     transforming = true;
     transformed = false;
     bufferTimer = 0.08 * 0;
+    ziz->setIsInvincible(true);
     //33 frames
 }
 
@@ -58,4 +59,5 @@ void ZizTransitionState::update(Boss* boss, float dt) {
 }
 
 void ZizTransitionState::exit(Boss* boss) {
+    ziz->setIsInvincible(false);
 }
