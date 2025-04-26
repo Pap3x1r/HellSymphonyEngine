@@ -80,8 +80,10 @@ void Arrow::onTriggerEnter(Collider* collider) {
 
 		Ziz* ziz = dynamic_cast<Ziz*>(obj2);
 		if (ziz) {
-			ziz->getHealth()->takeDamage(damage);
-			cout << "Ziz Health: " <<  ziz->getCurrentHealth() << endl;
+			if (ziz->getIsInvincible() == false) {
+				ziz->getHealth()->takeDamage(damage);
+				ziz->setHitEffectStrength(1.0f);
+			}
 		}
 
 		//DrawableObject::destroyObject(this, objectsListRef);

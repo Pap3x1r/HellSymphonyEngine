@@ -13,16 +13,16 @@ StormRise::StormRise() {
 	getColliderComponent()->setTrigger(true);
 	getColliderComponent()->setDimension(0.5f, 1.0f);
 	setDrawCollider(true);
-	initAnimation(43, 1);
-	getAnimationComponent()->addState("stormcaller", 0, 43);
-	setTexture("../Resource/Texture/FinalZiz/VFX/StormCaller.png", 1, 43, 0);
-	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
-	getAnimationComponent()->setState("stormcaller");
+	initAnimation(25, 1);
+	getAnimationComponent()->addState("stormtracker", 0, 25);
+	getAnimationComponent()->addState("stormcaller", 0, 32);
+	setTexture("../Resource/Texture/FinalZiz/VFX/StormTracker.png", 1, 25, 0);
+	getAnimationComponent()->setState("stormtracker");
 	
 
 	//getColliderComponent()->setDimension(1.0f, 1.0f);
 	
-	canAnim = false;
+	canAnim = true;
 	playerIsInside = false;
 	hasHit = false;
 	isActive = false;
@@ -30,9 +30,9 @@ StormRise::StormRise() {
 	isRecovering = false;
 	speed = 4.0f;
 	damage = 10.0f;
-	countdownTimer = 0.08f * 24;
+	countdownTimer = 0.08f * 25;
 	bufferTimer = 0.08f * 1;
-	activeTimer = 0.08f * 27;
+	activeTimer = 0.08f * 26;
 	recoveryTimer = 0.08f * 5;
 }
 
@@ -58,6 +58,7 @@ void StormRise::update(float dt) {
 
 		if (countdownTimer <= 0.0f) {
 			isBuffering = true;
+			setAnimStorm();
 			//cout << "buffering" << endl;
 		}
 	}
@@ -70,7 +71,6 @@ void StormRise::update(float dt) {
 		if (bufferTimer <= 0.0f) {
 			//setAnimStorm();
 			isBuffering = false;
-			canAnim = true;
 			isActive = true;
 		}
 	}
@@ -96,10 +96,7 @@ void StormRise::update(float dt) {
 }
 
 void StormRise::setAnimStorm() {
-	initAnimation(43, 1);
-	getAnimationComponent()->addState("stormcaller", 0, 43);
-	setTexture("../Resource/Texture/FinalZiz/VFX/StormCaller.png", 1, 43, 0);
-	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.4f, 1.0f));
+	setTexture("../Resource/Texture/FinalZiz/VFX/StormCaller2.png", 1, 32, 0);
 	getAnimationComponent()->setState("stormcaller");
 }
 
