@@ -23,6 +23,8 @@ private:
 
     std::list<DrawableObject*> chainAttackList;
 
+    bool canDrawCollider = false;
+
 public:
     // Constructor and Destructor
     Sword();
@@ -42,6 +44,10 @@ public:
 
     void setInputBuffer(bool s);
     bool getInputBuffer() const;
+
+    bool* getCanDrawColliderAddress() {
+        return &canDrawCollider;
+    }
 
     DrawableObject* getChainAttackObject(int index);
 };

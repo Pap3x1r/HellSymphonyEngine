@@ -80,6 +80,14 @@ void Sword::update(float dt, Player* playerObject) {
     glm::vec3 playerPos = playerObject->getTransform().getPosition();
 
     for (auto obj : chainAttackList) {
+        
+        if (!canDrawCollider) {
+            obj->setCanDrawColliderNew(false);
+        }
+        else {
+            obj->setCanDrawColliderNew(true);
+        }
+
         if (obj->getName() == "lightAttack1Sword") {
             obj->getTransform().setPosition(playerPos + attack1Offset);
             flipOffset(obj, playerObject);

@@ -220,11 +220,20 @@ void Player::selfUpdate(float dt_) {
 
 		//General
 		if (ImGui::TreeNode("General")) {
+			ImGui::Text("Player Position; x:%.2f, y:%.2f", getTransform().getPosition().x, getTransform().getPosition().y);
 			ImGui::Checkbox("Can Jump", &isGrounded);
 			ImGui::Checkbox("Can Dash", &canDash);
 			if (ImGui::Combo("Weapon Type", &weaponIndex, weaponNames, IM_ARRAYSIZE(weaponNames))) {
 				currentWeapon = static_cast<WeaponType>(weaponIndex);
 			}
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Collider")) {
+			ImGui::Checkbox("Player Collider", getCanDrawColliderAddress());
+			ImGui::Checkbox("Ground Checker Collider", groundChecker->getCanDrawColliderAddress());
+			ImGui::Checkbox("Sword Collider", sword->getCanDrawColliderAddress());
+			ImGui::Checkbox("Shield Collider", shield->getCanDrawColliderAddress());
 			ImGui::TreePop();
 		}
 

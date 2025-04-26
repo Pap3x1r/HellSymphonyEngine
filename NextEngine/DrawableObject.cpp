@@ -203,6 +203,10 @@ void DrawableObject::drawCollider() {
 		return;
 	}
 
+	if (!canDrawColliderNew) {
+		return;
+	}
+
 	SquareBorderMesh* squareBorderMesh = dynamic_cast<SquareBorderMesh*> (GameEngine::getInstance()->getRenderer()->getMesh(SquareBorderMesh::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::getInstance()->getRenderer()->getModelMatrixAttrId();
@@ -237,7 +241,7 @@ void DrawableObject::drawCollider() {
 		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
 		glUniform3f(colorId, 0, 1, 0);
 		glUniform1i(renderModeId, 0);
-		//squareBorderMesh->render();
+		squareBorderMesh->render();
 	}
 }
 

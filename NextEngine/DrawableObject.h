@@ -22,6 +22,7 @@ enum class Tag {
 
 class DrawableObject {
 private:
+	bool canDrawColliderNew;
 	bool canDrawCollider;
 	bool canDraw;
 	void processCollider();
@@ -86,6 +87,18 @@ public:
 	bool getMarkedForDelete();
 
 	bool getCanDraw();
+
+	void setCanDrawColliderNew(bool value) {
+		canDrawColliderNew = value;
+	}
+
+	bool getCanDrawCollider() {
+		return canDrawCollider;
+	}
+
+	bool* getCanDrawColliderAddress() {
+		return &canDrawColliderNew;
+	}
 
 	static void destroyObject(DrawableObject* obj);
 };

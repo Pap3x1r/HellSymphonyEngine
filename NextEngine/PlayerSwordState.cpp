@@ -14,7 +14,6 @@ PlayerBigSwordUlt* PlayerBigSwordUlt::instance = nullptr;
 void PlayerLightSwordAttack1::enter(Player* player) {
     if (player->getFacingRight()) {
         player->getTransform().setScale(glm::vec3(6.26f, 4.5f, 1.0f));
-       
     }
     else {
         player->getTransform().setScale(glm::vec3(-6.26f, 4.5f, 1.0f));
@@ -35,6 +34,7 @@ void PlayerLightSwordAttack1::enter(Player* player) {
         player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
     }
 
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.16f, 0.0f, 0.0f));
 }
 
 void PlayerLightSwordAttack1::update(Player* player, float dt_) {
@@ -44,6 +44,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
     /*list<DrawableObject*> attackList = player->getSword()->getChainAttackList();
     auto it = attackList.begin();
     advance(it, 0);*/
+    
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(0);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
@@ -103,6 +104,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
 
 void PlayerLightSwordAttack1::exit(Player* player) {
     cout << "Player exits Sword Light Attack 1 state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 //Light Sword Attack 2
@@ -126,6 +128,8 @@ void PlayerLightSwordAttack2::enter(Player* player) {
     else {
         player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
     }
+
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.16f, 0.0f, 0.0f));
 }
 
 void PlayerLightSwordAttack2::update(Player* player, float dt_) {
@@ -188,6 +192,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
 
 void PlayerLightSwordAttack2::exit(Player* player) {
     cout << "Player exits Sword Light Attack 2 state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 //Light Sword Attack 3
@@ -211,6 +216,8 @@ void PlayerLightSwordAttack3::enter(Player* player) {
     else {
         player->getPhysicsComponent()->setVelocity(glm::vec2(-2.0f, player->getPhysicsComponent()->getVelocity().y));
     }
+
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.16f, 0.0f, 0.0f));
 }
 
 void PlayerLightSwordAttack3::update(Player* player, float dt_) {
@@ -267,6 +274,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
 
 void PlayerLightSwordAttack3::exit(Player* player) {
     cout << "Player exits Sword Light Attack 3 state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 //Heavy Sword Attack
