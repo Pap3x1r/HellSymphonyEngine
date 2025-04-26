@@ -15,14 +15,14 @@ void ZizTransitionState::enter(Boss* boss) {
     ziz = dynamic_cast<Ziz*>(boss);
     if (!ziz) return;
 
-    ziz->setTexture("../Resource/Ziz/Idle.png");
-    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Transform.png", 1, 10, 0);
+    //ziz->setTexture("../Resource/Ziz/Idle.png");
+    ziz->setTexture("../Resource/Texture/FinalZiz/Starting Phase/Transform.png", 1, 33, 0);
     ziz->getAnimationComponent()->setState("transform");
-    transitionTimer = 0.08 * 20;
+    transitionTimer = 0.08 * 33;
     transforming = true;
     transformed = false;
-    bufferTimer = 0.08 * 36;
-    
+    bufferTimer = 0.08 * 0;
+    //33 frames
 }
 
 void ZizTransitionState::update(Boss* boss, float dt) {
@@ -32,6 +32,10 @@ void ZizTransitionState::update(Boss* boss, float dt) {
         if (transformed == false) {
             if (transitionTimer > 0) {
                 transitionTimer -= dt;
+                if (transitionTimer <= 2.24f && transitionTimer > 2.0f) {
+                    ziz->startShake(0.08f * 16, 0.005f);
+                }
+
                 cout << "transforming" << endl;
             }
             else {

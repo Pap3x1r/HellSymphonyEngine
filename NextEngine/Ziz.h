@@ -23,6 +23,7 @@ private:
     bool isGrounded = true;
     bool hasTransformed = false;
     bool dead;
+    bool isInvincible;
 
     //cam
     bool isShaking = false;
@@ -57,6 +58,8 @@ public:
     DrawableObject* createGust();
     DrawableObject* createStormRise();
     DrawableObject* createSwoopWarning(int side);
+    bool getIsInvincible();
+    void setIsInvincible(bool val);
 
     
 

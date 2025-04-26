@@ -32,7 +32,7 @@ Ziz::Ziz() {
 	getAnimationComponent()->addState("groundslamrecovery", 0, 10);
 	getAnimationComponent()->addState("clawslash", 0, 44);
 	getAnimationComponent()->addState("wingspan", 0, 22);
-	getAnimationComponent()->addState("transform", 0, 10);
+	getAnimationComponent()->addState("transform", 0, 33);
 	getAnimationComponent()->addState("chomp", 0, 32);
 
 	
@@ -45,6 +45,7 @@ Ziz::Ziz() {
 	//other
 	isFacingRight = false;
 	dead = false;
+	isInvincible = false;
 
 	currentState = new BossStateMachine();
 	
@@ -206,6 +207,14 @@ void Ziz::interruptPhaseChange() {
 
 void Ziz::interruptDeath() {
 	getStateMachine()->interruptDeath(this);
+}
+
+bool Ziz::getIsInvincible() {
+	return isInvincible;
+}
+
+void Ziz::setIsInvincible(bool val) {
+	isInvincible = val;
 }
 
 void Ziz::startShake(float duration, float intensity) {

@@ -504,7 +504,9 @@ void LevelBossTest::handleKey(char key) {
 		break;
 		
 	case 'l':
-		ziz->resetCam();
+		ziz->interruptPhaseChange();
+		
+		//ziz->resetCam();
 		break;
 	}
 
