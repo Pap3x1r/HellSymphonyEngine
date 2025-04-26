@@ -117,13 +117,15 @@ DrawableObject* Ziz::createGust() {
 	//Create Gust
 	Gust* gust = new Gust(getFacingRight());
 	gust->setTexture("../Resource/Texture/Ziz/Ziz_Aircutter.png");
-	gust->getTransform().setScale(glm::vec3(1.0f, 2.0f, 1.0f));
+	
 	gust->setDraw(true);
 	//-1.25
 	if (isFacingRight) {
+		gust->getTransform().setScale(glm::vec3(1.0f, 2.0f, 1.0f));
 		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x + 1.5f, -1.5f, 1.0f));
 	}
 	else {
+		gust->getTransform().setScale(glm::vec3(1.0f, 2.0f, 1.0f));
 		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 1.5f, -1.5f, 1.0f));
 	}
 	

@@ -158,7 +158,7 @@ void Player::selfUpdate(float dt_) {
 		}
 
 		if (movementSpeed > minMovementSpeed) {
-			movementSpeed -= 40 * dt_;
+			movementSpeed -= 80 * dt_;
 		}
 
 		if (movementSpeed <= minMovementSpeed) {

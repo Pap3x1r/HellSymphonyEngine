@@ -18,8 +18,8 @@ void ZizGustState::enter(Boss* boss) {
     startupTimer = 0.08f * 7;
     activeTimer = 0.08f * 5;
     recoveryTimer = 0.08f * 8;
-
-    ziz->setTexture("../Resource/Texture/Ziz/Ziz_Gust.png", 1, 20, 0);
+    ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Gust-Sheet.png", 1, 20, 0);
+    //ziz->setTexture("../Resource/Texture/Ziz/Ziz_Gust.png", 1, 20, 0);
     ziz->getAnimationComponent()->setState("gust");
     ziz->facePlayer();
 

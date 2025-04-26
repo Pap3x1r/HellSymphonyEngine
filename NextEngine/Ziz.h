@@ -29,6 +29,8 @@ private:
     float shakeDuration = 0.0f;
     float shakeTimer = 0.0f;
     float shakeIntensity = 15.0f; // Adjust for desired intensity
+    bool shakeInterval;
+    bool shakeIntervalTimer;
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_real_distribution<> shakeOffsetX;

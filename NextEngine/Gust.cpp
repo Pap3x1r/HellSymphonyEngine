@@ -18,7 +18,7 @@ Gust::Gust() {
     isMovingRight = false;
     speed = 3.0f;  // Adjust speed of the tornado
     hasHit = false;
-    damage = 10;
+    damage = 100;
     
 
 
@@ -63,11 +63,13 @@ void Gust::onCollisionEnter(Collider* collider) {
             if (player->getShield()->getIsBlocking()) { // is blocking
                 if (player->getShield()->getIsPerfect()) { //is perfectly timed
                     cout << "Player perfect blocked" << endl;
+                    player->setHitEffectStrength(1.0f);
                     player->increaseUltimateGauge(100.0f); //instant fill
                     hasHit = true;
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
+                    player->setHitEffectStrength(1.0f);
                     player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
                     hasHit = true;
@@ -75,6 +77,7 @@ void Gust::onCollisionEnter(Collider* collider) {
             }
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
+                player->setHitEffectStrength(1.0f);
                 player->getHealth()->takeDamage(damage);
                 hasHit = true;
             }

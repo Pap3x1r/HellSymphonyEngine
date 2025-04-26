@@ -370,6 +370,10 @@ void LevelBossTest::handleKey(char key) {
 		//player->getAnimationComponent()->setState("down");
 		break;
 	case 'a':
+		if (player->getIsDashing() == true) {
+			return;
+		}
+
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
@@ -382,6 +386,10 @@ void LevelBossTest::handleKey(char key) {
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd':
+		if (player->getIsDashing() == true) {
+			return;
+		}
+
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
@@ -445,7 +453,7 @@ void LevelBossTest::handleKey(char key) {
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
 	//case 'f': //player->getBow()->setEnableDebug(); break;
-		player->getHealth()->takeDamage(99);
+		//player->getHealth()->takeDamage(99);
 		//player->increaseUltimateSlot(1);
 		break;
 	case 'h': 
@@ -464,19 +472,28 @@ void LevelBossTest::handleKey(char key) {
 		
 		if (player->getIsGrounded()) {
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+			
 		}
-		player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+		if (player->getIsDashing() == false) {
+			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+		}
+		
+		
 		break;
 	case 'S': //Spacebar -> Jump
+		if (player->getIsDashing() == true) { //Prevent air attack
+			return;
+		}
+
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
 		}
 		break;
-	case 'P':
+	case 'P': // dash
 		if (player->getCanDash()) {
-			player->setMovementSpeed(player->getMovementSpeed() * 4);
+			player->setMovementSpeed(player->getMovementSpeed() * 5);
 			player->setIsDashing(true);
 			player->setCanDash(false);
 		}
@@ -542,6 +559,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		//player->getAnimationComponent()->setState("right");
 		break;
 	case SDL_CONTROLLER_BUTTON_X:
+		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
+			return;
+		}
+
 		if (player->getWeaponType() == Bow_) {
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
@@ -585,6 +606,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 
 		break;
 	case SDL_CONTROLLER_BUTTON_Y:
+		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
+			return;
+		}
+
 		if (player->getWeaponType() == Bow_) {
 			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
 		}
@@ -604,6 +629,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		break;
 
 	case SDL_CONTROLLER_BUTTON_A:
+		if (player->getIsDashing() == true) { //Prevent air attack
+			return;
+		}
+
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
@@ -641,7 +670,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 
 	if (player->getIsDead()) return;
 
-	if (!player->getIsGrounded()) { //Prevent air attack
+	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
 		return;
 	}
 
