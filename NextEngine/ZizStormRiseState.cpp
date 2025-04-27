@@ -31,6 +31,7 @@ void ZizStormRiseState::enter(Boss* boss) {
 
     
     startupTimer = 0.08f * 57;
+    ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.015f, 0, 0));
     //recoveryTimer = startupTimer + 0.08f * 13;
 }
 
@@ -49,5 +50,8 @@ void ZizStormRiseState::update(Boss* boss, float dt) {
 }
 
 void ZizStormRiseState::exit(Boss* boss) {
+    Ziz* ziz = dynamic_cast<Ziz*>(boss);
+    if (!ziz) return;
+    ziz->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0, 0));
     //cout << "Ziz exiting StormRise State." << endl;
 }

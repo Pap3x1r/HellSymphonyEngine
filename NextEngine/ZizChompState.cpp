@@ -51,7 +51,8 @@ void ZizChompState::enter(Boss* boss) {
 	attackCollider1->getColliderComponent()->setDimension(1.0f, 3.0f);
 	attackCollider1->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + attackOffSet1, ziz->getTransform().getPosition().y - 1.5f, 0.0f));*/
 
-	
+	DrawableObject* newChompTentacle = ziz->createChompTentacle();
+	ziz->getLevel()->addObject(newChompTentacle);
 
 	
 
@@ -62,7 +63,7 @@ void ZizChompState::update(Boss* boss, float dt) {
 		animOffsetTimer -= dt;
 
 		if (animOffsetTimer <= 0) {
-			cout << "correct Anim" << endl;
+			//cout << "correct Anim" << endl;
 			ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.03f, 0, 0));
 			animCorrected = true;
 		}

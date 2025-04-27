@@ -26,7 +26,7 @@ void ZizClawSlashState::enter(Boss* boss) {
     isPreparing = false;
     isStartingUp = true;
 
-    attackOffSet = 1.0f;
+    attackOffSet = 3.0f;
 
     startUpTimer = 0.08f * 10;
 
@@ -47,6 +47,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 	attackCollider1 = new EnemyAttackCollider(5);
 	attackCollider1->setDraw(false);
 	attackCollider1->setDrawCollider(true);
+	//attackCollider1->setCanDrawColliderNew(true);
 	attackCollider1->addColliderComponent();
 	attackCollider1->setActive(false);
 	attackCollider1->getColliderComponent()->setTrigger(true);
@@ -56,6 +57,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 	attackCollider2 = new EnemyAttackCollider(5);
 	attackCollider2->setDraw(false);
 	attackCollider2->setDrawCollider(true);
+	//attackCollider2->setCanDrawColliderNew(true);
 	attackCollider2->addColliderComponent();
 	attackCollider2->setActive(false);
 	attackCollider2->getColliderComponent()->setTrigger(true);
@@ -65,6 +67,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 	attackCollider3 = new EnemyAttackCollider(5);
 	attackCollider3->setDraw(false);
 	attackCollider3->setDrawCollider(true);
+	//attackCollider3->setCanDrawColliderNew(true);
 	attackCollider3->addColliderComponent();
 	attackCollider3->setActive(false);
 	attackCollider3->getColliderComponent()->setTrigger(true);

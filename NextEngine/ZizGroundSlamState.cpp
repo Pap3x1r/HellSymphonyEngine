@@ -36,7 +36,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
         else tooClose = true;
     }
 
-    impactPosition = glm::vec3(playerPos.x + facing * slamOffset, 0.05f, 0.0f);
+    impactPosition = glm::vec3(playerPos.x + facing * slamOffset, -0.25f, 0.0f);
     startupPosition = zizPos;
     midairTarget = glm::vec3(zizPos.x, 2.0f, 0.0f);
 

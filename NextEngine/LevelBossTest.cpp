@@ -183,6 +183,10 @@ void LevelBossTest::levelUpdate() {
 		
 	}
 
+	if (player) {
+		player->updateShake(dt);
+	}
+		
 
 
 	for (DrawableObject* obj : objectsList) {
@@ -528,14 +532,16 @@ void LevelBossTest::handleKey(char key) {
 		
 		break;
 	case 't':
+		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		player->increaseUltimateGauge(100.0f);
+		//player->increaseUltimateGauge(100.0f);
 		break;
 		
 	case 'l':
+		//ziz->startShake(0.2f, 0.005f);
 		//ziz->interruptPhaseChange();
-		//cout << "Spawn Tentacle" << endl;
-		ziz->createChompTentacle();
+		cout << "Spawn Tentacle" << endl;
+		//ziz->createChompTentacle();
 		//ziz->resetCam();
 		break;
 	}

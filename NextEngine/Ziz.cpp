@@ -16,7 +16,7 @@ Ziz::Ziz() {
 	//getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
 	getTransform().setPosition(glm::vec3(2.0f, -0.25f, 0.0f));
 	setDrawCollider(true);
-	setCanDrawColliderNew(true);
+	//setCanDrawColliderNew(true);
 	getColliderComponent()->setTrigger(true);
 
 
@@ -173,9 +173,14 @@ DrawableObject* Ziz::createSwoopWarning(int side) {
 }
 
 DrawableObject* Ziz::createChompTentacle() {
-	ChompTentacle* chompTentacle = new ChompTentacle(isFacingRight);
-	chompTentacle->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y, 1.0f));
-	getLevel()->addObject(chompTentacle);
+	ChompTentacle* chompTentacle = new ChompTentacle(isFacingRight,this);
+	
+	if (isFacingRight) {
+		chompTentacle->getTransform().setPosition(glm::vec3(getTransform().getPosition().x + 3.0f, getTransform().getPosition().y - 0.15f, 1.0f));
+	}
+	else {
+		chompTentacle->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 3.0f, getTransform().getPosition().y - 0.15f, 1.0f));
+	}
 	return chompTentacle;
 
 }

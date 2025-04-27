@@ -1,5 +1,6 @@
 #include "EnemyAttackCollider.h"
 #include "Shield.h"
+#include "Ziz.h"
 
 EnemyAttackCollider::EnemyAttackCollider() {
 	damage = 0.0f;
@@ -24,6 +25,8 @@ void EnemyAttackCollider::onCollisionEnter(Collider* collider) {
 void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Player* player = dynamic_cast<Player*>(obj);
+	DrawableObject* obj2 = collider->getObject();
+	Ziz* ziz = dynamic_cast<Ziz*>(obj2);
 
 	if (player) {
 		//playerInside = true;
@@ -47,12 +50,14 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 					player->increaseUltimateGauge(damage / 2); // increase by withered damage.
 					hasHit = true;
 					player->setHitEffectStrength(1.0f);
+					
 				}
 			}
 			else { //is not blocking
 				cout << "Enemy Hit Player for " << damage << " damage." << endl;
 				player->getHealth()->takeDamage(damage);
 				hasHit = true;
+				player->startShake(0.1f, 0.0025f);
 				player->setHitEffectStrength(1.0f);
 			}
 		}

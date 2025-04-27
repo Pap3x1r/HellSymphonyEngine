@@ -3,6 +3,7 @@
 #include "Ziz.h"
 #include "Level.h"
 #include "EnemyAttackCollider.h"
+#include "ChompTentacle.h"
 
 class Ziz;
 

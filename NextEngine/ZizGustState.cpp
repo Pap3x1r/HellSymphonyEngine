@@ -25,7 +25,8 @@ void ZizGustState::enter(Boss* boss) {
 
     currentState = 0;
     
-    cout << "start up gust" << endl;
+    //cout << "start up gust" << endl;
+    ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.015f, 0, 0));
     
 }
 
@@ -93,5 +94,5 @@ void ZizGustState::update(Boss* boss, float dt) {
 }
 
 void ZizGustState::exit(Boss* boss) {
-    //cout << "Ziz exiting Gust State.\n";
+    ziz->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0, 0));
 }

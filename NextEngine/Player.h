@@ -4,6 +4,7 @@
 #include "Health.h"
 #include "StateMachine.h"
 #include <imgui.h>
+#include <random>
 
 //Movesets
 #include "PlayerMovementState.h"
@@ -51,6 +52,18 @@ class Player : public TexturedObject {
     bool isDashing = true;
     float dashCooldown = 1.0f;
     float dashTimer = 0.0f;
+
+    //cam
+    bool isShaking = false;
+    float shakeDuration = 0.0f;
+    float shakeTimer = 0.0f;
+    float shakeIntensity = 15.0f; // Adjust for desired intensity
+    bool shakeInterval;
+    bool shakeIntervalTimer;
+    std::random_device rd;
+    std::mt19937 gen;
+    std::uniform_real_distribution<> shakeOffsetX;
+    std::uniform_real_distribution<> shakeOffsetY;
 
     Level* currentLevel;
     Health* health;
@@ -169,6 +182,10 @@ public:
     Bow* getBow() const;
     Sword* getSword() const;
     Shield* getShield() const;
+
+    void startShake(float duration, float intensity);
+    void updateShake(float deltaTime);
+    void stopShake();
 
     /*void onCollisionEnter(Collider* collider) override;
     void onCollisionStay(Collider* collider) override;
