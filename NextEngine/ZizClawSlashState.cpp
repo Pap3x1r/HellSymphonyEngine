@@ -16,7 +16,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 		//cout << "Found Ziz" << endl;
 	}
 	ziz->setTexture("../Resource/Ziz/Gust_2.png");
-	ziz->setTexture("../Resource/Texture/Ziz/Ziz_Clawslash.png", 1, 44, 0);
+	ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_ClawSlash-Sheet.png", 1, 44, 0);
 	ziz->getAnimationComponent()->setState("clawslash");
 	findPlayer();
 

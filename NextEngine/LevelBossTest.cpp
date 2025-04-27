@@ -161,6 +161,14 @@ void LevelBossTest::levelUpdate() {
 
 	if (player->getStateMachine()) {
 		player->getStateMachine()->update(player, playerDT);
+		//cout << player->getTransform().getPosition().x << endl;
+		if (player->getTransform().getPosition().x > 7.5f) {
+			player->getTransform().setPosition(glm::vec3(7.5f, player->getTransform().getPosition().y, 0.0f));
+		}
+		if (player->getTransform().getPosition().x < -7.5f) {
+			player->getTransform().setPosition(glm::vec3(-7.5f, player->getTransform().getPosition().y, 0.0f));
+		}
+
 	}
 
 	//cout << "player y: " << player->getTransform().getPosition().y << endl;
@@ -378,17 +386,23 @@ void LevelBossTest::handleKey(char key) {
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
 
+
+
+		playerIsMoving = true;
+
 		if (player->getIsGrounded()) { // only change when walking on ground
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		}
 
-		playerIsMoving = true;
+		
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd':
 		if (player->getIsDashing() == true) {
 			return;
 		}
+
+		
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
@@ -492,15 +506,19 @@ void LevelBossTest::handleKey(char key) {
 		}
 		break;
 	case 'P': // dash
-		if (player->getCanDash()) {
-			player->setMovementSpeed(player->getMovementSpeed() * 5);
-			player->setIsDashing(true);
-			player->setCanDash(false);
+
+		if (player->getTransform().getPosition().x > -7.4f && player->getTransform().getPosition().x < 7.4f) {
+			if (player->getCanDash()) {
+				player->setMovementSpeed(player->getMovementSpeed() * 5);
+				player->setIsDashing(true);
+				player->setCanDash(false);
+			}
 		}
+		
 		break;
 	case 't':
-		cout << "shaking" << endl;
-		ziz->startShake(0.2f, 0.005f);
+		//ziz->startShake(0.2f, 0.005f);
+		player->increaseUltimateGauge(100.0f);
 		break;
 		
 	case 'l':
@@ -645,11 +663,64 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		}
 		break;
 	case SDL_CONTROLLER_BUTTON_B:
-		if (player->getCanDash()) {
-			player->setMovementSpeed(player->getMovementSpeed() * 4);
-			player->setIsDashing(true);
-			player->setCanDash(false);
+		if (player->getTransform().getPosition().x > -7.4f && player->getTransform().getPosition().x < 7.4f) {
+			if (player->getCanDash()) {
+				player->setMovementSpeed(player->getMovementSpeed() * 4);
+				player->setIsDashing(true);
+				player->setCanDash(false);
+			}
 		}
+		
+		break;
+	case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
+			return;
+		}
+
+		if (player->getWeaponType() == Bow_) {
+			//cout << "works" << endl;
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Sword_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
+				}
+			}
+		}
+		else if (player->getWeaponType() == Shield_) {
+			if (player->getUltimateSlot() > 0) {
+				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
+				}
+				else {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
+				}
+			}
+		}
+
 		break;
 
 	default:

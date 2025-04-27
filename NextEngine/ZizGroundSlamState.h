@@ -23,11 +23,13 @@ private:
     bool hasImpacted = false;
     bool tooClose = false;
     bool wayTooClose = false;
+    bool hasStartUp = false;
 
     // Timers
-    float startupTime = 0.0f;
-    float hoverTime = 0.0f;
-    float slamTimer = 0.0f;
+    float startupTime;
+    float flyupTime;
+    float hoverTime;
+    float slamTimer;
     float descendTime = 0.0f;
     float recoverTime = 0.0f;
 

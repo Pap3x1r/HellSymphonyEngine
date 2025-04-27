@@ -14,8 +14,11 @@ void ZizGroundSlamState::enter(Boss* boss) {
     ziz = dynamic_cast<Ziz*>(boss);
     if (!ziz) return;
 
-    ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamStartup.png", 1, 8, 0);
-    ziz->getAnimationComponent()->setState("groundslamstartup");
+    //ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamStartup.png", 1, 8, 0);
+    //ziz->getAnimationComponent()->setState("groundslamstartup");
+
+    ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_GS.png", 1, 24, 0);
+    ziz->getAnimationComponent()->setState("groundslam");
     ziz->facePlayer();
 
     player = ziz->getPlayer();
@@ -49,16 +52,18 @@ void ZizGroundSlamState::enter(Boss* boss) {
     ziz->getLevel()->addObject(attackCollider);
 
     // Phase flags
+    hasStartUp = false;
     hasLaunched = false;
     peakReached = false;
     isDescending = false;
     hasImpacted = false;
 
     // Timers
-    startupTime = 0.08f * 8;
-    hoverTime = 0.08f * 6;
+    startupTime = 0.08f * 6;
+    flyupTime = 0.08f * 4;
+    hoverTime = 0.08f * 3;
     descendTime = 0.08f * 2;
-    recoverTime = 0.08f * 10;
+    recoverTime = 0.08f * 8;
 
     slamTimer = 0.0f;
 }
@@ -68,18 +73,22 @@ void ZizGroundSlamState::update(Boss* boss, float dt) {
 
     glm::vec3 pos = ziz->getTransform().getPosition();
 
-    // 1. Startup - Ascend vertically to midairTarget
-    if (!hasLaunched) {
+    if (hasStartUp == false) {
         startupTime -= dt;
-        float t = 1.0f - (startupTime / (8 * 0.08f));
+        if (startupTime <= 0) {
+            hasStartUp = true;
+        }
+    }else if (hasLaunched == false && hasStartUp == true) {
+        flyupTime -= dt;
+        float t = 1.0f - (flyupTime / (8 * 0.08f));
         t = glm::clamp(t, 0.0f, 1.0f);
         pos.y = glm::mix(startupPosition.y, midairTarget.y, t);
         ziz->getTransform().setPosition(pos);
 
-        if (startupTime <= 0) {
+        if (flyupTime <= 0) {
             hasLaunched = true;
-            ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamInAir.png", 1, 6, 0);
-            ziz->getAnimationComponent()->setState("groundslaminair");
+            //ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamInAir.png", 1, 6, 0);
+            //ziz->getAnimationComponent()->setState("groundslaminair");
         }
     }
     // 2. Hover phase - small delay before slam
@@ -90,8 +99,8 @@ void ZizGroundSlamState::update(Boss* boss, float dt) {
             isDescending = true;
             slamStartPos = ziz->getTransform().getPosition();
             slamTimer = 0.0f;
-            ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamSlamming.png", 1, 2, 0);
-            ziz->getAnimationComponent()->setState("groundslamslamming");
+            //ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamSlamming.png", 1, 2, 0);
+            //ziz->getAnimationComponent()->setState("groundslamslamming");
         }
     }
     // 3. Slam - descend diagonally toward impact position
@@ -111,8 +120,8 @@ void ZizGroundSlamState::update(Boss* boss, float dt) {
         if (t >= 1.0f) {
             hasImpacted = true;
             isDescending = false;
-            ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamRecovery.png", 1, 10, 0);
-            ziz->getAnimationComponent()->setState("groundslamrecovery");
+            //ziz->setTexture("../Resource/Texture/Ziz/Ziz_GroundslamRecovery.png", 1, 10, 0);
+            //ziz->getAnimationComponent()->setState("groundslamrecovery");
         }
     }
     // 4. Recovery after slam

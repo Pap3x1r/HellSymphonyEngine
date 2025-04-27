@@ -14,7 +14,7 @@ Ziz::Ziz() {
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.3f, 0.5f);
 	getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
-	getTransform().setPosition(glm::vec3(2.0f, 0.05, 0.0f));
+	getTransform().setPosition(glm::vec3(2.0f, -0.25f, 0.0f));
 	setDrawCollider(true);
 	getColliderComponent()->setTrigger(true);
 
@@ -26,6 +26,8 @@ Ziz::Ziz() {
 	getAnimationComponent()->addState("stormrise", 0, 57);
 	getAnimationComponent()->addState("flyup",0, 7);
 	getAnimationComponent()->addState("swoop", 0, 1);
+	getAnimationComponent()->addState("swooprecovery", 0, 16);
+	getAnimationComponent()->addState("groundslam", 0, 24);
 	getAnimationComponent()->addState("groundslamstartup", 0, 8);
 	getAnimationComponent()->addState("groundslaminair", 0, 6);
 	getAnimationComponent()->addState("groundslamslamming", 0, 2);

@@ -15,8 +15,8 @@ void ZizChompState::enter(Boss* boss) {
 	if (ziz) {
 		//cout << "Found Ziz" << endl;
 	}
-	ziz->setTexture("../Resource/Ziz/Gust_2.png");
-	ziz->setTexture("../Resource/Texture/Ziz/Ziz_Chomp.png", 1, 32, 0);
+	//ziz->setTexture("../Resource/Ziz/Gust_2.png");
+	ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Chomp/Zyzz_Chomp-Sheet.png", 1, 32, 0);
 	ziz->getAnimationComponent()->setState("chomp");
 	findPlayer();
 
@@ -60,12 +60,12 @@ void ZizChompState::enter(Boss* boss) {
 	attackCollider2->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + attackOffSet2, ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 
 	//cout << "Ziz Ready to ClawSlash" << endl;
-	if (ziz->getFacingRight() == false) {
+	/*if (ziz->getFacingRight() == false) {
 		ziz->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x - 1.6f, ziz->getTransform().getPosition().y, ziz->getTransform().getPosition().z));
 	}
 	else {
 		ziz->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + 1.6f, ziz->getTransform().getPosition().y, ziz->getTransform().getPosition().z));
-	}
+	}*/
 
 }
 
@@ -179,12 +179,12 @@ void ZizChompState::update(Boss* boss, float dt) {
 		// **Recovery Phase**
 		recoveryTimer -= dt;
 		if (recoveryTimer <= 0) {
-			if (ziz->getFacingRight() == false) {
+			/*if (ziz->getFacingRight() == false) {
 				ziz->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + 1.6f, ziz->getTransform().getPosition().y, ziz->getTransform().getPosition().z));
 			}
 			else {
 				ziz->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x - 1.6f, ziz->getTransform().getPosition().y, ziz->getTransform().getPosition().z));
-			}
+			}*/
 				
 			ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 		}

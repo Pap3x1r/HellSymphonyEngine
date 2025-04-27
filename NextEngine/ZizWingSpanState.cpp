@@ -17,7 +17,7 @@ void ZizWingSpanState::enter(Boss* boss) {
 
 
 	ziz->setTexture("../Resource/Ziz/WingSpan_1.png");
-	ziz->setTexture("../Resource/Texture/Ziz/Ziz_WingSpan.png", 1, 22, 0);
+	ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_WingSweep-Sheet.png", 1, 22, 0);
 	ziz->getAnimationComponent()->setState("wingspan");
 	ziz->facePlayer();
 

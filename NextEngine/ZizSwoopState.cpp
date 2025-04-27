@@ -16,8 +16,8 @@ void ZizSwoopState::enter(Boss* boss) {
 	if (!ziz) return;
 
 	
-	ziz->setTexture("../Resource/Ziz/Swoop_1.png");
-	ziz->setTexture("../Resource/Texture/Ziz/Ziz_Flyup.png", 1, 7, 0);
+	
+	ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_FlyUp-Sheet.png", 1, 7, 0);
 	ziz->getAnimationComponent()->setState("flyup");
 	//ziz->getPhysicsComponent()->setEnableGravity(false);
 	isOffScreen = false;
@@ -29,7 +29,7 @@ void ZizSwoopState::enter(Boss* boss) {
 
 	flyUpTimer = 0.08f * 7;
 	beforeWarningTimer = 1.0f;
-	recoveryTimer = 0.08f * 8;
+	recoveryTimer = 0.08f * 16;
 	beforeSwoopTimer = 0.08f * 3;
 	warningTimer = 2.0f + beforeSwoopTimer;
 	swoopTimer = 0;
@@ -39,12 +39,12 @@ void ZizSwoopState::enter(Boss* boss) {
 	if (swoopDirection == -1) {
 		//cout << "Ziz go from left to right" << endl;
 		startPos = glm::vec3(-10.5f, 0.0f, 0.0f);
-		endPos = glm::vec3(4.5f, 0.0f, 0.0f);
+		endPos = glm::vec3(4.5f, -0.25f, 0.0f);
 	}
 	else if (swoopDirection == 1) {
 		//cout << "Ziz go from right to left" << endl;
 		startPos = glm::vec3(10.5f, 0.0f, 0.0f);
-		endPos = glm::vec3(-4.5f, 0.0f, 0.0f);
+		endPos = glm::vec3(-4.5f, -0.25f, 0.0f);
 	}
 
 	newSwoopWarning = ziz->createSwoopWarning(swoopDirection);
@@ -61,7 +61,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	attackCollider->addColliderComponent();
 	attackCollider->setActive(true);
 	attackCollider->getColliderComponent()->setTrigger(true);
-	attackCollider->getColliderComponent()->setDimension(1.0f, 3.0f);
+	attackCollider->getColliderComponent()->setDimension(1.0f, 6.0f);
 	attackCollider->getTransform().setPosition(glm::vec3(0.0f,-10.0f,0.0f));
 	
 	ziz->getLevel()->addObject(attackCollider);
@@ -109,15 +109,15 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 				if (warningTimer <= 0) {
 					isDisplayingWarning = false;
 					//cout << "Warning done" << endl;
-					ziz->setTexture("../Resource/Texture/Ziz/Ziz_Swoop.png", 1, 1, 0);
+					ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Swoop.png", 1, 1, 0);
 					ziz->getAnimationComponent()->setState("swoop");
 					switch (swoopDirection) {
 					case -1:
-						ziz->getTransform().setPosition(glm::vec3(-10.5f, 0.0f, 0.0f));
+						ziz->getTransform().setPosition(glm::vec3(-10.5f, -0.25f, 0.0f));
 						break;
 
 					case 1:
-						ziz->getTransform().setPosition(glm::vec3(10.5f, 0.0f, 0.0f));
+						ziz->getTransform().setPosition(glm::vec3(10.5f, -0.25f, 0.0f));
 						break;
 					}
 					ziz->facePlayer();
@@ -145,7 +145,8 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					if (t >= 1.0f) {
 						hasReachedTarget = true;
 						//cout << "Finished" << endl;
-						ziz->setTexture("../Resource/Ziz/Swoop_3.png");
+						ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Swoop_Recovery.png", 1, 16, 0);
+						ziz->getAnimationComponent()->setState("swooprecovery");
 						DrawableObject::destroyObject(attackCollider);
 					}
 				}
