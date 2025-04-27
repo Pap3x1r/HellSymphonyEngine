@@ -13,9 +13,10 @@ Ziz::Ziz() {
 	//Collider
 	addColliderComponent();
 	getColliderComponent()->setDimension(0.3f, 0.5f);
-	getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+	//getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
 	getTransform().setPosition(glm::vec3(2.0f, -0.25f, 0.0f));
 	setDrawCollider(true);
+	setCanDrawColliderNew(true);
 	getColliderComponent()->setTrigger(true);
 
 
@@ -98,6 +99,15 @@ void Ziz::facePlayer() {
 
 		
 		isFacingRight = playerX > zizX;
+		if (isFacingRight) {
+			Transform colOffset;
+			colOffset = getColliderComponent()->getTransform();
+
+			getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+		}
+		else {
+			getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+		}
 		
 		setFacingRight(isFacingRight);
 	}
@@ -154,13 +164,21 @@ DrawableObject* Ziz::createStormRise() {
 	stormRise->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, 0.15f, 1.0f));
 	
 	
-
 	return stormRise;
+
 }
 
 DrawableObject* Ziz::createSwoopWarning(int side) {
 	SwoopWarning* warning = new SwoopWarning(side);
 	return warning;
+}
+
+DrawableObject* Ziz::createChompTentacle() {
+	ChompTentacle* chompTentacle = new ChompTentacle(isFacingRight);
+	chompTentacle->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y, 1.0f));
+	getLevel()->addObject(chompTentacle);
+	return chompTentacle;
+
 }
 
 void Ziz::setIdleState(){

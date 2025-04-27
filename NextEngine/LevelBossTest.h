@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Gust.h"
 #include "StormRise.h"
+#include "ChompTentacle.h"
 
 #include "Sword.h"
 #include "Bow.h"
@@ -25,6 +26,7 @@ private:
 	Player* player;
 	Gust* gust;
 	StormRise* stormRise;
+	ChompTentacle* chompTentacle;
 	//UI
 	SimpleObject* playerHealthBar;
 	SimpleObject* playerUltimateBar;

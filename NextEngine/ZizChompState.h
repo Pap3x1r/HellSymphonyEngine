@@ -17,6 +17,7 @@ private:
     bool hasChomped;
     bool isPreparing;
     bool isStartingUp;
+    bool animCorrected;
 
     float attackOffSet1;
     float attackOffSet2;
@@ -32,6 +33,7 @@ private:
     float pauseTimer2;
 
     float recoveryTimer;
+    float animOffsetTimer;
 
 
     Ziz* ziz;

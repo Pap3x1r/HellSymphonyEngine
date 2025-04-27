@@ -38,6 +38,7 @@
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ChompTentacle.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionHandler.cpp" />
     <ClCompile Include="CombineObject.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="BowUltimateCollider.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ChompTentacle.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionHandler.h" />
     <ClInclude Include="CombineObject.h" />

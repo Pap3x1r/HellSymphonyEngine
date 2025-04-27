@@ -91,6 +91,10 @@ void LevelBossTest::levelInit() {
 	/*SwoopWarning* warning = new SwoopWarning();
 	objectsList.push_back(warning);*/
 
+	/*ChompTentacle* chompTentacle_ = new ChompTentacle();
+	objectsList.push_back(chompTentacle_);
+	chompTentacle = chompTentacle_;*/
+
 	SimpleObject* floor = new SimpleObject();
 	floor->getTransform().setPosition(glm::vec3(0.0f, -3.7f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
@@ -176,6 +180,7 @@ void LevelBossTest::levelUpdate() {
 	if (ziz) {
 		ziz->phaseChangeTracker();
 		ziz->updateShake(dt);
+		
 	}
 
 
@@ -194,6 +199,12 @@ void LevelBossTest::levelUpdate() {
 				stormRise->getAnimationComponent()->updateCurrentState(dt);
 			}
 			
+		}
+
+		ChompTentacle* chompTentacle = dynamic_cast<ChompTentacle*>(obj);
+		if (chompTentacle) {
+			chompTentacle->update(dt);
+			chompTentacle->getAnimationComponent()->updateCurrentState(dt);
 		}
 
 		Arrow* arrow = dynamic_cast<Arrow*>(obj);
@@ -522,8 +533,9 @@ void LevelBossTest::handleKey(char key) {
 		break;
 		
 	case 'l':
-		ziz->interruptPhaseChange();
-		
+		//ziz->interruptPhaseChange();
+		//cout << "Spawn Tentacle" << endl;
+		ziz->createChompTentacle();
 		//ziz->resetCam();
 		break;
 	}
