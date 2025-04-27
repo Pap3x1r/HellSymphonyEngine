@@ -100,13 +100,12 @@ void Ziz::facePlayer() {
 		
 		isFacingRight = playerX > zizX;
 		if (isFacingRight) {
-			Transform colOffset;
-			colOffset = getColliderComponent()->getTransform();
-
-			getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+			Transform defaultTransform;
+			//defaultTransform.setPosition();
+			getColliderComponent()->getTransform().setPosition(glm::vec3(0.5f, 0.0f, 0.0f));
 		}
 		else {
-			getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
+			getColliderComponent()->getTransform().setPosition(glm::vec3(-0.5f, 0.0f, 0.0f));
 		}
 		
 		setFacingRight(isFacingRight);
