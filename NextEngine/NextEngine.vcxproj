@@ -61,6 +61,7 @@
     <ClCompile Include="LevelPrototype.cpp" />
     <ClCompile Include="LevelTest.cpp" />
     <ClCompile Include="LevelUITest.cpp" />
+    <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="LivingEntity.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapLoader.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
+    <ClCompile Include="UltZizOnBG.cpp" />
     <ClCompile Include="Ziz.cpp" />
     <ClCompile Include="ZizChompState.cpp" />
     <ClCompile Include="ZizClawSlashState.cpp" />
@@ -97,6 +99,7 @@
     <ClCompile Include="ZizStormRiseState.cpp" />
     <ClCompile Include="ZizSwoopState.cpp" />
     <ClCompile Include="ZizTransitionState.cpp" />
+    <ClCompile Include="ZizUltState.cpp" />
     <ClCompile Include="ZizWingSpanState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +148,8 @@
     <ClInclude Include="LevelPrototype.h" />
     <ClInclude Include="LevelTest.h" />
     <ClInclude Include="LevelUITest.h" />
+    <ClInclude Include="Lightning.h" />
+    <ClInclude Include="LightningWarning.h" />
     <ClInclude Include="LivingEntity.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MeshVbo.h" />
@@ -174,6 +179,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
+    <ClInclude Include="UltZizOnBG.h" />
     <ClInclude Include="Ziz.h" />
     <ClInclude Include="ZizChompState.h" />
     <ClInclude Include="ZizClawSlashState.h" />
@@ -184,6 +190,7 @@
     <ClInclude Include="ZizStormRiseState.h" />
     <ClInclude Include="ZizSwoopState.h" />
     <ClInclude Include="ZizTransitionState.h" />
+    <ClInclude Include="ZizUltState.h" />
     <ClInclude Include="ZizWingSpanState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

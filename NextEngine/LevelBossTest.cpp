@@ -228,6 +228,18 @@ void LevelBossTest::levelUpdate() {
 			swoopWarning->update(dt);
 		}
 
+		UltZizOnBG* ultZizOnBG = dynamic_cast<UltZizOnBG*>(obj);
+		if (ultZizOnBG) {
+			ultZizOnBG->update(dt);
+		}
+
+		Lightning* lightning = dynamic_cast<Lightning*>(obj);
+		if (lightning) {
+			//cout << "lightning found" << endl;
+			lightning->update(dt);
+			lightning->getAnimationComponent()->updateCurrentState(dt);
+		}
+
 		BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(obj);
 		if (attackCollider) {
 			attackCollider->update(dt);
@@ -538,9 +550,18 @@ void LevelBossTest::handleKey(char key) {
 		break;
 		
 	case 'l':
+
+
+		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
+		addObject(ultZizOnBG_);
+		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
+
+		DrawableObject* lightning_ = ziz->createLightning();
+		addObject(lightning_);
+		
+
 		//ziz->startShake(0.2f, 0.005f);
 		//ziz->interruptPhaseChange();
-		cout << "Spawn Tentacle" << endl;
 		//ziz->createChompTentacle();
 		//ziz->resetCam();
 		break;

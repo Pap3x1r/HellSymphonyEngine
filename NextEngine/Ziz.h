@@ -8,7 +8,9 @@
 #include "Gust.h"
 #include "StormRise.h"
 #include "SwoopWarning.h"
+#include "UltZizOnBG.h"
 #include "ChompTentacle.h"
+#include "Lightning.h"
 #include <random>
 
 enum zizPhase {
@@ -60,6 +62,8 @@ public:
     DrawableObject* createStormRise();
     DrawableObject* createSwoopWarning(int side);
     DrawableObject* createChompTentacle();
+    DrawableObject* createLightning();
+    DrawableObject* createBGZiz();
     bool getIsInvincible();
     void setIsInvincible(bool val);
 

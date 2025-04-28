@@ -8,6 +8,7 @@
 #include "ZizWingSpanState.h"
 #include "ZizClawSlashState.h"
 #include "ZizChompState.h"
+#include "ZizUltState.h"
 
 class Ziz;
 

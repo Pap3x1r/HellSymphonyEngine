@@ -172,6 +172,13 @@ DrawableObject* Ziz::createSwoopWarning(int side) {
 	return warning;
 }
 
+DrawableObject* Ziz::createBGZiz() {
+	UltZizOnBG* ultZizOnBG = new UltZizOnBG(this);
+	cout << "creat bg from ziz" << endl;
+
+	return ultZizOnBG;
+}
+
 DrawableObject* Ziz::createChompTentacle() {
 	ChompTentacle* chompTentacle = new ChompTentacle(isFacingRight,this);
 	
@@ -183,6 +190,11 @@ DrawableObject* Ziz::createChompTentacle() {
 	}
 	return chompTentacle;
 
+}
+
+DrawableObject* Ziz::createLightning() {
+	Lightning* lightning = new Lightning(this);
+	return lightning;
 }
 
 void Ziz::setIdleState(){

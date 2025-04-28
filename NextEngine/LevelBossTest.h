@@ -12,6 +12,8 @@
 #include "Shield.h"
 
 #include "SwoopWarning.h"
+#include "UltZizOnBG.h"
+#include "Lightning.h"
 
 #include <list>
 
