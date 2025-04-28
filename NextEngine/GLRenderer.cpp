@@ -313,11 +313,6 @@ GLuint GLRenderer::getHitEffectUniformId() {
 GLuint GLRenderer::LoadTexture(string path) {
     glActiveTexture(GL_TEXTURE0);
 
-    if (textureCache.find(path) != textureCache.end()) {
-        return textureCache[path]; //Reused texture
-    }
-
-
     // Load the image using SDL_Image
     SDL_Surface* image = IMG_Load(path.c_str());
     if (image == NULL) {
@@ -365,8 +360,6 @@ GLuint GLRenderer::LoadTexture(string path) {
 
     // Free the image memory
     SDL_FreeSurface(image);
-
-    //textureCache[path] = texture;
 
     // Return the texture ID
     return texture;
@@ -444,24 +437,59 @@ void GLRenderer::clearTextureCache() {
 }
 
 void GLRenderer::preloadTextures(const vector<string>& texturePaths) {
+    GLuint texture;
     for (const auto& path : texturePaths) {
-        LoadTexture(path); // This will automatically cache them
+        texture = LoadTexture(path);
+        textureCache[path] = texture;
     }
 }
 
 void GLRenderer::loadTextureFromDir(const std::string& dir) {
     //This loop through every file paths in directory and put inside map and vector
+    cout << "Directory: " << dir << " has been loaded." << endl;
+
     for (const auto& paths : std::filesystem::directory_iterator(dir)) {
         if (paths.is_regular_file()) {
+            filesystem::path fileExtension(paths.path().string());
+            if (fileExtension.extension() != ".png") {
+                continue;
+            }
+
             std::string filePath = paths.path().string();
             std::string fileName = paths.path().filename().string();
 
-            //Music music = loadMusic(filePath); // Add current music as cache file to access later using name
-            //v_music.push_back({ fileName, music });
-            //std::cout << "Successfully added " << fileName << " to map and vector at index: " << v_music.size() - 1 << std::endl;
+            GLuint texture = LoadTexture(filePath);
+            textureCache[filePath] = texture;
+
+            cout << fileName << " has been loaded." << endl;
         }
         else {
-            std::cerr << "Error: path is not a file. Path:" << paths.path().string() << std::endl;
+            filesystem::path path(paths.path());
+
+            if (filesystem::is_directory(path)) {
+                loadTextureFromDir(path.string());
+            }
+            else {
+                std::cerr << "Error: path is not a file. Path:" << paths.path().string() << std::endl;
+            }
         }
     }
+}
+
+GLuint GLRenderer::findTexture(const std::string path) {
+    auto it = textureCache.find(path);
+
+    GLuint texture;
+
+    if (it == textureCache.end()) {
+        texture = LoadTexture(path);
+        textureCache[path] = texture;
+        //cout << path << " is loaded for first time." << endl;
+    }
+    else {
+        texture = it->second;
+        //cout << path << " is found" << endl;
+    }
+
+    return texture;
 }

@@ -17,7 +17,7 @@ UltZizOnBG::UltZizOnBG() {
 
 	startUpTimer = 0;
 	startUpDuration = 0.08f * 36;
-	delayBeforeLightning = 0.08f * 12;
+	delayBeforeLightning = 10.0f;
 
 	cout << "made zizbg" << endl;
 }
@@ -46,7 +46,7 @@ UltZizOnBG::UltZizOnBG(Ziz* boss) {
 
 	startUpTimer = 0;
 	startUpDuration = 0.08f * 36;
-	delayBeforeLightning = 0.08f * 12;
+	delayBeforeLightning = 5.0f;
 	cout << "made zizbg" << endl;
 }
 
@@ -71,11 +71,12 @@ void UltZizOnBG::update(float dt) {
 
 	if (enteredScreen == true && hasSummonedLightning == false) {
 		delayBeforeLightning -= dt;
+		DrawableObject* lightning_ = ziz->createLightning();
+		ziz->getLevel()->addObject(lightning_);
 		if (delayBeforeLightning <= 0) {
 
 			for (int i = 0; i < 3; i++) {
-				DrawableObject* lightning_ = ziz->createLightning();
-				ziz->getLevel()->addObject(lightning_);
+				
 			}
 			
 			hasSummonedLightning = true;

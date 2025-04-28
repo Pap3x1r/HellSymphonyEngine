@@ -47,6 +47,7 @@ private:
     
     Player* player;
 
+    vector<string> texturePaths;
 
 public:
     Ziz();

@@ -24,7 +24,7 @@ private:
     float swoopTimer;
     float recoveryTimer;
     float beforeSwoopTimer;
-    const float swoopDuration = 0.4f;
+    const float swoopDuration = 5.0f;
     float t;
     DrawableObject* newSwoopWarning;
 

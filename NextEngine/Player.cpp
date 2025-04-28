@@ -47,6 +47,7 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	//};
 
 	//GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
+	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
 
 	setTexture("../Resource/Texture/Dante/DanteSword/dante_idle_sword.png");
 	getTransform().setScale(glm::vec3(4.5f, 4.5f, 1.0f));

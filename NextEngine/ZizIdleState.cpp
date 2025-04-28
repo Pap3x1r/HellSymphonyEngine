@@ -36,7 +36,7 @@ void ZizIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        ziz->getStateMachine()->changeState(ZizUltState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
         //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
         //pickState();
     }

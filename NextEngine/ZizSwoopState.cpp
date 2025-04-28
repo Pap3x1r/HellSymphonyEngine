@@ -59,6 +59,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
 	attackCollider->addColliderComponent();
+	attackCollider->setCanDrawColliderNew(true);
 	attackCollider->setActive(true);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.0f, 6.0f);
@@ -125,7 +126,7 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 			}
 
 			if (isOffScreen && hasDisplayedWarning && !isDisplayingWarning) {
-				if (!hasReachedTarget) {
+				if (hasReachedTarget == false) {
 					swoopTimer += dt;
 					//cout << "Swooping" << endl;
 					// Calculate interpolation factor (0 to 1 over 0.5s)
@@ -150,11 +151,12 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 						DrawableObject::destroyObject(attackCollider);
 					}
 				}
-				else {
+
+				if (hasReachedTarget == true){
 					recoveryTimer -= dt;
 					if (recoveryTimer <= 0) {
 						//ziz->getPhysicsComponent()->setEnableGravity(true);
-						DrawableObject::destroyObject(attackCollider);
+						//DrawableObject::destroyObject(attackCollider);
 						//ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
 						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
 					}
@@ -167,5 +169,5 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 
 void ZizSwoopState::exit(Boss* boss) {
 	//std::cout << "Ziz exiting Swoop State." << endl;
-	DrawableObject::destroyObject(attackCollider);
+	//DrawableObject::destroyObject(attackCollider);
 }

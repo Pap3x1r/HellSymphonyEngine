@@ -18,10 +18,13 @@ TexturedObject::~TexturedObject() {
 }
 
 void TexturedObject::setTexture(string path) {
-	if (texture != 0) {
+	/*if (texture != 0) {
 		glDeleteTextures(1, &texture);
-	}
-	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+	}*/
+
+	GLRenderer* renderer = GameEngine::getInstance()->getRenderer();
+
+	texture = renderer->findTexture(path);
 
 	if (animation != nullptr) {
 		animation->setTexture(texture);
@@ -29,10 +32,14 @@ void TexturedObject::setTexture(string path) {
 }
 
 void TexturedObject::setTexture(string path, int row, int col, int startFrame) {
-	if (texture != 0) {
+	/*if (texture != 0) {
 		glDeleteTextures(1, &texture);
-	}
-	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+	}*/
+	//texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+
+	GLRenderer* renderer = GameEngine::getInstance()->getRenderer();
+
+	texture = renderer->findTexture(path);
 
 	if (animation != nullptr) {
 		animation->setStartingFrame(startFrame);
@@ -42,10 +49,14 @@ void TexturedObject::setTexture(string path, int row, int col, int startFrame) {
 }
 
 void TexturedObject::setTexture(string path, int row, int col, int startFrame, bool loop) {
-	if (texture != 0) {
+	/*if (texture != 0) {
 		glDeleteTextures(1, &texture);
-	}
-	texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+	}*/
+	//texture = GameEngine::getInstance()->getRenderer()->LoadTexture(path);
+
+	GLRenderer* renderer = GameEngine::getInstance()->getRenderer();
+
+	texture = renderer->findTexture(path);
 
 	if (animation != nullptr) {
 		animation->setStartingFrame(startFrame);
