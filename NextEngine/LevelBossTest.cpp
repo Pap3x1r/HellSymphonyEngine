@@ -141,6 +141,17 @@ void LevelBossTest::levelInit() {
 	testText->setText("Test Text");
 	testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
 	objectsList.push_back(testText);
+
+	UIButton* testButton = new UIButton();
+	testButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	testButton->getTransform().setPosition(glm::vec3(5.5f, 3.5f, 0.0f));
+	testButton->getTransform().setScale(glm::vec3(1.6f * 1.5, 0.9f * 1.5, 0.0f));
+	testButton->addColliderComponent();
+	testButton->setDrawCollider(true);
+	testButton->setCanDrawColliderNew(true);
+	//testButton->SetFunction(resetLevel);
+	objectsList.push_back(testButton);
+	buttonsList.push_back(testButton);
 }
 
 void LevelBossTest::levelUpdate() {
@@ -152,6 +163,15 @@ void LevelBossTest::levelUpdate() {
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
 
+	int mouseX;
+	int mouseY;
+	SDL_GetMouseState(&mouseX, &mouseY);
+
+	for (UIButton* button : buttonsList) {
+		button->isHovered(mouseX, mouseY);
+	}
+
+
 	tempx2 = tempx;
 	tempx = ziz->getTransform().getPosition().y;
 	if (tempx2 != tempx) {
@@ -162,6 +182,7 @@ void LevelBossTest::levelUpdate() {
 	cout << "Distance: " << distance << endl;*/
 
 	//cout << ziz->getCurrentHealth() << endl;
+
 
 	if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, playerDT);
@@ -783,6 +804,14 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	GameEngine::getInstance()->getWindowHeight();
 
 	cout << "X : " << realX << " Y : " << realY << endl;
+
+	for (UIButton* button : buttonsList) {
+		if (button->getMouseOver()) {
+			if (type == 0) {
+				GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
+			}
+		}
+	}
 
 	//Check player weapon
 	// assume type = bow first

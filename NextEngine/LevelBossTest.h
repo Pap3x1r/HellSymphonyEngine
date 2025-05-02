@@ -22,6 +22,7 @@ class LevelBossTest : public Level
 {
 private:
 	list<DrawableObject*> objectsList;
+	list<UIButton*> buttonsList;
 	float timeK = 0;
 	float dt = 0;
 	Ziz* ziz;
@@ -58,4 +59,8 @@ public:
 	virtual void addObject(DrawableObject* obj) override;
 	
 	void addPlayerToDebug(Player* player);
+
+	void resetLevel() {
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
+	}
 };

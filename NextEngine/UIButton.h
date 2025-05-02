@@ -1,18 +1,29 @@
 #pragma once
 #include "TexturedObject.h"
+#include "GameEngine.h"
 #include <functional>
 
 class UIButton : public TexturedObject {
 	bool mouseOver = false;
-	function<void()> onClick;
-
+	function<void()> func;
 public:
 	
-	UIButton(function<void()> func) : onClick(func) {
+	UIButton() {
 		setDrawCollider(true);
 		setCanDrawColliderNew(true);
 	};
 
+	void OnClick() {
+		if (func) {
+			func();
+		}
+	}
+
+	void SetFunction(function<void()> func) {
+		this->func = func;
+	}
+
 	void update(float dt);
-	bool isMouseOver();
+	bool isHovered(int mouseX, int mouseY);
+	bool getMouseOver() const;
 };
