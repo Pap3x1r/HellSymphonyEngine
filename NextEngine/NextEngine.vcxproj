@@ -88,6 +88,8 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
+    <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UltZizOnBG.cpp" />
     <ClCompile Include="Ziz.cpp" />
     <ClCompile Include="ZizChompState.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
+    <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIText.h" />
     <ClInclude Include="UltZizOnBG.h" />
     <ClInclude Include="Ziz.h" />
     <ClInclude Include="ZizChompState.h" />
@@ -274,7 +278,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../Resource/glew/lib/Release/Win32;../Resource/sdl_mixer/lib/x86;../Resource/SDL2-2.32.4/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glew32s.lib;SDL2_mixer.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glew32s.lib;SDL2_mixer.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

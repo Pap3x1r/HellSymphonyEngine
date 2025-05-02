@@ -6,6 +6,7 @@
 #include "GameStateController.h"
 #include "Time.h"
 #include "InputManager.h" 
+#include "SDL_ttf.h"
 
 using namespace std;
 

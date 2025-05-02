@@ -42,10 +42,12 @@ string SquareMeshVbo::getMeshName() {
 
 void SquareMeshVbo::render() {
 	if (this->posAttribId != -1) {
+		glEnableVertexAttribArray(this->posAttribId);
 		glBindBuffer(GL_ARRAY_BUFFER, this->posVboId);
 		glVertexAttribPointer(this->posAttribId, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
 	}
 	if (this->texAttribId != -1) {
+		glEnableVertexAttribArray(this->texAttribId);
 		glBindBuffer(GL_ARRAY_BUFFER, this->texVboId);
 		glVertexAttribPointer(this->texAttribId, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
 	}

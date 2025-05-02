@@ -79,6 +79,7 @@ void GameEngine::init(int width, int height) {
 
 	time = new Time();
 	inputHandler = new InputManager();  
+	TTF_Init();
 }
 
 void GameEngine::render(list<DrawableObject*> renderObjects) {

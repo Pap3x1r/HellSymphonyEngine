@@ -5,6 +5,7 @@
 #include "SDL_image.h"
 #include <filesystem>	
 #include <fstream>
+#include "UIText.h"
 
 using namespace std;
 GLRenderer::GLRenderer(int w, int h) : winWidth(w), winHeight(h), camera(Camera()) {}
@@ -364,7 +365,6 @@ GLuint GLRenderer::LoadTexture(string path) {
     // Return the texture ID
     return texture;
 }
-
 
 void GLRenderer::setViewMatrix(const glm::mat4& viewMatrix) {
     GLuint viewMatrixId = glGetUniformLocation(gProgramId, "viewMatrix");

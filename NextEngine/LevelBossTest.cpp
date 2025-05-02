@@ -135,8 +135,12 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
 	
-
-
+	UIText* testText = new UIText();
+	SDL_Color color = { 255,255,255,255 };
+	testText->loadText("Hello", color, 100);
+	testText->setText("Test Text");
+	testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
+	objectsList.push_back(testText);
 }
 
 void LevelBossTest::levelUpdate() {
@@ -778,7 +782,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	GameEngine::getInstance()->getWindowWidth();
 	GameEngine::getInstance()->getWindowHeight();
 
-	//cout << "X : " << realX << " Y : " << realY << endl;
+	cout << "X : " << realX << " Y : " << realY << endl;
 
 	//Check player weapon
 	// assume type = bow first

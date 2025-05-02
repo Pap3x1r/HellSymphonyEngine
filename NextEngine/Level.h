@@ -9,6 +9,8 @@
 #include "EnemyObject.h"
 #include "Player.h"
 
+#include "UIText.h"
+
 //imgui.h
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>

@@ -21,7 +21,6 @@ void main()
 		finalColor = vec4( OutColor, 1.0 ); 
 	}
 	else if (renderMode == 1){
-		vec2 FTexCoord = vec2 ((TexCoord.x * scaleX) + offsetX, (TexCoord.y * scaleY) + offsetY);
     	finalColor = texture(ourTexture, TexCoord);
 	}
     else
