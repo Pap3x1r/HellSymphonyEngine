@@ -61,7 +61,7 @@ public:
         this->color = textColor;
         this->fontSize = fontSize;
 
-        TTF_Font* font = TTF_OpenFont("../Resource/Font/test2.ttf", fontSize);
+        TTF_Font* font = TTF_OpenFont("../Resource/Font/DragonHunter.ttf", fontSize);
         if (!font) {
             cerr << "Failed to load font: " << TTF_GetError() << endl;
             return;

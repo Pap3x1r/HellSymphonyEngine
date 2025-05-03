@@ -138,7 +138,7 @@ void LevelBossTest::levelInit() {
 	UIText* testText = new UIText();
 	SDL_Color color = { 255,255,255,255 };
 	testText->loadText("Hello", color, 100);
-	testText->setText("Test Text");
+	testText->setText("I AM The best");
 	testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
 	objectsList.push_back(testText);
 
@@ -152,6 +152,8 @@ void LevelBossTest::levelInit() {
 	//testButton->SetFunction(resetLevel);
 	objectsList.push_back(testButton);
 	buttonsList.push_back(testButton);
+
+	GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
 
 void LevelBossTest::levelUpdate() {
@@ -572,6 +574,7 @@ void LevelBossTest::handleKey(char key) {
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
 		//player->increaseUltimateGauge(100.0f);
+		ziz->interruptPhaseChange();
 		break;
 		
 	case 'l':

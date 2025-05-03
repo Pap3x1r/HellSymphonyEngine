@@ -37,4 +37,5 @@ public:
 	int getWindowHeight();
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
+	void freezeGameForSecond(float duration);
 };

@@ -8,8 +8,8 @@ Ziz::Ziz() {
 	health = new Health(2000);
 	currentPhase = firstPhase;
 
-	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
-	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz");
 
 	setTexture("../Resource/Ziz/Idle.png");
 	getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
@@ -78,11 +78,11 @@ void Ziz::setFacingRight(bool value) {
 	isFacingRight = value;
 
 	if (isFacingRight) {
-		getTransform().setScale(glm::vec3(-10.0f, 10.0f, 1.0f));
+		getTransform().setScale(glm::vec3(-10.0f, getTransform().getScale().y, getTransform().getScale().z));
 		//cout << "Ziz is Facing right" << endl;
 	}
 	else {
-		getTransform().setScale(glm::vec3(10.0f, 10.0f, 1.0f));
+		getTransform().setScale(glm::vec3(10.0f, getTransform().getScale().y, getTransform().getScale().z));
 		//cout << "Ziz is Facing Left" << endl;
 	}
 }

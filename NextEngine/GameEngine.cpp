@@ -120,3 +120,10 @@ void GameEngine::setWindowWidth(int w) {
 void GameEngine::setWindowHeight(int h) {
 	winHeight = h;
 }
+
+void GameEngine::freezeGameForSecond(float duration) {
+	while (duration > 0.0f) {
+		time->updateTick(SDL_GetTicks());
+		duration -= time->getDeltaTimeRealTime();
+	}
+}

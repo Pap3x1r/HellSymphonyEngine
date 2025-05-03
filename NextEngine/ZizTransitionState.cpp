@@ -1,5 +1,6 @@
 #include "ZizTransitionState.h"
 #include "Ziz.h"
+#include "ZizUltState.h"
 
 
 ZizTransitionState* ZizTransitionState::instance = nullptr;
@@ -51,7 +52,7 @@ void ZizTransitionState::update(Boss* boss, float dt) {
         bufferTimer -= dt;
         if (bufferTimer < 0) {
             ziz->changePhase();
-            ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+            ziz->getStateMachine()->changeState(ZizUltState::getInstance(), ziz);
         }
     }
     

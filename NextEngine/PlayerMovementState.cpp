@@ -153,6 +153,10 @@ void PlayerFallDownState::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
+
+    if (player->getTransform().getPosition().y < -1.1375) {
+        player->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, -1.13f, 0.0f));
+    }
     /*if (time > 0.12f) {
         player->getAnimationComponent()->updateCurrentState();
         time = 0;

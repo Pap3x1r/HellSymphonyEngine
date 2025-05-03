@@ -32,11 +32,11 @@ Lightning::Lightning(Ziz* boss) {
 	getAnimationComponent()->setState("thunder");
 	//cout << "Lightning Spawned" << endl;
 
-	attackCollider = new EnemyAttackCollider(5);
+	attackCollider = new EnemyAttackCollider(10);
 	attackCollider->addColliderComponent();
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
-	attackCollider->setCanDrawColliderNew(true);
+	//attackCollider->setCanDrawColliderNew(true);
 	attackCollider->setActive(false);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.5f, 3.0f);
