@@ -27,7 +27,9 @@ enum WeaponType {
 class Player : public TexturedObject {
     int playerLives = 3;
     bool isDead = false;
+    bool isStunned = false;
 
+    float stunTimer = 0.0f;
     float movementSpeed = 5.0f;
     float minMovementSpeed = 5.0f;
     float maxMovementSpeed = 20.0f;
@@ -128,6 +130,10 @@ public:
         return isDashing;
     }
 
+    bool getIsStunned() const {
+        return isStunned;
+    }
+
     void increaseUltimateGauge(float amount) {
         currentUltimateGauge += amount;
     }
@@ -186,6 +192,8 @@ public:
     void startShake(float duration, float intensity);
     void updateShake(float deltaTime);
     void stopShake();
+
+    void stun(float duration);
 
     /*void onCollisionEnter(Collider* collider) override;
     void onCollisionStay(Collider* collider) override;

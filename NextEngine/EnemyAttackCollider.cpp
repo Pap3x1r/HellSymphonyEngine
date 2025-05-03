@@ -12,6 +12,15 @@ EnemyAttackCollider::EnemyAttackCollider(float damage_) {
 	setName("EnemyAttackCollider");
 }
 
+EnemyAttackCollider::EnemyAttackCollider(float damage_, float force, float duration) {
+	damage = damage_;
+	setName("EnemyAttackCollider");
+	willKnockBack = true;
+	knockbackForce = force;
+	knockbackTimer = duration;
+	cout << "This attack will knockback" << endl;
+}
+
 void EnemyAttackCollider::onCollisionEnter(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Player* player = dynamic_cast<Player*>(obj);
@@ -25,8 +34,7 @@ void EnemyAttackCollider::onCollisionEnter(Collider* collider) {
 void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Player* player = dynamic_cast<Player*>(obj);
-	DrawableObject* obj2 = collider->getObject();
-	Ziz* ziz = dynamic_cast<Ziz*>(obj2);
+	Ziz* ziz = Ziz::getInstance();
 
 	if (player) {
 		//playerInside = true;
@@ -59,6 +67,26 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 				hasHit = true;
 				player->startShake(0.1f, 0.0025f);
 				player->setHitEffectStrength(1.0f);
+				if (willKnockBack == true) {
+					if (player->getTransform().getPosition().x < ziz->getTransform().getPosition().x) { //player is left of ziz
+						//cout << "knock left" << endl;
+						player->stun(0.25f);
+						player->getPhysicsComponent()->addForce(glm::vec2(-knockbackForce, knockbackTimer));
+						player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+						
+						
+						player->getStateMachine()->changeState(PlayerJumpUpState::getInstance(), player);
+					}
+					else {
+						//cout << "knock right" << endl;
+						player->stun(0.25f);
+						player->getPhysicsComponent()->addForce(glm::vec2(knockbackForce, knockbackTimer));
+						player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+
+
+						player->getStateMachine()->changeState(PlayerJumpUpState::getInstance(), player);
+					}
+				}
 			}
 		}
 

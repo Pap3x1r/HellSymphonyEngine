@@ -31,12 +31,12 @@ void UIButton::update(float dt) {
 
 		if (worldX > position.x - halfWidth && worldX < position.x + halfWidth &&
 			worldY > position.y - halfHeight && worldY < position.y + halfHeight) {
-			cout << "Hovered" << endl;
+			//cout << "Hovered" << endl;
 			mouseOver = true;
 			return true;
 		}
 
-		cout << "Not hovered" << endl;
+		//cout << "Not hovered" << endl;
 		mouseOver = false;
 		return false;
 	}

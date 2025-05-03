@@ -186,6 +186,18 @@ void Player::selfUpdate(float dt_) {
 		}
 	}
 
+	if (isStunned == true) {
+		if (stunTimer > 0) {
+			stunTimer -= dt_;
+			//cout << "stunTimer: " << stunTimer << endl;
+			getPhysicsComponent()->setVelocity(glm::vec2(0.0f, getPhysicsComponent()->getVelocity().y));
+			if (stunTimer <= 0) {
+				isStunned = false;
+				stunTimer = 0.0f;
+			}
+		}
+	}
+
 
 	//Set groundChecker position
 	groundChecker->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, getTransform().getPosition().y - 1.6f, getTransform().getPosition().z));
@@ -319,7 +331,7 @@ Shield* Player::getShield() const {
 }
 
 void Player::startShake(float duration, float intensity) {
-	cout << "Player Start Shake" << endl;
+	//cout << "Player Start Shake" << endl;
 	isShaking = true;
 	shakeDuration = duration;
 	shakeTimer = 0.0f;
@@ -368,6 +380,14 @@ void Player::updateShake(float deltaTime) {
 void Player::stopShake() {
 	isShaking = false;
 	shakeTimer = 0.0f;
+}
+
+void Player::stun(float duration) {
+	if (isStunned == false) {
+		isStunned = true;
+		stunTimer = duration;
+		//cout << "stunned for: " << duration << " second(s)" << endl;
+	}
 }
 
 //void Player::onCollisionEnter(Collider* collider) {

@@ -22,6 +22,8 @@ enum zizPhase {
 class Ziz : public Boss {
 
 private:
+    static Ziz* instance;
+
     bool isFacingRight = true;
     bool isGrounded = true;
     bool hasTransformed = false;
@@ -50,6 +52,8 @@ private:
     vector<string> texturePaths;
 
 public:
+    static Ziz* getInstance();
+
     Ziz();
     ~Ziz();
 

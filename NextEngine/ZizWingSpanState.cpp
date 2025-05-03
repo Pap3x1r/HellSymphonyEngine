@@ -28,12 +28,13 @@ void ZizWingSpanState::enter(Boss* boss) {
 
 
 	startupTimer = 0.08f * 12;
-	activeTimer = 0.08f * 4;
-	recoveryTimer = 0.08f * 6;
+	activeTimer = 0.08f * 2;
+	recoveryTimer = 0.08f * 8;
 
-	attackCollider = new EnemyAttackCollider(5);
+	attackCollider = new EnemyAttackCollider(5,30.0f, 0.25f);
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
+	//attackCollider->setCanDrawColliderNew(true);
 	attackCollider->addColliderComponent();
 	attackCollider->setActive(false);
 	attackCollider->getColliderComponent()->setTrigger(true);
@@ -55,6 +56,7 @@ void ZizWingSpanState::update(Boss* boss, float dt) {
                 isCurling = true;
                 //ziz->setTexture("../Resource/Ziz/WingSpan_2.png");
 				attackCollider->setActive(true);
+				ziz->startShake(0.1f, 0.01f);
             }
         }
         else if (isCurling && !hasAttacked) {
@@ -62,6 +64,7 @@ void ZizWingSpanState::update(Boss* boss, float dt) {
             activeTimer -= dt;
             if (activeTimer <= 0) {
                 hasAttacked = true;
+				DrawableObject::destroyObject(attackCollider);
                 //ziz->setTexture("../Resource/Ziz/WingSpan_3.png");
                 // If attack collider is needed, activate it here
             }
@@ -77,5 +80,5 @@ void ZizWingSpanState::update(Boss* boss, float dt) {
 }
 
 void ZizWingSpanState::exit(Boss* boss) {
-	DrawableObject::destroyObject(attackCollider);
+	//DrawableObject::destroyObject(attackCollider);
 }

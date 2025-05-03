@@ -415,6 +415,9 @@ void LevelBossTest::handleKey(char key) {
 		return;
 	}
 
+
+	
+
 	switch (key) {
 	case 'w':
 		//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
@@ -432,9 +435,8 @@ void LevelBossTest::handleKey(char key) {
 		//player->getAnimationComponent()->setState("down");
 		break;
 	case 'a':
-		if (player->getIsDashing() == true) {
-			return;
-		}
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
@@ -452,9 +454,8 @@ void LevelBossTest::handleKey(char key) {
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd':
-		if (player->getIsDashing() == true) {
-			return;
-		}
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
 
 		
 
@@ -806,7 +807,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	GameEngine::getInstance()->getWindowWidth();
 	GameEngine::getInstance()->getWindowHeight();
 
-	cout << "X : " << realX << " Y : " << realY << endl;
+	//cout << "X : " << realX << " Y : " << realY << endl;
 
 	for (UIButton* button : buttonsList) {
 		if (button->getMouseOver()) {
@@ -824,6 +825,8 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
 		return;
 	}
+
+	if (player->getIsStunned() == true) return;
 
 	if (player->getWeaponType() == Bow_) {
 		if (type == 0) {

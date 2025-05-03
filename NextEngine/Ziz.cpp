@@ -1,7 +1,15 @@
 #pragma once
 #include "Ziz.h"
 
+Ziz* Ziz::instance = nullptr;
 
+Ziz* Ziz::getInstance() {
+	if (!instance) {
+		cout << "ziz created singleton" << endl;
+		instance = new Ziz();
+	}
+	return instance;
+}
 
 Ziz::Ziz() {
 	setName("Ziz");
@@ -54,6 +62,9 @@ Ziz::Ziz() {
 	isInvincible = false;
 
 	currentState = new BossStateMachine();
+	instance = this;
+
+	//cout << "ziz created" << endl;
 	
 }
 
