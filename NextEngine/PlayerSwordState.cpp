@@ -115,6 +115,9 @@ void PlayerLightSwordAttack1::exit(Player* player) {
     player->getSword()->setInputBuffer(false);
     time = 0;
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    DrawableObject* collider = player->getSword()->getChainAttackObject(0);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    collider->getColliderComponent()->setEnableCollision(false);
 }
 
 //Light Sword Attack 2
@@ -213,6 +216,9 @@ void PlayerLightSwordAttack2::exit(Player* player) {
     player->getSword()->setInputBuffer(false);
     time = 0;
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    DrawableObject* collider = player->getSword()->getChainAttackObject(0);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    collider->getColliderComponent()->setEnableCollision(false);
 }
 
 //Light Sword Attack 3
@@ -304,6 +310,9 @@ void PlayerLightSwordAttack3::exit(Player* player) {
     }
     time = 0;
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    DrawableObject* collider = player->getSword()->getChainAttackObject(0);
+    PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    collider->getColliderComponent()->setEnableCollision(false);
 }
 
 //Heavy Sword Attack
