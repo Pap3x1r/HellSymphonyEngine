@@ -2,12 +2,14 @@
  
 uniform sampler2D ourTexture;
 uniform int renderMode = 0;
-uniform float offsetX;
-uniform float offsetY;
+uniform float offsetX = 0.0;
+uniform float offsetY = 0.0;
 uniform float scaleX;
 uniform float scaleY;
 
 uniform float hitEffectStrength;
+uniform float alphaOverride = 1.0;
+
 
 in vec3 OutColor;
 in vec2 TexCoord;
@@ -21,7 +23,13 @@ void main()
 		finalColor = vec4( OutColor, 1.0 ); 
 	}
 	else if (renderMode == 1){
-    	finalColor = texture(ourTexture, TexCoord);
+    	vec4 texColor = texture(ourTexture, TexCoord);
+
+		if (alphaOverride < 0.01) {
+			discard;
+		}
+
+		finalColor = vec4(texColor.rgb, texColor.a * alphaOverride);
 	}
     else
     {
@@ -32,8 +40,12 @@ void main()
 			discard;
 		}
 
+		if (alphaOverride < 0.01) {
+			discard;
+		}
+
 		vec4 redColor = vec4(1.0, 0.0, 0.0, 1.0);
 		finalColor = mix(textureColor, redColor, hitEffectStrength);
- 
+		finalColor = vec4(finalColor.rgb, finalColor.a * alphaOverride);
     }
 }

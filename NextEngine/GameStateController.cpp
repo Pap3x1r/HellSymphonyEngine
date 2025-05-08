@@ -8,6 +8,7 @@
 #include "LevelMapEditorTest.h"
 #include "LevelPrototype.h"
 #include "LevelBossTest.h"
+#include "LevelMainMenu.h"
 
 GameStateController::GameStateController() {
 	// set the initial game state
@@ -28,7 +29,8 @@ void GameStateController::loadLevel() {
 	cout << gameStateCurr << endl;
 	switch (gameStateCurr) {
 		case GameState::GS_LEVEL1:
-			currentLevel = new LevelBossTest();
+			currentLevel = new LevelMainMenu();
+			//currentLevel = new LevelBossTest();
 			break;
 		case GameState::GS_LEVEL2:
 			currentLevel = new LevelBossTest();

@@ -135,14 +135,14 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
 	
-	UIText* testText = new UIText();
+	UIText* testText = new UIText("Test Text");
 	SDL_Color color = { 255,255,255,255 };
 	testText->loadText("Hello", color, 100);
 	testText->setText("I AM The best");
 	testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
 	objectsList.push_back(testText);
 
-	UIButton* testButton = new UIButton();
+	UIButton* testButton = new UIButton("Test");
 	testButton->setTexture("../Resource/Texture/UI/UIButton.png");
 	testButton->getTransform().setPosition(glm::vec3(5.5f, 3.5f, 0.0f));
 	testButton->getTransform().setScale(glm::vec3(1.6f * 1.5, 0.9f * 1.5, 0.0f));

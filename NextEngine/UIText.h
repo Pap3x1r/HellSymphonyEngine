@@ -1,5 +1,5 @@
 #pragma once
-
+#include <GL/glew.h>
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 #include "DrawableObject.h"
@@ -11,12 +11,20 @@
 class UIText :public DrawableObject
 {
 private:
+    string name;
     unsigned int texture;
     string text;
     SDL_Color color;
     int fontSize;
+    float alpha = 1.0f;
+    glm::vec3 textOffset = { 0.0f,0.0f,0.0f };
+    float xPosition;
+    float yPosition;
+    float xScale;
+    float yScale;
 public:
-    UIText() {
+    UIText(string name) {
+        this->name = name;
     }
 
     ~UIText() {}
@@ -28,6 +36,12 @@ public:
         GLuint modelMatrixId = GameEngine::getInstance()->getRenderer()->getModelMatrixAttrId();
         GLuint renderModeId = GameEngine::getInstance()->getRenderer()->getModeUniformId();
         GLuint colorId = GameEngine::getInstance()->getRenderer()->getColorUniformId();
+        GLuint alphaOverrideId = GameEngine::getInstance()->getRenderer()->getAlphaOverrideUniformId();
+
+        GLuint offsetXId = GameEngine::getInstance()->getRenderer()->getOffsetXUniformId();
+        GLuint offsetYId = GameEngine::getInstance()->getRenderer()->getOffsetYUniformId();
+        GLuint scaleXId = GameEngine::getInstance()->getRenderer()->getScaleXUniformId();
+        GLuint scaleYId = GameEngine::getInstance()->getRenderer()->getScaleYUniformId();
 
         if (!squareMesh || modelMatrixId == -1 || renderModeId == -1) {
             std::cerr << "UIText render setup error" << std::endl;
@@ -39,10 +53,14 @@ public:
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Set uniforms
-        glm::mat4 currentMatrix = globalModelTransform * this->getTransformMat4();
+        glm::mat4 currentMatrix = transform.getTransformMat4();
+        currentMatrix = glm::translate(currentMatrix, textOffset);
+        currentMatrix = globalModelTransform * currentMatrix;
+
         glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
         glUniform1i(renderModeId, 1);  // Textured render mode
         glUniform4f(colorId, 1.0f, 1.0f, 1.0f, 1.0f);  // Pure white color
+        glUniform1f(alphaOverrideId, alpha);
 
         // Bind texture
         glActiveTexture(GL_TEXTURE0);
@@ -53,15 +71,51 @@ public:
     }
 
     void update(float dt) {
+        //cout << "Alpha: " << alpha << endl;
+        //cout << "scale x: " << getColliderComponent()->getTransform().getScale().x << " scale y: " << getColliderComponent()->getTransform().getScale().y << endl;
+        //offsetX = getTransform().getScale().x * 0.25f;
+        //offsetY = -getTransform().getScale().y * 0.25f;
+        //cout << "offsetX: " << offsetX << " offsetY: " << offsetY << endl;
+        if (ImGui::TreeNode(name.c_str())) {
+            if (ImGui::TreeNode("Position")) {
+                bool changed = false;
+                changed |= ImGui::InputFloat("x Position", &xPosition);
+                changed |= ImGui::InputFloat("y Position", &yPosition);
+                if (changed) {
+                    getTransform().setPosition(glm::vec3(xPosition, yPosition, getTransform().getPosition().z));
+                }
+                ImGui::TreePop();
+            }
 
+            if (ImGui::TreeNode("Scale")) {
+                bool changed = false;
+                changed |= ImGui::InputFloat("x Scale", &xScale);
+                changed |= ImGui::InputFloat("y Scale", &yScale);
+                if (changed) {
+                    getTransform().setScale(glm::vec3(xScale, yScale, getTransform().getScale().z));
+                }
+                ImGui::TreePop();
+            }
+
+            ImGui::TreePop();
+        }
+
+        glm::vec3 pos = getTransform().getPosition();
+        xPosition = pos.x;
+        yPosition = pos.y;
+
+        glm::vec3 scale = getTransform().getScale();
+        xScale = scale.x;
+        yScale = scale.y;
     }
 
     void loadText(string text, SDL_Color textColor, int fontSize) {
         this->text = text;
         this->color = textColor;
         this->fontSize = fontSize;
+        //this->alpha = static_cast<float>(textColor.a) / 255.0f;
 
-        TTF_Font* font = TTF_OpenFont("../Resource/Font/DragonHunter.ttf", fontSize);
+        TTF_Font* font = TTF_OpenFont("../Resource/Font/EBGaramond.ttf", fontSize);
         if (!font) {
             cerr << "Failed to load font: " << TTF_GetError() << endl;
             return;
@@ -131,5 +185,13 @@ public:
         if (newSize != fontSize) {
             loadText(text, color, newSize);
         }
+    }
+
+    void setAlpha(const float& newAlpha) {
+        alpha = newAlpha;
+    }
+
+    void setOffset(const glm::vec3& newVec) {
+        textOffset = newVec;
     }
 };

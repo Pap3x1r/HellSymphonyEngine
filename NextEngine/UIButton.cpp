@@ -1,46 +1,80 @@
 #include "UIButton.h"
 
 void UIButton::update(float dt) {
-	
-}
-
-	bool UIButton::isHovered(int mouseX, int mouseY) {
-
-		float windowWidth = GameEngine::getInstance()->getWindowWidth();
-		float windowHeight = GameEngine::getInstance()->getWindowHeight();
-
-		float worldMinX = -8;
-		float worldMaxX = 8;
-
-		float worldMinY = -4.5;
-		float worldMaxY = 4.5;
-	
-		float worldX = (mouseX / windowWidth) * (worldMaxX - worldMinX) + worldMinX;
-		float worldY = (1 - (mouseY / windowHeight)) * (worldMaxY - worldMinY) + worldMinY;
-
-		glm::vec3 position = getTransform().getPosition();
-		glm::vec3 scale = getTransform().getScale();
-
-		//std::cout << "Position: " << position.x << ", " << position.y << std::endl;
-		//std::cout << "Scale: " << scale.x << ", " << scale.y << std::endl;
-		//std::cout << "Mouse: " << mouseX << ", " << mouseY << std::endl;
-		//std::cout << "MouseWorld: " << worldX << ", " << worldY << std::endl;
-
-		float halfWidth = scale.x * 0.5f;
-		float halfHeight = scale.y * 0.5f;
-
-		if (worldX > position.x - halfWidth && worldX < position.x + halfWidth &&
-			worldY > position.y - halfHeight && worldY < position.y + halfHeight) {
-			//cout << "Hovered" << endl;
-			mouseOver = true;
-			return true;
+	if (ImGui::TreeNode(name.c_str())) {
+		if (ImGui::TreeNode("Position")) {
+			bool changed = false;
+			changed |= ImGui::InputFloat("x Position", &xPosition);
+			changed |= ImGui::InputFloat("y Position", &yPosition);
+			if (changed) {
+				getTransform().setPosition(glm::vec3(xPosition, yPosition, getTransform().getPosition().z));
+			}
+			ImGui::TreePop();
 		}
 
-		//cout << "Not hovered" << endl;
+		if (ImGui::TreeNode("Scale")) {
+			bool changed = false;
+			changed |= ImGui::InputFloat("x Scale", &xScale);
+			changed |= ImGui::InputFloat("y Scale", &yScale);
+			if (changed) {
+				getTransform().setScale(glm::vec3(xScale, yScale, getTransform().getScale().z));
+			}
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+
+	glm::vec3 pos = getTransform().getPosition();
+	xPosition = pos.x;
+	yPosition = pos.y;
+
+	glm::vec3 scale = getTransform().getScale();
+	xScale = scale.x;
+	yScale = scale.y;
+}
+
+bool UIButton::isHovered(int mouseX, int mouseY) {
+	if (!isEnable) {
 		mouseOver = false;
 		return false;
 	}
 
-	bool UIButton::getMouseOver() const {
-		return mouseOver;
+	float windowWidth = GameEngine::getInstance()->getWindowWidth();
+	float windowHeight = GameEngine::getInstance()->getWindowHeight();
+
+	float worldMinX = -8;
+	float worldMaxX = 8;
+
+	float worldMinY = -4.5;
+	float worldMaxY = 4.5;
+	
+	float worldX = (mouseX / windowWidth) * (worldMaxX - worldMinX) + worldMinX;
+	float worldY = (1 - (mouseY / windowHeight)) * (worldMaxY - worldMinY) + worldMinY;
+
+	glm::vec3 position = getTransform().getPosition();
+	glm::vec3 scale = getTransform().getScale();
+
+	//std::cout << "Position: " << position.x << ", " << position.y << std::endl;
+	//std::cout << "Scale: " << scale.x << ", " << scale.y << std::endl;
+	//std::cout << "Mouse: " << mouseX << ", " << mouseY << std::endl;
+	//std::cout << "MouseWorld: " << worldX << ", " << worldY << std::endl;
+
+	float halfWidth = scale.x * 0.5f;
+	float halfHeight = scale.y * 0.5f;
+
+	if (worldX > position.x - halfWidth && worldX < position.x + halfWidth &&
+		worldY > position.y - halfHeight && worldY < position.y + halfHeight) {
+		cout << "Hovered" << endl;
+		mouseOver = true;
+		return true;
 	}
+
+	cout << "Not hovered" << endl;
+	mouseOver = false;
+	return false;
+}
+
+bool UIButton::getMouseOver() const {
+	return mouseOver;
+}

@@ -15,6 +15,7 @@ class TexturedObject : public DrawableObject
 	unsigned int texture;
 	Animation* animation; // Might use vector in the future to support multiple animation state
 	float hitEffectStrength = 0;
+	float alpha = 1.0f; // Default alpha (visible)
 	/*bool animated = false;
 	int rowCount;
 	int colCount;
@@ -36,4 +37,6 @@ public:
 	void setSpriteOffset(glm::vec3 vector3);
 	void setHitEffectStrength(float value);
 	float getHitEffectStrength();
+	void setAlpha(float value);
+	float getAlpha() const;
 };

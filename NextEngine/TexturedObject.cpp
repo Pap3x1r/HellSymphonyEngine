@@ -90,6 +90,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 	GLuint scaleYId = GameEngine::getInstance()->getRenderer()->getScaleYUniformId();
 
 	GLuint hitEffectStrengthId = GameEngine::getInstance()->getRenderer()->getHitEffectUniformId();
+	GLuint alphaOverrideId = GameEngine::getInstance()->getRenderer()->getAlphaOverrideUniformId();
 
 
 	if (modelMatixId == -1) {
@@ -109,6 +110,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 		hitEffectStrength -= 0.2f * GameEngine::getInstance()->getTime()->getDeltaTime();
 	}*/
 
+	glUniform1f(alphaOverrideId, alpha);
 	glUniform1f(hitEffectStrengthId, hitEffectStrength);
 	glUniform4f(colorUniformId, 1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -169,4 +171,12 @@ void TexturedObject::setHitEffectStrength(float value) {
 
 float TexturedObject::getHitEffectStrength() {
 	return hitEffectStrength;
+}
+
+void TexturedObject::setAlpha(float value) {
+	alpha = value;
+}
+
+float TexturedObject::getAlpha() const {
+	return alpha;
 }

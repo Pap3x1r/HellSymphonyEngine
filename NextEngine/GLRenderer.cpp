@@ -80,6 +80,12 @@ bool GLRenderer::initialize(string vertexShaderFile, string fragmentShaderFile) 
         return false;
     }
 
+    alphaOverrideUniformId = glGetUniformLocation(gProgramId, "alphaOverride");
+    if (alphaOverrideUniformId == -1) {
+        cout << "alphaOverrideUniformId is not a valid GLSL uniform variable" << endl;
+        return false;
+    }
+
     //Setting color uniform id
     colorUniformId = glGetUniformLocation(gProgramId, "color");
     if (colorUniformId == -1) {
@@ -281,6 +287,10 @@ GLuint GLRenderer::getScaleYUniformId() {
 
 GLuint GLRenderer::getHitEffectUniformId() {
     return this->hitEffectStrengthUniformId;
+}
+
+GLuint GLRenderer::getAlphaOverrideUniformId() {
+    return this->alphaOverrideUniformId;
 }
 
 //GLuint GLRenderer::LoadTexture(string path) {

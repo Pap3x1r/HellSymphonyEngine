@@ -30,6 +30,7 @@ protected:
     GLuint scaleYUniformId = -1;
 
     GLint hitEffectStrengthUniformId = -1;
+    GLint alphaOverrideUniformId = -1;
 
     GLuint gProgramId;
     int gPos2DLocation;
@@ -73,6 +74,7 @@ public:
     GLuint getScaleYUniformId();
 
     GLuint getHitEffectUniformId();
+    GLuint getAlphaOverrideUniformId();
 
     GLuint LoadTexture(string path);
     void setViewMatrix(const glm::mat4& viewMatrix);
