@@ -28,4 +28,8 @@ public:
 	void handleMouseLevel(int type, int x, int y);
 	void handleAnalogLevel(int type, char key);
 	void handleNotReceivingInputs();
+
+	Level* getLevel() const {
+		return currentLevel;
+	}
 };

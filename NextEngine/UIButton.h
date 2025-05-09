@@ -37,13 +37,18 @@ public:
 		}
 	}
 
-	void SetFunction(function<void()> func) {
+	void setFunction(function<void()> func) {
 		this->func = func;
 	}
 
 	void update(float dt);
 	bool isHovered(int mouseX, int mouseY);
 	bool getMouseOver() const;
+
+	void setMouseOver(bool value) {
+		mouseOver = value;
+	}
+
 	void setEnable(bool value) {
 		isEnable = value;
 	}

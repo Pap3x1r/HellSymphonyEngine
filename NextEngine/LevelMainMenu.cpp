@@ -93,6 +93,10 @@ void LevelMainMenu::levelInit() {
 	playButton->setDraw(false);
 	playButton->setLabel(playText); // Link playText
 	playButton->setMenuState(MenuState::MAIN);
+	playButton->setFunction([this]() {
+		toBoss();
+	});
+
 	objectsList.push_back(playButton);
 	buttonsList.push_back(playButton);
 
@@ -214,14 +218,40 @@ void LevelMainMenu::levelUpdate() {
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
 
+
+	bool anyButtonHovered = false;
 	int mouseX;
 	int mouseY;
 	SDL_GetMouseState(&mouseX, &mouseY);
 
-	for (UIButton* button : buttonsList) {
-		button->isHovered(mouseX, mouseY);
+	int index = 0; 
+	for (auto it = buttonsList.begin(); it != buttonsList.end(); ++it, ++index) {
+		UIButton* button = *it;
+		bool isHovered = button->isHovered(mouseX, mouseY);
+
+		if (selectedIndex != index) {
+			button->setMouseOver(isHovered);
+		}
+
+		if (isHovered) {
+			hoveredIndex = index;  
+			selectedIndex = hoveredIndex;
+			anyButtonHovered = true;
+		}
 	}
 
+	// Handle control source switching
+	if (anyButtonHovered) {
+		controlByMouse = true;
+	}
+	else {
+		hoveredIndex = -1;
+
+		if (controlByMouse) {
+			controlByMouse = false;
+			selectedIndex = -1;
+		}
+	}
 
 
 	for (DrawableObject* obj : objectsList) {
@@ -282,24 +312,7 @@ void LevelMainMenu::levelUpdate() {
 		}
 	}
 
-
-
-	/*switch (currentMenuState) {
-		case MAIN:
-
-			break;
-		case OPTIONS:
-
-			break;
-		case AUDIO:
-			break;
-		case CONTROLS:
-			break;
-		case CREDITS:
-			break;
-		default:
-			break;
-	}*/
+	cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 
 	handleObjectCollision(objectsList);
 
@@ -318,8 +331,34 @@ void LevelMainMenu::levelFree() {
 	for (UIButton*& button : buttonsList) {
 		button = nullptr;
 	}
+
+	for (UIButton*& button : mainButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : optionsButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : audioButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : controlsButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : creditsButton) {
+		button = nullptr;
+	}
+
 	objectsList.clear();
 	buttonsList.clear();
+	mainButtons.clear();
+	optionsButtons.clear();
+	audioButtons.clear();
+	controlsButtons.clear();
+	creditsButton.clear();
 }
 
 void LevelMainMenu::levelUnload() {
@@ -333,12 +372,83 @@ void LevelMainMenu::isReceivingNoInputs() {
 void LevelMainMenu::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLS:
+		currentList = &controlsButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	default:
+		return;
+	}
+
+	UIButton* selectedButton = nullptr;
+
+	if (selectedIndex >= 0 && selectedIndex < currentList->size()) {
+		auto it = buttonsList.begin();
+		std::advance(it, selectedIndex);
+
+		selectedButton = *it;
+	}
+
+	/*switch (currentMenuState) {
+	case MAIN:
+		switch (key) {
+		case 'w':
+			changeSelection(-1);
+			break;
+		case 's':
+			changeSelection(1);
+			break;
+		case 'S':
+			if (selectedButton && selectedButton->getMouseOver()) {
+				selectedButton->OnClick();
+			}
+			break;
+		}
+		break;
+	case OPTIONS:
+
+		break;
+	case AUDIO:
+		break;
+	case CONTROLS:
+		break;
+	case CREDITS:
+		break;
+	default:
+		break;
+	}*/
+
 	switch (key) {
 	case 'a':
 		changeMenuState(MenuState::OPTIONS);
 		break;
 	case 'd':
 		changeMenuState(MenuState::MAIN);
+		break;
+	case 'w':
+		changeSelection(-1);
+		break;
+	case 's':
+		changeSelection(1);
+		break;
+	case 'S':
+		if (selectedButton && selectedButton->getMouseOver()) {
+			selectedButton->OnClick();
+		}
 		break;
 	}
 }
@@ -361,13 +471,49 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 
 	//cout << "X : " << realX << " Y : " << realY << endl;
 
-	for (UIButton* button : buttonsList) {
+	/*for (UIButton* button : buttonsList) {
 		if (button->getMouseOver()) {
 			if (type == 0) {
 				GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 			}
 		}
+	}*/
+
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLS:
+		currentList = &controlsButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	default:
+		return;
 	}
+
+	if (selectedIndex >= 0 && selectedIndex < currentList->size()) {
+		auto it = buttonsList.begin();
+		std::advance(it, selectedIndex);
+
+		UIButton* selectedButton = *it;
+
+		if (selectedButton && selectedButton->getMouseOver()) {
+			if (type == 0) {
+				selectedButton->OnClick();
+			}
+		}
+	}
+
 
 }
 
@@ -392,3 +538,58 @@ void LevelMainMenu::changeMenuState(MenuState targetState) {
 MenuState LevelMainMenu::getMenuState() const {
 	return currentMenuState;
 }
+
+void LevelMainMenu::changeSelection(int direction) {
+
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLS:
+		currentList = &controlsButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	default:
+		return;
+	}
+
+
+	if (!currentList || currentList->empty()) {
+		return;
+	}
+
+	for (UIButton* btn : buttonsList) { // Deselect
+		btn->setMouseOver(false);
+	}
+
+	if (selectedIndex == -1) {
+		selectedIndex = 0;
+	}
+	else {
+		selectedIndex += direction;
+	}
+
+	if (selectedIndex < 0) {
+		selectedIndex = currentList->size() - 1;
+	}
+	else if (selectedIndex >= currentList->size()) {
+		selectedIndex = 0;
+	}
+
+	auto it = currentList->begin();
+	advance(it, selectedIndex);
+
+	focusedButton = *it;
+	focusedButton->setMouseOver(true);
+}
+

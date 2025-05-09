@@ -8,6 +8,9 @@ class LevelMainMenu : public Level
 {
 private:
 	UIButton* focusedButton = nullptr;
+	int selectedIndex = -1; // Not select anything
+	int hoveredIndex = -1; //Mouse
+	bool controlByMouse = false;
 
 	list<DrawableObject*> objectsList;
 	list<UIButton*> buttonsList;
@@ -62,4 +65,10 @@ public:
 
 	void changeMenuState(MenuState targetState) override;
 	MenuState getMenuState() const override;
+
+	void changeSelection(int direction);
+
+	void toBoss() {
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+	}
 };

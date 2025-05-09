@@ -45,11 +45,15 @@ void UIButton::update(float dt) {
 			label->setColor(color);
 		}
 	}
+
+	if (mouseOver) {
+		cout << "Hovered" << endl;
+	}
 }
 
 bool UIButton::isHovered(int mouseX, int mouseY) {
 	if (!isEnable) {
-		mouseOver = false;
+		//mouseOver = false;
 		return false;
 	}
 
@@ -78,13 +82,13 @@ bool UIButton::isHovered(int mouseX, int mouseY) {
 
 	if (worldX > position.x - halfWidth && worldX < position.x + halfWidth &&
 		worldY > position.y - halfHeight && worldY < position.y + halfHeight) {
-		cout << "Hovered" << endl;
-		mouseOver = true;
+		//cout << "Hovered" << endl;
+		//mouseOver = true;
 		return true;
 	}
 
-	cout << "Not hovered" << endl;
-	mouseOver = false;
+	//cout << "Not hovered" << endl;
+	//mouseOver = false;
 	return false;
 }
 
