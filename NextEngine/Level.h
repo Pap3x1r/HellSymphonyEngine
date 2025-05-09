@@ -24,6 +24,13 @@ private:
     EnemyObject* enemy;
     TexturedObject* background;
 
+    float transitionTime = 0.0f;
+    float transitionDuration = 1.0f;
+    bool transitioning = false;
+
+    MenuState currentMenuState = MenuState::MAIN;
+    MenuState nextMenuState = MenuState::MAIN;
+
 public:
     virtual void levelLoad();
     virtual void levelInit();
@@ -43,4 +50,7 @@ public:
     virtual void addObject(DrawableObject* obj);
     
     virtual void renderGUI();
+
+    virtual void changeMenuState(MenuState targetState);
+    virtual MenuState getMenuState() const;
 };

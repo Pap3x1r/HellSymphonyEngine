@@ -32,6 +32,19 @@ void UIButton::update(float dt) {
 	glm::vec3 scale = getTransform().getScale();
 	xScale = scale.x;
 	yScale = scale.y;
+
+
+	
+	if (label) {
+		if (mouseOver) {
+			SDL_Color color = { 0, 0, 255, 255 };
+			label->setColor(color);
+		}	
+		else {
+			SDL_Color color = { 255, 255, 255, 255 };
+			label->setColor(color);
+		}
+	}
 }
 
 bool UIButton::isHovered(int mouseX, int mouseY) {

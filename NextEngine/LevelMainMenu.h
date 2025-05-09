@@ -7,10 +7,18 @@
 class LevelMainMenu : public Level
 {
 private:
+	UIButton* focusedButton = nullptr;
+
 	list<DrawableObject*> objectsList;
 	list<UIButton*> buttonsList;
-	list<UIButton*> mainMenuButtons;
-	list<UIButton*> optionButtons;
+
+	//Not for draw list
+	list<UIButton*> mainButtons;
+	list<UIButton*> optionsButtons;
+	list<UIButton*> audioButtons;
+	list<UIButton*> controlsButtons;
+	list<UIButton*> creditsButton;
+
 	float timeK = 0;
 	float dt = 0;
 	//UI
@@ -20,6 +28,13 @@ private:
 	SimpleObject* bossHealthBar;
 
 	float playerTimeScale = 1.0f;
+
+	float transitionTime = 0.0f;
+	float transitionDuration = 1.0f;
+	bool transitioning = false;
+
+	MenuState currentMenuState = MenuState::MAIN;
+	MenuState nextMenuState = MenuState::MAIN;
 
 	int tempx;
 	int tempx2;
@@ -44,4 +59,7 @@ public:
 	void resetLevel() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 	}
+
+	void changeMenuState(MenuState targetState) override;
+	MenuState getMenuState() const override;
 };

@@ -269,3 +269,11 @@ bool DrawableObject::getCanDraw() {
 void DrawableObject::destroyObject(DrawableObject* obj) {
 	obj->isMarkedForDelete = true;
 }
+
+void DrawableObject::setAlpha(float value) {
+	alpha = value;
+}
+
+float DrawableObject::getAlpha() const {
+	return alpha;
+}

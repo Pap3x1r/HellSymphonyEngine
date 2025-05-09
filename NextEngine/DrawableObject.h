@@ -10,6 +10,15 @@ using namespace std;
 
 class Collider; // forward declaration
 
+enum MenuState {
+	NONE,
+	MAIN,
+	OPTIONS,
+	AUDIO,
+	CONTROLS,
+	CREDITS,
+};
+
 enum class Tag {
 	Player,
 	PlayerAttack,
@@ -30,6 +39,8 @@ private:
 	bool isActive;
 	bool isMarkedForDelete;
 
+	MenuState menuState = MenuState::NONE;
+	float alpha = 1.0f; // Default alpha (visible)
 
 protected:
 	string name;
@@ -99,6 +110,18 @@ public:
 	bool* getCanDrawColliderAddress() {
 		return &canDrawColliderNew;
 	}
+
+	void setMenuState(MenuState newMenuState) {
+		menuState = newMenuState;
+	}
+
+	MenuState getMenuState() const {
+		return menuState;
+	}
+
+	virtual void setAlpha(float value);
+
+	virtual float getAlpha() const;
 
 	static void destroyObject(DrawableObject* obj);
 };

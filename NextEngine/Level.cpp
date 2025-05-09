@@ -98,3 +98,14 @@ void Level::renderGUI() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+void Level::changeMenuState(MenuState targetState) {
+    if (targetState == currentMenuState || transitioning) return;
+
+    nextMenuState = targetState;
+    transitionTime = 0.0f;
+    transitioning = true;
+}
+
+MenuState Level::getMenuState() const {
+    return currentMenuState;
+}

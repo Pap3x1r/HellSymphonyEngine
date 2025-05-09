@@ -37,6 +37,6 @@ public:
 	void setSpriteOffset(glm::vec3 vector3);
 	void setHitEffectStrength(float value);
 	float getHitEffectStrength();
-	void setAlpha(float value);
-	float getAlpha() const;
+	void setAlpha(float value) override;
+	float getAlpha() const override;
 };

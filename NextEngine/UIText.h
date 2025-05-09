@@ -22,6 +22,7 @@ private:
     float yPosition;
     float xScale;
     float yScale;
+
 public:
     UIText(string name) {
         this->name = name;
@@ -76,6 +77,11 @@ public:
         //offsetX = getTransform().getScale().x * 0.25f;
         //offsetY = -getTransform().getScale().y * 0.25f;
         //cout << "offsetX: " << offsetX << " offsetY: " << offsetY << endl;
+
+        const char* stateNames[] = { "NONE", "MAIN", "OPTIONS", "AUDIO", "CONTROLS", "CREDITS" };
+
+        int stateIndex = static_cast<int>(getMenuState());
+
         if (ImGui::TreeNode(name.c_str())) {
             if (ImGui::TreeNode("Position")) {
                 bool changed = false;
@@ -95,6 +101,10 @@ public:
                     getTransform().setScale(glm::vec3(xScale, yScale, getTransform().getScale().z));
                 }
                 ImGui::TreePop();
+            }
+
+            if (ImGui::Combo("Menu State", &stateIndex, stateNames, IM_ARRAYSIZE(stateNames))) {
+                //currentWeapon = static_cast<WeaponType>(weaponIndex);
             }
 
             ImGui::TreePop();
@@ -160,10 +170,13 @@ public:
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, potW, potH, 0, GL_RGBA, GL_UNSIGNED_BYTE, potSurface->pixels);
 
-        float w = textSurface->w / 100.0f;
-        float h = textSurface->h / 100.0f;
-        this->getTransform().setScale(glm::vec3(w, h, 1.0f)); 
-
+        glm::vec3 currentScale = getTransform().getScale();
+        if (currentScale == glm::vec3(1.0f)) {
+            float w = textSurface->w / 100.0f;
+            float h = textSurface->h / 100.0f;
+            this->getTransform().setScale(glm::vec3(w, h, 1.0f));
+        }
+        
         SDL_FreeSurface(textSurface);
         SDL_FreeSurface(potSurface);
         TTF_CloseFont(font);
@@ -187,7 +200,7 @@ public:
         }
     }
 
-    void setAlpha(const float& newAlpha) {
+    void setAlpha(float newAlpha) override {
         alpha = newAlpha;
     }
 
