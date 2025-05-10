@@ -33,7 +33,7 @@ private:
 	float playerTimeScale = 1.0f;
 
 	float transitionTime = 0.0f;
-	float transitionDuration = 1.0f;
+	float transitionDuration = 0.5f;
 	bool transitioning = false;
 
 	MenuState currentMenuState = MenuState::MAIN;

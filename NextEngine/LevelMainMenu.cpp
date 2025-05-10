@@ -23,10 +23,17 @@ void LevelMainMenu::levelLoad() {
 
 void LevelMainMenu::levelInit() {
 
-	TexturedObject* background = new TexturedObject();
-	background->setTexture("../Resource/Texture/newMainMenuBG.png");
-	background->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
-	objectsList.push_back(background);
+	TexturedObject* background1 = new TexturedObject("Background");
+	background1->setTexture("../Resource/Texture/newMainMenuBG.png");
+	background1->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background1->setMenuState(MenuState::MAIN);
+	objectsList.push_back(background1);
+
+	/*TexturedObject* background2 = new TexturedObject();
+	background2->setTexture("../Resource/Texture/newMainMenuBGOnly.png");
+	background2->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background2->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(background2);*/
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -264,15 +271,19 @@ void LevelMainMenu::levelUpdate() {
 		if (button) {
 			button->update(dt);
 		}
+
+		if (obj->getName() == "Background") {
+			cout << obj->getName() << "'s Alpha:" << obj->getAlpha() << endl;
+		}
 	}
 
 	if (transitioning) {
 		transitionTime += dt;
 		float t = transitionTime / transitionDuration;
+		bool finish = false;
 		if (t >= 1.0f) {
 			t = 1.0f;
-			transitioning = false;
-			currentMenuState = nextMenuState;
+			finish = true;
 		}
 
 		for (DrawableObject* obj : objectsList) {
@@ -291,6 +302,11 @@ void LevelMainMenu::levelUpdate() {
 			else {
 				obj->setAlpha(0.0f);
 			}
+		}
+
+		if (finish) {
+			transitioning = false;
+			currentMenuState = nextMenuState;
 		}
 	}
 	else {
@@ -312,7 +328,7 @@ void LevelMainMenu::levelUpdate() {
 		}
 	}
 
-	cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
+	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 
 	handleObjectCollision(objectsList);
 
