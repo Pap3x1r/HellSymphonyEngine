@@ -9,6 +9,8 @@
 #include "ZizClawSlashState.h"
 #include "ZizChompState.h"
 #include "ZizUltState.h"
+#include <random>
+#include <chrono>
 
 class Ziz;
 
@@ -21,6 +23,9 @@ private:
 
     Ziz* ziz;
     Player* player;
+
+    std::mt19937 gen;
+    std::uniform_real_distribution<> randomX;
 
 public:
     static ZizIdleState* getInstance();

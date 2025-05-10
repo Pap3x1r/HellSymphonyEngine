@@ -20,6 +20,13 @@ void ZizIdleState::enter(Boss* boss) {
         //cout << "found Player" << endl;
     }
 
+    unsigned seed = std::chrono::system_clock::now()
+        .time_since_epoch()
+        .count();
+    gen.seed(seed);
+
+    
+
     idleTimer = 0.08f * 10;
     //ziz->setTexture("../Resource/Ziz/Idle.png");
     ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Idle-Sheet.png", 1, 10, 0);
@@ -36,9 +43,9 @@ void ZizIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
+        //ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
         //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-        //pickState();
+        pickState();
     }
 
     
@@ -51,7 +58,12 @@ void ZizIdleState::exit(Boss* boss) {
 
 void ZizIdleState::pickState() {
     float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
-    float randValue = static_cast<float>(rand()) / RAND_MAX;
+
+    randomX = std::uniform_real_distribution<>(0, 1.0f);
+    float randValue = randomX(gen);
+    cout << "Rand In Idle: " << randValue << endl;
+
+    //float randValue = static_cast<float>(rand()) / RAND_MAX;
 
     if (ziz->getPhase() == 1) {//phase 1
         if (distance > 4.0f) { // **Far Distance Attacks**
@@ -69,8 +81,11 @@ void ZizIdleState::pickState() {
             }
         }
         else { // **Close Distance Attacks**
-            if (randValue < 0.60f) {
+            if (randValue < 0.45f) {
                 ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
+            }
+            else if (randValue < 0.60f){
+                ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
             }
             else {
                 ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);

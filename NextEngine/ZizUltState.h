@@ -18,6 +18,7 @@ private:
     DrawableObject* ultZizOnBG;
 
     float flyUpTimer;
+    float activeLightning;
 
     Ziz* ziz;
 
