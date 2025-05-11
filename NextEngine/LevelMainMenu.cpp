@@ -64,6 +64,26 @@ void LevelMainMenu::levelInit() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
+	//										Texts
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	UIText* staticSettingsText = new UIText("Static Settings Text");
+	SDL_Color staticSettingsTextColor = { 255,255,255,255 };
+	staticSettingsText->loadText("SETTINGS", staticSettingsTextColor, 100);
+	staticSettingsText->setText("SETTINGS");
+	staticSettingsText->setAlpha(1.0f);
+	staticSettingsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	staticSettingsText->getTransform().setPosition(glm::vec3(0.1f, 3.6f, 0.0f));
+	staticSettingsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	staticSettingsText->addColliderComponent();
+	staticSettingsText->setMenuState(MenuState::OPTIONS);
+	/*staticSettingsText->setDrawCollider(true);
+	staticSettingsText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(staticSettingsText);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
 	//										Continue Button
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +274,7 @@ void LevelMainMenu::levelInit() {
 	audioText->setText("Audio");
 	audioText->setAlpha(1.0f);
 	audioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	audioText->getTransform().setPosition(glm::vec3(0.14f, -2.1f - 1.0f, 0.0f));
+	audioText->getTransform().setPosition(glm::vec3(-5.5f, 2.15f, 0.0f));
 	audioText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
 	audioText->addColliderComponent();
 	audioText->setMenuState(MenuState::OPTIONS);
@@ -264,8 +284,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* audioButton = new UIButton("Audio Button");
 	//audioButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	audioButton->getTransform().setPosition(glm::vec3(0.0f, -1.85f - 1.0f, 0.0f));
-	audioButton->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
+	audioButton->getTransform().setPosition(glm::vec3(-5.5f, 2.4f, 0.0f));
+	audioButton->getTransform().setScale(glm::vec3(1.0f, 0.35f, 0.0f));
 	audioButton->addColliderComponent();
 	audioButton->setDrawCollider(true);
 	audioButton->setCanDrawColliderNew(true);
@@ -276,6 +296,44 @@ void LevelMainMenu::levelInit() {
 	buttonsList.push_back(audioButton);
 
 	optionsButtons.push_back(audioButton);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Controller Button (Settings)
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	UIText* controllerText = new UIText("Controller Text");
+	SDL_Color controllerTextColor = { 255,255,255,255 };
+	controllerText->loadText("Controller", controllerTextColor, 100);
+	controllerText->setText("Controller");
+	controllerText->setAlpha(1.0f);
+	controllerText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	controllerText->getTransform().setPosition(glm::vec3(-5.0f, 1.5f, 0.0f));
+	controllerText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	controllerText->addColliderComponent();
+	controllerText->setMenuState(MenuState::OPTIONS);
+	/*controllerText->setDrawCollider(true);
+	controllerText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(controllerText);
+
+	UIButton* controllerButton = new UIButton("Controller Button");
+	//controllerButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	controllerButton->getTransform().setPosition(glm::vec3(-5.2f, 1.75f, 0.0f));
+	controllerButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	controllerButton->addColliderComponent();
+	controllerButton->setDrawCollider(true);
+	controllerButton->setCanDrawColliderNew(true);
+	controllerButton->setDraw(false);
+	controllerButton->setLabel(controllerText); // Link playText
+	controllerButton->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(controllerButton);
+	buttonsList.push_back(controllerButton);
+
+	optionsButtons.push_back(controllerButton);
+
+
+
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
 
@@ -293,8 +351,30 @@ void LevelMainMenu::levelUpdate() {
 	int mouseY;
 	SDL_GetMouseState(&mouseX, &mouseY);
 
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLS:
+		currentList = &controlsButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	default:
+		return;
+	}
+
 	int index = 0; 
-	for (auto it = buttonsList.begin(); it != buttonsList.end(); ++it, ++index) {
+	for (auto it = currentList->begin(); it != currentList->end(); ++it, ++index) {
 		UIButton* button = *it;
 		bool isHovered = button->isHovered(mouseX, mouseY);
 
@@ -335,7 +415,7 @@ void LevelMainMenu::levelUpdate() {
 		}
 
 		if (obj->getName() == "Background") {
-			cout << obj->getName() << "'s Alpha:" << obj->getAlpha() << endl;
+			//cout << obj->getName() << "'s Alpha:" << obj->getAlpha() << endl;
 		}
 	}
 
@@ -525,7 +605,7 @@ void LevelMainMenu::handleKey(char key) {
 	}*/
 
 	switch (key) {
-	case 'a':
+	case 'c':
 		if (currentMenuState == MAIN) {
 			changeMenuState(MenuState::OPTIONS);
 		}
@@ -610,7 +690,7 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 	}
 
 	if (selectedIndex >= 0 && selectedIndex < currentList->size()) {
-		auto it = buttonsList.begin();
+		auto it = currentList->begin();
 		std::advance(it, selectedIndex);
 
 		UIButton* selectedButton = *it;
@@ -637,6 +717,8 @@ void LevelMainMenu::addObject(DrawableObject* obj) {
 
 void LevelMainMenu::changeMenuState(MenuState targetState) {
 	if (targetState == currentMenuState || transitioning) return;
+
+	selectedIndex = -1;
 
 	nextMenuState = targetState;
 	transitionTime = 0.0f;
@@ -699,5 +781,6 @@ void LevelMainMenu::changeSelection(int direction) {
 
 	focusedButton = *it;
 	focusedButton->setMouseOver(true);
+	cout << focusedButton->getName() << endl;
 }
 

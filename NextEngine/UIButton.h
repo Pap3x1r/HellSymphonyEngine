@@ -64,4 +64,8 @@ public:
 	UIText* getLabel() const {
 		return label;
 	}
+
+	string getName() const {
+		return name;
+	}
 };
