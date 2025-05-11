@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include <string>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -40,6 +41,7 @@ private:
 	bool isMarkedForDelete;
 
 	MenuState menuState = MenuState::NONE;
+	vector<MenuState> menuStateVec;
 	float alpha = 1.0f; // Default alpha (visible)
 
 protected:
@@ -113,10 +115,19 @@ public:
 
 	void setMenuState(MenuState newMenuState) {
 		menuState = newMenuState;
+		menuStateVec.push_back(newMenuState);
 	}
 
 	MenuState getMenuState() const {
 		return menuState;
+	}
+
+	void addMenuStateToVec(MenuState newMenuState) {
+		menuStateVec.push_back(newMenuState);
+	}
+
+	vector<MenuState> getMenuStateVec() const {
+		return menuStateVec;
 	}
 
 	virtual void setAlpha(float value);

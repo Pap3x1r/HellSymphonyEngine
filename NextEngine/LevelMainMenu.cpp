@@ -23,17 +23,44 @@ void LevelMainMenu::levelLoad() {
 
 void LevelMainMenu::levelInit() {
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Background
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	TexturedObject* background1 = new TexturedObject("Background");
 	background1->setTexture("../Resource/Texture/newMainMenuBG.png");
 	background1->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
-	background1->setMenuState(MenuState::MAIN);
+	background1->setMenuState(MenuState::NONE);
 	objectsList.push_back(background1);
 
-	/*TexturedObject* background2 = new TexturedObject();
+	TexturedObject* background2 = new TexturedObject();
 	background2->setTexture("../Resource/Texture/newMainMenuBGOnly.png");
 	background2->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	background2->setMenuState(MenuState::OPTIONS);
-	objectsList.push_back(background2);*/
+	background2->addMenuStateToVec(MenuState::AUDIO);
+	objectsList.push_back(background2);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Lines
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SimpleObject* line1 = new SimpleObject();
+	line1->setColor(1.0f, 1.0f, 1.0f);
+	line1->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));	
+	line1->getTransform().setPosition(glm::vec3(0.0f, 3.3f, 0.0f));
+	line1->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(line1);
+
+	SimpleObject* line2 = new SimpleObject();
+	line2->setColor(1.0f, 1.0f, 1.0f);
+	line2->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));
+	line2->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
+	line2->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(line2);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -47,8 +74,8 @@ void LevelMainMenu::levelInit() {
 	continueText->setText("Continue");
 	continueText->setAlpha(1.0f);
 	continueText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	continueText->getTransform().setPosition(glm::vec3(0.35f, 0.0f - 0.6f, 0.0f));
-	continueText->getTransform().setScale(glm::vec3(2.7f, 1.31f, 0.0f));
+	continueText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
+	continueText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	continueText->addColliderComponent();
 	continueText->setMenuState(MenuState::MAIN);
 	/*continueText->setDrawCollider(true);
@@ -57,8 +84,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* continueButton = new UIButton("Continue Button");
 	//continueButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	continueButton->getTransform().setPosition(glm::vec3(0.0f, 0.3f - 0.6f, 0.0f));
-	continueButton->getTransform().setScale(glm::vec3(2.05f, 0.45f, 0.0f));
+	continueButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
+	continueButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
 	continueButton->addColliderComponent();
 	continueButton->setDrawCollider(true);
 	continueButton->setCanDrawColliderNew(true);
@@ -82,8 +109,8 @@ void LevelMainMenu::levelInit() {
 	playText->setText("New Game");
 	playText->setAlpha(1.0f);
 	playText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	playText->getTransform().setPosition(glm::vec3(0.2f, -0.525f - 0.7f, 0.0f));
-	playText->getTransform().setScale(glm::vec3(2.7f, 1.31f, 0.0f));
+	playText->getTransform().setPosition(glm::vec3(0.15f, -0.525f - 0.7f, 0.0f));
+	playText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	playText->addColliderComponent();
 	playText->setMenuState(MenuState::MAIN);
 	/*playText->setDrawCollider(true);
@@ -92,8 +119,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* playButton = new UIButton("New Game Button");
 	//playButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	playButton->getTransform().setPosition(glm::vec3(0.0f, -0.23f - 0.7f, 0.0f));
-	playButton->getTransform().setScale(glm::vec3(2.35f, 0.45f, 0.0f));
+	playButton->getTransform().setPosition(glm::vec3(0.0f, -0.28f - 0.7f, 0.0f));
+	playButton->getTransform().setScale(glm::vec3(1.8f, 0.35f, 0.0f));
 	playButton->addColliderComponent();
 	playButton->setDrawCollider(true);
 	playButton->setCanDrawColliderNew(true);
@@ -121,8 +148,8 @@ void LevelMainMenu::levelInit() {
 	settingsText->setText("Settings");
 	settingsText->setAlpha(1.0f);
 	settingsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	settingsText->getTransform().setPosition(glm::vec3(0.62f, -1.05f - 0.8f, 0.0f));
-	settingsText->getTransform().setScale(glm::vec3(3.0f, 1.31f, 0.0f));
+	settingsText->getTransform().setPosition(glm::vec3(0.41f, -1.05f - 0.8f, 0.0f));
+	settingsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	settingsText->addColliderComponent();
 	settingsText->setMenuState(MenuState::MAIN);
 	/*settingsText->setDrawCollider(true);
@@ -131,14 +158,15 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* settingsButton = new UIButton("Settings Button");
 	//settingsButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	settingsButton->getTransform().setPosition(glm::vec3(0.0f, -0.76f - 0.8f, 0.0f));
-	settingsButton->getTransform().setScale(glm::vec3(1.8f, 0.45f, 0.0f));
+	settingsButton->getTransform().setPosition(glm::vec3(0.0f, -0.81f - 0.8f, 0.0f));
+	settingsButton->getTransform().setScale(glm::vec3(1.3f, 0.35f, 0.0f));
 	settingsButton->addColliderComponent();
 	settingsButton->setDrawCollider(true);
 	settingsButton->setCanDrawColliderNew(true);
 	settingsButton->setDraw(false);
 	settingsButton->setLabel(settingsText); // Link playText
 	settingsButton->setMenuState(MenuState::MAIN);
+	settingsButton->setFunction([this]() { changeMenuState(MenuState::OPTIONS);});
 	objectsList.push_back(settingsButton);
 	buttonsList.push_back(settingsButton);
 
@@ -156,8 +184,8 @@ void LevelMainMenu::levelInit() {
 	creditsText->setText("Credits");
 	creditsText->setAlpha(1.0f);
 	creditsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	creditsText->getTransform().setPosition(glm::vec3(0.6f, -1.58f - 0.9f, 0.0f));
-	creditsText->getTransform().setScale(glm::vec3(2.7f, 1.31f, 0.0f));
+	creditsText->getTransform().setPosition(glm::vec3(0.45f, -1.58f - 0.9f, 0.0f));
+	creditsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	creditsText->addColliderComponent();
 	creditsText->setMenuState(MenuState::MAIN);
 	/*creditsText->setDrawCollider(true);
@@ -166,8 +194,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* creditsButton = new UIButton("Credits Button");
 	//creditsButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	creditsButton->getTransform().setPosition(glm::vec3(0.0f, -1.29f - 0.9f, 0.0f));
-	creditsButton->getTransform().setScale(glm::vec3(1.5f, 0.45f, 0.0f));
+	creditsButton->getTransform().setPosition(glm::vec3(0.0f, -1.34f - 0.9f, 0.0f));
+	creditsButton->getTransform().setScale(glm::vec3(1.2f, 0.35f, 0.0f));
 	creditsButton->addColliderComponent();
 	creditsButton->setDrawCollider(true);
 	creditsButton->setCanDrawColliderNew(true);
@@ -191,8 +219,8 @@ void LevelMainMenu::levelInit() {
 	quitText->setText("Quit");
 	quitText->setAlpha(1.0f);
 	quitText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	quitText->getTransform().setPosition(glm::vec3(0.18f, -2.1f - 1.0f, 0.0f));
-	quitText->getTransform().setScale(glm::vec3(1.4f, 1.31f, 0.0f));
+	quitText->getTransform().setPosition(glm::vec3(0.14f, -2.1f - 1.0f, 0.0f));
+	quitText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
 	quitText->addColliderComponent();
 	quitText->setMenuState(MenuState::MAIN);
 	/*quitText->setDrawCollider(true);
@@ -201,8 +229,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* quitButton = new UIButton("Quit Button");
 	//creditsButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	quitButton->getTransform().setPosition(glm::vec3(0.0f, -1.82f - 1.0f, 0.0f));
-	quitButton->getTransform().setScale(glm::vec3(1.1f, 0.45f, 0.0f));
+	quitButton->getTransform().setPosition(glm::vec3(0.0f, -1.85f - 1.0f, 0.0f));
+	quitButton->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
 	quitButton->addColliderComponent();
 	quitButton->setDrawCollider(true);
 	quitButton->setCanDrawColliderNew(true);
@@ -214,6 +242,40 @@ void LevelMainMenu::levelInit() {
 
 	mainButtons.push_back(quitButton);
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Audio Button (Settings)
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	UIText* audioText = new UIText("Audio Text");
+	SDL_Color audioTextColor = { 255,255,255,255 };
+	audioText->loadText("Audio", audioTextColor, 100);
+	audioText->setText("Audio");
+	audioText->setAlpha(1.0f);
+	audioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	audioText->getTransform().setPosition(glm::vec3(0.14f, -2.1f - 1.0f, 0.0f));
+	audioText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
+	audioText->addColliderComponent();
+	audioText->setMenuState(MenuState::OPTIONS);
+	/*audioText->setDrawCollider(true);
+	audioText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(audioText);
+
+	UIButton* audioButton = new UIButton("Audio Button");
+	//audioButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	audioButton->getTransform().setPosition(glm::vec3(0.0f, -1.85f - 1.0f, 0.0f));
+	audioButton->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
+	audioButton->addColliderComponent();
+	audioButton->setDrawCollider(true);
+	audioButton->setCanDrawColliderNew(true);
+	audioButton->setDraw(false);
+	audioButton->setLabel(audioText); // Link playText
+	audioButton->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(audioButton);
+	buttonsList.push_back(audioButton);
+
+	optionsButtons.push_back(audioButton);
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
 
@@ -288,15 +350,25 @@ void LevelMainMenu::levelUpdate() {
 
 		for (DrawableObject* obj : objectsList) {
 			MenuState objState = obj->getMenuState();
+			vector<MenuState> objStateVec = obj->getMenuStateVec();
 
-			if (objState == MenuState::NONE) {
+			if (find(objStateVec.begin(), objStateVec.end(), MenuState::NONE) != objStateVec.end()) {
+				obj->setAlpha(1.0f);
 				continue;
 			}
 
-			if (objState == currentMenuState) {
+			bool inCurrent = objState == currentMenuState ||
+				find(objStateVec.begin(), objStateVec.end(), currentMenuState) != objStateVec.end();
+			bool inNext = objState == nextMenuState ||
+				find(objStateVec.begin(), objStateVec.end(), nextMenuState) != objStateVec.end();
+			
+			if (inCurrent && inNext) { //If the object has many states.
+				obj->setAlpha(1.0f);
+			}
+			else if (inCurrent) {
 				obj->setAlpha(1.0f - t);
 			}
-			else if (objState == nextMenuState) {
+			else if (inNext) {
 				obj->setAlpha(t);
 			}
 			else {
@@ -312,18 +384,22 @@ void LevelMainMenu::levelUpdate() {
 	else {
 		for (DrawableObject* obj : objectsList) {
 			MenuState objState = obj->getMenuState();
+			vector<MenuState> objStateVec = obj->getMenuStateVec();
 
-			if (objState == MenuState::NONE) { //Doesn't affect by any states
+			if (find(objStateVec.begin(), objStateVec.end(), MenuState::NONE) != objStateVec.end()) {//Doesn't affect by any states
 				obj->setAlpha(1.0f);
 				continue;
 			}
 
-			obj->setAlpha(objState == currentMenuState ? 1.0f : 0.0f);
+			bool inCurrent = objState == currentMenuState ||
+				find(objStateVec.begin(), objStateVec.end(), currentMenuState) != objStateVec.end();
+
+			obj->setAlpha(inCurrent ? 1.0f : 0.0f);
 			
 			UIButton* button = dynamic_cast<UIButton*>(obj);
 
 			if (button) {
-				button->setEnable(objState == currentMenuState ? true : false);
+				button->setEnable(inCurrent ? true : false);
 			}
 		}
 	}
@@ -450,7 +526,13 @@ void LevelMainMenu::handleKey(char key) {
 
 	switch (key) {
 	case 'a':
-		changeMenuState(MenuState::OPTIONS);
+		if (currentMenuState == MAIN) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == OPTIONS) {
+			changeMenuState(MenuState::AUDIO);
+		}
+
 		break;
 	case 'd':
 		changeMenuState(MenuState::MAIN);
@@ -461,6 +543,13 @@ void LevelMainMenu::handleKey(char key) {
 	case 's':
 		changeSelection(1);
 		break;
+	case 'q':
+		if (currentMenuState == OPTIONS) {
+			changeMenuState(MenuState::MAIN);
+		}
+		else if (currentMenuState == AUDIO) {
+			changeMenuState(MenuState::OPTIONS);
+		}
 	case 'S':
 		if (selectedButton && selectedButton->getMouseOver()) {
 			selectedButton->OnClick();
@@ -503,6 +592,9 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 		break;
 	case MenuState::OPTIONS:
 		currentList = &optionsButtons;
+		if (type == 1) {
+			changeMenuState(MenuState::MAIN);
+		}
 		break;
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
@@ -530,7 +622,7 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 		}
 	}
 
-
+	
 }
 
 void LevelMainMenu::handleAnalogStick(int type, char key) {

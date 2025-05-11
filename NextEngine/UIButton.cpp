@@ -37,7 +37,7 @@ void UIButton::update(float dt) {
 	
 	if (label) {
 		if (mouseOver) {
-			SDL_Color color = { 0, 0, 255, 255 };
+			SDL_Color color = { 121, 155, 242, 255 };
 			label->setColor(color);
 		}	
 		else {
