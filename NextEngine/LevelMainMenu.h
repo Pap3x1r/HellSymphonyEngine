@@ -23,6 +23,11 @@ private:
 	list<UIButton*> controlsButtons;
 	list<UIButton*> creditsButton;
 
+	//Slider List
+	list<SliderObject*> slidersList;
+
+	UIButton* focusedHandle = nullptr;
+
 	float timeK = 0;
 	float dt = 0;
 	//UI
@@ -40,7 +45,7 @@ private:
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 
-	SliderObject* slider;
+	//SliderObject* slider;
 
 	int tempx;
 	int tempx2;

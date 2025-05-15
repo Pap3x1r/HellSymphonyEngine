@@ -69,9 +69,9 @@ void LevelMainMenu::levelInit() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	SliderObject* masterVolumeSlider = new SliderObject();
-	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.5f, 1.0f), 0);
-	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.5f, 1.0f), 1);
-	masterVolumeSlider->setScale(glm::vec3(0.3f, 1.0f, 1.0f), 2);
+	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
+	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
+	masterVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
 	masterVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), -1);
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
@@ -80,9 +80,9 @@ void LevelMainMenu::levelInit() {
 		objectsList.push_back(obj);
 	}
 
+	slidersList.push_back(masterVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
-	slider = masterVolumeSlider;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -513,16 +513,14 @@ void LevelMainMenu::levelUpdate() {
 		}
 	}
 
-	for (DrawableObject* obj : slider->getObjectsList()) {
-		/*cout << obj->getName() << "'s MenuState:" << obj->getMenuState() << " Alpha:" << obj->getAlpha() << endl;
-		for (auto o : obj->getMenuStateVec()) {
-			cout << o << endl;
-		}*/
-	}
+	//for (DrawableObject* obj : slider->getObjectsList()) {
+	//	/*cout << obj->getName() << "'s MenuState:" << obj->getMenuState() << " Alpha:" << obj->getAlpha() << endl;
+	//	for (auto o : obj->getMenuStateVec()) {
+	//		cout << o << endl;
+	//	}*/
+	//}
 
 	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
-
-	slider->update(dt);
 
 	handleObjectCollision(objectsList);
 
@@ -727,19 +725,30 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 		return;
 	}
 
+
 	if (selectedIndex >= 0 && selectedIndex < currentList->size()) {
 		auto it = currentList->begin();
 		std::advance(it, selectedIndex);
 
-		UIButton* selectedButton = *it;
+		UIButton* onButton = *it;
 
-		if (selectedButton && selectedButton->getMouseOver()) {
+		if (onButton && onButton->getMouseOver()) {
 			if (type == 0) {
-				selectedButton->OnClick();
+				onButton->OnClick();
+				focusedHandle = *it;
 			}
-			else if (type == 4) {
-				glm::vec2 gamePos = convertMouseToGameSpace(x, y);
+		}
+	}
 
+	if (focusedHandle) {
+		if (type == 2) {
+			focusedHandle = nullptr;
+		}
+
+		if (type == 4) {
+			glm::vec2 gamePos = convertMouseToGameSpace(x, y);
+
+			for (SliderObject* slider : slidersList) {
 				glm::vec3 handlePos = slider->getObject(2)->getTransform().getPosition(); // 2 = handle
 				glm::vec3 bgPos = slider->getObject(0)->getTransform().getPosition(); // 0 = background
 
@@ -748,20 +757,22 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 
 				cout << "Mouse Pos: " << gamePos.x << "," << gamePos.y << "Slider X Left:" << sliderLeft << ", Slider X Right:" << sliderRight << endl;
 
-				
 
-				if (gamePos.x >= sliderLeft && gamePos.x <= sliderRight) {
+				if (gamePos.x <= sliderLeft) {
+					slider->setValue(0.0f);
+				}
+				else if (gamePos.x >= sliderRight) {
+					slider->setValue(1.0f);
+				}
+				else if (gamePos.x >= sliderLeft && gamePos.x <= sliderRight) {
 					float newValue = (gamePos.x - sliderLeft) / (sliderRight - sliderLeft);
 					slider->setValue(newValue);
-					slider->update(dt);
 				}
-
-				selectedButton->OnClick();
+				slider->update(dt);
 			}
+			//selectedButton->OnClick();
 		}
 	}
-
-	
 }
 
 void LevelMainMenu::handleAnalogStick(int type, char key) {

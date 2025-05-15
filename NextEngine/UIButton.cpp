@@ -47,7 +47,7 @@ void UIButton::update(float dt) {
 	}
 
 	if (mouseOver) {
-		cout << "Hovered" << endl;
+		//cout << "Hovered" << endl;
 	}
 }
 
