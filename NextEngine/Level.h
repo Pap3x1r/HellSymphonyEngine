@@ -5,6 +5,7 @@
 #include "SimpleObject.h"
 #include "TexturedObject.h"
 #include "Button.h"
+#include "SliderObject.h"
 #include "PlayerObject.h"
 #include "EnemyObject.h"
 #include "Player.h"

@@ -64,6 +64,28 @@ void LevelMainMenu::levelInit() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
+	//										Sliders
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SliderObject* masterVolumeSlider = new SliderObject();
+	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.5f, 1.0f), 0);
+	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.5f, 1.0f), 1);
+	masterVolumeSlider->setScale(glm::vec3(0.3f, 1.0f, 1.0f), 2);
+	masterVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), -1);
+	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), 1);
+	masterVolumeSlider->setMenuState(MenuState::AUDIO);
+	masterVolumeSlider->setValue(1.0f);
+	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
+		objectsList.push_back(obj);
+	}
+
+	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
+	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
+	slider = masterVolumeSlider;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
 	//										Texts
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,6 +497,13 @@ void LevelMainMenu::levelUpdate() {
 				find(objStateVec.begin(), objStateVec.end(), currentMenuState) != objStateVec.end();
 
 			obj->setAlpha(inCurrent ? 1.0f : 0.0f);
+
+			/*if (inCurrent) {
+				cout << obj->getName() << "'s MenuState:" << obj->getMenuState() << " Alpha:" << obj->getAlpha() << endl;
+				for (auto o : obj->getMenuStateVec()) {
+					cout << o << endl;
+				}
+			}*/
 			
 			UIButton* button = dynamic_cast<UIButton*>(obj);
 
@@ -484,7 +513,16 @@ void LevelMainMenu::levelUpdate() {
 		}
 	}
 
+	for (DrawableObject* obj : slider->getObjectsList()) {
+		/*cout << obj->getName() << "'s MenuState:" << obj->getMenuState() << " Alpha:" << obj->getAlpha() << endl;
+		for (auto o : obj->getMenuStateVec()) {
+			cout << o << endl;
+		}*/
+	}
+
 	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
+
+	slider->update(dt);
 
 	handleObjectCollision(objectsList);
 
@@ -607,7 +645,7 @@ void LevelMainMenu::handleKey(char key) {
 	switch (key) {
 	case 'c':
 		if (currentMenuState == MAIN) {
-			changeMenuState(MenuState::OPTIONS);
+			changeMenuState(MenuState::AUDIO);
 		}
 		else if (currentMenuState == OPTIONS) {
 			changeMenuState(MenuState::AUDIO);
@@ -699,6 +737,27 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 			if (type == 0) {
 				selectedButton->OnClick();
 			}
+			else if (type == 4) {
+				glm::vec2 gamePos = convertMouseToGameSpace(x, y);
+
+				glm::vec3 handlePos = slider->getObject(2)->getTransform().getPosition(); // 2 = handle
+				glm::vec3 bgPos = slider->getObject(0)->getTransform().getPosition(); // 0 = background
+
+				float sliderLeft = bgPos.x - slider->getOriginalWidth().x * 0.5f;
+				float sliderRight = bgPos.x + slider->getOriginalWidth().x * 0.5f;
+
+				cout << "Mouse Pos: " << gamePos.x << "," << gamePos.y << "Slider X Left:" << sliderLeft << ", Slider X Right:" << sliderRight << endl;
+
+				
+
+				if (gamePos.x >= sliderLeft && gamePos.x <= sliderRight) {
+					float newValue = (gamePos.x - sliderLeft) / (sliderRight - sliderLeft);
+					slider->setValue(newValue);
+					slider->update(dt);
+				}
+
+				selectedButton->OnClick();
+			}
 		}
 	}
 
@@ -781,6 +840,44 @@ void LevelMainMenu::changeSelection(int direction) {
 
 	focusedButton = *it;
 	focusedButton->setMouseOver(true);
-	cout << focusedButton->getName() << endl;
+	//cout << focusedButton->getName() << endl;
 }
 
+glm::vec2 LevelMainMenu::convertMouseToGameSpace(int mouseX, int mouseY) {
+	int windowWidth = GameEngine::getInstance()->getWindowWidth();
+	int windowHeight = GameEngine::getInstance()->getWindowHeight();
+
+	const float targetAspect = 16.0f / 9.0f;
+	float windowAspect = static_cast<float>(windowWidth) / windowHeight;
+
+	float gameWidth = 16.0f;
+	float gameHeight = 9.0f;
+
+	float scale;
+	float offsetX = 0;
+	float offsetY = 0;
+
+	if (windowAspect > targetAspect) {
+		// Black bars on left/right
+		scale = windowHeight / gameHeight;
+		offsetX = (windowWidth - gameWidth * scale) / 2.0f;
+	}
+	else {
+		// Black bars on top/bottom
+		scale = windowWidth / gameWidth;
+		offsetY = (windowHeight - gameHeight * scale) / 2.0f;
+	}
+
+	// Convert to normalized game coordinates
+	float gameX = (mouseX - offsetX) / scale;
+	float gameY = (mouseY - offsetY) / scale;
+
+	// Flip Y if window origin is top-left but game origin is center
+	gameY = gameHeight - gameY;
+
+	// Shift origin to center
+	gameX -= gameWidth / 2.0f;
+	gameY -= gameHeight / 2.0f;
+
+	return glm::vec2(gameX, gameY);
+}

@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 
+
 #include <list>
 
 
@@ -39,6 +40,8 @@ private:
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 
+	SliderObject* slider;
+
 	int tempx;
 	int tempx2;
 
@@ -71,4 +74,6 @@ public:
 	void toBoss() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
 	}
+
+	glm::vec2 convertMouseToGameSpace(int mouseX, int mouseY);
 };

@@ -7,6 +7,7 @@
 #include "gtc/type_ptr.hpp"
 #include <SDL_ttf.h>
 #include <SDL.h>
+#include "imgui.h"
 
 class UIText :public DrawableObject
 {

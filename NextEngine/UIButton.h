@@ -17,10 +17,15 @@ class UIButton : public TexturedObject {
 	float xScale;
 	float yScale;
 
-	UIText* label;
+	UIText* label = nullptr;
 
 public:
 	
+	UIButton() {
+		setDrawCollider(true);
+		setCanDrawColliderNew(true);
+	};
+
 	UIButton(string name) {
 		this->name = name;
 		setDrawCollider(true);
