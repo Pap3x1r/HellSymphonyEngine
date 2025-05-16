@@ -558,7 +558,7 @@ void LevelMainMenu::levelUpdate() {
 		obj->update(dt);
 	}
 
-	cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
+	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 
 	handleObjectCollision(objectsList);
 

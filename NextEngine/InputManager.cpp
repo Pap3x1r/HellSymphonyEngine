@@ -1,5 +1,5 @@
 #include "InputManager.h"
-
+#include "GameEngine.h"
 
 
 InputManager::InputManager() : mouseX(0), mouseY(0), controller(nullptr), leftTrigger(0.0f), rightTrigger(0.0f) {
@@ -56,6 +56,23 @@ void InputManager::updateInput() {
     // Poll events
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+        // Resizing window
+        if (event.type == SDL_WINDOWEVENT) {
+            if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                int newWidth = event.window.data1;
+                int newHeight = event.window.data2;
+
+                // Update engine dimensions
+                GameEngine::getInstance()->setWindowWidth(newWidth);
+                GameEngine::getInstance()->setWindowHeight(newHeight);
+
+                // Update OpenGL viewport
+                GameEngine::getInstance()->getRenderer()->setViewPort(0, 0, newWidth, newHeight);
+
+                std::cout << "Resized to: " << newWidth << "x" << newHeight << std::endl;
+            }
+        }
+
         // Handle keyboard events
         if (event.type == SDL_KEYDOWN && !event.key.repeat) {
             keyStates[event.key.keysym.sym] = KEY_PRESSED;

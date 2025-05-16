@@ -7,6 +7,8 @@
 #include <iostream>
 #include <imgui_impl_sdl2.h>
 
+class GameEngine;
+
 class InputManager {
 public:
     enum KeyState {
