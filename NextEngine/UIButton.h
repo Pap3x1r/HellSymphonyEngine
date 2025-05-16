@@ -5,6 +5,8 @@
 #include "imgui.h"
 #include <functional>
 
+class SliderObject;
+
 class UIButton : public TexturedObject {
 	bool isEnable = true;
 	bool mouseOver = false;
@@ -18,6 +20,9 @@ class UIButton : public TexturedObject {
 	float yScale;
 
 	UIText* label = nullptr;
+	SliderObject* slider = nullptr;
+	
+	bool isHandle = false;
 
 public:
 	
@@ -72,5 +77,21 @@ public:
 
 	string getName() const {
 		return name;
+	}
+
+	void setHandle(bool value) {
+		isHandle = value;
+	}
+
+	bool getHandle() const {
+		return isHandle;
+	}
+
+	void setSlider(SliderObject* obj) {
+		slider = obj;
+	}
+
+	SliderObject* getSlider() const {
+		return slider;
 	}
 };

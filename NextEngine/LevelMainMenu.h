@@ -41,11 +41,16 @@ private:
 	float transitionTime = 0.0f;
 	float transitionDuration = 0.5f;
 	bool transitioning = false;
+	float holdButtonTimer = 0.0f;
+	float holdButtonThreshold = 0.5f;
 
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 
 	//SliderObject* slider;
+
+	bool isHolding;
+	
 
 	int tempx;
 	int tempx2;
@@ -78,6 +83,10 @@ public:
 
 	void toBoss() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+	}
+
+	void quitGame() {
+		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT;
 	}
 
 	glm::vec2 convertMouseToGameSpace(int mouseX, int mouseY);

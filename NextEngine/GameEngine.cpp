@@ -25,6 +25,11 @@ GameStateController* GameEngine::getStateController() {
 Time* GameEngine::getTime() {
 	return this->time;
 }
+
+AudioEngine* GameEngine::getAudio() {
+	return this->audio;
+}
+
 InputManager* GameEngine::getInputHandler() {
 	return inputHandler;
 }

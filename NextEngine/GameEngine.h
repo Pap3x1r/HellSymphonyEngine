@@ -7,6 +7,7 @@
 #include "Time.h"
 #include "InputManager.h" 
 #include "SDL_ttf.h"
+#include "Audio.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ class GameEngine {
 	Time* time;
 	InputManager* inputHandler;
 	vector<string> texturePaths;
+	AudioEngine* audio;
 
 	GameEngine();
 public:
@@ -26,6 +28,7 @@ public:
 	GLRenderer * getRenderer();
 	GameStateController* getStateController();
 	Time* getTime();
+	AudioEngine* getAudio();
 	InputManager* getInputHandler();// Getter for input handler
 	void init(int width, int height);
 	void setDrawArea(float left, float right, float bottom, float top);

@@ -19,6 +19,7 @@ SliderObject::SliderObject() {
 	sliderHandle->setDrawCollider(true);
 	sliderHandle->setCanDrawColliderNew(true);
 	sliderHandle->setDraw(true);
+	sliderHandle->setHandle(true);
 	//sliderHandle->setMenuState(MenuState::MAIN);
 	objectsList.push_back(sliderHandle);
 }

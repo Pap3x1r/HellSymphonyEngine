@@ -72,8 +72,8 @@ void LevelMainMenu::levelInit() {
 	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
 	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
 	masterVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
-	masterVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), -1);
-	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), 1);
+	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
+	masterVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
 	masterVolumeSlider->setValue(1.0f);
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
@@ -83,6 +83,38 @@ void LevelMainMenu::levelInit() {
 	slidersList.push_back(masterVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
+
+	//////////////////////////////////////
+
+	UIText* masterVolumeText = new UIText("Master Volume Text");
+	SDL_Color masterVolumeTextColor = { 255,255,255,255 };
+	masterVolumeText->loadText("Master Volume", masterVolumeTextColor, 100);
+	masterVolumeText->setText("Master Volume");
+	masterVolumeText->setAlpha(1.0f);
+	masterVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	masterVolumeText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
+	masterVolumeText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	masterVolumeText->addColliderComponent();
+	masterVolumeText->setMenuState(MenuState::AUDIO);
+	/*masterVolumeText->setDrawCollider(true);
+	masterVolumeText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(masterVolumeText);
+
+	UIButton* masterVolumeButton = new UIButton("Master Volume Button");
+	//masterVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	masterVolumeButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
+	masterVolumeButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	masterVolumeButton->addColliderComponent();
+	masterVolumeButton->setDrawCollider(true);
+	masterVolumeButton->setCanDrawColliderNew(true);
+	masterVolumeButton->setDraw(false);
+	masterVolumeButton->setLabel(masterVolumeText); // Link continueText
+	masterVolumeButton->setMenuState(MenuState::AUDIO);
+	masterVolumeButton->setSlider(masterVolumeSlider);
+	objectsList.push_back(masterVolumeButton);
+	buttonsList.push_back(masterVolumeButton);
+
+	audioButtons.push_back(masterVolumeButton);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -279,6 +311,7 @@ void LevelMainMenu::levelInit() {
 	quitButton->setDraw(false);
 	quitButton->setLabel(quitText); // Link playText
 	quitButton->setMenuState(MenuState::MAIN);
+	quitButton->setFunction([this]() { quitGame();});
 	objectsList.push_back(quitButton);
 	buttonsList.push_back(quitButton);
 
@@ -314,6 +347,7 @@ void LevelMainMenu::levelInit() {
 	audioButton->setDraw(false);
 	audioButton->setLabel(audioText); // Link playText
 	audioButton->setMenuState(MenuState::OPTIONS);
+	audioButton->setFunction([this]() { changeMenuState(MenuState::AUDIO);});
 	objectsList.push_back(audioButton);
 	buttonsList.push_back(audioButton);
 
@@ -355,7 +389,7 @@ void LevelMainMenu::levelInit() {
 	optionsButtons.push_back(controllerButton);
 
 
-
+	isHolding = false;
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
 
@@ -520,7 +554,11 @@ void LevelMainMenu::levelUpdate() {
 	//	}*/
 	//}
 
-	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
+	for (SliderObject* obj : slidersList) {
+		obj->update(dt);
+	}
+
+	cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 
 	handleObjectCollision(objectsList);
 
@@ -602,14 +640,14 @@ void LevelMainMenu::handleKey(char key) {
 		return;
 	}
 
-	UIButton* selectedButton = nullptr;
+	/*UIButton* selectedButton = nullptr;
 
 	if (selectedIndex >= 0 && selectedIndex < currentList->size()) {
 		auto it = buttonsList.begin();
 		std::advance(it, selectedIndex);
 
 		selectedButton = *it;
-	}
+	}*/
 
 	/*switch (currentMenuState) {
 	case MAIN:
@@ -650,8 +688,56 @@ void LevelMainMenu::handleKey(char key) {
 		}
 
 		break;
+	case 'a':
+		if (isHolding == false) {
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() - 0.025f);
+				}
+			}
+			isHolding = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() - 0.005f);
+					}
+				}
+			}
+		}
+
+		
+		break;
 	case 'd':
-		changeMenuState(MenuState::MAIN);
+
+		if (isHolding == false){
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() + 0.025f);
+				}
+			}
+			isHolding = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() + 0.005f);
+					}
+				}
+			}
+		}
+
+		
 		break;
 	case 'w':
 		changeSelection(-1);
@@ -667,8 +753,21 @@ void LevelMainMenu::handleKey(char key) {
 			changeMenuState(MenuState::OPTIONS);
 		}
 	case 'S':
-		if (selectedButton && selectedButton->getMouseOver()) {
+		/*if (selectedButton && selectedButton->getMouseOver()) {
 			selectedButton->OnClick();
+		}*/
+
+		if (focusedButton && focusedButton->getMouseOver()) {
+			focusedButton->OnClick();
+		}
+
+		break;
+	case 'I':
+		if (isHolding == true) {
+			isHolding = false;
+		}
+		if (holdButtonTimer > 0){
+			holdButtonTimer = 0;
 		}
 		break;
 	}
@@ -735,7 +834,9 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 		if (onButton && onButton->getMouseOver()) {
 			if (type == 0) {
 				onButton->OnClick();
-				focusedHandle = *it;
+				if (onButton->getHandle()) {
+					focusedHandle = *it;
+				}
 			}
 		}
 	}
@@ -847,6 +948,22 @@ void LevelMainMenu::changeSelection(int direction) {
 	}
 
 	auto it = currentList->begin();
+	advance(it, selectedIndex);
+
+	focusedButton = *it;
+
+	if (focusedButton->getHandle()) {
+		selectedIndex += direction;
+	}
+
+	if (selectedIndex < 0) {
+		selectedIndex = currentList->size() - 1;
+	}
+	else if (selectedIndex >= currentList->size()) {
+		selectedIndex = 0;
+	}
+
+	it = currentList->begin();	
 	advance(it, selectedIndex);
 
 	focusedButton = *it;
