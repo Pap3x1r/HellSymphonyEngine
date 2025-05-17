@@ -293,34 +293,6 @@ GLuint GLRenderer::getAlphaOverrideUniformId() {
     return this->alphaOverrideUniformId;
 }
 
-//GLuint GLRenderer::LoadTexture(string path) {
-//    glActiveTexture(GL_TEXTURE0);
-//    SDL_Surface* image = IMG_Load(path.c_str());
-//    if (image == NULL) {
-//        cerr << "IMG_Load: " << SDL_GetError() << endl;
-//        return -1;
-//    }
-//    unsigned int texture;
-//    glGenTextures(1, &texture);
-//    glBindTexture(GL_TEXTURE_2D, texture);
-//
-//    int Mode = GL_RGB;
-//    if (image->format->BytesPerPixel == 4) {
-//        Mode = GL_RGBA;
-//    }
-//
-//    glTexImage2D(GL_TEXTURE_2D, 0, Mode, image->w, image->h, 0, Mode, GL_UNSIGNED_BYTE, image->pixels);
-//
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//    SDL_FreeSurface(image);
-//
-//    return texture;
-//}
-
 GLuint GLRenderer::LoadTexture(string path) {
     glActiveTexture(GL_TEXTURE0);
 
@@ -382,6 +354,7 @@ void GLRenderer::setViewMatrix(const glm::mat4& viewMatrix) {
         glUniformMatrix4fv(viewMatrixId, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     }
 }
+
 void GLRenderer::updateCamera(const glm::vec3& playerPosition) {
     camera.setPosition(glm::vec3(playerPosition.x, playerPosition.y, camera.getPosition().z));
 
@@ -430,6 +403,7 @@ void GLRenderer::updateViewport() {
 
     setOrthoProjection(left, right, bottom, top);
 }
+
 void GLRenderer::toggleViewport() {
     isViewportEnabled = !isViewportEnabled; 
     std::cout << "Viewport updating is now " << (isViewportEnabled ? "enabled" : "disabled") << std::endl;

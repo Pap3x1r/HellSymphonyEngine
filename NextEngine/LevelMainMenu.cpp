@@ -64,11 +64,12 @@ void LevelMainMenu::levelInit() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
-	//										Sliders
+	//										Master Volume Slider
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SliderObject* masterVolumeSlider = new SliderObject();
+	SliderObject* masterVolumeSlider = new SliderObject("Master Volume Slider");
+	masterVolumeSlider->setPosition(glm::vec3(-2.0f, 2.2f, 1.0f), -1);
 	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
 	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
 	masterVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
@@ -79,7 +80,8 @@ void LevelMainMenu::levelInit() {
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
-
+	/*UIButton* masterVolumeHandle = static_cast<UIButton*>(masterVolumeSlider->getObject(2));
+	masterVolumeHandle->setSlider*/
 	slidersList.push_back(masterVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
@@ -115,6 +117,60 @@ void LevelMainMenu::levelInit() {
 	buttonsList.push_back(masterVolumeButton);
 
 	audioButtons.push_back(masterVolumeButton);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Music Volume Slider
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SliderObject* musicVolumeSlider = new SliderObject("Music Volume Slider");
+	musicVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
+	musicVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
+	musicVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
+	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
+	musicVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), 1);
+	musicVolumeSlider->setMenuState(MenuState::AUDIO);
+	musicVolumeSlider->setValue(1.0f);
+	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
+		objectsList.push_back(obj);
+	}
+
+	slidersList.push_back(musicVolumeSlider);
+	buttonsList.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
+	audioButtons.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
+
+	//////////////////////////////////////
+
+	UIText* musicVolumeText = new UIText("Music Volume Text");
+	SDL_Color musicVolumeTextColor = { 255,255,255,255 };
+	musicVolumeText->loadText("Music Volume", musicVolumeTextColor, 100);
+	musicVolumeText->setText("Music Volume");
+	musicVolumeText->setAlpha(1.0f);
+	musicVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	musicVolumeText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
+	musicVolumeText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	musicVolumeText->addColliderComponent();
+	musicVolumeText->setMenuState(MenuState::AUDIO);
+	/*musicVolumeText->setDrawCollider(true);
+	musicVolumeText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(musicVolumeText);
+
+	UIButton* musicVolumeButton = new UIButton("Music Volume Button");
+	//musicVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	musicVolumeButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
+	musicVolumeButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	musicVolumeButton->addColliderComponent();
+	musicVolumeButton->setDrawCollider(true);
+	musicVolumeButton->setCanDrawColliderNew(true);
+	musicVolumeButton->setDraw(false);
+	musicVolumeButton->setLabel(musicVolumeText); // Link continueText
+	musicVolumeButton->setMenuState(MenuState::AUDIO);
+	musicVolumeButton->setSlider(musicVolumeSlider);
+	objectsList.push_back(musicVolumeButton);
+	buttonsList.push_back(musicVolumeButton);
+
+	audioButtons.push_back(musicVolumeButton);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -453,6 +509,7 @@ void LevelMainMenu::levelUpdate() {
 		hoveredIndex = -1;
 
 		if (controlByMouse) {
+			focusedButton = nullptr;
 			controlByMouse = false;
 			selectedIndex = -1;
 		}
@@ -842,36 +899,48 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 	}
 
 	if (focusedHandle) {
+		cout << focusedHandle->getName() << endl;
 		if (type == 2) {
 			focusedHandle = nullptr;
 		}
 
 		if (type == 4) {
+
+			SliderObject* handleSlider = focusedHandle->getSlider();
+
+			if (handleSlider) {
+				cout << "has slider" << endl;
+			}
+
 			glm::vec2 gamePos = convertMouseToGameSpace(x, y);
 
 			for (SliderObject* slider : slidersList) {
-				glm::vec3 handlePos = slider->getObject(2)->getTransform().getPosition(); // 2 = handle
-				glm::vec3 bgPos = slider->getObject(0)->getTransform().getPosition(); // 0 = background
 
-				float sliderLeft = bgPos.x - slider->getOriginalWidth().x * 0.5f;
-				float sliderRight = bgPos.x + slider->getOriginalWidth().x * 0.5f;
+				if (focusedHandle->getSlider() == slider) {
+					//cout << "Button's Slider: " << focusedHandle->getSlider()->getName() << " Slider:" << slider->getName() << endl;
 
-				cout << "Mouse Pos: " << gamePos.x << "," << gamePos.y << "Slider X Left:" << sliderLeft << ", Slider X Right:" << sliderRight << endl;
+					glm::vec3 handlePos = slider->getObject(2)->getTransform().getPosition(); // 2 = handle
+					glm::vec3 bgPos = slider->getObject(0)->getTransform().getPosition(); // 0 = background
+
+					float sliderLeft = bgPos.x - slider->getOriginalWidth().x * 0.5f;
+					float sliderRight = bgPos.x + slider->getOriginalWidth().x * 0.5f;
+
+					//cout << "Mouse Pos: " << gamePos.x << "," << gamePos.y << "Slider X Left:" << sliderLeft << ", Slider X Right:" << sliderRight << endl;
 
 
-				if (gamePos.x <= sliderLeft) {
-					slider->setValue(0.0f);
+					if (gamePos.x <= sliderLeft) {
+						slider->setValue(0.0f);
+					}
+					else if (gamePos.x >= sliderRight) {
+						slider->setValue(1.0f);
+					}
+					else if (gamePos.x >= sliderLeft && gamePos.x <= sliderRight) {
+						float newValue = (gamePos.x - sliderLeft) / (sliderRight - sliderLeft);
+						slider->setValue(newValue);
+					}
+					slider->update(dt);
 				}
-				else if (gamePos.x >= sliderRight) {
-					slider->setValue(1.0f);
-				}
-				else if (gamePos.x >= sliderLeft && gamePos.x <= sliderRight) {
-					float newValue = (gamePos.x - sliderLeft) / (sliderRight - sliderLeft);
-					slider->setValue(newValue);
-				}
-				slider->update(dt);
 			}
-			//selectedButton->OnClick();
 		}
 	}
 }

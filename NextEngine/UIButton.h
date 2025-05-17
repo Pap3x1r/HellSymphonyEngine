@@ -11,7 +11,7 @@ class UIButton : public TexturedObject {
 	bool isEnable = true;
 	bool mouseOver = false;
 	function<void()> func;
-	string name;
+	string name = "Button";
 
 	float xPosition;
 	float yPosition;

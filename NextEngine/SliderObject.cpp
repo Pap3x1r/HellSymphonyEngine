@@ -21,6 +21,35 @@ SliderObject::SliderObject() {
 	sliderHandle->setDraw(true);
 	sliderHandle->setHandle(true);
 	//sliderHandle->setMenuState(MenuState::MAIN);
+	sliderHandle->setSlider(this);
+	cout << "Handle Slider: " << sliderHandle->getSlider()->getName() << endl;
+	objectsList.push_back(sliderHandle);
+}
+
+SliderObject::SliderObject(string name) {
+	this->name = name;
+	sliderBackground = new SimpleObject("SliderBackground");
+	sliderBackground->setColor(1.0f, 1.0f, 1.0f);
+	//sliderBackground->setMenuState(MenuState::MAIN);
+	objectsList.push_back(sliderBackground);
+
+
+	sliderFill = new SimpleObject("SliderFill");
+	sliderFill->setColor(1.0f, 1.0f, 1.0f);
+	//sliderFill->setMenuState(MenuState::MAIN);
+	objectsList.push_back(sliderFill);
+
+
+
+	sliderHandle = new UIButton("SliderHandle");
+	sliderHandle->addColliderComponent();
+	sliderHandle->setDrawCollider(true);
+	sliderHandle->setCanDrawColliderNew(true);
+	sliderHandle->setDraw(true);
+	sliderHandle->setHandle(true);
+	//sliderHandle->setMenuState(MenuState::MAIN);
+	sliderHandle->setSlider(this);
+	cout << "Handle Slider: " << sliderHandle->getSlider()->getName() << endl;
 	objectsList.push_back(sliderHandle);
 }
 
@@ -53,6 +82,7 @@ void SliderObject::update(float dt) {
 
 void SliderObject::setPosition(glm::vec3 position, int type) {
 	//type 0 = background, type 1 = fill, type 2 = handle, else all
+	basePosition = position;
 	if (type == 0) {
 		sliderBackground->getTransform().setPosition(position);
 	}
@@ -132,4 +162,8 @@ DrawableObject* SliderObject::getObject(int index) {
 
 glm::vec3 SliderObject::getOriginalWidth() const {
 	return originalWidth;
+}
+
+string SliderObject::getName() const {
+	return name;
 }

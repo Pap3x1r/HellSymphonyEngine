@@ -5,6 +5,8 @@
 
 class SliderObject {
 
+	string name = "Slider Object";
+
 	float value;
 
 	glm::vec3 bgColor;
@@ -23,6 +25,7 @@ class SliderObject {
 
 public:
 	SliderObject();
+	SliderObject(string name);
 	~SliderObject();
 	void update(float dt);
 	void setPosition(glm::vec3 position, int type);
@@ -34,4 +37,5 @@ public:
 	list<DrawableObject*> getObjectsList() const;
 	DrawableObject* getObject(int index);
 	glm::vec3 getOriginalWidth() const;
+	string getName() const;
 };
