@@ -20,7 +20,8 @@ private:
 	list<UIButton*> mainButtons;
 	list<UIButton*> optionsButtons;
 	list<UIButton*> audioButtons;
-	list<UIButton*> controlsButtons;
+	list<UIButton*> controllerButtons;
+	list<UIButton*> keyboardButtons;
 	list<UIButton*> creditsButton;
 
 	//Slider List

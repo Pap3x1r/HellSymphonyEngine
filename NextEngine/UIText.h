@@ -120,13 +120,21 @@ public:
         yScale = scale.y;
     }
 
-    void loadText(string text, SDL_Color textColor, int fontSize) {
+    void loadText(string text, SDL_Color textColor, int fontSize, bool bold = false) {
         this->text = text;
         this->color = textColor;
         this->fontSize = fontSize;
         //this->alpha = static_cast<float>(textColor.a) / 255.0f;
 
-        TTF_Font* font = TTF_OpenFont("../Resource/Font/EBGaramond.ttf", fontSize);
+        TTF_Font* font = nullptr;
+
+        if (bold) {
+            font = TTF_OpenFont("../Resource/Font/EBGaramond-Bold.ttf", fontSize);
+        }
+        else {
+            font = TTF_OpenFont("../Resource/Font/EBGaramond.ttf", fontSize);
+        }
+
         if (!font) {
             cerr << "Failed to load font: " << TTF_GetError() << endl;
             return;

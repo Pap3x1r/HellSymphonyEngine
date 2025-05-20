@@ -22,6 +22,9 @@ void LevelMainMenu::levelLoad() {
 }
 
 void LevelMainMenu::levelInit() {
+	//Value
+	float audioSettingsOffsetY = 0.2f;
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -40,6 +43,9 @@ void LevelMainMenu::levelInit() {
 	background2->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	background2->setMenuState(MenuState::OPTIONS);
 	background2->addMenuStateToVec(MenuState::AUDIO);
+	background2->addMenuStateToVec(MenuState::CREDITS);
+	background2->addMenuStateToVec(MenuState::CONTROLLER);
+	background2->addMenuStateToVec(MenuState::KEYBOARD);
 	objectsList.push_back(background2);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,6 +59,10 @@ void LevelMainMenu::levelInit() {
 	line1->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));	
 	line1->getTransform().setPosition(glm::vec3(0.0f, 3.3f, 0.0f));
 	line1->setMenuState(MenuState::OPTIONS);
+	line1->addMenuStateToVec(MenuState::AUDIO);
+	line1->addMenuStateToVec(MenuState::CONTROLLER);
+	line1->addMenuStateToVec(MenuState::KEYBOARD);
+	line1->addMenuStateToVec(MenuState::CREDITS);
 	objectsList.push_back(line1);
 
 	SimpleObject* line2 = new SimpleObject();
@@ -60,6 +70,10 @@ void LevelMainMenu::levelInit() {
 	line2->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));
 	line2->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 	line2->setMenuState(MenuState::OPTIONS);
+	line2->addMenuStateToVec(MenuState::AUDIO);
+	line2->addMenuStateToVec(MenuState::CONTROLLER);
+	line2->addMenuStateToVec(MenuState::KEYBOARD);
+	line2->addMenuStateToVec(MenuState::CREDITS);
 	objectsList.push_back(line2);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,19 +83,19 @@ void LevelMainMenu::levelInit() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	SliderObject* masterVolumeSlider = new SliderObject("Master Volume Slider");
-	masterVolumeSlider->setPosition(glm::vec3(-2.0f, 2.2f, 1.0f), -1);
-	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
-	masterVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
-	masterVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
+	masterVolumeSlider->setPosition(glm::vec3(-1.0f, 1.7f + audioSettingsOffsetY, 1.0f), -1);
+	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 0);
+	masterVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 1);
+	masterVolumeSlider->setScale(glm::vec3(0.35f, 0.35f, 1.0f), 2);
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
-	masterVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), 1);
+	masterVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
 	masterVolumeSlider->setValue(1.0f);
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
-	/*UIButton* masterVolumeHandle = static_cast<UIButton*>(masterVolumeSlider->getObject(2));
-	masterVolumeHandle->setSlider*/
+	UIButton* masterVolumeHandle = static_cast<UIButton*>(masterVolumeSlider->getObject(2));
+	masterVolumeHandle->setTexture("../Resource/Texture/UI/SliderHandle.png");
 	slidersList.push_back(masterVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
@@ -94,8 +108,8 @@ void LevelMainMenu::levelInit() {
 	masterVolumeText->setText("Master Volume");
 	masterVolumeText->setAlpha(1.0f);
 	masterVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	masterVolumeText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
-	masterVolumeText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	masterVolumeText->getTransform().setPosition(glm::vec3(-3.65f, 2.1f + audioSettingsOffsetY, 0.0f));
+	masterVolumeText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
 	masterVolumeText->addColliderComponent();
 	masterVolumeText->setMenuState(MenuState::AUDIO);
 	/*masterVolumeText->setDrawCollider(true);
@@ -103,9 +117,9 @@ void LevelMainMenu::levelInit() {
 	objectsList.push_back(masterVolumeText);
 
 	UIButton* masterVolumeButton = new UIButton("Master Volume Button");
-	//masterVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	masterVolumeButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
-	masterVolumeButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	//masterVolumeButton->setTexture("../Resource/Texture/UI/SliderHandle.png");
+	masterVolumeButton->getTransform().setPosition(glm::vec3(-4.5f, 2.35f + audioSettingsOffsetY, 0.0f));
+	masterVolumeButton->getTransform().setScale(glm::vec3(2.35f, 0.35f, 0.0f));
 	masterVolumeButton->addColliderComponent();
 	masterVolumeButton->setDrawCollider(true);
 	masterVolumeButton->setCanDrawColliderNew(true);
@@ -125,17 +139,19 @@ void LevelMainMenu::levelInit() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	SliderObject* musicVolumeSlider = new SliderObject("Music Volume Slider");
-	musicVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 1);
-	musicVolumeSlider->setScale(glm::vec3(8.0f, 0.15f, 1.0f), 0);
-	musicVolumeSlider->setScale(glm::vec3(0.1f, 0.3f, 1.0f), 2);
+	musicVolumeSlider->setPosition(glm::vec3(-1.0f, 0.2f + audioSettingsOffsetY, 1.0f), -1);
+	musicVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 1);
+	musicVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 0);
+	musicVolumeSlider->setScale(glm::vec3(0.35f, 0.35f, 1.0f), 2);
 	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
-	musicVolumeSlider->setColor(glm::vec3(1.0f, 1.0f, 1.0f), 1);
+	musicVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	musicVolumeSlider->setMenuState(MenuState::AUDIO);
 	musicVolumeSlider->setValue(1.0f);
 	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
-
+	UIButton* musicVolumeHandle = static_cast<UIButton*>(musicVolumeSlider->getObject(2));
+	musicVolumeHandle->setTexture("../Resource/Texture/UI/SliderHandle.png");
 	slidersList.push_back(musicVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
@@ -148,8 +164,8 @@ void LevelMainMenu::levelInit() {
 	musicVolumeText->setText("Music Volume");
 	musicVolumeText->setAlpha(1.0f);
 	musicVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	musicVolumeText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
-	musicVolumeText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	musicVolumeText->getTransform().setPosition(glm::vec3(-3.65f, 0.65f + audioSettingsOffsetY, 0.0f));
+	musicVolumeText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
 	musicVolumeText->addColliderComponent();
 	musicVolumeText->setMenuState(MenuState::AUDIO);
 	/*musicVolumeText->setDrawCollider(true);
@@ -158,8 +174,8 @@ void LevelMainMenu::levelInit() {
 
 	UIButton* musicVolumeButton = new UIButton("Music Volume Button");
 	//musicVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	musicVolumeButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
-	musicVolumeButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	musicVolumeButton->getTransform().setPosition(glm::vec3(-4.55f, 0.9f + audioSettingsOffsetY, 0.0f));
+	musicVolumeButton->getTransform().setScale(glm::vec3(2.3f, 0.35f, 0.0f));
 	musicVolumeButton->addColliderComponent();
 	musicVolumeButton->setDrawCollider(true);
 	musicVolumeButton->setCanDrawColliderNew(true);
@@ -174,23 +190,407 @@ void LevelMainMenu::levelInit() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
+	//										Effect Volume Slider
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SliderObject* effectVolumeSlider = new SliderObject("Effect Volume Slider");
+	effectVolumeSlider->setPosition(glm::vec3(-1.0f, -1.25f + audioSettingsOffsetY, 1.0f), -1);
+	effectVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 1);
+	effectVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 0);
+	effectVolumeSlider->setScale(glm::vec3(0.35f, 0.35f, 1.0f), 2);
+	effectVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
+	effectVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
+	effectVolumeSlider->setMenuState(MenuState::AUDIO);
+	effectVolumeSlider->setValue(1.0f);
+	for (DrawableObject* obj : effectVolumeSlider->getObjectsList()) {
+		objectsList.push_back(obj);
+	}
+	UIButton* effectVolumeHandle = static_cast<UIButton*>(effectVolumeSlider->getObject(2));
+	effectVolumeHandle->setTexture("../Resource/Texture/UI/SliderHandle.png");
+	slidersList.push_back(effectVolumeSlider);
+	buttonsList.push_back(static_cast<UIButton*>(effectVolumeSlider->getObject(2)));
+	audioButtons.push_back(static_cast<UIButton*>(effectVolumeSlider->getObject(2)));
+
+	//////////////////////////////////////
+
+	UIText* effectVolumeText = new UIText("Effect Volume Text");
+	SDL_Color effectVolumeTextColor = { 255,255,255,255 };
+	effectVolumeText->loadText("Effect Volume", effectVolumeTextColor, 100);
+	effectVolumeText->setText("Effect Volume");
+	effectVolumeText->setAlpha(1.0f);
+	effectVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	effectVolumeText->getTransform().setPosition(glm::vec3(-3.65f, -0.8f + audioSettingsOffsetY, 0.0f));
+	effectVolumeText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	effectVolumeText->addColliderComponent();
+	effectVolumeText->setMenuState(MenuState::AUDIO);
+	/*effectVolumeText->setDrawCollider(true);
+	effectVolumeText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(effectVolumeText);
+
+	UIButton* effectVolumeButton = new UIButton("Effect Volume Button");
+	//effectVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	effectVolumeButton->getTransform().setPosition(glm::vec3(-4.6f, -0.55f + audioSettingsOffsetY, 0.0f));
+	effectVolumeButton->getTransform().setScale(glm::vec3(2.15f, 0.35f, 0.0f));
+	effectVolumeButton->addColliderComponent();
+	effectVolumeButton->setDrawCollider(true);
+	effectVolumeButton->setCanDrawColliderNew(true);
+	effectVolumeButton->setDraw(false);
+	effectVolumeButton->setLabel(effectVolumeText); // Link continueText
+	effectVolumeButton->setMenuState(MenuState::AUDIO);
+	effectVolumeButton->setSlider(effectVolumeSlider);
+	objectsList.push_back(effectVolumeButton);
+	buttonsList.push_back(effectVolumeButton);
+
+	audioButtons.push_back(effectVolumeButton);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Ambient Volume Slider
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	SliderObject* ambientVolumeSlider = new SliderObject("Ambient Volume Slider");
+	ambientVolumeSlider->setPosition(glm::vec3(-1.0f, -2.68f + audioSettingsOffsetY, 1.0f), -1);
+	ambientVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 1);
+	ambientVolumeSlider->setScale(glm::vec3(10.0f, 0.2f, 1.0f), 0);
+	ambientVolumeSlider->setScale(glm::vec3(0.35f, 0.35f, 1.0f), 2);
+	ambientVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
+	ambientVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
+	ambientVolumeSlider->setMenuState(MenuState::AUDIO);
+	ambientVolumeSlider->setValue(1.0f);
+	for (DrawableObject* obj : ambientVolumeSlider->getObjectsList()) {
+		objectsList.push_back(obj);
+	}
+	UIButton* ambientVolumeHandle = static_cast<UIButton*>(ambientVolumeSlider->getObject(2));
+	ambientVolumeHandle->setTexture("../Resource/Texture/UI/SliderHandle.png");
+	slidersList.push_back(ambientVolumeSlider);
+	buttonsList.push_back(static_cast<UIButton*>(ambientVolumeSlider->getObject(2)));
+	audioButtons.push_back(static_cast<UIButton*>(ambientVolumeSlider->getObject(2)));
+
+	//////////////////////////////////////
+
+	UIText* ambientVolumeText = new UIText("Ambient Volume Text");
+	SDL_Color ambientVolumeTextColor = { 255,255,255,255 };
+	ambientVolumeText->loadText("Ambient Volume", ambientVolumeTextColor, 100);
+	ambientVolumeText->setText("Ambient Volume");
+	ambientVolumeText->setAlpha(1.0f);
+	ambientVolumeText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	ambientVolumeText->getTransform().setPosition(glm::vec3(-3.65f, -2.25f + audioSettingsOffsetY, 0.0f));
+	ambientVolumeText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	ambientVolumeText->addColliderComponent();
+	ambientVolumeText->setMenuState(MenuState::AUDIO);
+	/*ambientVolumeText->setDrawCollider(true);
+	ambientVolumeText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(ambientVolumeText);
+
+	UIButton* ambientVolumeButton = new UIButton("Ambient Volume Button");
+	//ambientVolumeButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	ambientVolumeButton->getTransform().setPosition(glm::vec3(-4.35f, -2.0f + audioSettingsOffsetY, 0.0f));
+	ambientVolumeButton->getTransform().setScale(glm::vec3(2.65f, 0.35f, 0.0f));
+	ambientVolumeButton->addColliderComponent();
+	ambientVolumeButton->setDrawCollider(true);
+	ambientVolumeButton->setCanDrawColliderNew(true);
+	ambientVolumeButton->setDraw(false);
+	ambientVolumeButton->setLabel(ambientVolumeText); // Link continueText
+	ambientVolumeButton->setMenuState(MenuState::AUDIO);
+	ambientVolumeButton->setSlider(ambientVolumeSlider);
+	objectsList.push_back(ambientVolumeButton);
+	buttonsList.push_back(ambientVolumeButton);
+
+	audioButtons.push_back(ambientVolumeButton);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
 	//										Texts
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	UIText* staticSettingsText = new UIText("Static Settings Text");
 	SDL_Color staticSettingsTextColor = { 255,255,255,255 };
-	staticSettingsText->loadText("SETTINGS", staticSettingsTextColor, 100);
+	staticSettingsText->loadText("SETTINGS", staticSettingsTextColor, 100, true);
 	staticSettingsText->setText("SETTINGS");
 	staticSettingsText->setAlpha(1.0f);
 	staticSettingsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticSettingsText->getTransform().setPosition(glm::vec3(0.1f, 3.6f, 0.0f));
+	staticSettingsText->getTransform().setPosition(glm::vec3(0.05f, 3.6f, 0.0f));
 	staticSettingsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	staticSettingsText->addColliderComponent();
 	staticSettingsText->setMenuState(MenuState::OPTIONS);
 	/*staticSettingsText->setDrawCollider(true);
 	staticSettingsText->setCanDrawColliderNew(true);*/
 	objectsList.push_back(staticSettingsText);
+
+	UIText* staticAudioText = new UIText("Static Audio Text");
+	SDL_Color staticAudioTextColor = { 255,255,255,255 };
+	staticAudioText->loadText("AUDIO", staticAudioTextColor, 100, true);
+	staticAudioText->setText("AUDIO");
+	staticAudioText->setAlpha(1.0f);
+	staticAudioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	staticAudioText->getTransform().setPosition(glm::vec3(0.29f, 3.6f, 0.0f));
+	staticAudioText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	staticAudioText->addColliderComponent();
+	staticAudioText->setMenuState(MenuState::AUDIO);
+	/*staticAudioText->setDrawCollider(true);
+	staticAudioText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(staticAudioText);
+
+	UIText* staticCreditsText = new UIText("Static Credits Text");
+	SDL_Color staticCreditsTextColor = { 255,255,255,255 };
+	staticCreditsText->loadText("CREDITS", staticCreditsTextColor, 100, true);
+	staticCreditsText->setText("CREDITS");
+	staticCreditsText->setAlpha(1.0f);
+	staticCreditsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	staticCreditsText->getTransform().setPosition(glm::vec3(0.15f, 3.6f, 0.0f));
+	staticCreditsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	staticCreditsText->addColliderComponent();
+	staticCreditsText->setMenuState(MenuState::CREDITS);
+	/*staticCreditsText->setDrawCollider(true);
+	staticCreditsText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(staticCreditsText);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Credits Texts
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	UIText* studioText = new UIText("Studio Text");
+	SDL_Color studioTextColor = { 255,255,255,255 };
+	studioText->loadText("BLEND 285 STUDIOS", studioTextColor, 100, true);
+	studioText->setText("BLEND 285 STUDIOS");
+	studioText->setAlpha(1.0f);
+	studioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	studioText->getTransform().setPosition(glm::vec3(0.175f, 2.65f, 0.0f));
+	studioText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	studioText->addColliderComponent();
+	studioText->setMenuState(MenuState::CREDITS);
+	/*studioText->setDrawCollider(true);
+	studioText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(studioText);
+
+	UIText* gameDirectorText = new UIText("Game Director Text");
+	SDL_Color gameDirectorTextColor = { 200,200,200,255 };
+	gameDirectorText->loadText("Game Director", gameDirectorTextColor, 100);
+	gameDirectorText->setText("Game Director");
+	gameDirectorText->setAlpha(1.0f);
+	gameDirectorText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	gameDirectorText->getTransform().setPosition(glm::vec3(-0.8f, 2.1f, 0.0f));
+	gameDirectorText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	gameDirectorText->addColliderComponent();
+	gameDirectorText->setMenuState(MenuState::CREDITS);
+	/*gameDirectorText->setDrawCollider(true);
+	gameDirectorText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(gameDirectorText);
+
+	UIText* productionDirectorText = new UIText("Production Director Text");
+	SDL_Color productionDirectorTextColor = { 200,200,200,255 };
+	productionDirectorText->loadText("Production Director", productionDirectorTextColor, 100);
+	productionDirectorText->setText("Production Director");
+	productionDirectorText->setAlpha(1.0f);
+	productionDirectorText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	productionDirectorText->getTransform().setPosition(glm::vec3(-1.65f, 1.4f, 0.0f));
+	productionDirectorText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	productionDirectorText->addColliderComponent();
+	productionDirectorText->setMenuState(MenuState::CREDITS);
+	/*productionDirectorText->setDrawCollider(true);
+	productionDirectorText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(productionDirectorText);
+
+	UIText* artDirectorText = new UIText("Art Director Text");
+	SDL_Color artDirectorTextColor = { 200,200,200,255 };
+	artDirectorText->loadText("Art Director", artDirectorTextColor, 100);
+	artDirectorText->setText("Art Director");
+	artDirectorText->setAlpha(1.0f);
+	artDirectorText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	artDirectorText->getTransform().setPosition(glm::vec3(-1.45f, 0.7f, 0.0f));
+	artDirectorText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	artDirectorText->addColliderComponent();
+	artDirectorText->setMenuState(MenuState::CREDITS);
+	/*artDirectorText->setDrawCollider(true);
+	artDirectorText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(artDirectorText);
+
+	UIText* designersText = new UIText("Designers Text");
+	SDL_Color designersTextColor = { 200,200,200,255 };
+	designersText->loadText("Designers", designersTextColor, 100);
+	designersText->setText("Designers");
+	designersText->setAlpha(1.0f);
+	designersText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	designersText->getTransform().setPosition(glm::vec3(-1.0f, 0.0f, 0.0f));
+	designersText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	designersText->addColliderComponent();
+	designersText->setMenuState(MenuState::CREDITS);
+	/*designersText->setDrawCollider(true);
+	designersText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(designersText);
+
+	UIText* artistsText = new UIText("Artists Text");
+	SDL_Color artistsTextColor = { 200,200,200,255 };
+	artistsText->loadText("Artists", artistsTextColor, 100);
+	artistsText->setText("Artists");
+	artistsText->setAlpha(1.0f);
+	artistsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	artistsText->getTransform().setPosition(glm::vec3(-1.05f, -1.1f, 0.0f));
+	artistsText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
+	artistsText->addColliderComponent();
+	artistsText->setMenuState(MenuState::CREDITS);
+	/*artistsText->setDrawCollider(true);
+	artistsText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(artistsText);
+
+	UIText* programmersText = new UIText("Programmers Text");
+	SDL_Color programmersTextColor = { 200,200,200,255 };
+	programmersText->loadText("Programmers", programmersTextColor, 100);
+	programmersText->setText("Programmers");
+	programmersText->setAlpha(1.0f);
+	programmersText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	programmersText->getTransform().setPosition(glm::vec3(-0.55f, -2.6f, 0.0f));
+	programmersText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	programmersText->addColliderComponent();
+	programmersText->setMenuState(MenuState::CREDITS);
+	/*programmersText->setDrawCollider(true);
+	programmersText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(programmersText);
+
+	UIText* putawan1Text = new UIText("putawan1 Text");
+	SDL_Color putawan1TextColor = { 255,255,255,255 };
+	putawan1Text->loadText("Putawan Bunnate", putawan1TextColor, 100);
+	putawan1Text->setText("Putawan Bunnate");
+	putawan1Text->setAlpha(1.0f);
+	putawan1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	putawan1Text->getTransform().setPosition(glm::vec3(2.5f, 2.1f, 0.0f));
+	putawan1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	putawan1Text->addColliderComponent();
+	putawan1Text->setMenuState(MenuState::CREDITS);
+	/*putawan1Text->setDrawCollider(true);
+	putawan1Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(putawan1Text);
+
+	UIText* karanyaphat1Text = new UIText("karanyaphat1 Text");
+	SDL_Color karanyaphat1TextColor = { 255,255,255,255 };
+	karanyaphat1Text->loadText("Karanyaphat Phuphong", karanyaphat1TextColor, 100);
+	karanyaphat1Text->setText("Karanyaphat Phuphong");
+	karanyaphat1Text->setAlpha(1.0f);
+	karanyaphat1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	karanyaphat1Text->getTransform().setPosition(glm::vec3(2.5f, 1.4f, 0.0f));
+	karanyaphat1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	karanyaphat1Text->addColliderComponent();
+	karanyaphat1Text->setMenuState(MenuState::CREDITS);
+	/*karanyaphat1Text->setDrawCollider(true);
+	karanyaphat1Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(karanyaphat1Text);
+
+	UIText* pasipong1Text = new UIText("pasipong1 Text");
+	SDL_Color pasipong1TextColor = { 255,255,255,255 };
+	pasipong1Text->loadText("Pasipong Sirithanikawet", pasipong1TextColor, 100);
+	pasipong1Text->setText("Pasipong Sirithanikawet");
+	pasipong1Text->setAlpha(1.0f);
+	pasipong1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	pasipong1Text->getTransform().setPosition(glm::vec3(2.5f, 0.7f, 0.0f));
+	pasipong1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	pasipong1Text->addColliderComponent();
+	pasipong1Text->setMenuState(MenuState::CREDITS);
+	/*pasipong1Text->setDrawCollider(true);
+	pasipong1Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(pasipong1Text);
+
+	UIText* napas1Text = new UIText("napas1 Text");
+	SDL_Color napas1TextColor = { 255,255,255,255 };
+	napas1Text->loadText("Napas Rakkarnpatch", napas1TextColor, 100);
+	napas1Text->setText("Napas Rakkarnpatch");
+	napas1Text->setAlpha(1.0f);
+	napas1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	napas1Text->getTransform().setPosition(glm::vec3(2.5f, 0.0f, 0.0f));
+	napas1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	napas1Text->addColliderComponent();
+	napas1Text->setMenuState(MenuState::CREDITS);
+	/*napas1Text->setDrawCollider(true);
+	napas1Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(napas1Text);
+
+	UIText* putawan2Text = new UIText("putawan2 Text");
+	SDL_Color putawan2TextColor = { 255,255,255,255 };
+	putawan2Text->setText("Putawan Bunnate");
+	putawan2Text->loadText("Putawan Bunnate", putawan2TextColor, 100);
+	putawan2Text->setAlpha(1.0f);
+	putawan2Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	putawan2Text->getTransform().setPosition(glm::vec3(2.5f, -0.4f, 0.0f));
+	putawan2Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	putawan2Text->addColliderComponent();
+	putawan2Text->setMenuState(MenuState::CREDITS);
+	/*putawan2Text->setDrawCollider(true);
+	putawan2Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(putawan2Text);
+
+	UIText* akkarawin1Text = new UIText("akkarawin1 Text");
+	SDL_Color akkarawin1TextColor = { 255,255,255,255 };
+	akkarawin1Text->setText("Akkarawin Charoenwitworakul");
+	akkarawin1Text->loadText("Akkarawin Charoenwitworakul", akkarawin1TextColor, 100);
+	akkarawin1Text->setAlpha(1.0f);
+	akkarawin1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	akkarawin1Text->getTransform().setPosition(glm::vec3(4.5f, -1.1f, 0.0f));
+	akkarawin1Text->getTransform().setScale(glm::vec3(8.0f, 1.0f, 0.0f));
+	akkarawin1Text->addColliderComponent();
+	akkarawin1Text->setMenuState(MenuState::CREDITS);
+	/*putawan2Text->setDrawCollider(true);
+	putawan2Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(akkarawin1Text);
+
+	UIText* nathadech1Text = new UIText("nathadech1 Text");
+	SDL_Color nathadech1TextColor = { 255,255,255,255 };
+	nathadech1Text->setText("Nathadech Koboonchuay");
+	nathadech1Text->loadText("Nathadech Koboonchuay", nathadech1TextColor, 100);
+	nathadech1Text->setAlpha(1.0f);
+	nathadech1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	nathadech1Text->getTransform().setPosition(glm::vec3(2.5f, -1.5f, 0.0f));
+	nathadech1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	nathadech1Text->addColliderComponent();
+	nathadech1Text->setMenuState(MenuState::CREDITS);
+	/*nathadech1Text->setDrawCollider(true);
+	nathadech1Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(nathadech1Text);
+
+	UIText* pasipong2Text = new UIText("pasipong2 Text");
+	SDL_Color pasipong2TextColor = { 255,255,255,255 };
+	pasipong2Text->setText("Pasipong Sirithanikawet");
+	pasipong2Text->loadText("Pasipong Sirithanikawet", pasipong2TextColor, 100);
+	pasipong2Text->setAlpha(1.0f);
+	pasipong2Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	pasipong2Text->getTransform().setPosition(glm::vec3(2.5f, -1.9f, 0.0f));
+	pasipong2Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	pasipong2Text->addColliderComponent();
+	pasipong2Text->setMenuState(MenuState::CREDITS);
+	/*pasipong2Text->setDrawCollider(true);
+	pasipong2Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(pasipong2Text);
+
+	UIText* karanyaphat2Text = new UIText("karanyaphat2 Text");
+	SDL_Color karanyaphat2TextColor = { 255,255,255,255 };
+	karanyaphat2Text->setText("Karanyaphat Phuphong");
+	karanyaphat2Text->loadText("Karanyaphat Phuphong", karanyaphat2TextColor, 100);
+	karanyaphat2Text->setAlpha(1.0f);
+	karanyaphat2Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	karanyaphat2Text->getTransform().setPosition(glm::vec3(2.5f, -2.6f, 0.0f));
+	karanyaphat2Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	karanyaphat2Text->addColliderComponent();
+	karanyaphat2Text->setMenuState(MenuState::CREDITS);
+	/*karanyaphat2Text->setDrawCollider(true);
+	karanyaphat2Text->setCanDrawColliderNew(true);*/
+	objectsList.push_back(karanyaphat2Text);
+
+	UIText* sarun1Text = new UIText("sarun1 Text");
+	SDL_Color sarun1TextColor = { 255,255,255,255 };
+	sarun1Text->setText("Sarun Pachiyanukoon");
+	sarun1Text->loadText("Sarun Pachiyanukoon", sarun1TextColor, 100);
+	sarun1Text->setAlpha(1.0f);
+	sarun1Text->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	sarun1Text->getTransform().setPosition(glm::vec3(2.5f, -3.0f, 0.0f));
+	sarun1Text->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	sarun1Text->addColliderComponent();
+	sarun1Text->setMenuState(MenuState::CREDITS);
+	/*sarun1Text->setDrawCollider(true);
+	pasipong2sarun1TextText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(sarun1Text);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -332,6 +732,7 @@ void LevelMainMenu::levelInit() {
 	creditsButton->setDraw(false);
 	creditsButton->setLabel(creditsText); // Link playText
 	creditsButton->setMenuState(MenuState::MAIN);
+	creditsButton->setFunction([this]() { changeMenuState(MenuState::CREDITS);});
 	objectsList.push_back(creditsButton);
 	buttonsList.push_back(creditsButton);
 
@@ -444,6 +845,41 @@ void LevelMainMenu::levelInit() {
 
 	optionsButtons.push_back(controllerButton);
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Keyboard Button (Settings)
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	UIText* keyboardText = new UIText("Keyboard Text");
+	SDL_Color keyboardTextColor = { 255,255,255,255 };
+	keyboardText->loadText("Keyboard", keyboardTextColor, 100);
+	keyboardText->setText("Keyboard");
+	keyboardText->setAlpha(1.0f);
+	keyboardText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	keyboardText->getTransform().setPosition(glm::vec3(-5.0f, 0.85f, 0.0f));
+	keyboardText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	keyboardText->addColliderComponent();
+	keyboardText->setMenuState(MenuState::OPTIONS);
+	/*keyboardText->setDrawCollider(true);
+	keyboardText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(keyboardText);
+
+	UIButton* keyboardButton = new UIButton("Keyboard Button");
+	//keyboardButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	keyboardButton->getTransform().setPosition(glm::vec3(-5.25f, 1.1f, 0.0f));
+	keyboardButton->getTransform().setScale(glm::vec3(1.5f, 0.35f, 0.0f));
+	keyboardButton->addColliderComponent();
+	keyboardButton->setDrawCollider(true);
+	keyboardButton->setCanDrawColliderNew(true);
+	keyboardButton->setDraw(false);
+	keyboardButton->setLabel(keyboardText); // Link playText
+	keyboardButton->setMenuState(MenuState::OPTIONS);
+	objectsList.push_back(keyboardButton);
+	buttonsList.push_back(keyboardButton);
+
+	optionsButtons.push_back(keyboardButton);
+
 
 	isHolding = false;
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
@@ -475,8 +911,11 @@ void LevelMainMenu::levelUpdate() {
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
 		break;
-	case MenuState::CONTROLS:
-		currentList = &controlsButtons;
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		break;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
@@ -647,7 +1086,11 @@ void LevelMainMenu::levelFree() {
 		button = nullptr;
 	}
 
-	for (UIButton*& button : controlsButtons) {
+	for (UIButton*& button : controllerButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : keyboardButtons) {
 		button = nullptr;
 	}
 
@@ -660,7 +1103,8 @@ void LevelMainMenu::levelFree() {
 	mainButtons.clear();
 	optionsButtons.clear();
 	audioButtons.clear();
-	controlsButtons.clear();
+	controllerButtons.clear();
+	keyboardButtons.clear();
 	creditsButton.clear();
 }
 
@@ -687,8 +1131,11 @@ void LevelMainMenu::handleKey(char key) {
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
 		break;
-	case MenuState::CONTROLS:
-		currentList = &controlsButtons;
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		break;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
@@ -809,6 +1256,16 @@ void LevelMainMenu::handleKey(char key) {
 		else if (currentMenuState == AUDIO) {
 			changeMenuState(MenuState::OPTIONS);
 		}
+		else if (currentMenuState == CONTROLLER) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == KEYBOARD) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == CREDITS) {
+			changeMenuState(MenuState::MAIN);
+		}
+		break;
 	case 'S':
 		/*if (selectedButton && selectedButton->getMouseOver()) {
 			selectedButton->OnClick();
@@ -870,12 +1327,27 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 		break;
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
+		if (type == 1) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		break;   
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		if (type == 1) {
+			changeMenuState(MenuState::OPTIONS);
+		}
 		break;
-	case MenuState::CONTROLS:
-		currentList = &controlsButtons;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
+		if (type == 1) {
+			changeMenuState(MenuState::OPTIONS);
+		}
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
+		if (type == 1) {
+			changeMenuState(MenuState::MAIN);
+		}
 		break;
 	default:
 		return;
@@ -983,8 +1455,11 @@ void LevelMainMenu::changeSelection(int direction) {
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
 		break;
-	case MenuState::CONTROLS:
-		currentList = &controlsButtons;
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		break;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;

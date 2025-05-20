@@ -16,7 +16,8 @@ enum MenuState {
 	MAIN,
 	OPTIONS,
 	AUDIO,
-	CONTROLS,
+	CONTROLLER,
+	KEYBOARD,
 	CREDITS,
 };
 
