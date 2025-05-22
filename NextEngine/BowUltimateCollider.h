@@ -17,6 +17,9 @@ class BowUltimateCollider : public PlayerAttackCollider {
 
 	float timeEnabled = 0.0f;
 	float timeLimit = 3.0f;
+	float hitCooldown = 0.083f * 3;
+
+	glm::vec3 defaultPosition = { 0.0f,0.0f,0.0f };
 
 public:
 	BowUltimateCollider() {
@@ -47,14 +50,16 @@ public:
 
 			//cout << "timeElapsed " << timeElapsed << " timeEnabled: " << timeEnabled << endl;
 
-			if (timeElapsed >= 1.0f) {
+			if (timeElapsed >= hitCooldown) {
 				resetHit();
 			}
 
 			if (timeEnabled >= timeLimit) {
 				isEnable = false;
+				timeElapsed = 0.0f;
 				timeEnabled = 0.0f;
 				setDrawCollider(false);
+				setDraw(false);
 				getColliderComponent()->setEnableCollision(false);
 			}
 		}
@@ -113,7 +118,7 @@ public:
 
 	void resetHit() {
 		hasHit = false;
-		timeElapsed = 0.0f;
+		timeElapsed -= hitCooldown;
 	}
 
 	void setPlayer(Player* p) {
@@ -122,5 +127,13 @@ public:
 
 	void setEnable(bool value) {
 		isEnable = value;
+	}
+
+	void setTimeLimit(float value) {
+		timeLimit = value;
+	}
+
+	void setHitCooldown(float value) {
+		hitCooldown = value;
 	}
 };

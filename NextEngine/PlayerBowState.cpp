@@ -11,7 +11,7 @@ PlayerBigBowUlt* PlayerBigBowUlt::instance = nullptr;
 //Bow Light Attack
 void PlayerLightBowAttack::enter(Player* player) {
     cout << "Player enters Bow Light Attack state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_lightAttack_bow.png", 1, 8, 0); //set new texture ("path", row, column)
+    player->setTexture("../Resource/Texture/Dante/DanteBow/dante_lightAttack_bow.png", 1, 7, 0); //set new texture ("path", row, column)
     player->getAnimationComponent()->setState("lightAttackBow");
     currentPhase = STARTUP; //reset back to startup
     time = 0.0f;
@@ -153,12 +153,15 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
             attackCollider->resetHit();
             attackCollider->setEnable(true);
             if (player->getFacingRight()) {
-                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                attackCollider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
             }
             else {
-                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                attackCollider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
             }
-
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_effect.png", 1, 11, 0);
+            attackCollider->getAnimationComponent()->setState("smallUlt");
+            attackCollider->setDraw(true);
+            collider->setCanDrawColliderNew(true);
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
             //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here
@@ -221,12 +224,17 @@ void PlayerBigBowUlt::update(Player* player, float dt_) {
             attackCollider->resetHit();
             attackCollider->setEnable(true);
             if (player->getFacingRight()) {
-                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                attackCollider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                cout << "Right: Player Pos " << player->getTransform().getPosition().x << " xOffset: " << attackCollider->getXOffset() << " Total: " << player->getTransform().getPosition().x + attackCollider->getXOffset() << endl;
             }
             else {
-                collider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                attackCollider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x - attackCollider->getXOffset(), collider->getTransform().getPosition().y, collider->getTransform().getPosition().z));
+                cout << "Left: Player Pos " << player->getTransform().getPosition().x << " xOffset: " << attackCollider->getXOffset() << " Total: " << player->getTransform().getPosition().x - attackCollider->getXOffset() << endl;
             }
-
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_effect.png", 1, 15, 0);
+            attackCollider->getAnimationComponent()->setState("bigUlt");
+            attackCollider->setDraw(true);
+            collider->setCanDrawColliderNew(true);
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
             //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here

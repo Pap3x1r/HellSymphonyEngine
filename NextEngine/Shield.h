@@ -55,23 +55,31 @@ public:
 		chainAttackList.push_back(attack2);
 
 		PlayerAttackCollider* attack3 = new PlayerAttackCollider(100, 0);
+		attack3->initAnimation(0, 0);
+		attack3->getAnimationComponent()->addState("explosion", 0, 10);
+		attack3->getAnimationComponent()->setLoop(false);
 		attack3->setName("SmallUlt");
 		attack3->setDraw(false);
+		attack3->getTransform().setScale(glm::vec3(5.0f, 5.0f, 5.0f));
 		attack3->addColliderComponent();
 		attack3->getColliderComponent()->setTrigger(true);
 		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack3->getColliderComponent()->setDimension(3.0f, 3.0f); //Set collider dimension
+		attack3->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
 		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack3->setDrawCollider(false);
 		chainAttackList.push_back(attack3);
 
 		PlayerAttackCollider* attack4 = new PlayerAttackCollider(200, 0);
+		attack4->initAnimation(0, 0);
+		attack4->getAnimationComponent()->addState("explosion", 0, 12);
+		attack4->getAnimationComponent()->setLoop(false);
 		attack4->setName("BigUlt");
 		attack4->setDraw(false);
+		attack4->getTransform().setScale(glm::vec3(7.5f, 7.5f, 7.5f));
 		attack4->addColliderComponent();
 		attack4->getColliderComponent()->setTrigger(true);
 		attack4->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack4->getColliderComponent()->setDimension(3.0f, 3.0f); //Set collider dimension
+		attack4->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
 		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 		attack4->setDrawCollider(false);
 		chainAttackList.push_back(attack4);
@@ -94,6 +102,18 @@ public:
 			}
 			else {
 				obj->setCanDrawColliderNew(true);
+			}
+
+			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+
+			if (!col) {
+				return;
+			}
+
+			if (col->getCanDraw()) {
+				if (!col->getAnimationComponent()->getAnimationCompleted()) {
+					return;
+				}
 			}
 
 			if (obj->getName() == "Attack1") {

@@ -38,7 +38,7 @@ void LevelBossTest::levelInit() {
 	player->getTransform().setPosition(glm::vec3(-5.0,-0.8f,0.0f));
 	objectsList.push_back(player->getGroundChecker());
 
-	player->setWeaponType(Sword_);
+	player->setWeaponType(Bow_);
 	player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 
 	playerTimeScale = 1.0f;
@@ -135,23 +135,23 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
 	
-	UIText* testText = new UIText("Test Text");
-	SDL_Color color = { 255,255,255,255 };
-	testText->loadText("Hello", color, 100);
-	testText->setText("I AM The best");
-	testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
-	objectsList.push_back(testText);
+	//UIText* testText = new UIText("Test Text");
+	//SDL_Color color = { 255,255,255,255 };
+	//testText->loadText("Hello", color, 100);
+	//testText->setText("I AM The best");
+	//testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
+	//objectsList.push_back(testText);
 
-	UIButton* testButton = new UIButton("Test");
-	testButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	testButton->getTransform().setPosition(glm::vec3(5.5f, 3.5f, 0.0f));
-	testButton->getTransform().setScale(glm::vec3(1.6f * 1.5, 0.9f * 1.5, 0.0f));
-	testButton->addColliderComponent();
-	testButton->setDrawCollider(true);
-	testButton->setCanDrawColliderNew(true);
-	//testButton->SetFunction(resetLevel);
-	objectsList.push_back(testButton);
-	buttonsList.push_back(testButton);
+	//UIButton* testButton = new UIButton("Test");
+	//testButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	//testButton->getTransform().setPosition(glm::vec3(5.5f, 3.5f, 0.0f));
+	//testButton->getTransform().setScale(glm::vec3(1.6f * 1.5, 0.9f * 1.5, 0.0f));
+	//testButton->addColliderComponent();
+	//testButton->setDrawCollider(true);
+	//testButton->setCanDrawColliderNew(true);
+	////testButton->SetFunction(resetLevel);
+	//objectsList.push_back(testButton);
+	//buttonsList.push_back(testButton);
 
 	GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
@@ -267,11 +267,17 @@ void LevelBossTest::levelUpdate() {
 			lightning->getAnimationComponent()->updateCurrentState(dt);
 		}
 
-		BowUltimateCollider* attackCollider = dynamic_cast<BowUltimateCollider*>(obj);
-		if (attackCollider) {
-			attackCollider->update(dt);
+		BowUltimateCollider* bowUltCol = dynamic_cast<BowUltimateCollider*>(obj);
+		if (bowUltCol) {
+			bowUltCol->update(dt);
 		}
 		
+		PlayerAttackCollider* playerAttackCol = dynamic_cast<PlayerAttackCollider*>(obj);
+		if (playerAttackCol) {
+			if (playerAttackCol->isAnimated()) {
+				playerAttackCol->getAnimationComponent()->updateCurrentState(dt);
+			}
+		}
 
 	}
 
@@ -475,6 +481,11 @@ void LevelBossTest::handleKey(char key) {
 		ziz->interruptDeath();
 		break;
 	case 'q':
+
+		if (!player->getIsGrounded()) {
+			return;
+		}
+
 		if (player->getWeaponType() == Bow_) {
 			//cout << "works" << endl;
 			if (player->getUltimateSlot() > 0) {

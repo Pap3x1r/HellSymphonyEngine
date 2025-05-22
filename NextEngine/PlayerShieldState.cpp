@@ -149,7 +149,7 @@ void PlayerLightShieldAttack2::exit(Player* player) {
 void PlayerShieldGuard::enter(Player* player) {
     cout << "Player enters Shield Guard state.\n";
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, 0.0f));
-    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_holding_shield.png", 1, 2, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_holding_shield.png", 1, 3, 0);
     player->getAnimationComponent()->setState("holdShield");
     player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
@@ -176,7 +176,7 @@ void PlayerShieldGuard::update(Player* player, float dt_) {
         //do something
         //change phase
 
-        if (time >= 1.0f) {
+        if (time >= 0.5f) {
             time = 0;
             player->getShield()->setIsPerfect(false);
         }
@@ -283,6 +283,7 @@ void PlayerSmallShieldUlt::enter(Player* player) {
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setInChainAttack(true); //Player is in chain attack
+    player->setInvincibleFloat(1.0f);
 }
 
 void PlayerSmallShieldUlt::update(Player* player, float dt_) {
@@ -302,11 +303,15 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true); //Enable once after startup
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteShield/dante_shield_smallUlt_explosion.png", 1, 10, 0);
+            attackCollider->getAnimationComponent()->setState("explosion");
+            attackCollider->setDraw(true);
         }
         break;
     case ACTIVE:
         //do something
         //change phase
+        
 
         if (time >= 0.167f) {
             currentPhase = RECOVERY;
@@ -332,16 +337,18 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
 
 void PlayerSmallShieldUlt::exit(Player* player) {
     cout << "Player exits Shield Small Ult state.\n";
+
 }
 
 //Light Shield Attack 2
 void PlayerBigShieldUlt::enter(Player* player) {
     cout << "Player enters Shield Big Ult state.\n";
-    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 23, 0);
+    player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 24, 0);
     player->getAnimationComponent()->setState("bigUltShield");
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setInChainAttack(true); //Player is in chain attack
+    player->setInvincibleFloat(2.0f);
 }
 
 void PlayerBigShieldUlt::update(Player* player, float dt_) {
@@ -361,6 +368,9 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteShield/dante_shield_bigUlt_explosion.png", 1, 12, 0);
+            attackCollider->getAnimationComponent()->setState("explosion");
+            attackCollider->setDraw(true);
         }
         break;
     case ACTIVE:

@@ -1371,7 +1371,7 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 	}
 
 	if (focusedHandle) {
-		cout << focusedHandle->getName() << endl;
+		//cout << focusedHandle->getName() << endl;
 		if (type == 2) {
 			focusedHandle = nullptr;
 		}
@@ -1381,7 +1381,7 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 			SliderObject* handleSlider = focusedHandle->getSlider();
 
 			if (handleSlider) {
-				cout << "has slider" << endl;
+				//cout << "has slider" << endl;
 			}
 
 			glm::vec2 gamePos = convertMouseToGameSpace(x, y);

@@ -26,6 +26,7 @@ class Animation {
 		int currentFrame;
 		int startingFrame;
 		bool loop = true;
+		bool animationCompleted = false; //For object without loop;
 
 		// Animation
 		unsigned int& texture;
@@ -66,5 +67,9 @@ class Animation {
 		}
 		void setParent(TexturedObject* obj) {
 			parent = obj;
+		}
+
+		bool getAnimationCompleted() const {
+			return animationCompleted;
 		}
 };

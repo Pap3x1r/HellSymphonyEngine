@@ -73,17 +73,17 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	getAnimationComponent()->addState("dashShield", 0, 1);
 	getAnimationComponent()->addState("lightAttack1Shield", 0, 16);
 	getAnimationComponent()->addState("lightAttack2Shield", 0, 11);
-	getAnimationComponent()->addState("holdShield", 0, 2);
+	getAnimationComponent()->addState("holdShield", 0, 3);
 	getAnimationComponent()->addState("offShield", 0, 3);
 	getAnimationComponent()->addState("smallUltShield", 0, 11);
-	getAnimationComponent()->addState("bigUltShield", 0, 23);
+	getAnimationComponent()->addState("bigUltShield", 0, 24);
 	//Bow States
 	getAnimationComponent()->addState("idleBow", 0, 8);
 	getAnimationComponent()->addState("walkingBow", 0, 8);
 	getAnimationComponent()->addState("jumpingBow", 0, 1);
 	getAnimationComponent()->addState("fallingBow", 0, 1);
 	getAnimationComponent()->addState("dashBow", 0, 1);
-	getAnimationComponent()->addState("lightAttackBow", 0, 8);
+	getAnimationComponent()->addState("lightAttackBow", 0, 7);
 	getAnimationComponent()->addState("heavyAttackBow", 0, 16);
 	getAnimationComponent()->addState("smallUltBow", 0, 17);
 	getAnimationComponent()->addState("bigUltBow", 0, 18);

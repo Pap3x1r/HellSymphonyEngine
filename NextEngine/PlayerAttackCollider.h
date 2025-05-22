@@ -8,6 +8,7 @@ class PlayerAttackCollider : public TexturedObject {
 	bool hasHit = false;
 	float ultGainPercentage;
 	Player* player;
+	bool lockInPlace = false;
 public:
 	PlayerAttackCollider();
 	PlayerAttackCollider(float damage_);
@@ -20,4 +21,11 @@ public:
 	void onTriggerExit(Collider* collider) override;
 	void resetHit();
 	void setPlayer(Player* p);
+	void setLock(bool v) {
+		lockInPlace = v;
+	}
+
+	bool getLock() const {
+		return lockInPlace;
+	}
 };

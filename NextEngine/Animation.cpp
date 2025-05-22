@@ -82,11 +82,15 @@ void Animation::addState(string name, int row, int frameCount) {
 
 void Animation::setState(string name) {
 	State nextState = states[name];
-	if (nextState.name != currentState.name) {
+	/*if (nextState.name != currentState.name) {
 		currentFrame = startingFrame;
 		animationTimer = 0.0f;
 		setFrame(currentState.row, currentFrame);
-	}
+	}*/
+	currentFrame = startingFrame;
+	animationTimer = 0.0f;
+	animationCompleted = false;
+	setFrame(currentState.row, currentFrame);
 	currentState = states[name];
 }
 
@@ -105,6 +109,7 @@ void Animation::updateCurrentState(float dt) {
 			}
 			else {
 				currentFrame = currentState.frameCount - 1;
+				animationCompleted = true;
 			}
 		}
 
