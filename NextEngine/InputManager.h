@@ -9,6 +9,13 @@
 
 class GameEngine;
 
+enum class InputDevice {
+    NONE,
+    KEYBOARD,
+    MOUSE,
+    CONTROLLER
+};
+
 class InputManager {
 public:
     enum KeyState {
@@ -47,6 +54,9 @@ public:
 
     bool isMovementInputIdle();                 // Is Receiving Input
 
+    void setLastInput(InputDevice device);
+    InputDevice getLastInput() const;
+
 
 private:
     std::unordered_map<SDL_Keycode, KeyState> keyStates;   // Map of key states
@@ -58,6 +68,7 @@ private:
     float leftTrigger;
     float rightTrigger;
     
+    InputDevice lastInput = InputDevice::KEYBOARD;
 };
 
 #endif

@@ -207,6 +207,9 @@ void Player::selfUpdate(float dt_) {
 
 	//cout << "Player (x,y) velocity: (" << getPhysicsComponent()->getVelocity().x << " , " << getPhysicsComponent()->getVelocity().y << ")" << endl;
 
+
+	cout << getColorOverride().x << "," << getColorOverride().y << "," << getColorOverride().z << "," << getColorOverride().a << endl;
+
 	if (time >= 1.50f) {
 		time = 0.0f;
 		//cout << "Current Ultimate Gauge: " << currentUltimateGauge << endl;

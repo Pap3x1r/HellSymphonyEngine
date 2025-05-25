@@ -16,6 +16,7 @@ class TexturedObject : public DrawableObject
 	Animation* animation; // Might use vector in the future to support multiple animation state
 	float hitEffectStrength = 0;
 	float alpha = 1.0f; // Default alpha (visible)
+	glm::vec4 colorOverride = { 1.0f, 1.0f, 1.0f, 1.0f };
 	/*bool animated = false;
 	int rowCount;
 	int colCount;
@@ -39,4 +40,6 @@ public:
 	float getHitEffectStrength();
 	void setAlpha(float value) override;
 	float getAlpha() const override;
+	void setColorOverride(glm::vec4 v4);
+	glm::vec4 getColorOverride() const;
 };

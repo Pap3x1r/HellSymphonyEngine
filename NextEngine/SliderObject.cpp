@@ -17,7 +17,7 @@ SliderObject::SliderObject() {
 	sliderHandle = new UIButton("SliderHandle");
 	sliderHandle->addColliderComponent();
 	sliderHandle->setDrawCollider(true);
-	sliderHandle->setCanDrawColliderNew(true);
+	sliderHandle->setCanDrawColliderNew(false);
 	sliderHandle->setDraw(true);
 	sliderHandle->setHandle(true);
 	//sliderHandle->setMenuState(MenuState::MAIN);
@@ -44,7 +44,7 @@ SliderObject::SliderObject(string name) {
 	sliderHandle = new UIButton("SliderHandle");
 	sliderHandle->addColliderComponent();
 	sliderHandle->setDrawCollider(true);
-	sliderHandle->setCanDrawColliderNew(true);
+	sliderHandle->setCanDrawColliderNew(false);
 	sliderHandle->setDraw(true);
 	sliderHandle->setHandle(true);
 	//sliderHandle->setMenuState(MenuState::MAIN);

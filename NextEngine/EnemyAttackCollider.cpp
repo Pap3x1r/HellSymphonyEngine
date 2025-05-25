@@ -50,6 +50,7 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 					cout << "Player perfect blocked" << endl;
 					player->increaseUltimateGauge(100.0f); //instant fill
 					hasHit = true;
+					player->setColorOverride(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					player->setHitEffectStrength(1.0f);
 				}
 				else { //if blocking but not perfectly
@@ -57,6 +58,7 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 					player->getHealth()->takeDamage(damage, 30);
 					player->increaseUltimateGauge(damage / 2); // increase by withered damage.
 					hasHit = true;
+					player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 					player->setHitEffectStrength(1.0f);
 					
 				}
@@ -66,6 +68,7 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 				player->getHealth()->takeDamage(damage);
 				hasHit = true;
 				player->startShake(0.1f, 0.0025f);
+				player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 				player->setHitEffectStrength(1.0f);
 				if (willKnockBack == true) {
 					if (player->getTransform().getPosition().x < ziz->getTransform().getPosition().x) { //player is left of ziz

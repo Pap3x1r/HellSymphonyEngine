@@ -32,13 +32,13 @@ void LevelMainMenu::levelInit() {
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	TexturedObject* background1 = new TexturedObject("Background");
+	TexturedObject* background1 = new TexturedObject("Background1");
 	background1->setTexture("../Resource/Texture/newMainMenuBG.png");
 	background1->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	background1->setMenuState(MenuState::NONE);
 	objectsList.push_back(background1);
 
-	TexturedObject* background2 = new TexturedObject();
+	TexturedObject* background2 = new TexturedObject("Background2");
 	background2->setTexture("../Resource/Texture/newMainMenuBGOnly.png");
 	background2->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	background2->setMenuState(MenuState::OPTIONS);
@@ -47,6 +47,48 @@ void LevelMainMenu::levelInit() {
 	background2->addMenuStateToVec(MenuState::CONTROLLER);
 	background2->addMenuStateToVec(MenuState::KEYBOARD);
 	objectsList.push_back(background2);
+
+	TexturedObject* background3 = new TexturedObject("Background3");
+	background3->setTexture("../Resource/Texture/MenuController.png");
+	background3->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background3->setMenuState(MenuState::CONTROLLER);
+	objectsList.push_back(background3);
+
+	TexturedObject* background4 = new TexturedObject("Background4");
+	background4->setTexture("../Resource/Texture/MenuMKB.png");
+	background4->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background4->setMenuState(MenuState::KEYBOARD);
+	objectsList.push_back(background4);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Overlays
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* overlayMKB = new TexturedObject();
+	overlayMKB->setTexture("../Resource/Texture/KB_Bundle.png");
+	overlayMKB->getTransform().setPosition(glm::vec3(-4.8f, -4.0f, 1.0f));
+	overlayMKB->getTransform().setScale(glm::vec3(2.382f * 2.2f, 0.277f * 2.2f, 1.0f));
+	overlayMKB->setMenuState(MenuState::NONE);
+	/*overlayMKB->addMenuStateToVec(MenuState::AUDIO);
+	overlayMKB->addMenuStateToVec(MenuState::CREDITS);
+	overlayMKB->addMenuStateToVec(MenuState::CONTROLLER);
+	overlayMKB->addMenuStateToVec(MenuState::KEYBOARD);*/
+	objectsList.push_back(overlayMKB);
+	kbOverlay = overlayMKB;
+
+	TexturedObject* overlayController = new TexturedObject();
+	overlayController->setTexture("../Resource/Texture/Controller_Bundle.png");
+	overlayController->getTransform().setPosition(glm::vec3(-4.8f, -4.0f, 1.0f));
+	overlayController->getTransform().setScale(glm::vec3(2.382f * 2.2f, 0.277f * 2.2f, 1.0f));
+	overlayController->setMenuState(MenuState::NONE);
+	/*overlayController->addMenuStateToVec(MenuState::AUDIO);
+	overlayController->addMenuStateToVec(MenuState::CREDITS);
+	overlayController->addMenuStateToVec(MenuState::CONTROLLER);
+	overlayController->addMenuStateToVec(MenuState::KEYBOARD);*/
+	objectsList.push_back(overlayController);
+	controllerOverlay = overlayController;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -60,8 +102,6 @@ void LevelMainMenu::levelInit() {
 	line1->getTransform().setPosition(glm::vec3(0.0f, 3.3f, 0.0f));
 	line1->setMenuState(MenuState::OPTIONS);
 	line1->addMenuStateToVec(MenuState::AUDIO);
-	line1->addMenuStateToVec(MenuState::CONTROLLER);
-	line1->addMenuStateToVec(MenuState::KEYBOARD);
 	line1->addMenuStateToVec(MenuState::CREDITS);
 	objectsList.push_back(line1);
 
@@ -71,8 +111,6 @@ void LevelMainMenu::levelInit() {
 	line2->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
 	line2->setMenuState(MenuState::OPTIONS);
 	line2->addMenuStateToVec(MenuState::AUDIO);
-	line2->addMenuStateToVec(MenuState::CONTROLLER);
-	line2->addMenuStateToVec(MenuState::KEYBOARD);
 	line2->addMenuStateToVec(MenuState::CREDITS);
 	objectsList.push_back(line2);
 
@@ -121,8 +159,8 @@ void LevelMainMenu::levelInit() {
 	masterVolumeButton->getTransform().setPosition(glm::vec3(-4.5f, 2.35f + audioSettingsOffsetY, 0.0f));
 	masterVolumeButton->getTransform().setScale(glm::vec3(2.35f, 0.35f, 0.0f));
 	masterVolumeButton->addColliderComponent();
-	masterVolumeButton->setDrawCollider(true);
-	masterVolumeButton->setCanDrawColliderNew(true);
+	//masterVolumeButton->setDrawCollider(true);
+	//masterVolumeButton->setCanDrawColliderNew(true);
 	masterVolumeButton->setDraw(false);
 	masterVolumeButton->setLabel(masterVolumeText); // Link continueText
 	masterVolumeButton->setMenuState(MenuState::AUDIO);
@@ -177,8 +215,8 @@ void LevelMainMenu::levelInit() {
 	musicVolumeButton->getTransform().setPosition(glm::vec3(-4.55f, 0.9f + audioSettingsOffsetY, 0.0f));
 	musicVolumeButton->getTransform().setScale(glm::vec3(2.3f, 0.35f, 0.0f));
 	musicVolumeButton->addColliderComponent();
-	musicVolumeButton->setDrawCollider(true);
-	musicVolumeButton->setCanDrawColliderNew(true);
+	//musicVolumeButton->setDrawCollider(true);
+	//musicVolumeButton->setCanDrawColliderNew(true);
 	musicVolumeButton->setDraw(false);
 	musicVolumeButton->setLabel(musicVolumeText); // Link continueText
 	musicVolumeButton->setMenuState(MenuState::AUDIO);
@@ -233,8 +271,8 @@ void LevelMainMenu::levelInit() {
 	effectVolumeButton->getTransform().setPosition(glm::vec3(-4.6f, -0.55f + audioSettingsOffsetY, 0.0f));
 	effectVolumeButton->getTransform().setScale(glm::vec3(2.15f, 0.35f, 0.0f));
 	effectVolumeButton->addColliderComponent();
-	effectVolumeButton->setDrawCollider(true);
-	effectVolumeButton->setCanDrawColliderNew(true);
+	//effectVolumeButton->setDrawCollider(true);
+	//effectVolumeButton->setCanDrawColliderNew(true);
 	effectVolumeButton->setDraw(false);
 	effectVolumeButton->setLabel(effectVolumeText); // Link continueText
 	effectVolumeButton->setMenuState(MenuState::AUDIO);
@@ -289,8 +327,8 @@ void LevelMainMenu::levelInit() {
 	ambientVolumeButton->getTransform().setPosition(glm::vec3(-4.35f, -2.0f + audioSettingsOffsetY, 0.0f));
 	ambientVolumeButton->getTransform().setScale(glm::vec3(2.65f, 0.35f, 0.0f));
 	ambientVolumeButton->addColliderComponent();
-	ambientVolumeButton->setDrawCollider(true);
-	ambientVolumeButton->setCanDrawColliderNew(true);
+	//ambientVolumeButton->setDrawCollider(true);
+	//ambientVolumeButton->setCanDrawColliderNew(true);
 	ambientVolumeButton->setDraw(false);
 	ambientVolumeButton->setLabel(ambientVolumeText); // Link continueText
 	ambientVolumeButton->setMenuState(MenuState::AUDIO);
@@ -618,7 +656,7 @@ void LevelMainMenu::levelInit() {
 	continueButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
 	continueButton->addColliderComponent();
 	continueButton->setDrawCollider(true);
-	continueButton->setCanDrawColliderNew(true);
+	continueButton->setCanDrawColliderNew(false);
 	continueButton->setDraw(false);
 	continueButton->setLabel(continueText); // Link continueText
 	continueButton->setMenuState(MenuState::MAIN);
@@ -653,7 +691,7 @@ void LevelMainMenu::levelInit() {
 	playButton->getTransform().setScale(glm::vec3(1.8f, 0.35f, 0.0f));
 	playButton->addColliderComponent();
 	playButton->setDrawCollider(true);
-	playButton->setCanDrawColliderNew(true);
+	playButton->setCanDrawColliderNew(false);
 	playButton->setDraw(false);
 	playButton->setLabel(playText); // Link playText
 	playButton->setMenuState(MenuState::MAIN);
@@ -692,7 +730,7 @@ void LevelMainMenu::levelInit() {
 	settingsButton->getTransform().setScale(glm::vec3(1.3f, 0.35f, 0.0f));
 	settingsButton->addColliderComponent();
 	settingsButton->setDrawCollider(true);
-	settingsButton->setCanDrawColliderNew(true);
+	settingsButton->setCanDrawColliderNew(false);
 	settingsButton->setDraw(false);
 	settingsButton->setLabel(settingsText); // Link playText
 	settingsButton->setMenuState(MenuState::MAIN);
@@ -728,7 +766,7 @@ void LevelMainMenu::levelInit() {
 	creditsButton->getTransform().setScale(glm::vec3(1.2f, 0.35f, 0.0f));
 	creditsButton->addColliderComponent();
 	creditsButton->setDrawCollider(true);
-	creditsButton->setCanDrawColliderNew(true);
+	creditsButton->setCanDrawColliderNew(false);
 	creditsButton->setDraw(false);
 	creditsButton->setLabel(creditsText); // Link playText
 	creditsButton->setMenuState(MenuState::MAIN);
@@ -764,7 +802,7 @@ void LevelMainMenu::levelInit() {
 	quitButton->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
 	quitButton->addColliderComponent();
 	quitButton->setDrawCollider(true);
-	quitButton->setCanDrawColliderNew(true);
+	quitButton->setCanDrawColliderNew(false);
 	quitButton->setDraw(false);
 	quitButton->setLabel(quitText); // Link playText
 	quitButton->setMenuState(MenuState::MAIN);
@@ -800,7 +838,7 @@ void LevelMainMenu::levelInit() {
 	audioButton->getTransform().setScale(glm::vec3(1.0f, 0.35f, 0.0f));
 	audioButton->addColliderComponent();
 	audioButton->setDrawCollider(true);
-	audioButton->setCanDrawColliderNew(true);
+	audioButton->setCanDrawColliderNew(false);
 	audioButton->setDraw(false);
 	audioButton->setLabel(audioText); // Link playText
 	audioButton->setMenuState(MenuState::OPTIONS);
@@ -836,10 +874,11 @@ void LevelMainMenu::levelInit() {
 	controllerButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
 	controllerButton->addColliderComponent();
 	controllerButton->setDrawCollider(true);
-	controllerButton->setCanDrawColliderNew(true);
+	controllerButton->setCanDrawColliderNew(false);
 	controllerButton->setDraw(false);
 	controllerButton->setLabel(controllerText); // Link playText
 	controllerButton->setMenuState(MenuState::OPTIONS);
+	controllerButton->setFunction([this]() { changeMenuState(MenuState::CONTROLLER);});
 	objectsList.push_back(controllerButton);
 	buttonsList.push_back(controllerButton);
 
@@ -871,10 +910,11 @@ void LevelMainMenu::levelInit() {
 	keyboardButton->getTransform().setScale(glm::vec3(1.5f, 0.35f, 0.0f));
 	keyboardButton->addColliderComponent();
 	keyboardButton->setDrawCollider(true);
-	keyboardButton->setCanDrawColliderNew(true);
+	keyboardButton->setCanDrawColliderNew(false);
 	keyboardButton->setDraw(false);
 	keyboardButton->setLabel(keyboardText); // Link playText
 	keyboardButton->setMenuState(MenuState::OPTIONS);
+	keyboardButton->setFunction([this]() { changeMenuState(MenuState::KEYBOARD);});
 	objectsList.push_back(keyboardButton);
 	buttonsList.push_back(keyboardButton);
 
@@ -1053,6 +1093,20 @@ void LevelMainMenu::levelUpdate() {
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
 	}
+
+	InputManager* inputManager = GameEngine::getInstance()->getInputHandler();
+
+	if (inputManager) {
+		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
+			kbOverlay->setDraw(true);
+			controllerOverlay->setDraw(false);
+		}
+		else {
+			kbOverlay->setDraw(false);
+			controllerOverlay->setDraw(true);
+		}
+	}
+	
 
 	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 

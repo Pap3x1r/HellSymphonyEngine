@@ -76,28 +76,35 @@ void InputManager::updateInput() {
         // Handle keyboard events
         if (event.type == SDL_KEYDOWN && !event.key.repeat) {
             keyStates[event.key.keysym.sym] = KEY_PRESSED;
+            setLastInput(InputDevice::KEYBOARD);
         }
         if (event.type == SDL_KEYUP) {
             keyStates[event.key.keysym.sym] = KEY_RELEASED;
+            setLastInput(InputDevice::KEYBOARD);
         }
 
         // Handle mouse events
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             mouseButtonStates[event.button.button] = KEY_PRESSED;
+            setLastInput(InputDevice::KEYBOARD);
         }
         if (event.type == SDL_MOUSEBUTTONUP) {
             mouseButtonStates[event.button.button] = KEY_RELEASED;
+            setLastInput(InputDevice::KEYBOARD);
         }
 
         // Handle controller events
         if (event.type == SDL_CONTROLLERBUTTONDOWN) {
             buttonStates[event.cbutton.button] = KEY_PRESSED;
+            setLastInput(InputDevice::CONTROLLER);
         }
         if (event.type == SDL_CONTROLLERBUTTONUP) {
             buttonStates[event.cbutton.button] = KEY_RELEASED;
+            setLastInput(InputDevice::CONTROLLER);
         }
 
         if (event.type == SDL_CONTROLLERAXISMOTION) {
+            setLastInput(InputDevice::CONTROLLER);
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
                 analogStick.first = event.caxis.value / 32768.0f; // Capture left stick x-axis
             }
@@ -205,4 +212,12 @@ bool InputManager::isMovementInputIdle() {
         getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_UP) ||
         getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) ||
         (getControllerAnalogStickX() > 0.15) || (getControllerAnalogStickX() < -0.15)   );
+}
+
+void InputManager::setLastInput(InputDevice device) {
+    lastInput = device;
+}
+
+InputDevice InputManager::getLastInput() const {
+    return lastInput;
 }

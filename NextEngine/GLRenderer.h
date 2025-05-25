@@ -29,8 +29,9 @@ protected:
     GLuint scaleXUniformId = -1;
     GLuint scaleYUniformId = -1;
 
-    GLint hitEffectStrengthUniformId = -1;
-    GLint alphaOverrideUniformId = -1;
+    GLuint colorOverrideUniformId = -1;
+    GLuint hitEffectStrengthUniformId = -1;
+    GLuint alphaOverrideUniformId = -1;
 
     GLuint gProgramId;
     int gPos2DLocation;
@@ -73,6 +74,7 @@ public:
     GLuint getScaleXUniformId();
     GLuint getScaleYUniformId();
 
+    GLuint getColorOverrideUniformId();
     GLuint getHitEffectUniformId();
     GLuint getAlphaOverrideUniformId();
 

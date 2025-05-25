@@ -2,7 +2,9 @@
 #include "TexturedObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "Player.h"
 
+class Player;
 
 TexturedObject::TexturedObject() {}
 
@@ -91,6 +93,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 
 	GLuint hitEffectStrengthId = GameEngine::getInstance()->getRenderer()->getHitEffectUniformId();
 	GLuint alphaOverrideId = GameEngine::getInstance()->getRenderer()->getAlphaOverrideUniformId();
+	GLuint colorOverrideId = GameEngine::getInstance()->getRenderer()->getColorOverrideUniformId();
 
 
 	if (modelMatixId == -1) {
@@ -113,7 +116,7 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 	glUniform1f(alphaOverrideId, alpha);
 	glUniform1f(hitEffectStrengthId, hitEffectStrength);
 	glUniform4f(colorUniformId, 1.0f, 1.0f, 1.0f, 1.0f);
-
+	glUniform4f(colorOverrideId, colorOverride.x, colorOverride.y, colorOverride.z, colorOverride.a);
 
 	vector <glm::mat4> matrixStack;
 
@@ -179,4 +182,12 @@ void TexturedObject::setAlpha(float value) {
 
 float TexturedObject::getAlpha() const {
 	return alpha;
+}
+
+void TexturedObject::setColorOverride(glm::vec4 v4) {
+	colorOverride = v4;
+}
+
+glm::vec4 TexturedObject::getColorOverride() const {
+	return colorOverride;
 }

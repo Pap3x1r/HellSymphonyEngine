@@ -32,10 +32,9 @@ private:
 	float timeK = 0;
 	float dt = 0;
 	//UI
-	SimpleObject* playerHealthBar;
-	SimpleObject* playerUltimateBar;
-	SimpleObject* witherHealthBar;
-	SimpleObject* bossHealthBar;
+	
+	TexturedObject* controllerOverlay = nullptr;
+	TexturedObject* kbOverlay = nullptr;
 
 	float playerTimeScale = 1.0f;
 

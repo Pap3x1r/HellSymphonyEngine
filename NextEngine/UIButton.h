@@ -28,13 +28,13 @@ public:
 	
 	UIButton() {
 		setDrawCollider(true);
-		setCanDrawColliderNew(true);
+		setCanDrawColliderNew(false);
 	};
 
 	UIButton(string name) {
 		this->name = name;
 		setDrawCollider(true);
-		setCanDrawColliderNew(true);
+		setCanDrawColliderNew(false);
 	};
 
 	~UIButton() {
