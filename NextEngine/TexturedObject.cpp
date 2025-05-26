@@ -115,10 +115,10 @@ void TexturedObject::render(glm::mat4 globalModelTransform) {
 
 	glUniform1f(alphaOverrideId, alpha);
 	glUniform1f(hitEffectStrengthId, hitEffectStrength);
-	glUniform4f(colorUniformId, 1.0f, 1.0f, 1.0f, 1.0f);
-	glUniform4f(colorOverrideId, colorOverride.x, colorOverride.y, colorOverride.z, colorOverride.a);
+	//glUniform4f(colorUniformId, 1.0f, 1.0f, 1.0f, 1.0f);
+	glUniform4f(colorOverrideId, this->newColor.x, this->newColor.y, this->newColor.z, this->newColor.a);
 
-	vector <glm::mat4> matrixStack;
+	vector <glm::mat4> matrixStack;	
 
 	glm::mat4 currentMatrix = this->getTransformMat4();
 	currentMatrix = glm::translate(currentMatrix, spriteOffset);
@@ -184,10 +184,10 @@ float TexturedObject::getAlpha() const {
 	return alpha;
 }
 
-void TexturedObject::setColorOverride(glm::vec4 v4) {
-	colorOverride = v4;
+void TexturedObject::setNewColor(glm::vec4 v4) {
+	newColor = v4;
 }
 
-glm::vec4 TexturedObject::getColorOverride() const {
-	return colorOverride;
+glm::vec4 TexturedObject::getNewColor() const {
+	return newColor;
 }

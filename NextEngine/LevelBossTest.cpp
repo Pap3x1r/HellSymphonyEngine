@@ -21,6 +21,9 @@ void LevelBossTest::levelLoad() {
 	GameEngine::getInstance()->addMesh(SquareBorderMesh::MESH_NAME, border);
 
 	//cout << "Load Level" << endl;
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz");
 }
 
 void LevelBossTest::levelInit() {
