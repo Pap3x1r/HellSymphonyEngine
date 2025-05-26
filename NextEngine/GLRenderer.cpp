@@ -86,7 +86,7 @@ bool GLRenderer::initialize(string vertexShaderFile, string fragmentShaderFile) 
         return false;
     }
 
-    colorOverrideUniformId = glGetUniformLocation(gProgramId, "colorOverride");
+    colorOverrideUniformId = glGetUniformLocation(gProgramId, "newColor");
     if (colorOverrideUniformId == -1) {
         cout << "colorOverrideUniformId is not a valid GLSL uniform variable" << endl;
         return false;
@@ -478,11 +478,11 @@ GLuint GLRenderer::findTexture(const std::string path) {
     if (it == textureCache.end()) {
         texture = LoadTexture(path);
         textureCache[path] = texture;
-        //cout << path << " is loaded for first time." << endl;
+        cout << path << " is loaded for first time." << endl;
     }
     else {
         texture = it->second;
-        //cout << path << " is found" << endl;
+        cout << path << " is found" << endl;
     }
 
     return texture;

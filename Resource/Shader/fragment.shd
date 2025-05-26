@@ -9,7 +9,7 @@ uniform float scaleY;
 
 uniform float hitEffectStrength;
 uniform float alphaOverride = 1.0;
-uniform vec4 colorOverride = { 1.0f, 1.0f, 1.0f, 1.0f };
+uniform vec4 newColor = vec4(1.0, 0.0, 0.0, 1.0);
 
 
 in vec3 OutColor;
@@ -45,7 +45,7 @@ void main()
 			discard;
 		}
 
-		finalColor = mix(textureColor, colorOverride, hitEffectStrength);
+		finalColor = mix(textureColor, newColor, hitEffectStrength);
 		finalColor = vec4(finalColor.rgb, finalColor.a * alphaOverride);
     }
 }

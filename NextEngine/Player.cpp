@@ -47,7 +47,7 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	//};
 
 	//GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
-	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
+	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
 
 	setTexture("../Resource/Texture/Dante/DanteSword/dante_idle_sword.png");
 	getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
@@ -208,7 +208,7 @@ void Player::selfUpdate(float dt_) {
 	//cout << "Player (x,y) velocity: (" << getPhysicsComponent()->getVelocity().x << " , " << getPhysicsComponent()->getVelocity().y << ")" << endl;
 
 
-	cout << getColorOverride().x << "," << getColorOverride().y << "," << getColorOverride().z << "," << getColorOverride().a << endl;
+	cout << getNewColor().x << "," << getNewColor().y << "," << getNewColor().z << "," << getNewColor().a << endl;
 
 	if (time >= 1.50f) {
 		time = 0.0f;

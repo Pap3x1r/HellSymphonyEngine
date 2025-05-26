@@ -63,14 +63,14 @@ void Gust::onCollisionEnter(Collider* collider) {
             if (player->getShield()->getIsBlocking()) { // is blocking
                 if (player->getShield()->getIsPerfect()) { //is perfectly timed
                     cout << "Player perfect blocked" << endl;
-                    player->setColorOverride(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     player->increaseUltimateGauge(100.0f); //instant fill
                     hasHit = true;
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
-                    player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
@@ -79,7 +79,7 @@ void Gust::onCollisionEnter(Collider* collider) {
             }
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
-                player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                 player->setHitEffectStrength(1.0f);
                 player->getHealth()->takeDamage(damage);
                 hasHit = true;
@@ -105,7 +105,7 @@ void Gust::onCollisionStay(Collider* collider) {
             if (player->getShield()->getIsBlocking()) { // is blocking
                 if (player->getShield()->getIsPerfect()) { //is perfectly timed
                     cout << "Player perfect blocked" << endl;
-                    player->setColorOverride(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     player->increaseUltimateGauge(100.0f); //instant fill
                     hasHit = true;
@@ -113,7 +113,7 @@ void Gust::onCollisionStay(Collider* collider) {
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
                     player->getHealth()->takeDamage(damage, 30);
-                    player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
                     hasHit = true;
@@ -122,7 +122,7 @@ void Gust::onCollisionStay(Collider* collider) {
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
                 player->getHealth()->takeDamage(damage);
-                player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                 player->setHitEffectStrength(1.0f);
                 hasHit = true;
             }
@@ -152,7 +152,7 @@ void Gust::onTriggerEnter(Collider* collider) {
                 if (player->getShield()->getIsPerfect()) { //is perfectly timed
                     cout << "Player perfect blocked" << endl;
                     player->increaseUltimateGauge(100.0f); //instant fill
-                    player->setColorOverride(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
                 }
@@ -160,7 +160,7 @@ void Gust::onTriggerEnter(Collider* collider) {
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
                     player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
-                    player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                    player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
                 }
@@ -168,7 +168,7 @@ void Gust::onTriggerEnter(Collider* collider) {
             else { //is not blocking
                 cout << "Enemy Hit Player for " << damage << " damage." << endl;
                 player->getHealth()->takeDamage(damage);
-                player->setColorOverride(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+                player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                 player->setHitEffectStrength(1.0f);
                 hasHit = true;
             }
