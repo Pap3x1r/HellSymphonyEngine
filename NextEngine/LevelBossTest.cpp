@@ -891,6 +891,9 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	else if (player->getWeaponType() == Shield_) {
 		if (type == 0) {
 			//enter first attack of the chain
+			if (player->getShield()->getIsBlocking()) {
+				return;
+			}
 
 			if (player->getShield()->getInChainAttack()) {
 				//input buffer

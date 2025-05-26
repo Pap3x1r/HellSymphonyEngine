@@ -59,7 +59,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
 	attackCollider->addColliderComponent();
-	attackCollider->setCanDrawColliderNew(true);
+	//attackCollider->setCanDrawColliderNew(true);
 	attackCollider->setActive(true);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.0f, 6.0f);
