@@ -109,27 +109,38 @@ void LevelBossTest::levelInit() {
 
 
 	//cout << "Init Level" << endl;
+	TexturedObject* healthBarBackground = new TexturedObject();
+	healthBarBackground->setTexture("../Resource/Texture/UI/Healthbar_BG.png");
+	healthBarBackground->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
+	healthBarBackground->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
+	objectsList.push_back(healthBarBackground);
 
 	SimpleObject* witherHealthBar_ = new SimpleObject();
 	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
-	witherHealthBar_->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
-	witherHealthBar_->getTransform().setPosition(glm::vec3(-4.0f, -4.0f, 0.0f));
+	witherHealthBar_->getTransform().setScale(glm::vec3(4.5f, 0.23f, 0.0f));
+	witherHealthBar_->getTransform().setPosition(glm::vec3(-3.5f, -3.95f, 0.0f));
 	objectsList.push_back(witherHealthBar_);
 	witherHealthBar = witherHealthBar_;
 
 	SimpleObject* healthBar = new SimpleObject();
-	healthBar->setColor(0.0f, 1.0f, 0.0f);
-	healthBar->getTransform().setScale(glm::vec3(4.5f, 0.45f, 0.0f));
-	healthBar->getTransform().setPosition(glm::vec3(-4.0f, -4.0f, 0.0f));
+	healthBar->setColor(1.0f, 0.0f, 0.0f);
+	healthBar->getTransform().setScale(glm::vec3(4.5f, 0.23f, 0.0f));
+	healthBar->getTransform().setPosition(glm::vec3(-3.5f, -3.95f, 0.0f));
 	objectsList.push_back(healthBar);
 	playerHealthBar = healthBar;
 
 	SimpleObject* ultimateBar = new SimpleObject();
 	ultimateBar->setColor(235.0f / 255.0f, 168.0f / 255.0f, 52.0f / 255.0f);
-	ultimateBar->getTransform().setScale(glm::vec3(2.5f, 0.18f, 0.0f));
-	ultimateBar->getTransform().setPosition(glm::vec3(-4.0f, -3.65f, 0.0f));
+	ultimateBar->getTransform().setScale(glm::vec3(2.5f, 0.25f, 0.0f));
+	ultimateBar->getTransform().setPosition(glm::vec3(-4.0f, -4.225f, 0.0f));
 	objectsList.push_back(ultimateBar);
 	playerUltimateBar = ultimateBar;
+
+	TexturedObject* healthBarFrame = new TexturedObject();
+	healthBarFrame->setTexture("../Resource/Texture/UI/Healthbar_Frame.png");
+	healthBarFrame->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
+	healthBarFrame->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
+	objectsList.push_back(healthBarFrame);
 
 	SimpleObject* bossHealthBar_ = new SimpleObject();
 	bossHealthBar_->setColor(0.0f, 1.0f, 0.0f);
@@ -314,8 +325,8 @@ void LevelBossTest::levelUpdate() {
 	}
 
 
-	float healthOriginalWidth = 4.5f;
-	float healthBaseX = -5.7f;
+	float healthOriginalWidth = 5.375f;
+	float healthBaseX = -5.05f;
 
 	//Health Bar
 	float healthPercentage = player->getHealth()->getCurrentHP() / player->getHealth()->getMaxHP();
@@ -326,7 +337,7 @@ void LevelBossTest::levelUpdate() {
 	float healthX = healthBaseX - (healthOriginalWidth * 0.5f) + (healthWidth * 0.5f);
 
 	playerHealthBar->getTransform().setScale(glm::vec3(healthWidth, playerHealthBar->getTransform().getScale().y, playerHealthBar->getTransform().getScale().z));
-	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, -4.0f, 0.0f));
+	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, playerHealthBar->getTransform().getPosition().y, playerHealthBar->getTransform().getPosition().z));
 
 	//Wither Health Bar
 	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
@@ -337,11 +348,11 @@ void LevelBossTest::levelUpdate() {
 	float witherX = healthBaseX - (healthOriginalWidth * 0.5f) + (witherWidth * 0.5f);
 
 	witherHealthBar->getTransform().setScale(glm::vec3(witherWidth, witherHealthBar->getTransform().getScale().y, witherHealthBar->getTransform().getScale().z));
-	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, -4.0f, 0.0f));
+	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, witherHealthBar->getTransform().getPosition().y, witherHealthBar->getTransform().getPosition().z));
 
 	//Ultimate Bar
-	float ultimateOriginalWidth = 2.5f;
-	float ultimateBaseX = -6.7f;
+	float ultimateOriginalWidth = 3.18f;
+	float ultimateBaseX = -6.165f;
 
 	float ultimatePercentage = (player->getUltimateSlot() * 100.0f + player->getUltimateGauge()) / (player->getUltimateSlotMax() * 100.0f);
 	ultimatePercentage = glm::clamp(ultimatePercentage, 0.0f, 1.0f);
@@ -351,7 +362,7 @@ void LevelBossTest::levelUpdate() {
 	float ultimateX = ultimateBaseX - (ultimateOriginalWidth * 0.5f) + (ultimateWidth * 0.5f);
 
 	playerUltimateBar->getTransform().setScale(glm::vec3(ultimateWidth, playerUltimateBar->getTransform().getScale().y, playerUltimateBar->getTransform().getScale().z));
-	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, -3.65f, 0.0f));
+	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, playerUltimateBar->getTransform().getPosition().y, playerUltimateBar->getTransform().getPosition().z));
 
 	//Boss Health Bar
 	float bossHealthOriginalWidth = 9.0f;
