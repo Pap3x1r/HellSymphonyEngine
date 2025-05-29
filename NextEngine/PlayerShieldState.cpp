@@ -33,12 +33,15 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
 
     DrawableObject* collider = player->getShield()->getChainAttackObject(0);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     switch (currentPhase) {
     case STARTUP:
+
         //do something
         //change phase
         if (time >= 0.833f) {
+            
             currentPhase = ACTIVE;
             time = 0;
             attackCollider->resetHit();
@@ -92,6 +95,7 @@ void PlayerLightShieldAttack2::enter(Player* player) {
     time = 0.0f;
     player->getShield()->setCurrentChainAttack(2);
     player->getShield()->setInChainAttack(true); //Player is in chain attack
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
 void PlayerLightShieldAttack2::update(Player* player, float dt_) {
@@ -100,6 +104,7 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
 
     DrawableObject* collider = player->getShield()->getChainAttackObject(1);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     switch (currentPhase) {
     case STARTUP:
@@ -143,6 +148,8 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
 
 void PlayerLightShieldAttack2::exit(Player* player) {
     cout << "Player exits Shield Light Attack 2 state.\n";
+    player->getShield()->setInChainAttack(false);
+    player->getShield()->setCurrentChainAttack(0);
 }
 
 //Shield Guard
@@ -161,7 +168,7 @@ void PlayerShieldGuard::enter(Player* player) {
 void PlayerShieldGuard::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
-
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     switch (currentPhase) {
     case STARTUP:
         //do something
@@ -223,12 +230,13 @@ void PlayerOffShield::enter(Player* player) {
     player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
     time = 0.0f;
+    
 }
 
 void PlayerOffShield::update(Player* player, float dt_) {
     time += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
-
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     switch (currentPhase) {
     case STARTUP:
         //do something
@@ -273,6 +281,8 @@ void PlayerOffShield::update(Player* player, float dt_) {
 void PlayerOffShield::exit(Player* player) {
     player->getAnimationComponent()->setLoop(true);
     cout << "Player exits Off Shield state.\n";
+    player->getShield()->setIsBlocking(false);
+    player->getShield()->setIsHolding(false);
 }
 
 //Small Shield Ult

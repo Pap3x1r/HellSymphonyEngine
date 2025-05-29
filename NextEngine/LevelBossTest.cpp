@@ -226,6 +226,9 @@ void LevelBossTest::levelUpdate() {
 
 	if (player) {
 		player->updateShake(dt);
+		//cout << "Player X Vel:" << player->getPhysicsComponent()->getVelocity().x << ", Y: " << player->getPhysicsComponent()->getVelocity().y <<endl;
+		//player->getPhysicsComponent()->setVelocity(glm::vec2(0,0));
+		
 	}
 		
 
@@ -459,6 +462,7 @@ void LevelBossTest::handleKey(char key) {
 		if (player->getIsStunned() == true) return;
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
 
@@ -480,6 +484,7 @@ void LevelBossTest::handleKey(char key) {
 		
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
+
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
 
@@ -564,13 +569,14 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'I': //No Movement Input -> Idle
 		
-		if (player->getIsGrounded()) {
-			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
-			
-		}
 		if (player->getIsDashing() == false) {
 			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 		}
+
+		if (player->getIsGrounded()) {
+			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+		}
+		
 		
 		
 		break;
@@ -599,8 +605,8 @@ void LevelBossTest::handleKey(char key) {
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		//player->increaseUltimateGauge(100.0f);
-		ziz->interruptPhaseChange();
+		player->increaseUltimateGauge(100.0f);
+		//ziz->interruptPhaseChange();
 		break;
 		
 	case 'l':
@@ -914,6 +920,8 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 				player->getShield()->setInputBuffer(true);
 				return;
 			}
+
+			
 
 			switch (player->getShield()->getCurrentChainAttack()) {
 			case 0:

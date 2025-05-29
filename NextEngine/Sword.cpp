@@ -14,7 +14,7 @@ Sword::Sword() {
     lightAttack1Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack1Sword);
 
-    PlayerAttackCollider* lightAttack2Sword = new PlayerAttackCollider(20, 100);
+    PlayerAttackCollider* lightAttack2Sword = new PlayerAttackCollider(10, 100);
     lightAttack2Sword->setName("lightAttack2Sword");
     lightAttack2Sword->setDraw(false);
     lightAttack2Sword->addColliderComponent();
@@ -25,7 +25,7 @@ Sword::Sword() {
     lightAttack2Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack2Sword);
 
-    PlayerAttackCollider* lightAttack3Sword = new PlayerAttackCollider(30, 100);
+    PlayerAttackCollider* lightAttack3Sword = new PlayerAttackCollider(10, 100);
     lightAttack3Sword->setName("lightAttack3Sword");
     lightAttack3Sword->setDraw(false);
     lightAttack3Sword->addColliderComponent();
@@ -36,7 +36,7 @@ Sword::Sword() {
     lightAttack3Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack3Sword);
 
-    PlayerAttackCollider* heavyAttackSword = new PlayerAttackCollider(50, 100);
+    PlayerAttackCollider* heavyAttackSword = new PlayerAttackCollider(20, 100);
     heavyAttackSword->setName("heavyAttackSword");
     heavyAttackSword->setDraw(false);
     heavyAttackSword->addColliderComponent();
@@ -47,7 +47,7 @@ Sword::Sword() {
     heavyAttackSword->setDrawCollider(false);
     chainAttackList.push_back(heavyAttackSword);
 
-    PlayerAttackCollider* smallUltSword = new PlayerAttackCollider(200, 0);
+    PlayerAttackCollider* smallUltSword = new PlayerAttackCollider(250, 0);
     smallUltSword->setName("smallUltSword");
     smallUltSword->setDraw(false);
     smallUltSword->addColliderComponent();
@@ -57,7 +57,7 @@ Sword::Sword() {
     smallUltSword->setDrawCollider(false);
     chainAttackList.push_back(smallUltSword);
 
-    PlayerAttackCollider* bigUltSword = new PlayerAttackCollider(1000, 0);
+    PlayerAttackCollider* bigUltSword = new PlayerAttackCollider(1700, 0);
     bigUltSword->setName("bigUltSword");
     bigUltSword->setDraw(false);
     bigUltSword->addColliderComponent();

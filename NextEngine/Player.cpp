@@ -187,12 +187,14 @@ void Player::selfUpdate(float dt_) {
 	}
 
 	if (isStunned == true) {
+		
 		if (stunTimer > 0) {
 			stunTimer -= dt_;
 			//cout << "stunTimer: " << stunTimer << endl;
 			getPhysicsComponent()->setVelocity(glm::vec2(0.0f, getPhysicsComponent()->getVelocity().y));
 			if (stunTimer <= 0) {
 				isStunned = false;
+				getPhysicsComponent()->setVelocity(glm::vec2(0.0f, getPhysicsComponent()->getVelocity().y));
 				stunTimer = 0.0f;
 			}
 		}
@@ -208,7 +210,7 @@ void Player::selfUpdate(float dt_) {
 	//cout << "Player (x,y) velocity: (" << getPhysicsComponent()->getVelocity().x << " , " << getPhysicsComponent()->getVelocity().y << ")" << endl;
 
 
-	cout << getNewColor().x << "," << getNewColor().y << "," << getNewColor().z << "," << getNewColor().a << endl;
+	//cout << getNewColor().x << "," << getNewColor().y << "," << getNewColor().z << "," << getNewColor().a << endl;
 
 	if (time >= 1.50f) {
 		time = 0.0f;

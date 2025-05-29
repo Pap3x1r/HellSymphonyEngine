@@ -54,8 +54,7 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
-	DrawableObject* obj2 = collider->getObject();
-	Ziz* ziz = dynamic_cast<Ziz*>(obj2);
+	Ziz* ziz = Ziz::getInstance();
 
 	if (enemy) {
 		//playerInside = true;

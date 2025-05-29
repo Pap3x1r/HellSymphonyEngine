@@ -71,6 +71,8 @@ void Physics::update(Transform& transform) {
 		force.y = 0.0f;
 	}
 
+	
+
 	glm::vec3 velocityVec = glm::vec3(velocity.x, velocity.y, 0.0f);
 	//velocityVec *= CONST_DELTA_TIME; // for testing, change later
 	velocityVec *= deltaTime;

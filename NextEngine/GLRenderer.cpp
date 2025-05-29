@@ -478,11 +478,11 @@ GLuint GLRenderer::findTexture(const std::string path) {
     if (it == textureCache.end()) {
         texture = LoadTexture(path);
         textureCache[path] = texture;
-        cout << path << " is loaded for first time." << endl;
+        //cout << path << " is loaded for first time." << endl;
     }
     else {
         texture = it->second;
-        cout << path << " is found" << endl;
+        //cout << path << " is found" << endl;
     }
 
     return texture;

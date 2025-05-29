@@ -73,19 +73,22 @@ void EnemyAttackCollider::onCollisionStay(Collider* collider) {
 				if (willKnockBack == true) {
 					if (player->getTransform().getPosition().x < ziz->getTransform().getPosition().x) { //player is left of ziz
 						//cout << "knock left" << endl;
-						player->stun(0.25f);
-						player->getPhysicsComponent()->addForce(glm::vec2(-knockbackForce, knockbackTimer));
-						player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+						player->stun(knockbackTimer);
+						
+						player->getPhysicsComponent()->addForce(glm::vec2(-knockbackForce, 0.25f));
+						//player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
 						
 						
 						player->getStateMachine()->changeState(PlayerJumpUpState::getInstance(), player);
 					}
 					else {
 						//cout << "knock right" << endl;
-						player->stun(0.25f);
-						player->getPhysicsComponent()->addForce(glm::vec2(knockbackForce, knockbackTimer));
-						player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+						player->stun(knockbackTimer);
 
+						
+						player->getPhysicsComponent()->addForce(glm::vec2(knockbackForce, 0.25));
+						//player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
+						
 
 						player->getStateMachine()->changeState(PlayerJumpUpState::getInstance(), player);
 					}
