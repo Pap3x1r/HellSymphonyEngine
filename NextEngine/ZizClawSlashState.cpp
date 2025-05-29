@@ -15,9 +15,11 @@ void ZizClawSlashState::enter(Boss* boss) {
 	if (ziz) {
 		//cout << "Found Ziz" << endl;
 	}
-	ziz->setTexture("../Resource/Ziz/Gust_2.png");
-	ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_ClawSlash-Sheet.png", 1, 44, 0);
-	ziz->getAnimationComponent()->setState("clawslash");
+
+	ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/1_1_Zyzz_ClawSlash_Startup_1.png", 1, 16, 0);
+	ziz->getAnimationComponent()->setState("clawslashstartup1");
+
+
 	findPlayer();
 
     slashCount = 0;
@@ -31,7 +33,7 @@ void ZizClawSlashState::enter(Boss* boss) {
     startUpTimer = 0.08f * 10;
 
     startUpTimer1 = 0.08f * 6;
-    activeTimer1 = 0.08f * 3;
+    activeTimer1 = 0.08f * 4;
     pauseTimer1 = 0.08f * 0;
 
     startUpTimer2 = 0.08f * 2;
@@ -42,7 +44,7 @@ void ZizClawSlashState::enter(Boss* boss) {
     activeTimer3 = 0.08f * 6;
     pauseTimer3 = 0.08f * 0;
 
-    recoveryTimer = 0.08f * 12;
+    recoveryTimer = 0.08f * 9;
 
 	attackCollider1 = new EnemyAttackCollider(5);
 	attackCollider1->setDraw(false);
@@ -107,6 +109,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						//ziz->setTexture("../Resource/Ziz/ClawSlash_1.png");
 						ziz->getLevel()->addObject(attackCollider1);
 						attackCollider1->setActive(true);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/1_2_Zyzz_ClawSlash_Active_1.png", 1, 4, 0);
+						ziz->getAnimationComponent()->setState("clawslashactive1");
 					}
 					break;
 				case 1:
@@ -120,6 +124,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						//ziz->setTexture("../Resource/Ziz/ClawSlash_2.png");
 						ziz->getLevel()->addObject(attackCollider2);
 						attackCollider2->setActive(true);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/2_2_Zyzz_ClawSlash_Active_2.png", 1, 3, 0);
+						ziz->getAnimationComponent()->setState("clawslashactive2");
 					}
 					break;
 				case 2:
@@ -133,6 +139,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						//ziz->setTexture("../Resource/Ziz/ClawSlash_3.png");
 						ziz->getLevel()->addObject(attackCollider3);
 						attackCollider3->setActive(true);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/3_2_Zyzz_ClawSlash_Active_3.png", 1, 6, 0);
+						ziz->getAnimationComponent()->setState("clawslashactive3");
 					}
 					break;
 			}
@@ -151,6 +159,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						hasSlashed = true;
 						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider1);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/2_1_Zyzz_ClawSlash_Startup_2.png", 1, 2, 0);
+						ziz->getAnimationComponent()->setState("clawslashstartup2");
 					}
 					break;
 				case 1:
@@ -163,6 +173,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						hasSlashed = true;
 						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider2);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/3_1_Zyzz_ClawSlash_Startup_3.png", 1, 4, 0);
+						ziz->getAnimationComponent()->setState("clawslashstartup3");
 					}
 					break;
 				case 2:
@@ -175,6 +187,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 						hasSlashed = true;
 						//cout << "finish slashing" << endl;
 						DrawableObject::destroyObject(attackCollider3);
+						ziz->setTexture("../Resource/Texture/FinalZiz/clawslash/4_Zyzz_ClawSlash_Recovery.png", 1, 9, 0);
+						ziz->getAnimationComponent()->setState("clawslashrecovery");
 					}
 					break;
 			}

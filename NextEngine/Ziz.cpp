@@ -39,15 +39,26 @@ Ziz::Ziz() {
 	getAnimationComponent()->addState("flyup",0, 7);
 	getAnimationComponent()->addState("swoop", 0, 1);
 	getAnimationComponent()->addState("swooprecovery", 0, 16);
-	getAnimationComponent()->addState("groundslam", 0, 24);
-	getAnimationComponent()->addState("groundslamstartup", 0, 8);
-	getAnimationComponent()->addState("groundslaminair", 0, 6);
-	getAnimationComponent()->addState("groundslamslamming", 0, 2);
-	getAnimationComponent()->addState("groundslamrecovery", 0, 10);
-	getAnimationComponent()->addState("clawslash", 0, 44);
 	getAnimationComponent()->addState("wingspan", 0, 22);
 	getAnimationComponent()->addState("transform", 0, 33);
 	getAnimationComponent()->addState("chomp", 0, 32);
+	//clawslash
+	getAnimationComponent()->addState("clawslashstartup1", 0, 16);
+	getAnimationComponent()->addState("clawslashactive1", 0, 4);
+
+	getAnimationComponent()->addState("clawslashstartup2", 0, 2);
+	getAnimationComponent()->addState("clawslashactive2", 0, 3);
+
+	getAnimationComponent()->addState("clawslashstartup3", 0, 4);
+	getAnimationComponent()->addState("clawslashactive3", 0, 6);
+
+	getAnimationComponent()->addState("clawslashrecovery", 0, 9);
+	//groundslam
+	getAnimationComponent()->addState("groundslam", 0, 24);
+
+	getAnimationComponent()->addState("groundslamstartup", 0, 14);
+	getAnimationComponent()->addState("groundslamactive", 0, 5);
+	getAnimationComponent()->addState("groundslamrecovery", 0, 5);
 
 	
 	//Physics

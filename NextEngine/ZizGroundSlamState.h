@@ -38,6 +38,7 @@ private:
     glm::vec3 midairTarget;
     glm::vec3 slamStartPos;
     glm::vec3 impactPosition;
+    void selectTarget();
 
 public:
     static ZizGroundSlamState* getInstance();

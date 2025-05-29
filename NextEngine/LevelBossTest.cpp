@@ -860,7 +860,12 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	if (player->getIsStunned() == true) return;
 
 	if (player->getWeaponType() == Bow_) {
+		if (player->getBow()->getIsShooting() == true) {
+			return;
+		}
 		if (type == 0) {
+			
+
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
 					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
