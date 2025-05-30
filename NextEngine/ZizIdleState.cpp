@@ -44,6 +44,7 @@ void ZizIdleState::update(Boss* boss, float dt) {
     }
     else {
         ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+        //ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
         //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
         //pickState();
     }

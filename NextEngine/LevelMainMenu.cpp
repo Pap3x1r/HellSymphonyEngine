@@ -920,6 +920,18 @@ void LevelMainMenu::levelInit() {
 
 	optionsButtons.push_back(keyboardButton);
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Black Fading Transition
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* blackFade_ = new TexturedObject("Black Fade");
+	blackFade_->setTexture("../Resource/Texture/blackFade.png");
+	blackFade_->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	blackFade_->setMenuState(MenuState::IGNORE);
+	objectsList.push_back(blackFade_);
+	blackFade = blackFade_;
 
 	isHolding = false;
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
@@ -932,6 +944,22 @@ void LevelMainMenu::levelUpdate() {
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
+
+	if (firstStart) {
+		blackFadeTransitionTime += dt;
+		float t = blackFadeTransitionTime / blackFadeTransitionDuration;
+		bool finishBlackFade = false;
+		if (t >= 1.0f) {
+			t = 1.0f;
+			finishBlackFade = true;
+		}
+
+		blackFade->setAlpha(1.0f - t);
+
+		if (finishBlackFade) {
+			firstStart = false;
+		}
+	}
 
 
 	bool anyButtonHovered = false;
@@ -1024,6 +1052,14 @@ void LevelMainMenu::levelUpdate() {
 			MenuState objState = obj->getMenuState();
 			vector<MenuState> objStateVec = obj->getMenuStateVec();
 
+			if (find(objStateVec.begin(), objStateVec.end(), MenuState::IGNORE) != objStateVec.end()) {
+				UIButton* button = dynamic_cast<UIButton*>(obj);
+				if (button) {
+					button->setEnable(true);
+				}
+				continue;
+			}
+
 			if (find(objStateVec.begin(), objStateVec.end(), MenuState::NONE) != objStateVec.end()) {
 				obj->setAlpha(1.0f);
 				continue;
@@ -1057,6 +1093,14 @@ void LevelMainMenu::levelUpdate() {
 		for (DrawableObject* obj : objectsList) {
 			MenuState objState = obj->getMenuState();
 			vector<MenuState> objStateVec = obj->getMenuStateVec();
+
+			if (find(objStateVec.begin(), objStateVec.end(), MenuState::IGNORE) != objStateVec.end()) {
+				UIButton* button = dynamic_cast<UIButton*>(obj);
+				if (button) {
+					button->setEnable(true);
+				}
+				continue;
+			}
 
 			if (find(objStateVec.begin(), objStateVec.end(), MenuState::NONE) != objStateVec.end()) {//Doesn't affect by any states
 				obj->setAlpha(1.0f);

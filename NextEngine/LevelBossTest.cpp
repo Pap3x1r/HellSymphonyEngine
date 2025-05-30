@@ -148,24 +148,19 @@ void LevelBossTest::levelInit() {
 	bossHealthBar_->getTransform().setPosition(glm::vec3(0.0f, 4.0f, 0.0f));
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
-	
-	//UIText* testText = new UIText("Test Text");
-	//SDL_Color color = { 255,255,255,255 };
-	//testText->loadText("Hello", color, 100);
-	//testText->setText("I AM The best");
-	//testText->getTransform().setPosition(glm::vec3(-5.0f, 3.0f, 0.0f));
-	//objectsList.push_back(testText);
 
-	//UIButton* testButton = new UIButton("Test");
-	//testButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	//testButton->getTransform().setPosition(glm::vec3(5.5f, 3.5f, 0.0f));
-	//testButton->getTransform().setScale(glm::vec3(1.6f * 1.5, 0.9f * 1.5, 0.0f));
-	//testButton->addColliderComponent();
-	//testButton->setDrawCollider(true);
-	//testButton->setCanDrawColliderNew(true);
-	////testButton->SetFunction(resetLevel);
-	//objectsList.push_back(testButton);
-	//buttonsList.push_back(testButton);
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Black Fading Transition
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* blackFade_ = new TexturedObject("Black Fade");
+	blackFade_->setTexture("../Resource/Texture/blackFade.png");
+	blackFade_->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	blackFade_->setMenuState(MenuState::IGNORE);
+	objectsList.push_back(blackFade_);
+	blackFade = blackFade_;
 
 	GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
@@ -178,6 +173,22 @@ void LevelBossTest::levelUpdate() {
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
+
+	if (firstStart) {
+		blackFadeTransitionTime += dt;
+		float t = blackFadeTransitionTime / blackFadeTransitionDuration;
+		bool finishBlackFade = false;
+		if (t >= 1.0f) {
+			t = 1.0f;
+			finishBlackFade = true;
+		}
+
+		blackFade->setAlpha(1.0f - t);
+
+		if (finishBlackFade) {
+			firstStart = false;
+		}
+	}
 
 	int mouseX;
 	int mouseY;

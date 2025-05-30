@@ -44,6 +44,12 @@ private:
 	float holdButtonTimer = 0.0f;
 	float holdButtonThreshold = 0.5f;
 
+
+	float blackFadeTransitionTime = 0.0f;
+	float blackFadeTransitionDuration = 1.0f;
+	bool firstStart = true;
+	TexturedObject* blackFade = nullptr;
+
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 

@@ -3,16 +3,19 @@
 #include "Ziz.h"
 
 EnemyAttackCollider::EnemyAttackCollider() {
+	setTag(Tag::EnemyAttack);
 	damage = 0.0f;
 	setName("EnemyAttackCollider");
 }
 
 EnemyAttackCollider::EnemyAttackCollider(float damage_) {
+	setTag(Tag::EnemyAttack);
 	damage = damage_;
 	setName("EnemyAttackCollider");
 }
 
 EnemyAttackCollider::EnemyAttackCollider(float damage_, float force, float duration) {
+	setTag(Tag::EnemyAttack);
 	damage = damage_;
 	setName("EnemyAttackCollider");
 	willKnockBack = true;

@@ -19,6 +19,7 @@ enum MenuState {
 	CONTROLLER,
 	KEYBOARD,
 	CREDITS,
+	IGNORE
 };
 
 enum class Tag {

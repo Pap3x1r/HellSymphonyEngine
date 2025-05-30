@@ -38,6 +38,12 @@ private:
 
 	float playerTimeScale = 1.0f;
 
+	float blackFadeTransitionTime = 0.0f;
+	float blackFadeTransitionDuration = 1.0f;
+	bool firstStart = true;
+	TexturedObject* blackFade = nullptr;
+
+
 	int tempx;
 	int tempx2;
 
