@@ -39,7 +39,6 @@ StormRise::StormRise() {
 }
 
 void StormRise::update(float dt) {
-
 	if (!isActive && !isBuffering) {
 		countdownTimer -= dt;
 
@@ -65,7 +64,6 @@ void StormRise::update(float dt) {
 			//cout << "buffering" << endl;
 		}
 	}
-
 
 	// Buffer phase
 	if (isBuffering == true && isActive == false) {

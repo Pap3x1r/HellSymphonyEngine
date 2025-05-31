@@ -156,14 +156,14 @@ void LevelBossTest::levelInit() {
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	/*TexturedObject* blackFade_ = new TexturedObject("Black Fade");
+	TexturedObject* blackFade_ = new TexturedObject("Black Fade");
 	blackFade_->setTexture("../Resource/Texture/blackFade.png");
 	blackFade_->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	blackFade_->setMenuState(MenuState::IGNORE);
 	objectsList.push_back(blackFade_);
 	blackFade = blackFade_;
 	blackFade->setAlpha(1.0f);
-	firstStart = true;*/
+	firstStart = true;
 
 	GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
@@ -263,7 +263,6 @@ void LevelBossTest::levelUpdate() {
 			if (stormRise->getCanAnim()) {
 				stormRise->getAnimationComponent()->updateCurrentState(dt);
 			}
-			
 		}
 
 		ChompTentacle* chompTentacle = dynamic_cast<ChompTentacle*>(obj);
