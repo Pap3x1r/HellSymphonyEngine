@@ -24,6 +24,7 @@ void LevelBossTest::levelLoad() {
 	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
 	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
 	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz/VFX");
 }
 
 void LevelBossTest::levelInit() {
@@ -155,12 +156,14 @@ void LevelBossTest::levelInit() {
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	TexturedObject* blackFade_ = new TexturedObject("Black Fade");
+	/*TexturedObject* blackFade_ = new TexturedObject("Black Fade");
 	blackFade_->setTexture("../Resource/Texture/blackFade.png");
 	blackFade_->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	blackFade_->setMenuState(MenuState::IGNORE);
 	objectsList.push_back(blackFade_);
 	blackFade = blackFade_;
+	blackFade->setAlpha(1.0f);
+	firstStart = true;*/
 
 	GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
@@ -175,18 +178,21 @@ void LevelBossTest::levelUpdate() {
 	ImGui::Begin("Debug Panel");
 
 	if (firstStart) {
-		blackFadeTransitionTime += dt;
-		float t = blackFadeTransitionTime / blackFadeTransitionDuration;
-		bool finishBlackFade = false;
-		if (t >= 1.0f) {
-			t = 1.0f;
-			finishBlackFade = true;
-		}
+		if (blackFade) {
+			blackFadeTransitionTime += dt;
+			float t = blackFadeTransitionTime / blackFadeTransitionDuration;
+			bool finishBlackFade = false;
+			if (t >= 1.0f) {
+				t = 1.0f;
+				finishBlackFade = true;
+			}
 
-		blackFade->setAlpha(1.0f - t);
+			blackFade->setAlpha(1.0f - t);
 
-		if (finishBlackFade) {
-			firstStart = false;
+			if (finishBlackFade) {
+				firstStart = false;
+				blackFade->setAlpha(0.0f);
+			}
 		}
 	}
 
@@ -627,9 +633,14 @@ void LevelBossTest::handleKey(char key) {
 		addObject(ultZizOnBG_);
 		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
 
-		DrawableObject* lightning_ = ziz->createLightning();
-		addObject(lightning_);
+		/*DrawableObject* lightning_ = ziz->createLightning();
+		addObject(lightning_);*/
 		
+		/*DrawableObject* newStormRise = ziz->createStormRise();
+		addObject(newStormRise);*/
+
+		DrawableObject* newGust = ziz->createGust();
+		addObject(newGust);
 
 		//ziz->startShake(0.2f, 0.005f);
 		//ziz->interruptPhaseChange();
