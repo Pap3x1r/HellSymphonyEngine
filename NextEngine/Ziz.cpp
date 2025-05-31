@@ -35,30 +35,43 @@ Ziz::Ziz() {
 	initAnimation(10,1);
 	getAnimationComponent()->addState("idle", 0, 10);
 	getAnimationComponent()->addState("gust", 0, 20);
-	getAnimationComponent()->addState("stormrise", 0, 57);
+
+	//swoop
 	getAnimationComponent()->addState("flyup",0, 7);
 	getAnimationComponent()->addState("swoop", 0, 1);
 	getAnimationComponent()->addState("swooprecovery", 0, 16);
+
+	//wingspan
 	getAnimationComponent()->addState("wingspan", 0, 22);
-	getAnimationComponent()->addState("transform", 0, 33);
-	getAnimationComponent()->addState("chomp", 0, 32);
+
 	//clawslash
 	getAnimationComponent()->addState("clawslashstartup1", 0, 16);
 	getAnimationComponent()->addState("clawslashactive1", 0, 4);
-
 	getAnimationComponent()->addState("clawslashstartup2", 0, 2);
 	getAnimationComponent()->addState("clawslashactive2", 0, 3);
-
 	getAnimationComponent()->addState("clawslashstartup3", 0, 4);
 	getAnimationComponent()->addState("clawslashactive3", 0, 6);
-
 	getAnimationComponent()->addState("clawslashrecovery", 0, 9);
+
 	//groundslam
 	getAnimationComponent()->addState("groundslam", 0, 24);
-
 	getAnimationComponent()->addState("groundslamstartup", 0, 14);
 	getAnimationComponent()->addState("groundslamactive", 0, 5);
 	getAnimationComponent()->addState("groundslamrecovery", 0, 5);
+
+	//stormrise
+	getAnimationComponent()->addState("stormrisestartup1", 0, 8);
+	getAnimationComponent()->addState("stormrisestartup2", 0, 16);
+	getAnimationComponent()->addState("stormriseactive", 0, 2);
+	getAnimationComponent()->addState("stormriserecovery1", 0, 15);
+	getAnimationComponent()->addState("stormriserecovery2", 0, 6);
+	getAnimationComponent()->addState("stormriserecovery3", 0, 10);
+
+	//transform
+	getAnimationComponent()->addState("transform", 0, 33);
+
+	//chomp
+	getAnimationComponent()->addState("chomp", 0, 32);
 
 	
 	//Physics
@@ -158,11 +171,11 @@ DrawableObject* Ziz::createGust() {
 	gust->setDraw(true);
 	//-1.25
 	if (isFacingRight) {
-		gust->getTransform().setScale(glm::vec3(-1.0f, 2.0f, 1.0f));
+		gust->getTransform().setScale(glm::vec3(-1.0f, 4.0f, 1.0f));
 		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x + 1.5f, -1.5f, 1.0f));
 	}
 	else {
-		gust->getTransform().setScale(glm::vec3(1.0f, 2.0f, 1.0f));
+		gust->getTransform().setScale(glm::vec3(1.0f, 4.0f, 1.0f));
 		gust->getTransform().setPosition(glm::vec3(getTransform().getPosition().x - 1.5f, -1.5f, 1.0f));
 	}
 	
@@ -187,7 +200,7 @@ DrawableObject* Ziz::createStormRise() {
 	stormRise->setPlayer(player);
 	stormRise->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, 0.15f, 1.0f));
 	
-	
+	cout << "Ziz Created Stormrise" << endl;
 	return stormRise;
 
 }

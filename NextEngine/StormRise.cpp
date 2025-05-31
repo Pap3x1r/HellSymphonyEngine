@@ -2,23 +2,21 @@
 #include "StormRise.h"
 
 StormRise::StormRise() {
-	
-
+	setTag(Tag::Enemy);
 	setName("StormRise");
-	//setTexture("../Resource/Ziz/StormRiseProjectile.png");
 	getTransform().setScale(glm::vec3(3.0f, 6.0f, 1.0f));
 	setDraw(true);
-	//getTransform().setPosition(glm::vec3(getTransform().getPosition().x, 0.15f, 1.0f));
 	addColliderComponent();
 	getColliderComponent()->setTrigger(true);
 	getColliderComponent()->setDimension(0.5f, 1.0f);
-	setDrawCollider(true);
+
 	initAnimation(25, 1);
 	getAnimationComponent()->addState("stormtracker", 0, 25);
 	getAnimationComponent()->addState("stormcaller", 0, 32);
-	setTexture("../Resource/Texture/FinalZiz/VFX/StormTracker.png", 1, 25, 0);
-	getAnimationComponent()->setState("stormtracker");
+
 	
+	
+	setCanDrawColliderNew(true);
 
 	//getColliderComponent()->setDimension(1.0f, 1.0f);
 	
@@ -34,9 +32,14 @@ StormRise::StormRise() {
 	bufferTimer = 0.08f * 1;
 	activeTimer = 0.08f * 26;
 	recoveryTimer = 0.08f * 5;
+
+	setTexture("../Resource/Texture/FinalZiz/VFX/StormTracker.png", 1, 25, 0);
+	getAnimationComponent()->setState("stormtracker");
+	
 }
 
 void StormRise::update(float dt) {
+
 	if (!isActive && !isBuffering) {
 		countdownTimer -= dt;
 

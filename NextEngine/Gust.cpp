@@ -28,9 +28,10 @@ Gust::Gust() {
 Gust::Gust(bool facingRight) {
 
     isMovingRight = facingRight;
-    speed = 5.0f; 
+    speed = 8.0f; 
     hasHit = false;
     damage = 10;
+    setCanDrawColliderNew(true);
     //cout << "Gust from Ziz created and moving\n";
 }
 
