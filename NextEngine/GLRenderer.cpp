@@ -440,7 +440,7 @@ void GLRenderer::preloadTextures(const vector<string>& texturePaths) {
 
 void GLRenderer::loadTextureFromDir(const std::string& dir) {
     //This loop through every file paths in directory and put inside map and vector
-    cout << "Directory: " << dir << " has been loaded." << endl;
+    //cout << "Directory: " << dir << " has been loaded." << endl;
 
     for (const auto& paths : std::filesystem::directory_iterator(dir)) {
         if (paths.is_regular_file()) {
@@ -455,7 +455,7 @@ void GLRenderer::loadTextureFromDir(const std::string& dir) {
             GLuint texture = LoadTexture(filePath);
             textureCache[filePath] = texture;
 
-            cout << fileName << " has been loaded." << endl;
+            //cout << fileName << " has been loaded." << endl;
         }
         else {
             filesystem::path path(paths.path());

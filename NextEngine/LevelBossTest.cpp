@@ -6,6 +6,7 @@
 #include "GLRenderer.h" // Include GLRenderer header
 #include <iostream>
 #include <random>
+#include <fstream>
 using namespace std;
 
 
@@ -35,7 +36,7 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(background);
 	
 
-	Player* player_ = new Player(100, 0, 3);
+	Player* player_ = loadPlayerData("../Resource/Saves/PlayerData/playerData.txt");
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
@@ -108,7 +109,29 @@ void LevelBossTest::levelInit() {
 	floor->setDraw(false);
 	objectsList.push_back(floor);
 
+	//Overheat
+	TexturedObject* overheatBarBackground = new TexturedObject();
+	overheatBarBackground->setTexture("../Resource/Texture/UI/Bow/Overheat_Empty_BG.png");
+	overheatBarBackground->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
+	overheatBarBackground->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	objectsList.push_back(overheatBarBackground);
+	playerOverheatBarBackground = overheatBarBackground;
 
+	SimpleObject* overheatBar = new SimpleObject();
+	overheatBar->setColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f);
+	overheatBar->getTransform().setScale(glm::vec3(3.665f, 0.08f, 0.0f));
+	overheatBar->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	objectsList.push_back(overheatBar);
+	playerOverheatBar = overheatBar;
+
+	TexturedObject* overheatBarFrame = new TexturedObject();
+	overheatBarFrame->setTexture("../Resource/Texture/UI/Bow/Overheat_Frame.png");
+	overheatBarFrame->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
+	overheatBarFrame->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	objectsList.push_back(overheatBarFrame);
+	playerOverheatBarFrame = overheatBarFrame;
+
+	//Health & Ult UI
 	//cout << "Init Level" << endl;
 	TexturedObject* healthBarBackground = new TexturedObject();
 	healthBarBackground->setTexture("../Resource/Texture/UI/Healthbar_BG.png");
@@ -118,22 +141,22 @@ void LevelBossTest::levelInit() {
 
 	SimpleObject* witherHealthBar_ = new SimpleObject();
 	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
-	witherHealthBar_->getTransform().setScale(glm::vec3(4.5f, 0.23f, 0.0f));
-	witherHealthBar_->getTransform().setPosition(glm::vec3(-3.5f, -3.95f, 0.0f));
+	witherHealthBar_->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
+	witherHealthBar_->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
 	objectsList.push_back(witherHealthBar_);
 	witherHealthBar = witherHealthBar_;
 
 	SimpleObject* healthBar = new SimpleObject();
 	healthBar->setColor(1.0f, 0.0f, 0.0f);
-	healthBar->getTransform().setScale(glm::vec3(4.5f, 0.23f, 0.0f));
-	healthBar->getTransform().setPosition(glm::vec3(-3.5f, -3.95f, 0.0f));
+	healthBar->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
+	healthBar->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
 	objectsList.push_back(healthBar);
 	playerHealthBar = healthBar;
 
 	SimpleObject* ultimateBar = new SimpleObject();
 	ultimateBar->setColor(235.0f / 255.0f, 168.0f / 255.0f, 52.0f / 255.0f);
-	ultimateBar->getTransform().setScale(glm::vec3(2.5f, 0.25f, 0.0f));
-	ultimateBar->getTransform().setPosition(glm::vec3(-4.0f, -4.225f, 0.0f));
+	ultimateBar->getTransform().setScale(glm::vec3(3.18f, 0.25f, 0.0f));
+	ultimateBar->getTransform().setPosition(glm::vec3(-6.165f, -4.225f, 0.0f));
 	objectsList.push_back(ultimateBar);
 	playerUltimateBar = ultimateBar;
 
@@ -444,61 +467,8 @@ void LevelBossTest::levelUpdate() {
 		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
 		playerTimeScale = newScale;
 	}
-
-
-	float healthOriginalWidth = 5.375f;
-	float healthBaseX = -5.05f;
-
-	//Health Bar
-	float healthPercentage = player->getHealth()->getCurrentHP() / player->getHealth()->getMaxHP();
-	healthPercentage = glm::clamp(healthPercentage, 0.0f, 1.0f);
-
-	float healthWidth = healthPercentage * healthOriginalWidth;
-
-	float healthX = healthBaseX - (healthOriginalWidth * 0.5f) + (healthWidth * 0.5f);
-
-	playerHealthBar->getTransform().setScale(glm::vec3(healthWidth, playerHealthBar->getTransform().getScale().y, playerHealthBar->getTransform().getScale().z));
-	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, playerHealthBar->getTransform().getPosition().y, playerHealthBar->getTransform().getPosition().z));
-
-	//Wither Health Bar
-	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
-	totalHealthPercentage = glm::clamp(totalHealthPercentage, 0.0f, 1.0f);
-
-	float witherWidth = totalHealthPercentage * healthOriginalWidth;
-
-	float witherX = healthBaseX - (healthOriginalWidth * 0.5f) + (witherWidth * 0.5f);
-
-	witherHealthBar->getTransform().setScale(glm::vec3(witherWidth, witherHealthBar->getTransform().getScale().y, witherHealthBar->getTransform().getScale().z));
-	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, witherHealthBar->getTransform().getPosition().y, witherHealthBar->getTransform().getPosition().z));
-
-	//Ultimate Bar
-	float ultimateOriginalWidth = 3.18f;
-	float ultimateBaseX = -6.165f;
-
-	float ultimatePercentage = (player->getUltimateSlot() * 100.0f + player->getUltimateGauge()) / (player->getUltimateSlotMax() * 100.0f);
-	ultimatePercentage = glm::clamp(ultimatePercentage, 0.0f, 1.0f);
-
-	float ultimateWidth = ultimatePercentage * ultimateOriginalWidth;
-
-	float ultimateX = ultimateBaseX - (ultimateOriginalWidth * 0.5f) + (ultimateWidth * 0.5f);
-
-	playerUltimateBar->getTransform().setScale(glm::vec3(ultimateWidth, playerUltimateBar->getTransform().getScale().y, playerUltimateBar->getTransform().getScale().z));
-	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, playerUltimateBar->getTransform().getPosition().y, playerUltimateBar->getTransform().getPosition().z));
-
-	//Boss Health Bar
-	float bossHealthOriginalWidth = 9.0f;
-	float bossHealthBaseX = 0.0f;
-
-	float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
-	//cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
-	bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
-
-	float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
-
-	float bossHealthX = bossHealthBaseX - (bossHealthOriginalWidth * 0.5f) + (bossHealthWidth * 0.5f);
-
-	bossHealthBar->getTransform().setScale(glm::vec3(bossHealthWidth, bossHealthBar->getTransform().getScale().y, bossHealthBar->getTransform().getScale().z));
-	bossHealthBar->getTransform().setPosition(glm::vec3(bossHealthX, 4.0f, 0.0f));
+	
+	updateUIBar();
 
 	player->selfUpdate(playerDT);
 	player->getSword()->update(playerDT, player);
@@ -520,6 +490,8 @@ void LevelBossTest::levelDraw() {
 }
 
 void LevelBossTest::levelFree() {
+	//savePlayerData(player, "../Resource/Saves/PlayerData/playerData.txt");
+
 	for (DrawableObject* obj : objectsList) {
 		delete obj;
 	}
@@ -1166,11 +1138,15 @@ void LevelBossTest::updateSkillsIcon() {
 	bowSmallUltIconOn->setDraw(false);
 	bowBigUltIconOff->setDraw(false);
 	bowBigUltIconOn->setDraw(false);
+	playerOverheatBarBackground->setDraw(false);
+	playerOverheatBar->setDraw(false);
+	playerOverheatBarFrame->setDraw(false);
 
 	shieldSmallUltIconOff->setDraw(false);
 	shieldSmallUltIconOn->setDraw(false);
 	shieldBigUltIconOff->setDraw(false);
 	shieldBigUltIconOn->setDraw(false);
+
 
 	if (player) {
 		WeaponType playerWeapon = player->getWeaponType();
@@ -1194,6 +1170,9 @@ void LevelBossTest::updateSkillsIcon() {
 					bigUltOn = bowBigUltIconOn;
 					smallUltReady = player->getBow()->getSmallUltReady();
 					bigUltReady = player->getBow()->getBigUltReady();
+					playerOverheatBarBackground->setDraw(true);
+					playerOverheatBar->setDraw(true);
+					playerOverheatBarFrame->setDraw(true);
 					break;
 				case Shield_:
 					smallUltOff = shieldSmallUltIconOff;
@@ -1301,4 +1280,147 @@ void LevelBossTest::playerUltimateInput() {
 			}
 		}
 	}
+}
+
+void LevelBossTest::updateUIBar() {
+	static float healthOriginalWidth = playerHealthBar->getTransform().getScale().x;
+	static float healthBaseX = playerHealthBar->getTransform().getPosition().x;
+
+	//Health Bar
+	float healthPercentage = player->getHealth()->getCurrentHP() / player->getHealth()->getMaxHP();
+	healthPercentage = glm::clamp(healthPercentage, 0.0f, 1.0f);
+
+	float healthWidth = healthPercentage * healthOriginalWidth;
+
+	float healthX = healthBaseX - (healthOriginalWidth * 0.5f) + (healthWidth * 0.5f);
+
+	playerHealthBar->getTransform().setScale(glm::vec3(healthWidth, playerHealthBar->getTransform().getScale().y, playerHealthBar->getTransform().getScale().z));
+	playerHealthBar->getTransform().setPosition(glm::vec3(healthX, playerHealthBar->getTransform().getPosition().y, playerHealthBar->getTransform().getPosition().z));
+
+	//Wither Health Bar
+	float totalHealthPercentage = (player->getHealth()->getCurrentHP() + player->getHealth()->getWitherHP()) / player->getHealth()->getMaxHP();
+	totalHealthPercentage = glm::clamp(totalHealthPercentage, 0.0f, 1.0f);
+
+	float witherWidth = totalHealthPercentage * healthOriginalWidth;
+
+	float witherX = healthBaseX - (healthOriginalWidth * 0.5f) + (witherWidth * 0.5f);
+
+	witherHealthBar->getTransform().setScale(glm::vec3(witherWidth, witherHealthBar->getTransform().getScale().y, witherHealthBar->getTransform().getScale().z));
+	witherHealthBar->getTransform().setPosition(glm::vec3(witherX, witherHealthBar->getTransform().getPosition().y, witherHealthBar->getTransform().getPosition().z));
+
+	//Ultimate Bar
+	static float ultimateOriginalWidth = playerUltimateBar->getTransform().getScale().x;
+	static float ultimateBaseX = playerUltimateBar->getTransform().getPosition().x;
+
+	float ultimatePercentage = (player->getUltimateSlot() * 100.0f + player->getUltimateGauge()) / (player->getUltimateSlotMax() * 100.0f);
+	ultimatePercentage = glm::clamp(ultimatePercentage, 0.0f, 1.0f);
+
+	float ultimateWidth = ultimatePercentage * ultimateOriginalWidth;
+
+	float ultimateX = ultimateBaseX - (ultimateOriginalWidth * 0.5f) + (ultimateWidth * 0.5f);
+
+	playerUltimateBar->getTransform().setScale(glm::vec3(ultimateWidth, playerUltimateBar->getTransform().getScale().y, playerUltimateBar->getTransform().getScale().z));
+	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, playerUltimateBar->getTransform().getPosition().y, playerUltimateBar->getTransform().getPosition().z));
+
+	//Boss Health Bar
+	static float bossHealthOriginalWidth = bossHealthBar->getTransform().getScale().x;
+	static float bossHealthBaseX = bossHealthBar->getTransform().getPosition().x;
+
+	float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
+	//cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
+	bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
+
+	float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
+
+	float bossHealthX = bossHealthBaseX - (bossHealthOriginalWidth * 0.5f) + (bossHealthWidth * 0.5f);
+
+	bossHealthBar->getTransform().setScale(glm::vec3(bossHealthWidth, bossHealthBar->getTransform().getScale().y, bossHealthBar->getTransform().getScale().z));
+	bossHealthBar->getTransform().setPosition(glm::vec3(bossHealthX, 4.0f, 0.0f));
+
+	if (player->getWeaponType() == WeaponType::Bow_) {
+		//Overheat Bar
+		static float overheatOriginalWidth = playerOverheatBar->getTransform().getScale().x;
+		static float overheatBaseX = playerOverheatBar->getTransform().getPosition().x;
+
+		float overheatPercentage = player->getBow()->getCurrentOverheat() / player->getBow()->getMaxOverheat();
+		//float overheatPercentage = player->getBow()->getMaxOverheat() / player->getBow()->getMaxOverheat();
+		overheatPercentage = glm::clamp(overheatPercentage, 0.0f, 1.0f);
+
+		float overheatWidth = overheatPercentage * overheatOriginalWidth;
+
+		float overheatX = overheatBaseX - (overheatOriginalWidth * 0.5f) + (overheatWidth * 0.5f);
+
+		playerOverheatBar->getTransform().setScale(glm::vec3(overheatWidth, playerOverheatBar->getTransform().getScale().y, playerOverheatBar->getTransform().getScale().z));
+		playerOverheatBar->getTransform().setPosition(glm::vec3(overheatX, playerOverheatBar->getTransform().getPosition().y, playerOverheatBar->getTransform().getPosition().z));
+	}
+}
+
+void LevelBossTest::savePlayerData(const Player* player, const std::string& filename) {
+	ofstream outFile(filename);
+	if (!outFile) {
+		cerr << "Error opening file for writing!" << endl;
+		return;
+	}
+
+	if (player) {
+		// Save player data with descriptions and line breaks
+		outFile << "Player Health: " << player->getHealth()->getCurrentHP() << endl;
+		outFile << "Player Wither Health: " << player->getHealth()->getWitherHP() << endl;
+		outFile << "Player Lives: " << player->getLives() << endl;
+
+		cout << "Saved Successful." << endl;
+	}
+	else {
+		cerr << "Player is missing, save file does not write." << endl;
+	}
+
+	outFile.close();
+}
+
+Player* LevelBossTest::loadPlayerData(const string& filepath) {
+	ifstream inFile(filepath);
+	if (!inFile) {
+		cerr << "Error opening file for reading! Using default values.\n";
+		return new Player(100, 0, 3);
+	}
+
+	string line;
+
+	float hp = 100.0f;
+	float wither = 0.0f;
+	int lives = 3;
+
+	auto extractValue = [&inFile](const string& label, auto& value) {
+		string line;
+		if (getline(inFile, line)) {
+			size_t pos = line.find(label);
+			if (pos != string::npos) {
+				try {
+					value = stof(line.substr(pos + label.length()));  // Convert to float or int
+				}
+				catch (...) {
+					cerr << "Error reading " << label << endl;
+				}
+			}
+		}
+		};
+
+	extractValue("Player Health:", hp);
+	extractValue("Player Wither Health:", wither);
+	extractValue("Player Lives:", lives);
+
+
+	inFile.close();
+	cout << "Data loaded from text file.\n";
+
+	cout << "Player health: " << hp << endl;
+	cout << "Player wither health: " << wither << endl;
+	cout << "Player lives: " << lives << endl;
+
+	Player* player_ = new Player(hp, wither, lives);
+	/*player_->getHealth()->setHP(hp);
+	player_->getHealth()->setWitherHP(wither);
+	player_->setLives(lives);*/
+
+	return player_;
 }

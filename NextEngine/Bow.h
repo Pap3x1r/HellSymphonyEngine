@@ -11,9 +11,9 @@ class Bow {
 
 	float currentRapidOverheat = 0.0f;
 	float maxRapidOverheat = 100.0f;
-	float overheatPerArrow = 7.5f;
-	float normalDecreaseRate = 25.0f;
-	float overheatDecreaseRate = 17.5f;
+	float overheatPerArrow = 30.0f;
+	float normalDecreaseRate = 20.0f;
+	float overheatDecreaseRate = 15.0f;
 	bool isOverheat = false;
 
 	bool isShooting = false;
@@ -65,4 +65,12 @@ public:
 
 	void setBigUltReady(bool v);
 	bool getBigUltReady() const;
+
+	float getCurrentOverheat() {
+		return currentRapidOverheat;
+	}
+
+	float getMaxOverheat() {
+		return maxRapidOverheat;
+	}
 };

@@ -35,6 +35,10 @@ private:
 	SimpleObject* playerUltimateBar;
 	SimpleObject* witherHealthBar;
 	SimpleObject* bossHealthBar;
+	SimpleObject* playerOverheatBar;
+
+	TexturedObject* playerOverheatBarBackground = nullptr;
+	TexturedObject* playerOverheatBarFrame = nullptr;
 
 	//Skill Icon
 	TexturedObject* bowSmallUltIconOff = nullptr;
@@ -55,6 +59,7 @@ private:
 	void createSkillsIcon();
 	void updateSkillsIcon();
 	void playerUltimateInput();
+	void updateUIBar();
 
 	float playerTimeScale = 1.0f;
 
@@ -91,4 +96,8 @@ public:
 	void resetLevel() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 	}
+
+	void savePlayerData(const Player* player, const std::string& filename);
+
+	Player* loadPlayerData(const string& filepath);
 };
