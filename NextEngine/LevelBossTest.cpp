@@ -152,6 +152,108 @@ void LevelBossTest::levelInit() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
+	//										Bow Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* bowSmallUltIconOff_ = new TexturedObject("Bow Small Ultimate Icon Off");
+	bowSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_Off.png");
+	bowSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(bowSmallUltIconOff_);
+	bowSmallUltIconOff = bowSmallUltIconOff_;
+
+	TexturedObject* bowSmallUltIconOn_ = new TexturedObject("Bow Small Ultimate Icon On");
+	bowSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_On.png");
+	bowSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(bowSmallUltIconOn_);
+	bowSmallUltIconOn = bowSmallUltIconOn_;
+
+	TexturedObject* bowBigUltIconOff_ = new TexturedObject("Bow Big Ultimate Icon Off");
+	bowBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_Off.png");
+	bowBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(bowBigUltIconOff_);
+	bowBigUltIconOff = bowBigUltIconOff_;
+
+	TexturedObject* bowBigUltIconOn_ = new TexturedObject("Bow Big Ultimate Icon On");
+	bowBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_On.png");
+	bowBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(bowBigUltIconOn_);
+	bowBigUltIconOn = bowBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Sword Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* swordSmallUltIconOff_ = new TexturedObject("Sword Small Ultimate Icon Off");
+	swordSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_Off.png");
+	swordSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(swordSmallUltIconOff_);
+	swordSmallUltIconOff = swordSmallUltIconOff_;
+
+	TexturedObject* swordSmallUltIconOn_ = new TexturedObject("Sword Small Ultimate Icon On");
+	swordSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_On.png");
+	swordSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(swordSmallUltIconOn_);
+	swordSmallUltIconOn = swordSmallUltIconOn_;
+
+	TexturedObject* swordBigUltIconOff_ = new TexturedObject("Sword Big Ultimate Icon Off");
+	swordBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_Off.png");
+	swordBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(swordBigUltIconOff_);
+	swordBigUltIconOff = swordBigUltIconOff_;
+
+	TexturedObject* swordBigUltIconOn_ = new TexturedObject("Sword Big Ultimate Icon On");
+	swordBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_On.png");
+	swordBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(swordBigUltIconOn_);
+	swordBigUltIconOn = swordBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Shield Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* shieldSmallUltIconOff_ = new TexturedObject("Shield Small Ultimate Icon Off");
+	shieldSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_Off.png");
+	shieldSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(shieldSmallUltIconOff_);
+	shieldSmallUltIconOff = shieldSmallUltIconOff_;
+
+	TexturedObject* shieldSmallUltIconOn_ = new TexturedObject("Shield Small Ultimate Icon On");
+	shieldSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_On.png");
+	shieldSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(shieldSmallUltIconOn_);
+	shieldSmallUltIconOn = shieldSmallUltIconOn_;
+
+	TexturedObject* shieldBigUltIconOff_ = new TexturedObject("Shield Big Ultimate Icon Off");
+	shieldBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_Off.png");
+	shieldBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(shieldBigUltIconOff_);
+	shieldBigUltIconOff = shieldBigUltIconOff_;
+
+	TexturedObject* shieldBigUltIconOn_ = new TexturedObject("Shield Big Ultimate Icon On");
+	shieldBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_On.png");
+	shieldBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(shieldBigUltIconOn_);
+	shieldBigUltIconOn = shieldBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
 	//										Black Fading Transition
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +261,6 @@ void LevelBossTest::levelInit() {
 	TexturedObject* blackFade_ = new TexturedObject("Black Fade");
 	blackFade_->setTexture("../Resource/Texture/blackFade.png");
 	blackFade_->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
-	blackFade_->setMenuState(MenuState::IGNORE);
 	objectsList.push_back(blackFade_);
 	blackFade = blackFade_;
 	blackFade->setAlpha(1.0f);
@@ -173,6 +274,7 @@ void LevelBossTest::levelUpdate() {
 	float playerDT = dt * playerTimeScale;
 	timeK += dt;
 	updateObjects(objectsList);
+	updateSkillsIcon();
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
@@ -516,54 +618,7 @@ void LevelBossTest::handleKey(char key) {
 		ziz->interruptDeath();
 		break;
 	case 'q':
-
-		if (!player->getIsGrounded()) {
-			return;
-		}
-
-		if (player->getWeaponType() == Bow_) {
-			//cout << "works" << endl;
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
-				}
-			}
-		}
-		else if (player->getWeaponType() == Sword_) {
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
-				}
-			}
-		}
-		else if (player->getWeaponType() == Shield_) {
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
-				}
-			}
-		}
+		playerUltimateInput();
 		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
@@ -793,53 +848,8 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		
 		break;
 	case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
-		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
-			return;
-		}
 
-		if (player->getWeaponType() == Bow_) {
-			//cout << "works" << endl;
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
-				}
-			}
-		}
-		else if (player->getWeaponType() == Sword_) {
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
-				}
-			}
-		}
-		else if (player->getWeaponType() == Shield_) {
-			if (player->getUltimateSlot() > 0) {
-				if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
-					player->increaseUltimateSlot(-1); //decrease ult slot by 1
-					//enter small ult
-					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
-				}
-				else {
-					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
-					//enter big ult
-					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
-				}
-			}
-		}
+		playerUltimateInput();
 
 		break;
 
@@ -885,8 +895,6 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 			return;
 		}
 		if (type == 0) {
-			
-
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
 					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
@@ -1034,4 +1042,263 @@ void LevelBossTest::addObject(DrawableObject* obj) {
 
 void LevelBossTest::addPlayerToDebug(Player* player) {
 
+}
+
+void LevelBossTest::createSkillsIcon() {
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Bow Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* bowSmallUltIconOff_ = new TexturedObject("Bow Small Ultimate Icon Off");
+	bowSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_Off.png");
+	bowSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(bowSmallUltIconOff_);
+	bowSmallUltIconOff = bowSmallUltIconOff_;
+
+	TexturedObject* bowSmallUltIconOn_ = new TexturedObject("Bow Small Ultimate Icon On");
+	bowSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_On.png");
+	bowSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(bowSmallUltIconOn_);
+	bowSmallUltIconOn = bowSmallUltIconOn_;
+
+	TexturedObject* bowBigUltIconOff_ = new TexturedObject("Bow Big Ultimate Icon Off");
+	bowBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_Off.png");
+	bowBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(bowBigUltIconOff_);
+	bowBigUltIconOff = bowBigUltIconOff_;
+
+	TexturedObject* bowBigUltIconOn_ = new TexturedObject("Bow Big Ultimate Icon On");
+	bowBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_On.png");
+	bowBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	bowBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(bowBigUltIconOn_);
+	bowBigUltIconOn = bowBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Sword Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* swordSmallUltIconOff_ = new TexturedObject("Sword Small Ultimate Icon Off");
+	swordSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_Off.png");
+	swordSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(swordSmallUltIconOff_);
+	swordSmallUltIconOff = swordSmallUltIconOff_;
+
+	TexturedObject* swordSmallUltIconOn_ = new TexturedObject("Sword Small Ultimate Icon On");
+	swordSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_On.png");
+	swordSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(swordSmallUltIconOn_);
+	swordSmallUltIconOn = swordSmallUltIconOn_;
+
+	TexturedObject* swordBigUltIconOff_ = new TexturedObject("Sword Big Ultimate Icon Off");
+	swordBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_Off.png");
+	swordBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(swordBigUltIconOff_);
+	swordBigUltIconOff = swordBigUltIconOff_;
+
+	TexturedObject* swordBigUltIconOn_ = new TexturedObject("Sword Big Ultimate Icon On");
+	swordBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_On.png");
+	swordBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	swordBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(swordBigUltIconOn_);
+	swordBigUltIconOn = swordBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Shield Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* shieldSmallUltIconOff_ = new TexturedObject("Shield Small Ultimate Icon Off");
+	shieldSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_Off.png");
+	shieldSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(shieldSmallUltIconOff_);
+	shieldSmallUltIconOff = shieldSmallUltIconOff_;
+
+	TexturedObject* shieldSmallUltIconOn_ = new TexturedObject("Shield Small Ultimate Icon On");
+	shieldSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_On.png");
+	shieldSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	objectsList.push_back(shieldSmallUltIconOn_);
+	shieldSmallUltIconOn = shieldSmallUltIconOn_;
+
+	TexturedObject* shieldBigUltIconOff_ = new TexturedObject("Shield Big Ultimate Icon Off");
+	shieldBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_Off.png");
+	shieldBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(shieldBigUltIconOff_);
+	shieldBigUltIconOff = shieldBigUltIconOff_;
+
+	TexturedObject* shieldBigUltIconOn_ = new TexturedObject("Shield Big Ultimate Icon On");
+	shieldBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_On.png");
+	shieldBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	shieldBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	objectsList.push_back(shieldBigUltIconOn_);
+	shieldBigUltIconOn = shieldBigUltIconOn_;
+}
+
+void LevelBossTest::updateSkillsIcon() {
+
+	TexturedObject* smallUltOff = nullptr;
+	TexturedObject* smallUltOn = nullptr;
+	TexturedObject* bigUltOff = nullptr;
+	TexturedObject* bigUltOn = nullptr;
+	bool smallUltReady = false;
+	bool bigUltReady = false;
+
+	swordSmallUltIconOff->setDraw(false);
+	swordSmallUltIconOn->setDraw(false);
+	swordBigUltIconOff->setDraw(false);
+	swordBigUltIconOn->setDraw(false);
+
+	bowSmallUltIconOff->setDraw(false);
+	bowSmallUltIconOn->setDraw(false);
+	bowBigUltIconOff->setDraw(false);
+	bowBigUltIconOn->setDraw(false);
+
+	shieldSmallUltIconOff->setDraw(false);
+	shieldSmallUltIconOn->setDraw(false);
+	shieldBigUltIconOff->setDraw(false);
+	shieldBigUltIconOn->setDraw(false);
+
+	if (player) {
+		WeaponType playerWeapon = player->getWeaponType();
+		if (playerWeapon) {
+			switch (playerWeapon) {
+				case None_:
+					return;
+					break;
+				case Sword_:
+					smallUltOff = swordSmallUltIconOff;
+					smallUltOn = swordSmallUltIconOn;
+					bigUltOff = swordBigUltIconOff;
+					bigUltOn = swordBigUltIconOn;
+					smallUltReady = player->getSword()->getSmallUltReady();
+					bigUltReady = player->getSword()->getBigUltReady();
+					break;
+				case Bow_:
+					smallUltOff = bowSmallUltIconOff;
+					smallUltOn = bowSmallUltIconOn;
+					bigUltOff = bowBigUltIconOff;
+					bigUltOn = bowBigUltIconOn;
+					smallUltReady = player->getBow()->getSmallUltReady();
+					bigUltReady = player->getBow()->getBigUltReady();
+					break;
+				case Shield_:
+					smallUltOff = shieldSmallUltIconOff;
+					smallUltOn = shieldSmallUltIconOn;
+					bigUltOff = shieldBigUltIconOff;
+					bigUltOn = shieldBigUltIconOn;
+					smallUltReady = player->getShield()->getSmallUltReady();
+					bigUltReady = player->getShield()->getBigUltReady();
+					break;
+			}
+
+
+			if (player->getUltimateSlot() >= 1) {
+				if (smallUltReady) {
+					smallUltOff->setDraw(false);
+					smallUltOn->setDraw(true);
+				}
+				else {
+					smallUltOff->setDraw(true);
+					smallUltOn->setDraw(false);
+				}
+			}
+			else if (player->getUltimateSlot() == 0) {
+				smallUltOff->setDraw(true);
+				smallUltOn->setDraw(false);
+			}
+
+			if (player->getUltimateSlot() == player->getUltimateSlotMax()) {
+				if (bigUltReady) {
+					bigUltOff->setDraw(false);
+					bigUltOn->setDraw(true);
+				}
+				else {
+					bigUltOff->setDraw(true);
+					bigUltOn->setDraw(false);
+				}
+			}
+			else {
+				bigUltOff->setDraw(true);
+				bigUltOn->setDraw(false);
+			}
+		}
+	}
+}
+
+void LevelBossTest::playerUltimateInput() {
+	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
+		return;
+	}
+
+	if (player->getWeaponType() == Bow_) {
+		//cout << "works" << endl;
+
+
+		if (player->getUltimateSlot() > 0) {
+			if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+				if (player->getBow()->getSmallUltReady()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallBowUlt::getInstance(), player);
+				}
+			}
+			else {
+				if (player->getBow()->getBigUltReady()) {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigBowUlt::getInstance(), player);
+				}
+			}
+		}
+	}
+	else if (player->getWeaponType() == Sword_) {
+		if (player->getUltimateSlot() > 0) {
+			if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+				if (player->getSword()->getSmallUltReady()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallSwordUlt::getInstance(), player);
+				}
+			}
+			else {
+				if (player->getSword()->getBigUltReady()) {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigSwordUlt::getInstance(), player);
+				}
+			}
+		}
+	}
+	else if (player->getWeaponType() == Shield_) {
+		if (player->getUltimateSlot() > 0) {
+			if (player->getUltimateSlot() < player->getUltimateSlotMax()) {
+				if (player->getShield()->getSmallUltReady()) {
+					player->increaseUltimateSlot(-1); //decrease ult slot by 1
+					//enter small ult
+					player->getStateMachine()->changeState(PlayerSmallShieldUlt::getInstance(), player);
+				}
+			}
+			else {
+				if (player->getShield()->getBigUltReady()) {
+					player->increaseUltimateSlot(-player->getUltimateSlotMax()); //decrease ult slot by max
+					//enter big ult
+					player->getStateMachine()->changeState(PlayerBigShieldUlt::getInstance(), player);
+				}
+			}
+		}
+	}
 }

@@ -85,6 +85,8 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="BowUltimateCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Resource\imgui\include\imconfig.h" />

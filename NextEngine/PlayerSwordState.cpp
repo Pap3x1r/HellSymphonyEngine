@@ -384,6 +384,7 @@ void PlayerSmallSwordUlt::enter(Player* player) {
     player->getSword()->setInChainAttack(true); //Player is in chain attack
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.2f, 0.0f, 0.0f));
+    player->getSword()->setSmallUltReady(false);
 }
 
 void PlayerSmallSwordUlt::update(Player* player, float dt_) {
@@ -442,6 +443,7 @@ void PlayerSmallSwordUlt::exit(Player* player) {
     cout << "Player exits Sword Small Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    player->getSword()->setSmallUltReady(true);
 }
 
 ////BigSwordUlt
@@ -453,6 +455,7 @@ void PlayerBigSwordUlt::enter(Player* player) {
     player->getSword()->setInChainAttack(true); //Player is in chain attack
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.125f, -0.165f, 0.0f));
+    player->getSword()->setBigUltReady(false);
 }
 
 void PlayerBigSwordUlt::update(Player* player, float dt_) {
@@ -504,4 +507,5 @@ void PlayerBigSwordUlt::exit(Player* player) {
     cout << "Player exits Sword Big Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+    player->getSword()->setBigUltReady(true);
 }

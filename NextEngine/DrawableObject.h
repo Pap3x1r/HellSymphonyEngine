@@ -43,7 +43,7 @@ private:
 	bool isMarkedForDelete;
 
 	MenuState menuState = MenuState::NONE;
-	vector<MenuState> menuStateVec;
+	vector<MenuState> menuStateVec = { MenuState::NONE };
 	float alpha = 1.0f; // Default alpha (visible)
 
 protected:

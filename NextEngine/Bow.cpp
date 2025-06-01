@@ -117,3 +117,19 @@ bool Bow::getRapidShotReady() const {
 bool Bow::getIsOverheat() const {
 	return isOverheat;
 }
+
+void Bow::setSmallUltReady(bool v) {
+	smallUltReady = v;
+}
+
+bool Bow::getSmallUltReady() const {
+	return smallUltReady;
+}
+
+void Bow::setBigUltReady(bool v) {
+	bigUltReady = v;
+}
+
+bool Bow::getBigUltReady() const {
+	return bigUltReady;
+}

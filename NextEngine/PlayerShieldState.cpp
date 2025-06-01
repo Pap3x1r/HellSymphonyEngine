@@ -294,6 +294,8 @@ void PlayerSmallShieldUlt::enter(Player* player) {
     time = 0.0f;
     player->getShield()->setInChainAttack(true); //Player is in chain attack
     player->setInvincibleFloat(1.0f);
+
+    player->getShield()->setSmallUltReady(false);
 }
 
 void PlayerSmallShieldUlt::update(Player* player, float dt_) {
@@ -302,6 +304,7 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
 
     DrawableObject* collider = player->getShield()->getChainAttackObject(2);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     switch (currentPhase) {
     case STARTUP:
@@ -347,10 +350,11 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
 
 void PlayerSmallShieldUlt::exit(Player* player) {
     cout << "Player exits Shield Small Ult state.\n";
+    player->getShield()->setSmallUltReady(true);
 
 }
 
-//Light Shield Attack 2
+//Shield Big Ult
 void PlayerBigShieldUlt::enter(Player* player) {
     cout << "Player enters Shield Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 24, 0);
@@ -359,6 +363,8 @@ void PlayerBigShieldUlt::enter(Player* player) {
     time = 0.0f;
     player->getShield()->setInChainAttack(true); //Player is in chain attack
     player->setInvincibleFloat(2.0f);
+
+    player->getShield()->setBigUltReady(false);
 }
 
 void PlayerBigShieldUlt::update(Player* player, float dt_) {
@@ -367,6 +373,7 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
 
     DrawableObject* collider = player->getShield()->getChainAttackObject(3);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+    player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     switch (currentPhase) {
     case STARTUP:
@@ -411,4 +418,5 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
 
 void PlayerBigShieldUlt::exit(Player* player) {
     cout << "Player exits Shield Big Ult state.\n";
+    player->getShield()->setBigUltReady(true);
 }

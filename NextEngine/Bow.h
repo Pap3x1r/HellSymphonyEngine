@@ -22,6 +22,9 @@ class Bow {
 
 	list<DrawableObject*> chainAttackList;
 
+	bool smallUltReady = true;
+	bool bigUltReady = true;
+
 public:
 
 	Bow();
@@ -56,4 +59,10 @@ public:
 		std::advance(it, index);
 		return *it;
 	}
+
+	void setSmallUltReady(bool v);
+	bool getSmallUltReady() const;
+
+	void setBigUltReady(bool v);
+	bool getBigUltReady() const;
 };

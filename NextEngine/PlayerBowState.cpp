@@ -126,6 +126,8 @@ void PlayerSmallBowUlt::enter(Player* player) {
     time = 0.0f;
     player->getBow()->setIsShooting(true);
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+
+    player->getBow()->setSmallUltReady(false);
 }
 
 void PlayerSmallBowUlt::update(Player* player, float dt_) {
@@ -197,6 +199,8 @@ void PlayerBigBowUlt::enter(Player* player) {
     time = 0.0f;
     player->getBow()->setIsShooting(true);
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+
+    player->getBow()->setBigUltReady(false);
 }
 
 void PlayerBigBowUlt::update(Player* player, float dt_) {

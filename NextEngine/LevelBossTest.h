@@ -36,6 +36,26 @@ private:
 	SimpleObject* witherHealthBar;
 	SimpleObject* bossHealthBar;
 
+	//Skill Icon
+	TexturedObject* bowSmallUltIconOff = nullptr;
+	TexturedObject* bowSmallUltIconOn = nullptr;
+	TexturedObject* bowBigUltIconOff = nullptr;
+	TexturedObject* bowBigUltIconOn = nullptr;
+
+	TexturedObject* swordSmallUltIconOff = nullptr;
+	TexturedObject* swordSmallUltIconOn = nullptr;
+	TexturedObject* swordBigUltIconOff = nullptr;
+	TexturedObject* swordBigUltIconOn = nullptr;
+
+	TexturedObject* shieldSmallUltIconOff = nullptr;
+	TexturedObject* shieldSmallUltIconOn = nullptr;
+	TexturedObject* shieldBigUltIconOff = nullptr;
+	TexturedObject* shieldBigUltIconOn = nullptr;
+
+	void createSkillsIcon();
+	void updateSkillsIcon();
+	void playerUltimateInput();
+
 	float playerTimeScale = 1.0f;
 
 	float blackFadeTransitionTime = 0.0f;
@@ -46,6 +66,8 @@ private:
 
 	int tempx;
 	int tempx2;
+
+	
 
 public:
 	virtual void levelLoad();

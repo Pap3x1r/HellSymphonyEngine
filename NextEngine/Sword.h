@@ -25,6 +25,9 @@ private:
 
     bool canDrawCollider = false;
 
+    bool smallUltReady = true;
+    bool bigUltReady = true;
+
 public:
     // Constructor and Destructor
     Sword();
@@ -50,4 +53,10 @@ public:
     }
 
     DrawableObject* getChainAttackObject(int index);
+
+    void setSmallUltReady(bool v);
+    bool getSmallUltReady() const;
+
+    void setBigUltReady(bool v);
+    bool getBigUltReady() const;
 };

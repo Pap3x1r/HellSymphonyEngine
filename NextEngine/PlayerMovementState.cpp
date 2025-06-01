@@ -94,7 +94,7 @@ void PlayerJumpUpState::enter(Player* player) {
         player->getAnimationComponent()->setState("jumpingSword"); //set state
         break;
     case Shield_:
-        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_jumping_shield.png", 1, 2, 0);
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_jumping_shield.png", 1, 1, 0);
         player->getAnimationComponent()->setState("jumpingShield");
         break;
     case Bow_:

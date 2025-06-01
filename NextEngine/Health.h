@@ -166,13 +166,27 @@ public:
 
     void healWither(float amount)
     {
-        if (witherHealth - amount < 0)
+        if (witherHealth > 0)
         {
-            witherHealth = 0;
-        }
-        else
-        {
-            witherHealth -= amount;
+            if (amount > witherHealth)
+            {
+                amount -= witherHealth;
+                witherHealth = 0;
+            }
+            else
+            {
+                witherHealth -= amount;
+                amount = 0;
+            }
+
+            if (currentHealth + amount > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            else
+            {
+                currentHealth += amount;
+            }
         }
     }
 

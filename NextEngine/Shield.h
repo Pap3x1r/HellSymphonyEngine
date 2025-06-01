@@ -29,218 +29,51 @@ class Shield {
 
 	bool canDrawCollider = false;
 
+	bool smallUltReady = true;
+	bool bigUltReady = true;
+
 public:
 
-	Shield() {
-		PlayerAttackCollider* attack1 = new PlayerAttackCollider(15, 100); //Change damage and ult gain percentage here
-		attack1->setName("Attack1");
-		attack1->setDraw(false);
-		attack1->addColliderComponent();
-		attack1->getColliderComponent()->setTrigger(true);
-		attack1->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack1->getColliderComponent()->setDimension(1.4f, 0.6f); //Set collider dimension
-		//attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
-		attack1->setDrawCollider(false);
-		chainAttackList.push_back(attack1);
+	Shield();
 
-		PlayerAttackCollider* attack2 = new PlayerAttackCollider(15, 100);
-		attack2->setName("Attack2");
-		attack2->setDraw(false);
-		attack2->addColliderComponent();
-		attack2->getColliderComponent()->setTrigger(true);
-		attack2->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
-		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
-		attack2->setDrawCollider(false);
-		chainAttackList.push_back(attack2);
+	~Shield();
 
-		PlayerAttackCollider* attack3 = new PlayerAttackCollider(500, 0);
-		attack3->initAnimation(0, 0);
-		attack3->getAnimationComponent()->addState("explosion", 0, 10);
-		attack3->getAnimationComponent()->setLoop(false);
-		attack3->setName("SmallUlt");
-		attack3->setDraw(false);
-		attack3->getTransform().setScale(glm::vec3(5.0f, 5.0f, 5.0f));
-		attack3->addColliderComponent();
-		attack3->getColliderComponent()->setTrigger(true);
-		attack3->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack3->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
-		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
-		attack3->setDrawCollider(false);
-		chainAttackList.push_back(attack3);
+	void update(float dt, Player* playerObject);
 
-		PlayerAttackCollider* attack4 = new PlayerAttackCollider(1850, 0);
-		attack4->initAnimation(0, 0);
-		attack4->getAnimationComponent()->addState("explosion", 0, 12);
-		attack4->getAnimationComponent()->setLoop(false);
-		attack4->setName("BigUlt");
-		attack4->setDraw(false);
-		attack4->getTransform().setScale(glm::vec3(7.5f, 7.5f, 7.5f));
-		attack4->addColliderComponent();
-		attack4->getColliderComponent()->setTrigger(true);
-		attack4->getColliderComponent()->setEnableCollision(false); //Set collision to false at the start
-		attack4->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
-		//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
-		attack4->setDrawCollider(false);
-		chainAttackList.push_back(attack4);
-	}
+	void flipOffset(DrawableObject* obj, Player* playerObject);
 
-	~Shield() {
-		for (auto obj : chainAttackList) {
-			delete obj;
-		}
-	}
+	void chainAttack();
 
-	void update(float dt, Player* playerObject) {
-		list<DrawableObject*>::iterator itr = chainAttackList.begin();
-		glm::vec3 playerPos = playerObject->getTransform().getPosition();
+	list<DrawableObject*> getChainAttackList() const;
 
-		for (auto obj : chainAttackList) {
+	void setCurrentChainAttack(int i);
 
-			if (!canDrawCollider) {
-				obj->setCanDrawColliderNew(false);
-			}
-			else {
-				obj->setCanDrawColliderNew(true);
-			}
+	int getCurrentChainAttack() const;
 
-			PlayerAttackCollider* col = dynamic_cast<PlayerAttackCollider*>(obj);
+	void setInChainAttack(bool s);
 
-			if (!col) {
-				return;
-			}
+	bool getInChainAttack() const;
 
-			if (col->getCanDraw()) {
-				if (!col->getAnimationComponent()->getAnimationCompleted()) {
-					return;
-				}
-			}
+	void setInputBuffer(bool s);
 
-			if (obj->getName() == "Attack1") {
-				obj->getTransform().setPosition(playerPos + attack1Offset);
-				flipOffset(obj, playerObject);
-			}
-			else if (obj->getName() == "Attack2") {
-				obj->getTransform().setPosition(playerPos + attack2Offset);
-				flipOffset(obj, playerObject);
-			}
-			else if (obj->getName() == "SmallUlt") {
-				obj->getTransform().setPosition(playerPos + smallUltOffset);
-				flipOffset(obj, playerObject);
-			}
-			else if (obj->getName() == "BigUlt") {
-				obj->getTransform().setPosition(playerPos + bigUltOffset);
-				flipOffset(obj, playerObject);
-			}
-		}
-	}
+	bool getInputBuffer() const;
 
-	void flipOffset(DrawableObject* obj, Player* playerObject) {
-		if (!playerObject) return;
-		if (playerObject->getFacingRight()) return;
+	DrawableObject* getChainAttackObject(int index);
 
-		glm::vec3 newPos = playerObject->getTransform().getPosition();
+	void setIsHolding(bool s);
+	bool getIsHolding() const;
 
-		if (obj->getName() == "Attack1") {
-			newPos.x = newPos.x - attack1Offset.x;
-			newPos.y = newPos.y + attack1Offset.y;
-			obj->getTransform().setPosition(newPos);
-		}
-		else if (obj->getName() == "Attack2") {
-			newPos.x = newPos.x - attack2Offset.x;
-			newPos.y = newPos.y + attack2Offset.y;
-			obj->getTransform().setPosition(newPos);
-		}
-		else if (obj->getName() == "SmallUlt") {
-			newPos.x = newPos.x - smallUltOffset.x;
-			newPos.y = newPos.y + smallUltOffset.y;
-			obj->getTransform().setPosition(newPos);
-		}
-		else if (obj->getName() == "BigUlt") {
-			newPos.x = newPos.x - bigUltOffset.x;
-			newPos.y = newPos.y + bigUltOffset.y;
-			obj->getTransform().setPosition(newPos);
-		}
-	}
+	void setIsBlocking(bool s);
+	bool getIsBlocking() const;
 
-	void chainAttack() { //Unused
-		list<DrawableObject*>::iterator itr = chainAttackList.begin();
+	void setIsPerfect(bool s);
+	bool getIsPerfect() const;
 
-		switch (currentChainAttack) {
-		case 0: // Start of the chain attack
-			//Change player animation
-			//Enable first chainAttackList object hitbox
-			if (itr != chainAttackList.end() && *itr != nullptr) {
-				DrawableObject* attack = *itr;
-				attack->setDrawCollider(true);
-				inChainAttack = true;
-			}
-		}
-	}
+	bool* getCanDrawColliderAddress();
 
-	list<DrawableObject*> getChainAttackList() const {
-		return chainAttackList;
-	}
+	void setSmallUltReady(bool v);
+	bool getSmallUltReady() const;
 
-	void setCurrentChainAttack(int i) {
-		currentChainAttack = i;
-	}
-
-	int getCurrentChainAttack() const {
-		return currentChainAttack;
-	}
-
-	void setInChainAttack(bool s) {
-		inChainAttack = s;
-	}
-
-	bool getInChainAttack() const {
-		return inChainAttack;
-	}
-
-	void setInputBuffer(bool s) {
-		inputBuffer = s;
-	}
-
-	bool getInputBuffer() const {
-		return inputBuffer;
-	}
-
-	DrawableObject* getChainAttackObject(int index) {
-		if (index < 0 || index >= chainAttackList.size()) {
-			return nullptr;
-		}
-
-		auto it = chainAttackList.begin();
-		std::advance(it, index);
-		return *it;
-	}
-
-	void setIsHolding(bool s) {
-		isHolding = s;
-	}
-
-	bool getIsHolding() const {
-		return isHolding;
-	}
-
-	void setIsBlocking(bool s) {
-		isBlocking = s;
-	}
-
-	bool getIsBlocking() const {
-		return isBlocking;
-	}
-
-	void setIsPerfect(bool s) {
-		isPerfect = s;
-	}
-
-	bool getIsPerfect() const {
-		return isPerfect;
-	}
-
-	bool* getCanDrawColliderAddress() {
-		return &canDrawCollider;
-	}
+	void setBigUltReady(bool v);
+	bool getBigUltReady() const;
 };

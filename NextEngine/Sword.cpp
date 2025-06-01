@@ -197,3 +197,19 @@ DrawableObject* Sword::getChainAttackObject(int index) {
     std::advance(it, index);
     return *it;
 }
+
+void Sword::setSmallUltReady(bool v) {
+    smallUltReady = v;
+}
+
+bool Sword::getSmallUltReady() const {
+    return smallUltReady;
+}
+
+void Sword::setBigUltReady(bool v) {
+    bigUltReady = v;
+}
+
+bool Sword::getBigUltReady() const {
+    return bigUltReady;
+}

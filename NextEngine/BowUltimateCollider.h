@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Ziz.h"
+#include "Bow.h"
 
 class BowUltimateCollider : public PlayerAttackCollider {
 	float damage;
@@ -22,118 +23,29 @@ class BowUltimateCollider : public PlayerAttackCollider {
 	glm::vec3 defaultPosition = { 0.0f,0.0f,0.0f };
 
 public:
-	BowUltimateCollider() {
-		damage = 0;
-		ultGainPercentage = 0;
-	}
+	BowUltimateCollider();
+	BowUltimateCollider(float damage_);
+	BowUltimateCollider(float damage_, float ultPercentage_);
+	BowUltimateCollider(float damage_, float ultPercentage_, float xOffset_);
 
-	BowUltimateCollider(float damage_) {
-		damage = damage_;
-		ultGainPercentage = 0;
-	}
+	void update(float dt);
 
-	BowUltimateCollider(float damage_, float ultPercentage_) {
-		damage = damage_;
-		ultGainPercentage = ultPercentage_;
-	}
+	void onCollisionEnter(Collider* collider) override;
+	void onCollisionStay(Collider* collider) override;
+	void onCollisionExit(Collider* collider) override;
+	void onTriggerEnter(Collider* collider) override;
+	void onTriggerStay(Collider* collider) override;
+	void onTriggerExit(Collider* collider) override;
 
-	BowUltimateCollider(float damage_, float ultPercentage_, float xOffset_) {
-		damage = damage_;
-		ultGainPercentage = ultPercentage_;
-		xOffset = xOffset_;
-	}
+	float getXOffset() const;
 
-	void update(float dt) {
-		if (isEnable) {
-			timeElapsed += dt;
-			timeEnabled += dt;
+	void resetHit();
 
-			//cout << "timeElapsed " << timeElapsed << " timeEnabled: " << timeEnabled << endl;
+	void setPlayer(Player* p);
 
-			if (timeElapsed >= hitCooldown) {
-				resetHit();
-			}
+	void setEnable(bool value);
 
-			if (timeEnabled >= timeLimit) {
-				isEnable = false;
-				timeElapsed = 0.0f;
-				timeEnabled = 0.0f;
-				setDrawCollider(false);
-				setDraw(false);
-				getColliderComponent()->setEnableCollision(false);
-			}
-		}
-	}
+	void setTimeLimit(float value);
 
-	void onCollisionEnter(Collider* collider) override {
-
-	}
-
-	void onCollisionStay(Collider* collider) override {
-
-	}
-
-	void onCollisionExit(Collider* collider) override {
-
-	}
-	void onTriggerEnter(Collider* collider) override {
-
-	}
-
-	void onTriggerStay(Collider* collider) override {
-		DrawableObject* obj = collider->getObject();
-		DrawableObject* obj2 = collider->getObject();
-
-		Enemy* enemy = dynamic_cast<Enemy*>(obj);
-		Ziz* ziz = dynamic_cast<Ziz*>(obj2);
-
-		if (enemy) {
-			//playerInside = true;
-			if (!hasHit) {
-				//cout << "Player Hit Enemy for " << damage << " damage." << endl;
-				if (player) {
-					player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
-					//cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
-				}
-
-				if (ziz) {
-					//cout << "ult hit ziz" << endl;
-					ziz->getHealth()->takeDamage(damage);
-					//cout << "ziz health from ult: " << ziz->getCurrentHealth() << endl;
-				}
-
-				hasHit = true;
-			}
-
-		}
-	}
-
-	void onTriggerExit(Collider* collider) override {
-
-	}
-
-	float getXOffset() const {
-		return xOffset;
-	}
-
-	void resetHit() {
-		hasHit = false;
-		timeElapsed -= hitCooldown;
-	}
-
-	void setPlayer(Player* p) {
-		player = p;
-	}
-
-	void setEnable(bool value) {
-		isEnable = value;
-	}
-
-	void setTimeLimit(float value) {
-		timeLimit = value;
-	}
-
-	void setHitCooldown(float value) {
-		hitCooldown = value;
-	}
+	void setHitCooldown(float value);
 };

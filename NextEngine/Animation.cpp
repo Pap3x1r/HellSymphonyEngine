@@ -26,6 +26,7 @@ void Animation::render(glm::mat4 globalModelTransform, Transform& transform) {
 
 	GLuint hitEffectStrengthId = GameEngine::getInstance()->getRenderer()->getHitEffectUniformId();
 	GLuint colorOverrideId = GameEngine::getInstance()->getRenderer()->getColorOverrideUniformId();
+	GLuint alphaOverrideId = GameEngine::getInstance()->getRenderer()->getAlphaOverrideUniformId();
 
 	if (modelMatixId == -1) {
 		cout << "Error: Can't perform transformation " << endl;
@@ -41,6 +42,7 @@ void Animation::render(glm::mat4 globalModelTransform, Transform& transform) {
 	}
 
 	glUniform1f(hitEffectStrengthId, parent->getHitEffectStrength());
+	glUniform1f(alphaOverrideId, parent->getAlpha());
 	glUniform4f(colorOverrideId, parent->getNewColor().x, parent->getNewColor().y, parent->getNewColor().z, parent->getNewColor().a);
 
 	vector <glm::mat4> matrixStack;
