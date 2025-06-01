@@ -60,6 +60,7 @@ private:
 	void updateSkillsIcon();
 	void playerUltimateInput();
 	void updateUIBar();
+	void stateMachineUpdate(float dt);
 
 	float playerTimeScale = 1.0f;
 

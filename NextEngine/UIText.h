@@ -79,7 +79,7 @@ public:
         //offsetY = -getTransform().getScale().y * 0.25f;
         //cout << "offsetX: " << offsetX << " offsetY: " << offsetY << endl;
 
-        const char* stateNames[] = { "NONE", "MAIN", "OPTIONS", "AUDIO", "CONTROLS", "CREDITS" };
+        const char* stateNames[] = { "NONE", "MAIN", "OPTIONS", "AUDIO", "CONTROLS", "CREDITS", "IGNORE"};
 
         int stateIndex = static_cast<int>(getMenuState());
 

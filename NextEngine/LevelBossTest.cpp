@@ -329,37 +329,8 @@ void LevelBossTest::levelUpdate() {
 		button->isHovered(mouseX, mouseY);
 	}
 
+	stateMachineUpdate(playerDT);
 
-	tempx2 = tempx;
-	tempx = ziz->getTransform().getPosition().y;
-	if (tempx2 != tempx) {
-		//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
-	}
-	//cout << "Ziz X: " << ziz->getTransform().getPosition().x << endl;
-	/*float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
-	cout << "Distance: " << distance << endl;*/
-
-	//cout << ziz->getCurrentHealth() << endl;
-
-
-	if (ziz->getStateMachine()) {
-		ziz->getStateMachine()->update(ziz, playerDT);
-	}
-
-	if (player->getStateMachine()) {
-		player->getStateMachine()->update(player, playerDT);
-		//cout << player->getTransform().getPosition().x << endl;
-		if (player->getTransform().getPosition().x > 7.5f) {
-			player->getTransform().setPosition(glm::vec3(7.5f, player->getTransform().getPosition().y, 0.0f));
-		}
-		if (player->getTransform().getPosition().x < -7.5f) {
-			player->getTransform().setPosition(glm::vec3(-7.5f, player->getTransform().getPosition().y, 0.0f));
-		}
-
-	}
-
-	//cout << "player y: " << player->getTransform().getPosition().y << endl;
-	
 	if (ziz) {
 		ziz->phaseChangeTracker();
 		ziz->updateShake(dt);
@@ -368,9 +339,6 @@ void LevelBossTest::levelUpdate() {
 
 	if (player) {
 		player->updateShake(dt);
-		//cout << "Player X Vel:" << player->getPhysicsComponent()->getVelocity().x << ", Y: " << player->getPhysicsComponent()->getVelocity().y <<endl;
-		//player->getPhysicsComponent()->setVelocity(glm::vec2(0,0));
-		
 	}
 		
 
@@ -1423,4 +1391,21 @@ Player* LevelBossTest::loadPlayerData(const string& filepath) {
 	player_->setLives(lives);*/
 
 	return player_;
+}
+
+void LevelBossTest::stateMachineUpdate(float dt) {
+	if (ziz->getStateMachine()) {
+		ziz->getStateMachine()->update(ziz, dt);
+	}
+
+	if (player->getStateMachine()) {
+		player->getStateMachine()->update(player, dt);
+		//cout << player->getTransform().getPosition().x << endl;
+		if (player->getTransform().getPosition().x > 7.5f) {
+			player->getTransform().setPosition(glm::vec3(7.5f, player->getTransform().getPosition().y, 0.0f));
+		}
+		if (player->getTransform().getPosition().x < -7.5f) {
+			player->getTransform().setPosition(glm::vec3(-7.5f, player->getTransform().getPosition().y, 0.0f));
+		}
+	}
 }
