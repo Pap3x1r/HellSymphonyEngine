@@ -139,21 +139,7 @@ public:
     }
 
     void heal(float amount)
-    {
-        if (witherHealth > 0)
-        {
-            if (amount > witherHealth)
-            {
-                amount -= witherHealth;
-                witherHealth = 0;
-            }
-            else
-            {
-                witherHealth -= amount;
-                amount = 0;
-            }
-        }
-
+    {   
         if (currentHealth + amount > maxHealth)
         {
             currentHealth = maxHealth;
@@ -162,30 +148,44 @@ public:
         {
             currentHealth += amount;
         }
+
+        if (witherHealth > 0)
+        {
+            if (amount >= witherHealth)
+            {
+                witherHealth = 0.0f;
+            }
+            else
+            {
+                witherHealth -= amount;
+            }
+        }
     }
 
     void healWither(float amount)
     {
         if (witherHealth > 0)
         {
+            float drained = 0.0f;
+
             if (amount > witherHealth)
             {
-                amount -= witherHealth;
-                witherHealth = 0;
+                drained = witherHealth;
+                witherHealth = 0.0f;
             }
             else
             {
+                drained = amount;
                 witherHealth -= amount;
-                amount = 0;
             }
 
-            if (currentHealth + amount > maxHealth)
+            if (currentHealth + drained > maxHealth)
             {
                 currentHealth = maxHealth;
             }
             else
             {
-                currentHealth += amount;
+                currentHealth += drained;
             }
         }
     }

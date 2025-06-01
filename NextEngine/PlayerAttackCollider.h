@@ -9,6 +9,7 @@ class PlayerAttackCollider : public TexturedObject {
 	float ultGainPercentage;
 	Player* player;
 	bool lockInPlace = false;
+	Shield* shieldParent = nullptr;
 public:
 	PlayerAttackCollider();
 	PlayerAttackCollider(float damage_);
@@ -28,4 +29,6 @@ public:
 	bool getLock() const {
 		return lockInPlace;
 	}
+
+	void setShieldParent(Shield* s);
 };

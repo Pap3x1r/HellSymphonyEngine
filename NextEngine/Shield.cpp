@@ -10,6 +10,7 @@ Shield::Shield() {
 	attack1->getColliderComponent()->setDimension(1.4f, 0.6f); //Set collider dimension
 	//attack1->getColliderComponent()->setOffset(glm::vec3(0.85f, -1.0f, 0.0f)); //Set collider offset
 	attack1->setDrawCollider(false);
+	attack1->setShieldParent(this);
 	chainAttackList.push_back(attack1);
 
 	PlayerAttackCollider* attack2 = new PlayerAttackCollider(15, 100);
@@ -21,6 +22,7 @@ Shield::Shield() {
 	attack2->getColliderComponent()->setDimension(2.4f, 1.0f); //Set collider dimension
 	//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 	attack2->setDrawCollider(false);
+	attack2->setShieldParent(this);
 	chainAttackList.push_back(attack2);
 
 	PlayerAttackCollider* attack3 = new PlayerAttackCollider(500, 0);
@@ -36,6 +38,7 @@ Shield::Shield() {
 	attack3->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
 	//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 	attack3->setDrawCollider(false);
+	attack3->setShieldParent(this);
 	chainAttackList.push_back(attack3);
 
 	PlayerAttackCollider* attack4 = new PlayerAttackCollider(1850, 0);
@@ -51,6 +54,7 @@ Shield::Shield() {
 	attack4->getColliderComponent()->setDimension(1.0f, 1.0f); //Set collider dimension
 	//attack2->getColliderComponent()->setOffset(glm::vec3(1.55f, -1.0f, 0.0f)); //Set collider offset
 	attack4->setDrawCollider(false);
+	attack4->setShieldParent(this);
 	chainAttackList.push_back(attack4);
 }
 

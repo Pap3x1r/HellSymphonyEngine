@@ -62,6 +62,10 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 			//cout << "Player Hit Enemy test for " << damage << " damage." << endl;
 			if (player) {
 				player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
+
+				if (shieldParent) {
+					player->getHealth()->healWither(damage / 25.0f);
+				}
 				//cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
 			}
 
@@ -89,4 +93,8 @@ void PlayerAttackCollider::resetHit() {
 
 void PlayerAttackCollider::setPlayer(Player* p) {
 	player = p;
+}
+
+void PlayerAttackCollider::setShieldParent(Shield* s) {
+	shieldParent = s;
 }
