@@ -40,27 +40,36 @@ AudioEngine::AudioEngine()
 	std::ifstream volumeFile("../Resource/Audio/volumeFile.txt");
 
 	if (volumeFile.is_open()) {
-		volumeFile >> currentSoundEffectVolume >> currentMusicVolume;
+		volumeFile >> currentMasterVolume >> currentSoundEffectVolume >> currentMusicVolume >> currentAmbientVolume;
 
-		if (!(currentSoundEffectVolume >= MIX_MIN_VOLUME && currentSoundEffectVolume <= MIX_MAX_VOLUME) && (currentMusicVolume >= MIX_MIN_VOLUME && currentMusicVolume <= MIX_MAX_VOLUME)) {
+		/*if (!(currentSoundEffectVolume >= MIX_MIN_VOLUME && currentSoundEffectVolume <= MIX_MAX_VOLUME) && (currentMusicVolume >= MIX_MIN_VOLUME && currentMusicVolume <= MIX_MAX_VOLUME)) {
 			currentSoundEffectVolume = MIX_MAX_VOLUME / 2;
 			currentMusicVolume = MIX_MAX_VOLUME / 2;
 
 			std::cerr << "Error: Volume file has invalid volume, setting back to default values" << std::endl;
-		}
+		}*/
 
+		currentMasterVolume = std::clamp(currentMasterVolume, 0.0f, 1.0f);
+		currentSoundEffectVolume = std::clamp(currentSoundEffectVolume, 0.0f, 1.0f);
+		currentMusicVolume = std::clamp(currentMusicVolume, 0.0f, 1.0f);
+		currentAmbientVolume = std::clamp(currentAmbientVolume, 0.0f, 1.0f);
+
+		std::cout << "Loaded master volume: " << currentMasterVolume << std::endl;
 		std::cout << "Loaded sound effect volume: " << currentSoundEffectVolume << std::endl;
 		std::cout << "Loaded music volume: " << currentMusicVolume << std::endl;
+		std::cout << "Loaded ambient volume: " << currentAmbientVolume << std::endl;
 
 		volumeFile.close();
 	}
 	else {
 		std::ofstream newVolumeFile("../Resource/Audio/volumeFile.txt");
 		if (newVolumeFile.is_open()) {
-			currentSoundEffectVolume = MIX_MAX_VOLUME / 2;
-			currentMusicVolume = MIX_MAX_VOLUME / 2;
+			currentMasterVolume = 1.0f;
+			currentSoundEffectVolume = 1.0f;
+			currentMusicVolume = 1.0f;
+			currentAmbientVolume = 1.0f;
 
-			newVolumeFile << currentSoundEffectVolume << "\n" << currentMusicVolume << "\n";
+			newVolumeFile << currentMasterVolume << "\n" << currentSoundEffectVolume << "\n" << currentMusicVolume << "\n" << currentAmbientVolume << "\n";
 			newVolumeFile.close();
 
 			std::cout << "Created new volume file" << std::endl;
@@ -87,8 +96,8 @@ void AudioEngine::init(const std::string& effectFolderPath, const std::string& m
 		std::cout << "Mix_Init Error " << std::string(Mix_GetError());
 	}
 
-	Mix_Volume(-1, currentSoundEffectVolume);
-	Mix_VolumeMusic(currentMusicVolume);
+	/*Mix_Volume(-1, currentSoundEffectVolume);
+	Mix_VolumeMusic(currentMusicVolume);*/
 
 	loadSoundEffectFromDir(effectFolderPath);
 	loadMusicFromDir(musicFolderPath);
@@ -238,8 +247,17 @@ void AudioEngine::loadMusicFromDir(const std::string& dir) {
 	}
 }
 
-void AudioEngine::adjustSoundEffectVolume(int amount) {
-	int currentVolume = Mix_Volume(-1, -1);
+void AudioEngine::adjustMasterVolume(float amount) {
+	currentMasterVolume += amount;
+	currentMasterVolume = std::clamp(currentMasterVolume, 0.0f, 1.0f);
+	updateAllVolumes();
+}
+
+void AudioEngine::adjustSoundEffectVolume(float amount) {
+	currentSoundEffectVolume += amount;
+	currentSoundEffectVolume = std::clamp(currentSoundEffectVolume, 0.0f, 1.0f);
+	updateAllVolumes();
+	/*int currentVolume = Mix_Volume(-1, -1);
 	int newVolume;
 
 	if (currentVolume + amount < MIX_MIN_VOLUME) {
@@ -254,11 +272,14 @@ void AudioEngine::adjustSoundEffectVolume(int amount) {
 
 	currentSoundEffectVolume = newVolume;
 	Mix_Volume(-1, newVolume);
-	std::cout << "New sound effect volume: " << currentSoundEffectVolume << std::endl;
+	std::cout << "New sound effect volume: " << currentSoundEffectVolume << std::endl;*/
 }
 
-void AudioEngine::adjustMusicVolume(int amount) {
-	int currentVolume = Mix_VolumeMusic(-1);
+void AudioEngine::adjustMusicVolume(float amount) {
+	currentMusicVolume += amount;
+	currentMusicVolume = std::clamp(currentMusicVolume, 0.0f, 1.0f);
+	updateAllVolumes();
+	/*int currentVolume = Mix_VolumeMusic(-1);
 	int newVolume;
 
 	if (currentVolume + amount < MIX_MIN_VOLUME) {
@@ -273,26 +294,63 @@ void AudioEngine::adjustMusicVolume(int amount) {
 
 	currentMusicVolume = newVolume;
 	Mix_VolumeMusic(newVolume);
-	std::cout << "New music volume: " << currentMusicVolume << std::endl;
+	std::cout << "New music volume: " << currentMusicVolume << std::endl;*/
 }
 
-void AudioEngine::setSoundEffectVolume(int value) {
-	if ((value >= 0) && (value <= 128)) {
+void AudioEngine::adjustAmbientVolume(float amount) {
+	currentAmbientVolume += amount;
+	currentAmbientVolume = std::clamp(currentAmbientVolume, 0.0f, 1.0f);
+	updateAllVolumes();
+}
+
+void AudioEngine::setMasterVolume(float value) {
+	currentMasterVolume = std::clamp(value, 0.0f, 1.0f);
+	updateAllVolumes();
+}
+
+void AudioEngine::setSoundEffectVolume(float value) {
+	currentSoundEffectVolume = std::clamp(value, 0.0f, 1.0f);
+	updateAllVolumes();
+	/*if ((value >= 0) && (value <= 128)) {
 		Mix_Volume(-1, value);
 		currentSoundEffectVolume = value;
 		std::cout << "New sound effect volume: " << currentSoundEffectVolume << std::endl;
 		return;
 	}
-	std::cerr << "Error: set music volume is more than the maximum, Given: " << value << "Min,Max: 0,128 " << std::endl;
+	std::cerr << "Error: set music volume is more than the maximum, Given: " << value << "Min,Max: 0,128 " << std::endl;*/
 }
-void AudioEngine::setMusicVolume(int value) {
-	if ((value >= 0) && (value <= 128)) {
+
+void AudioEngine::setMusicVolume(float value) {
+	currentMusicVolume = std::clamp(value, 0.0f, 1.0f);
+	updateAllVolumes();
+	/*if ((value >= 0) && (value <= 128)) {
 		Mix_VolumeMusic(value);
 		currentMusicVolume = value;
 		std::cout << "New music volume: " << currentMusicVolume << std::endl;
 		return;
 	}
-	std::cerr << "Error: adjust music volume is more than the maximum, Given: " << value << "Min,Max: 0,128 " << std::endl;
+	std::cerr << "Error: adjust music volume is more than the maximum, Given: " << value << "Min,Max: 0,128 " << std::endl;*/
+}
+
+void AudioEngine::setAmbientVolume(float value) {
+	currentAmbientVolume = std::clamp(value, 0.0f, 1.0f);
+	updateAllVolumes();
+}
+
+float AudioEngine::getMasterVolume() const {
+	return currentMasterVolume;
+}
+
+float AudioEngine::getSoundEffectVolume() const {
+	return currentSoundEffectVolume;
+}
+
+float AudioEngine::getMusicVolume() const {
+	return currentMusicVolume;
+}
+
+float AudioEngine::getAmbientVolume() const {
+	return currentAmbientVolume;
 }
 
 void AudioEngine::saveVolumeToFile() {
@@ -315,4 +373,25 @@ void AudioEngine::printVolume() {
 void AudioEngine::stopMusic() {
 	Music music;
 	music.stop();
+}
+
+void AudioEngine::updateAllVolumes() {
+	// Update sound effect volumes
+	for (SoundEffectObj& se : v_soundEffect) {
+		float finalVolume = currentMasterVolume * (se.isAmbient ? currentAmbientVolume : currentSoundEffectVolume);
+		Mix_VolumeChunk(se.soundEffect.m_chunk, convertVolume(finalVolume));
+	}
+
+	// Update music volume — only applies to the *currently playing music*
+	for (const MusicObj& musicObj : v_music) {	
+		if (Mix_PlayingMusic()) {
+			float finalVolume = currentMasterVolume * (musicObj.isAmbient ? currentAmbientVolume : currentMusicVolume);
+			Mix_VolumeMusic(convertVolume(finalVolume));
+			break; // SDL_mixer only supports one music track at a time
+		}
+	}
+}
+
+int AudioEngine::convertVolume(float volume) {
+	return static_cast<int>(std::clamp(volume, 0.0f, 1.0f) * 128.0f);
 }

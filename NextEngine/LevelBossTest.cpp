@@ -296,10 +296,16 @@ void LevelBossTest::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float playerDT = dt * playerTimeScale;
 	timeK += dt;
+
+	if (isPausing(dt)) {
+		return;
+	}
+
+
 	updateObjects(objectsList);
 	updateSkillsIcon();
 
-	std::cout << "Current cache size: " << GameEngine::getInstance()->getRenderer()->getTextureCache().size() << std::endl;
+	//std::cout << "Current cache size: " << GameEngine::getInstance()->getRenderer()->getTextureCache().size() << std::endl;
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
@@ -490,6 +496,18 @@ void LevelBossTest::handleKey(char key) {
 
 	bool playerIsMoving = false;
 
+	if (currentMenuState != MenuState::MAIN) {
+		if (key == 't') {
+			currentMenuState = MenuState::MAIN;
+		}
+		else if (key == 'l') {
+			currentMenuState = MenuState::PAUSE;
+		}
+		return;
+	}
+
+
+
 	//Jump -> higher priority
 
 	if (player->getIsDead() && key != 'r') return;
@@ -618,13 +636,14 @@ void LevelBossTest::handleKey(char key) {
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		player->increaseUltimateGauge(100.0f);
+		//player->increaseUltimateGauge(100.0f);
 		//ziz->interruptPhaseChange();
+		currentMenuState = MenuState::MAIN;
 		break;
 		
 	case 'l':
 
-
+		currentMenuState = MenuState::PAUSE;
 		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
 		addObject(ultZizOnBG_);
 		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
@@ -635,8 +654,8 @@ void LevelBossTest::handleKey(char key) {
 		/*DrawableObject* newStormRise = ziz->createStormRise();
 		addObject(newStormRise);*/
 
-		DrawableObject* newGust = ziz->createGust();
-		addObject(newGust);
+		/*DrawableObject* newGust = ziz->createGust();
+		addObject(newGust);*/
 
 		//ziz->startShake(0.2f, 0.005f);
 		//ziz->interruptPhaseChange();
@@ -655,6 +674,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
+
+	if (currentMenuState != MenuState::MAIN) {
+		return;
+	}
 
 	bool playerIsMoving = false;
 	if (player->getIsDead()) return;
@@ -811,6 +834,10 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	GameEngine::getInstance()->getWindowWidth();
 	GameEngine::getInstance()->getWindowHeight();
 
+	if (currentMenuState != MenuState::MAIN) {
+		return;
+	}
+
 	//cout << "X : " << realX << " Y : " << realY << endl;
 
 	for (UIButton* button : buttonsList) {
@@ -932,6 +959,10 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 	float speed = 20.0f;
 	speed *= dt_;
 	bool playerIsMoving = false;
+
+	if (currentMenuState != MenuState::MAIN) {
+		return;
+	}
 
 	if (player->getIsDead()) return;
 
@@ -1338,4 +1369,14 @@ void LevelBossTest::stateMachineUpdate(float dt) {
 			player->getTransform().setPosition(glm::vec3(-7.5f, player->getTransform().getPosition().y, 0.0f));
 		}
 	}
+}
+
+bool LevelBossTest::isPausing(float dt) {
+	if (currentMenuState == MenuState::MAIN) { // isnt Pausing
+
+
+		return false;
+	}
+
+	return true;
 }

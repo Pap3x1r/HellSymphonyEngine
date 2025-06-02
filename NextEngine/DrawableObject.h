@@ -14,6 +14,7 @@ class Collider; // forward declaration
 enum MenuState {
 	NONE,
 	MAIN,
+	PAUSE,
 	OPTIONS,
 	AUDIO,
 	CONTROLLER,

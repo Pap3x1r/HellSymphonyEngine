@@ -128,7 +128,7 @@ void LevelMainMenu::levelInit() {
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	masterVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
-	masterVolumeSlider->setValue(1.0f);
+	masterVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMasterVolume());
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -137,6 +137,7 @@ void LevelMainMenu::levelInit() {
 	slidersList.push_back(masterVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(masterVolumeSlider->getObject(2)));
+	masterSlider = masterVolumeSlider;
 
 	//////////////////////////////////////
 
@@ -184,7 +185,7 @@ void LevelMainMenu::levelInit() {
 	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	musicVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	musicVolumeSlider->setMenuState(MenuState::AUDIO);
-	musicVolumeSlider->setValue(1.0f);
+	musicVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMusicVolume());
 	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -193,6 +194,7 @@ void LevelMainMenu::levelInit() {
 	slidersList.push_back(musicVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(musicVolumeSlider->getObject(2)));
+	musicSlider = musicVolumeSlider;
 
 	//////////////////////////////////////
 
@@ -240,7 +242,7 @@ void LevelMainMenu::levelInit() {
 	effectVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	effectVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	effectVolumeSlider->setMenuState(MenuState::AUDIO);
-	effectVolumeSlider->setValue(1.0f);
+	effectVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getSoundEffectVolume());
 	for (DrawableObject* obj : effectVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -249,6 +251,7 @@ void LevelMainMenu::levelInit() {
 	slidersList.push_back(effectVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(effectVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(effectVolumeSlider->getObject(2)));
+	sfxSlider = effectVolumeSlider;
 
 	//////////////////////////////////////
 
@@ -296,7 +299,7 @@ void LevelMainMenu::levelInit() {
 	ambientVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	ambientVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	ambientVolumeSlider->setMenuState(MenuState::AUDIO);
-	ambientVolumeSlider->setValue(1.0f);
+	ambientVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getAmbientVolume());
 	for (DrawableObject* obj : ambientVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -305,6 +308,7 @@ void LevelMainMenu::levelInit() {
 	slidersList.push_back(ambientVolumeSlider);
 	buttonsList.push_back(static_cast<UIButton*>(ambientVolumeSlider->getObject(2)));
 	audioButtons.push_back(static_cast<UIButton*>(ambientVolumeSlider->getObject(2)));
+	ambientSlider = ambientVolumeSlider;
 
 	//////////////////////////////////////
 
@@ -945,6 +949,15 @@ void LevelMainMenu::levelUpdate() {
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
 
+	static float soundElapsed = 0.0f;
+	float soundTimer = 2.0f;
+	soundElapsed += dt;
+
+	if (soundElapsed >= soundTimer) {
+		soundElapsed -= soundTimer;
+		GameEngine::getInstance()->getAudio()->playSoundEffectByName("Dante-Sword_LightAttack-1.wav");
+	}
+
 	if (firstStart) {
 		blackFadeTransitionTime += dt;
 		float t = blackFadeTransitionTime / blackFadeTransitionDuration;
@@ -1136,6 +1149,23 @@ void LevelMainMenu::levelUpdate() {
 
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
+
+		AudioEngine* audio = GameEngine::getInstance()->getAudio();
+
+		if (audio) {
+			if (obj == masterSlider) {
+				audio->setMasterVolume(masterSlider->getValue());
+			}
+			else if (obj == musicSlider) {
+				audio->setMusicVolume(musicSlider->getValue());
+			}
+			else if (obj == sfxSlider) {
+				audio->setSoundEffectVolume(sfxSlider->getValue());
+			}
+			else if (obj == ambientSlider) {
+				audio->setAmbientVolume(ambientSlider->getValue());
+			}
+		}
 	}
 
 	InputManager* inputManager = GameEngine::getInstance()->getInputHandler();

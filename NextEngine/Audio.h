@@ -27,11 +27,13 @@ private:
 struct SoundEffectObj {
 	std::string fileName;
 	SoundEffect soundEffect;
+	bool isAmbient = false;	
 };
 
 struct MusicObj {
 	std::string fileName;
 	Music music;
+	bool isAmbient = false;
 };
 
 class AudioEngine {
@@ -53,18 +55,30 @@ public:
 
 	void stopMusic();
 
-	void adjustSoundEffectVolume(int amount);
-	void adjustMusicVolume(int amount);
+	void adjustMasterVolume(float amount);
+	void adjustSoundEffectVolume(float amount);
+	void adjustMusicVolume(float amount);
+	void adjustAmbientVolume(float amount);
 
-	void setSoundEffectVolume(int value);
-	void setMusicVolume(int value);
+	void setMasterVolume(float value);
+	void setSoundEffectVolume(float value);
+	void setMusicVolume(float value);
+	void setAmbientVolume(float value);
+
+	float getMasterVolume() const;
+	float getSoundEffectVolume() const;
+	float getMusicVolume() const;
+	float getAmbientVolume() const;
 
 	void saveVolumeToFile();
 	void printVolume();
 private:
 	bool isInit = false;
-	int currentSoundEffectVolume;
-	int currentMusicVolume;
+
+	float currentMasterVolume;
+	float currentSoundEffectVolume;
+	float currentMusicVolume;
+	float currentAmbientVolume;
 
 	std::vector<SoundEffectObj> v_soundEffect;
 	std::vector<MusicObj> v_music;
@@ -74,4 +88,7 @@ private:
 
 	void loadSoundEffectFromDir(const std::string& dir);
 	void loadMusicFromDir(const std::string& dir);
+
+	void updateAllVolumes();
+	int convertVolume(float volume);
 };

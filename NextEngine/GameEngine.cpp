@@ -49,6 +49,7 @@ void GameEngine::init(int width, int height) {
 	time = new Time();
 	inputHandler = new InputManager();  
 	audio = new AudioEngine();
+	audio->init("../Resource/Audio/SoundEffect", "../Resource/Audio/Music");
 	TTF_Init();
 }
 

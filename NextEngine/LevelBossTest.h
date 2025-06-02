@@ -73,7 +73,8 @@ private:
 	int tempx;
 	int tempx2;
 
-	
+	MenuState currentMenuState = MenuState::MAIN;
+	MenuState nextMenuState = MenuState::MAIN;
 
 public:
 	virtual void levelLoad();
@@ -97,4 +98,6 @@ public:
 	void resetLevel() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 	}
+
+	bool isPausing(float dt);
 };

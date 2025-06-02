@@ -27,6 +27,12 @@ private:
 	//Slider List
 	list<SliderObject*> slidersList;
 
+	SliderObject* masterSlider;
+	SliderObject* musicSlider;
+	SliderObject* sfxSlider;
+	SliderObject* ambientSlider;
+
+
 	UIButton* focusedHandle = nullptr;
 
 	float timeK = 0;
