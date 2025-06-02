@@ -1,4 +1,6 @@
 #include "QTEButtonUI.h"
+#include "InputManager.h"
+#include "GameEngine.h"
 
 QTEButtonUI::QTEButtonUI() {
 	setTexture("../Resource/Texture/UI/KeyboardButtons/W.png");
@@ -18,58 +20,139 @@ void QTEButtonUI::expire() {
 }
 
 void QTEButtonUI::changeTextureDefault(int target) {
-	switch (target) {
-	case 0:
-		setTexture("../Resource/Texture/UI/QTEButtons/default/W.png");
-		break;
-	case 1:
-		setTexture("../Resource/Texture/UI/QTEButtons/default/A.png");
-		break;
-	case 2:
-		setTexture("../Resource/Texture/UI/QTEButtons/default/S.png");
-		break;
-	case 3:
-		setTexture("../Resource/Texture/UI/QTEButtons/default/D.png");
-		break;
-	default:
-		break;
+	InputManager* inputManager = GameEngine::getInstance()->getInputHandler();
+
+	if (inputManager) {
+		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
+			cout << "keyboard" << endl;
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/default/W.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/default/A.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/default/S.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/default/D.png");
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			cout << "controller" << endl;
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/default/Up.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/default/Left.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/default/Down.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/default/Right.png");
+				break;
+			default:
+				break;
+			}
+		}
 	}
+
+
+	
 }
 
 void QTEButtonUI::changeTextureFailure(int target) {
-	switch (target) {
-	case 0:
-		setTexture("../Resource/Texture/UI/QTEButtons/failure/W.png");
-		break;
-	case 1:
-		setTexture("../Resource/Texture/UI/QTEButtons/failure/A.png");
-		break;
-	case 2:
-		setTexture("../Resource/Texture/UI/QTEButtons/failure/S.png");
-		break;
-	case 3:
-		setTexture("../Resource/Texture/UI/QTEButtons/failure/D.png");
-		break;
-	default:
-		break;
+	InputManager* inputManager = GameEngine::getInstance()->getInputHandler();
+
+	if (inputManager) {
+		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/failure/W.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/failure/A.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/failure/S.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/failure/D.png");
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/failure/Up.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/failure/Left.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/failure/Down.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/failure/Right.png");
+				break;
+			default:
+				break;
+			}
+		}
 	}
+
+	
 }
 
 void QTEButtonUI::changeTextureSuccess(int target) {
-	switch (target) {
-	case 0:
-		setTexture("../Resource/Texture/UI/QTEButtons/success/W.png");
-		break;
-	case 1:
-		setTexture("../Resource/Texture/UI/QTEButtons/success/A.png");
-		break;
-	case 2:
-		setTexture("../Resource/Texture/UI/QTEButtons/success/S.png");
-		break;
-	case 3:
-		setTexture("../Resource/Texture/UI/QTEButtons/success/D.png");
-		break;
-	default:
-		break;
+	InputManager* inputManager = GameEngine::getInstance()->getInputHandler();
+
+	if (inputManager) {
+		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/success/W.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/success/A.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/success/S.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/keyboard/success/D.png");
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			switch (target) {
+			case 0:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/success/Up.png");
+				break;
+			case 1:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/success/Left.png");
+				break;
+			case 2:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/success/Down.png");
+				break;
+			case 3:
+				setTexture("../Resource/Texture/UI/QTEButtons/controller/success/Right.png");
+				break;
+			default:
+				break;
+			}
+		}
 	}
+
+	
 }

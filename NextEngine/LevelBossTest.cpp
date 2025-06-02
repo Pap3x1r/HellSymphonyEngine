@@ -293,6 +293,7 @@ void LevelBossTest::levelInit() {
 	firstStart = true;
 
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
+	inputManager = GameEngine::getInstance()->getInputHandler();
 }
 
 void LevelBossTest::levelUpdate() {
@@ -304,7 +305,6 @@ void LevelBossTest::levelUpdate() {
 		UIUpdate();
 		return;
 	}
-
 
 	updateObjects(objectsList);
 	updateSkillsIcon();
@@ -319,6 +319,17 @@ void LevelBossTest::levelUpdate() {
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
+	
+
+	if (inputManager) {
+		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
+			cout << "inputmanager last Keyboard" << endl;
+		}
+		else {
+			cout << "inputmanager last controller" << endl;
+		}
+	}
+
 
 	if (firstStart) {
 		if (blackFade) {
@@ -944,7 +955,8 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 			return;
 		}
 		switchControlType(controller);
-		playerUltimateInput();
+		ziz->interruptIntoPhase();
+		//playerUltimateInput();
 
 		break;
 

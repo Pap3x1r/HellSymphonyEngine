@@ -90,6 +90,8 @@ private:
 	QTEButtonUI* qbui;
 
 	//ControlType
+	InputManager* inputManager;
+
 	enum ControlType {
 		keyboard = 0,
 		controller
