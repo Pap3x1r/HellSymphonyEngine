@@ -151,6 +151,11 @@ bool GLRenderer::initialize(string vertexShaderFile, string fragmentShaderFile) 
 }
 
 void GLRenderer::render(list<DrawableObject*>& objList) {
+    //Sort objList
+    objList.sort([](DrawableObject* a, DrawableObject* b) {
+        return a->drawLayer < b->drawLayer;
+        });
+
     // Clear color buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

@@ -63,6 +63,8 @@ protected:
 	virtual void onTriggerExit(Collider* collider);
 
 public:
+	int drawLayer = 0;
+
 	string getName();
 	void setName(string name);
 

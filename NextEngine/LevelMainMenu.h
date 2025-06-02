@@ -35,10 +35,7 @@ private:
 
 	UIButton* focusedHandle = nullptr;
 
-	float timeK = 0;
-	float dt = 0;
 	//UI
-	
 	TexturedObject* controllerOverlay = nullptr;
 	TexturedObject* kbOverlay = nullptr;
 
@@ -59,11 +56,10 @@ private:
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 
-	//SliderObject* slider;
-
 	bool isHolding;
 	
-
+	float timeK = 0;
+	float dt = 0;
 	int tempx;
 	int tempx2;
 

@@ -21,8 +21,64 @@
 class LevelBossTest : public Level
 {
 private:
-	list<DrawableObject*> objectsList;
+
+	///////////////////////////////////// Needed for UI ////////////////////////////////////////////
+	UIButton* focusedButton = nullptr;
+	int selectedIndex = -1; // Not select anything
+	int hoveredIndex = -1; //Mouse
+	bool controlByMouse = false;
+
 	list<UIButton*> buttonsList;
+
+	//Not for draw list
+	list<UIButton*> mainButtons;
+	list<UIButton*> optionsButtons;
+	list<UIButton*> audioButtons;
+	list<UIButton*> controllerButtons;
+	list<UIButton*> keyboardButtons;
+	list<UIButton*> creditsButton;
+
+	//Slider List
+	list<SliderObject*> slidersList;
+
+	SliderObject* masterSlider;
+	SliderObject* musicSlider;
+	SliderObject* sfxSlider;
+	SliderObject* ambientSlider;
+
+
+	UIButton* focusedHandle = nullptr;
+
+	//UI
+	TexturedObject* controllerOverlay = nullptr;
+	TexturedObject* kbOverlay = nullptr;
+
+	float transitionTime = 0.0f;
+	float transitionDuration = 0.5f;
+	bool transitioning = false;
+	float holdButtonTimer = 0.0f;
+	float holdButtonThreshold = 0.5f;
+
+
+	float blackFadeTransitionTime = 0.0f;
+	float blackFadeTransitionDuration = 1.0f;
+	bool firstStart = true;
+	TexturedObject* blackFade = nullptr;
+
+	MenuState currentMenuState = MenuState::MAIN;
+	MenuState nextMenuState = MenuState::MAIN;
+
+	bool isHolding;
+
+
+
+	////////////////////////////////////////////////////////////////
+
+
+
+
+	list<DrawableObject*> objectsList;
+
 	float timeK = 0;
 	float dt = 0;
 	Ziz* ziz;
@@ -64,17 +120,8 @@ private:
 
 	float playerTimeScale = 1.0f;
 
-	float blackFadeTransitionTime = 0.0f;
-	float blackFadeTransitionDuration = 1.0f;
-	bool firstStart = true;
-	TexturedObject* blackFade = nullptr;
-
-
 	int tempx;
 	int tempx2;
-
-	MenuState currentMenuState = MenuState::MAIN;
-	MenuState nextMenuState = MenuState::MAIN;
 
 public:
 	virtual void levelLoad();
@@ -100,4 +147,18 @@ public:
 	}
 
 	bool isPausing(float dt);
+
+	void changeMenuState(MenuState targetState);
+	MenuState getMenuState() const;
+
+	void mouseUIHandling(int type, float x, float y);
+	void keyboardUIHandling(char key);
+
+	glm::vec2 convertMouseToGameSpace(int mouseX, int mouseY);
+
+	void changeSelection(int direction);
+
+	void buttonsFree();
+
+	void UIUpdate();
 };

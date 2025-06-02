@@ -1140,13 +1140,6 @@ void LevelMainMenu::levelUpdate() {
 		}
 	}
 
-	//for (DrawableObject* obj : slider->getObjectsList()) {
-	//	/*cout << obj->getName() << "'s MenuState:" << obj->getMenuState() << " Alpha:" << obj->getAlpha() << endl;
-	//	for (auto o : obj->getMenuStateVec()) {
-	//		cout << o << endl;
-	//	}*/
-	//}
-
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
 
