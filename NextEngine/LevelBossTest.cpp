@@ -22,10 +22,10 @@ void LevelBossTest::levelLoad() {
 	GameEngine::getInstance()->addMesh(SquareBorderMesh::MESH_NAME, border);
 
 	//cout << "Load Level" << endl;
-	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
+	/*GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
 	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
 	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz");
-	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz/VFX");
+	GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/FinalZiz/VFX");*/
 }
 
 void LevelBossTest::levelInit() {
@@ -36,7 +36,7 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(background);
 	
 
-	Player* player_ = loadPlayerData("../Resource/Saves/PlayerData/playerData.txt");
+	Player* player_ = GameEngine::getInstance()->loadPlayerData("../Resource/Saves/PlayerData/playerData.txt");
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
@@ -289,7 +289,7 @@ void LevelBossTest::levelInit() {
 	blackFade->setAlpha(1.0f);
 	firstStart = true;
 
-	GameEngine::getInstance()->freezeGameForSecond(1.6f);
+	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
 
 void LevelBossTest::levelUpdate() {
@@ -298,6 +298,8 @@ void LevelBossTest::levelUpdate() {
 	timeK += dt;
 	updateObjects(objectsList);
 	updateSkillsIcon();
+
+	std::cout << "Current cache size: " << GameEngine::getInstance()->getRenderer()->getTextureCache().size() << std::endl;
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
@@ -837,16 +839,14 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 		if (type == 0) {
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
-					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
-					objectsList.push_back(newArrow);*/
 					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
 				}
 			}
 		}
 		else if (type == 1) {
-			/*DrawableObject* newArrow = bow->arrowShot(100, player, 50);
-			objectsList.push_back(newArrow);*/
-			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+			if (player->getBow()->getIsOverheat() == false) {
+				player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+			}
 		}
 	}
 	else if (player->getWeaponType() == Sword_) {
@@ -1321,76 +1321,6 @@ void LevelBossTest::updateUIBar() {
 		playerOverheatBar->getTransform().setScale(glm::vec3(overheatWidth, playerOverheatBar->getTransform().getScale().y, playerOverheatBar->getTransform().getScale().z));
 		playerOverheatBar->getTransform().setPosition(glm::vec3(overheatX, playerOverheatBar->getTransform().getPosition().y, playerOverheatBar->getTransform().getPosition().z));
 	}
-}
-
-void LevelBossTest::savePlayerData(const Player* player, const std::string& filename) {
-	ofstream outFile(filename);
-	if (!outFile) {
-		cerr << "Error opening file for writing!" << endl;
-		return;
-	}
-
-	if (player) {
-		// Save player data with descriptions and line breaks
-		outFile << "Player Health: " << player->getHealth()->getCurrentHP() << endl;
-		outFile << "Player Wither Health: " << player->getHealth()->getWitherHP() << endl;
-		outFile << "Player Lives: " << player->getLives() << endl;
-
-		cout << "Saved Successful." << endl;
-	}
-	else {
-		cerr << "Player is missing, save file does not write." << endl;
-	}
-
-	outFile.close();
-}
-
-Player* LevelBossTest::loadPlayerData(const string& filepath) {
-	ifstream inFile(filepath);
-	if (!inFile) {
-		cerr << "Error opening file for reading! Using default values.\n";
-		return new Player(100, 0, 3);
-	}
-
-	string line;
-
-	float hp = 100.0f;
-	float wither = 0.0f;
-	int lives = 3;
-
-	auto extractValue = [&inFile](const string& label, auto& value) {
-		string line;
-		if (getline(inFile, line)) {
-			size_t pos = line.find(label);
-			if (pos != string::npos) {
-				try {
-					value = stof(line.substr(pos + label.length()));  // Convert to float or int
-				}
-				catch (...) {
-					cerr << "Error reading " << label << endl;
-				}
-			}
-		}
-		};
-
-	extractValue("Player Health:", hp);
-	extractValue("Player Wither Health:", wither);
-	extractValue("Player Lives:", lives);
-
-
-	inFile.close();
-	cout << "Data loaded from text file.\n";
-
-	cout << "Player health: " << hp << endl;
-	cout << "Player wither health: " << wither << endl;
-	cout << "Player lives: " << lives << endl;
-
-	Player* player_ = new Player(hp, wither, lives);
-	/*player_->getHealth()->setHP(hp);
-	player_->getHealth()->setWitherHP(wither);
-	player_->setLives(lives);*/
-
-	return player_;
 }
 
 void LevelBossTest::stateMachineUpdate(float dt) {

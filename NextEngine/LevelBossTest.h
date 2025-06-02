@@ -97,8 +97,4 @@ public:
 	void resetLevel() {
 		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
 	}
-
-	void savePlayerData(const Player* player, const std::string& filename);
-
-	Player* loadPlayerData(const string& filepath);
 };

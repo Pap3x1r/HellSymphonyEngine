@@ -440,7 +440,7 @@ void GLRenderer::preloadTextures(const vector<string>& texturePaths) {
 
 void GLRenderer::loadTextureFromDir(const std::string& dir) {
     //This loop through every file paths in directory and put inside map and vector
-    //cout << "Directory: " << dir << " has been loaded." << endl;
+    cout << "Directory: " << dir << " has been loaded." << endl;
 
     for (const auto& paths : std::filesystem::directory_iterator(dir)) {
         if (paths.is_regular_file()) {
@@ -449,13 +449,13 @@ void GLRenderer::loadTextureFromDir(const std::string& dir) {
                 continue;
             }
 
-            std::string filePath = paths.path().string();
+            std::string filePath = normalizePath(paths.path().string());
             std::string fileName = paths.path().filename().string();
 
             GLuint texture = LoadTexture(filePath);
             textureCache[filePath] = texture;
 
-            //cout << fileName << " has been loaded." << endl;
+            cout << filePath << " has been loaded." << endl;
         }
         else {
             filesystem::path path(paths.path());
@@ -471,19 +471,32 @@ void GLRenderer::loadTextureFromDir(const std::string& dir) {
 }
 
 GLuint GLRenderer::findTexture(const std::string path) {
-    auto it = textureCache.find(path);
+
+    string normPath = normalizePath(path);
+
+    auto it = textureCache.find(normPath);
 
     GLuint texture;
 
     if (it == textureCache.end()) {
         texture = LoadTexture(path);
-        textureCache[path] = texture;
-        //cout << path << " is loaded for first time." << endl;
+        textureCache[normPath] = texture;
+        cout << normPath << " is loaded for first time." << endl;
     }
     else {
         texture = it->second;
-        //cout << path << " is found" << endl;
+        cout << normPath << " is found" << endl;
     }
 
     return texture;
+}
+
+string GLRenderer::normalizePath(const std::string& path) {
+    std::string fixed = path;
+    std::replace(fixed.begin(), fixed.end(), '\\', '/');
+    return fixed;
+}
+
+map<string, GLuint> GLRenderer::getTextureCache() const {
+    return textureCache;
 }

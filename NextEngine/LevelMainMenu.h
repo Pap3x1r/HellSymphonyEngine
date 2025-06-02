@@ -87,8 +87,20 @@ public:
 
 	void changeSelection(int direction);
 
-	void toBoss() {
-		GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL2;
+	void toLoadingScreen() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {
+			"../Resource/Texture/Dante",
+			"../Resource/Texture/Ziz",
+			"../Resource/Texture/FinalZiz",
+			"../Resource/Texture/FinalZiz/VFX"
+		};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
 	}
 
 	void quitGame() {

@@ -110,6 +110,33 @@ DrawableObject* Bow::arrowShot(float damage_, float ultPercentage_,Player* playe
 	return arrow;
 }
 
+DrawableObject* Bow::arrowShot(float damage_, float ultPercentage_, Player* player, float speed, float overheat) {
+	glm::vec3 playerPos = player->getTransform().getPosition();
+	//Create arrow
+	Arrow* arrow = new Arrow(damage_, ultPercentage_, player->getFacingRight(), speed, player);
+	arrow->setTexture("../Resource/Texture/arrow.png"); //set texture
+	arrow->getTransform().setScale(glm::vec3(2.0f, 2.0f, 1.0f));
+	if (!player->getFacingRight()) {
+		arrow->getTransform().setRotationDeg(180.0f);
+	}
+
+
+	//arrow->setDraw(false);
+	arrow->getTransform().setPosition(glm::vec3(playerPos.x, playerPos.y - 0.6f, playerPos.z));
+	arrow->addColliderComponent();
+	arrow->getColliderComponent()->setTrigger(true);
+	arrow->getColliderComponent()->setEnableCollision(true); //Set collision to false at the start
+	arrow->getColliderComponent()->setDimension(0.6f, 0.25f); //Set collider dimension
+	//arrow->getColliderComponent()->setOffset(glm::vec3(0.0f, 0.0f, 0.0f)); //Set collider offset
+	arrow->setDrawCollider(true);
+
+	rapidShotReady = false;
+	rapidShotTimeElapsed = 0.0f;
+	currentRapidOverheat += overheat;
+
+	return arrow;
+}
+
 bool Bow::getRapidShotReady() const {
 	return rapidShotReady;
 }

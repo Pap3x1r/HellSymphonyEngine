@@ -9,6 +9,7 @@
 #include "LevelPrototype.h"
 #include "LevelBossTest.h"
 #include "LevelMainMenu.h"
+#include "LevelLoader.h"
 
 GameStateController::GameStateController() {
 	// set the initial game state
@@ -28,16 +29,20 @@ void GameStateController::loadLevel() {
 	}
 	cout << gameStateCurr << endl;
 	switch (gameStateCurr) {
-		case GameState::GS_LEVEL1:
-			//currentLevel = new LevelMainMenu();
-			currentLevel = new LevelBossTest();
+		case GameState::GS_MAINMENU:
+			currentLevel = new LevelMainMenu();
 			break;
-		case GameState::GS_LEVEL2:
-			currentLevel = new LevelBossTest();
+		case GameState::GS_LOADINGSCREEN: {
+			LevelLoader* loader = new LevelLoader();
+			loader->configure(pendingLoad.textureDirs, pendingLoad.nextStateAfterLoad);
+			currentLevel = loader;
 			break;
-		case GameState::GS_COL_TEST:
-			cout << "in" << endl;
+		}
+		case GameState::GS_LIMBO:
 			currentLevel = new LevelPrototype();
+			break;
+		case GameState::GS_ZIZ:
+			currentLevel = new LevelBossTest();
 			break;
 		default:
 			cout << "gameStateCurr : invalid state!!" << endl;

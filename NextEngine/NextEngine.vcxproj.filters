@@ -87,6 +87,7 @@
     </ClCompile>
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="BowUltimateCollider.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Resource\imgui\include\imconfig.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Animation.h">
       <Filter>Animation</Filter>
     </ClInclude>
+    <ClInclude Include="LevelLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shader\fragment.shd" />

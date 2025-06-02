@@ -96,6 +96,9 @@ public:
     void loadTextureFromDir(const std::string& dir);
 
     GLuint findTexture(const std::string path);
+    string normalizePath(const std::string& path);
+
+    map<string, GLuint> getTextureCache() const;
 };
 
 #endif

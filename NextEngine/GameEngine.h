@@ -9,6 +9,8 @@
 #include "SDL_ttf.h"
 #include "Audio.h"
 
+class Player;
+
 using namespace std;
 
 class GameEngine {
@@ -41,4 +43,6 @@ public:
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
 	void freezeGameForSecond(float duration);
+	void savePlayerData(const Player* player, const std::string& filename);
+	Player* loadPlayerData(const string& filepath);
 };

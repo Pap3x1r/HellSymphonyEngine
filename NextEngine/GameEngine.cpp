@@ -1,5 +1,6 @@
-
 #include "GameEngine.h"
+#include "Player.h"
+#include <fstream>
 
 GameEngine* GameEngine::instance = nullptr;
 
@@ -42,45 +43,8 @@ void GameEngine::init(int width, int height) {
 	setDrawArea(-8, 8, -4.5, 4.5);
 	setBackgroundColor(95.0f / 255, 110.0f / 255, 133.0f / 255);
 
-	//texturePaths = { //vector holding paths (might create something that automatically load files into map for easier use)
-	//	//Sword
-	//	"../Resource/Texture/Dante/DanteSword/dante_idle_sword.png", //path
-	//	"../Resource/Texture/Dante/DanteSword/dante_walking_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_dash_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack1_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_heavyAttack_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_smallUlt_sword.png",
-	//	//Shield
-	//	"../Resource/Texture/Dante/DanteShield/dante_idle_shield.png", //path
-	//	"../Resource/Texture/Dante/DanteShield/dante_walking_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_jumping_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_falling_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_dash_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_lightAttack1_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_lightAttack2_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_holding_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_off_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_smallUlt_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png",
-	//	//Bow
-	//	"../Resource/Texture/Dante/DanteBow/dante_idle_bow.png", //path
-	//	"../Resource/Texture/Dante/DanteBow/dante_walking_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_jumping_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_falling_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_dash_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_lightAttack_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_heavyAttack_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png",
-	//};
-
-	//GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
-
 	stateController = new GameStateController();
-	stateController->init(GameState::GS_LEVEL1);
+	stateController->init(GameState::GS_MAINMENU);
 
 	time = new Time();
 	inputHandler = new InputManager();  
@@ -132,4 +96,74 @@ void GameEngine::freezeGameForSecond(float duration) {
 		time->updateTick(SDL_GetTicks());
 		duration -= time->getDeltaTimeRealTime();
 	}
+}
+
+void GameEngine::savePlayerData(const Player* player, const std::string& filename) {
+	ofstream outFile(filename);
+	if (!outFile) {
+		cerr << "Error opening file for writing!" << endl;
+		return;
+	}
+
+	if (player) {
+		// Save player data with descriptions and line breaks
+		outFile << "Player Health: " << player->getHealth()->getCurrentHP() << endl;
+		outFile << "Player Wither Health: " << player->getHealth()->getWitherHP() << endl;
+		outFile << "Player Lives: " << player->getLives() << endl;
+
+		cout << "Saved Successful." << endl;
+	}
+	else {
+		cerr << "Player is missing, save file does not write." << endl;
+	}
+
+	outFile.close();
+}
+
+Player* GameEngine::loadPlayerData(const string& filepath) {
+	ifstream inFile(filepath);
+	if (!inFile) {
+		cerr << "Error opening file for reading! Using default values.\n";
+		return new Player(100, 0, 3);
+	}
+
+	string line;
+
+	float hp = 100.0f;
+	float wither = 0.0f;
+	int lives = 3;
+
+	auto extractValue = [&inFile](const string& label, auto& value) {
+		string line;
+		if (getline(inFile, line)) {
+			size_t pos = line.find(label);
+			if (pos != string::npos) {
+				try {
+					value = stof(line.substr(pos + label.length()));  // Convert to float or int
+				}
+				catch (...) {
+					cerr << "Error reading " << label << endl;
+				}
+			}
+		}
+		};
+
+	extractValue("Player Health:", hp);
+	extractValue("Player Wither Health:", wither);
+	extractValue("Player Lives:", lives);
+
+
+	inFile.close();
+	cout << "Data loaded from text file.\n";
+
+	cout << "Player health: " << hp << endl;
+	cout << "Player wither health: " << wither << endl;
+	cout << "Player lives: " << lives << endl;
+
+	Player* player_ = new Player(hp, wither, lives);
+	/*player_->getHealth()->setHP(hp);
+	player_->getHealth()->setWitherHP(wither);
+	player_->setLives(lives);*/
+
+	return player_;
 }

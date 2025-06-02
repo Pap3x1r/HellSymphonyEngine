@@ -696,7 +696,7 @@ void LevelMainMenu::levelInit() {
 	playButton->setLabel(playText); // Link playText
 	playButton->setMenuState(MenuState::MAIN);
 	playButton->setFunction([this]() {
-		toBoss();
+		toLoadingScreen();
 	});
 
 	objectsList.push_back(playButton);

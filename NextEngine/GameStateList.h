@@ -2,9 +2,10 @@
 
 enum GameState {
 	// list of all game states 
-	GS_LEVEL1 = 0,
-	GS_LEVEL2,
-	GS_COL_TEST,
+	GS_MAINMENU = 0,
+	GS_LOADINGSCREEN,
+	GS_LIMBO,
+	GS_ZIZ,
 
 	// special game state. Do not change
 	GS_RESTART,

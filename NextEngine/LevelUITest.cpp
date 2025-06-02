@@ -128,7 +128,7 @@ void LevelUITest::handleKey(char key) {
     case 'd': player->getTransform().translate(glm::vec3(0.3, 0, 0)); break;
     case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; break;
     case 'f': GameEngine::getInstance()->getRenderer()->toggleViewport(); break;
-    case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_COL_TEST; break;
+    case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_MAINMENU; break;
     case 'z': GameEngine::getInstance()->getRenderer()->increaseZoomRatio(zoomRatio); break;
     case 'x': GameEngine::getInstance()->getRenderer()->decreaseZoomRatio(zoomRatio); break;
     case 'h': player->takeDamage(1); break;  

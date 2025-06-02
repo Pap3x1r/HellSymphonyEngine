@@ -11,7 +11,7 @@ class Bow {
 
 	float currentRapidOverheat = 0.0f;
 	float maxRapidOverheat = 100.0f;
-	float overheatPerArrow = 30.0f;
+	float overheatPerArrow = 20.0f;
 	float normalDecreaseRate = 20.0f;
 	float overheatDecreaseRate = 15.0f;
 	bool isOverheat = false;
@@ -42,6 +42,7 @@ public:
 	}
 
 	DrawableObject* arrowShot(float damage_, float ultPercentage_, Player* player, float speed);
+	DrawableObject* arrowShot(float damage_, float ultPercentage_, Player* player, float speed, float overheat);
 
 	bool getRapidShotReady() const;
 	bool getIsOverheat() const;
