@@ -90,6 +90,11 @@ Ziz::Ziz() {
 
 	//cout << "ziz created" << endl;
 	qteInputReceieved = false;
+	qteMode = false;
+	qteInputReceieved = false;
+	QTETarget = 0;
+	QTEInput = 0;
+	QTECorrect = false;
 	
 }
 
@@ -209,6 +214,11 @@ DrawableObject* Ziz::createStormRise() {
 DrawableObject* Ziz::createSwoopWarning(int side) {
 	SwoopWarning* warning = new SwoopWarning(side);
 	return warning;
+}
+
+QTEButtonUI* Ziz::createQTEButtonUI(){
+	QTEButtonUI* qteButtonUI = new QTEButtonUI(QTETarget);
+	return qteButtonUI;
 }
 
 DrawableObject* Ziz::createBGZiz() {
@@ -377,18 +387,24 @@ void Ziz::updateQTEMode(float dt) {
 	
 }
 
-void Ziz::handleQTEInput(char c) {
-	QTEInput = c;
-	cout << "ziz receieved qte input: " << c << endl;
+void Ziz::handleQTEInput(int input) {
+
+
+
+	QTEInput = input;
+	cout << "ziz receieved qte input: " << input << endl;
 	QTECorrect = (QTEInput == QTETarget);
+	if (QTECorrect == true) {
+		startShake(0.05f, 0.0015f);
+	}
 	qteInputReceieved = true;
 }
 
-void Ziz::startQTEMode(char c) {
+void Ziz::startQTEMode(int target) {
 	qteInputReceieved = false;
-	QTETarget = c;
+	QTETarget = target;
 	QTECorrect = false;
-	cout << "QTE Mode Started, target: " << c << endl;
+	cout << "QTE Mode Started, target: " << target << endl;
 	qteMode = true;
 }
 

@@ -96,6 +96,8 @@ void LevelBossTest::levelInit() {
 
 	/*SwoopWarning* warning = new SwoopWarning();
 	objectsList.push_back(warning);*/
+	
+	
 
 	/*ChompTentacle* chompTentacle_ = new ChompTentacle();
 	objectsList.push_back(chompTentacle_);
@@ -397,6 +399,11 @@ void LevelBossTest::levelUpdate() {
 			swoopWarning->update(dt);
 		}
 
+		QTEButtonUI* qteButtonUI = dynamic_cast<QTEButtonUI*>(obj);
+		if (qteButtonUI) {
+			qteButtonUI->update(dt);
+		}
+
 		UltZizOnBG* ultZizOnBG = dynamic_cast<UltZizOnBG*>(obj);
 		if (ultZizOnBG) {
 			ultZizOnBG->update(dt);
@@ -542,10 +549,27 @@ void LevelBossTest::handleKey(char key) {
 		return;
 	}
 
+	
+
 	if (ziz->getQTEMode() == true) {
 		if (key != 'I') {
 			if ((key == 'w') || (key == 'a') || (key == 's') || (key == 'd')) {
-				ziz->handleQTEInput(key);
+				switch (key) {
+				case 'w':
+					ziz->handleQTEInput(0);
+					break;
+				case 'a':
+					ziz->handleQTEInput(1);
+					break;
+				case 's':
+					ziz->handleQTEInput(2);
+					break;
+				case 'd':
+					ziz->handleQTEInput(3);
+					break;
+				default:
+					break;
+				}
 				return;
 			}
 		}
@@ -686,9 +710,13 @@ void LevelBossTest::handleKey(char key) {
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		player->increaseUltimateGauge(100.0f);
+		//player->increaseUltimateGauge(100.0f);
 		//ziz->interruptPhaseChange();
 		//currentMenuState = MenuState::MAIN;
+		/*qbui = new QTEButtonUI(0);
+		objectsList.push_back(qbui);*/
+		ziz->interruptIntoPhase();
+
 		break;
 		
 	case 'l':
@@ -706,11 +734,13 @@ void LevelBossTest::handleKey(char key) {
 
 		/*DrawableObject* newGust = ziz->createGust();
 		addObject(newGust);*/
-
-		ziz->interruptIntoPhase();
+		//qbui->expire();
+		
+		//ziz->interruptIntoPhase();
+		ziz->interruptPhaseChange();
 
 		//ziz->startShake(0.2f, 0.005f);
-		//ziz->interruptPhaseChange();
+		
 		//ziz->createChompTentacle();
 		//ziz->resetCam();
 		break;
@@ -731,9 +761,32 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		return;
 	}
 
+
 	bool playerIsMoving = false;
 	if (player->getIsDead()) return;
 
+
+	if (ziz->getQTEMode() == true) {
+		if ((button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) || (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || (button == SDL_CONTROLLER_BUTTON_DPAD_UP) || (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
+			switch (button) {
+			case SDL_CONTROLLER_BUTTON_DPAD_UP:
+				ziz->handleQTEInput(0);
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+				ziz->handleQTEInput(1);
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+				ziz->handleQTEInput(2);
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+				ziz->handleQTEInput(3);
+				break;
+			default:
+				break;
+			}
+			return;
+		}
+	}
 
 	
 
@@ -833,7 +886,9 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 
 		if (player->getWeaponType() == Bow_) {
 			if (player->getBow()->getIsShooting() == true) return;
-			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+			if (player->getBow()->getIsOverheat() == false) {
+				player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
+			}
 		}
 		else if (player->getWeaponType() == Sword_) {
 			if (player->getSword()->getInChainAttack()) {

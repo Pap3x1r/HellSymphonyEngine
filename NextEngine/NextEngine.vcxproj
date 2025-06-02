@@ -79,6 +79,7 @@
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="PlayerShieldState.cpp" />
     <ClCompile Include="PlayerSwordState.cpp" />
+    <ClCompile Include="QTEButtonUI.cpp" />
     <ClCompile Include="QTEManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shield.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="PlayerShieldState.h" />
     <ClInclude Include="PlayerSwordState.h" />
+    <ClInclude Include="QTEButtonUI.h" />
     <ClInclude Include="QTEManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shield.h" />

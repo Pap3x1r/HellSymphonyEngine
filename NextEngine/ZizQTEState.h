@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "ZizIdleState.h"
 #include "QTEManager.h"
+#include "QTEButtonUI.h"
 #include <vector>
 
 class Ziz;
@@ -15,6 +16,9 @@ private:
 
     Ziz* ziz;
     Player* player;
+
+    float bufferTimerFailure;
+    float bufferTimerSuccess;
 
     float timer;
     float timer1;
@@ -28,8 +32,9 @@ private:
     int QTETarget1;
     int QTETarget2;
     int QTETarget3;
-    
 
+    QTEButtonUI* qteButtonUI;
+    
 
 public:
     static ZizQTEState* getInstance();

@@ -11,6 +11,7 @@
 #include "UltZizOnBG.h"
 #include "ChompTentacle.h"
 #include "Lightning.h"
+#include "QTEButtonUI.h"
 #include <vector>
 #include <random>
 
@@ -56,8 +57,8 @@ private:
     //qte
     bool qteMode;
     bool qteInputReceieved;
-    char QTETarget;
-    char QTEInput;
+    int QTETarget;
+    int QTEInput;
     bool QTECorrect;
 
 
@@ -79,14 +80,15 @@ public:
     DrawableObject* createChompTentacle();
     DrawableObject* createLightning();
     DrawableObject* createBGZiz();
+    QTEButtonUI* createQTEButtonUI();
     bool getIsInvincible();
     void setIsInvincible(bool val);
 
     bool getQTECorrect();
     bool getQTEMode();
     bool getQTEInputReceieved();
-    void handleQTEInput(char c);
-    void startQTEMode(char c);
+    void handleQTEInput(int input);
+    void startQTEMode(int target);
     void endQTEMode();
 
     

@@ -1,5 +1,6 @@
 #include "ZizQTEState.h"
 #include "LevelBossTest.h"
+#include "QTEButtonUI.h"
 #include <cstdlib>
 
 ZizQTEState* ZizQTEState::instance = nullptr;
@@ -32,6 +33,11 @@ void ZizQTEState::enter(Boss* boss) {
 	randomQTESequence();
 
 	startQTE(QTETarget1);
+	qteButtonUI = ziz->createQTEButtonUI();
+	ziz->getLevel()->addObject(qteButtonUI);
+
+	bufferTimerFailure = 0.25f;
+	bufferTimerSuccess = 0.25f;
 	
 }
 
@@ -60,17 +66,32 @@ void ZizQTEState::update(Boss* boss, float dt) {
 				timer1 -= dt;
 				if (ziz->getQTEInputReceieved() == true) {
 					if (ziz->getQTECorrect() == true) {
-						cout << "correct 1st" << endl;
-						startQTE(QTETarget2);
-						currentSeq++;
+						qteButtonUI->changeTextureSuccess(QTETarget1);
+
+						if (bufferTimerSuccess > 0) {
+							cout << "buffering success" << endl;
+							bufferTimerSuccess -= dt;
+							if (bufferTimerSuccess <= 0) {
+								qteButtonUI->changeTextureDefault(QTETarget2);
+								startQTE(QTETarget2);
+								currentSeq++;
+								bufferTimerSuccess = 0.25f;
+							}
+						}
+						
 					}
 					else if (ziz->getQTECorrect() == false) {
+						ziz->startShake(0.1f, 0.005f);
 						cout << "wrong 1st" << endl;
+						qteButtonUI->changeTextureFailure(QTETarget1);
 						failedAny = true;
 					}
+					
 				}
 				if (timer1 <= 0) {
+					ziz->startShake(0.1f, 0.005f);
 					cout << "time ran out 1st" << endl;
+					qteButtonUI->changeTextureFailure(QTETarget1);
 					failedAny = true;
 				}
 			}
@@ -80,17 +101,33 @@ void ZizQTEState::update(Boss* boss, float dt) {
 				timer2 -= dt;
 				if (ziz->getQTEInputReceieved() == true) {
 					if (ziz->getQTECorrect() == true) {
-						cout << "correct 2nd" << endl;
-						startQTE(QTETarget3);
-						currentSeq++;
+
+						qteButtonUI->changeTextureSuccess(QTETarget2);
+
+						if (bufferTimerSuccess > 0) {
+							cout << "buffering success" << endl;
+							bufferTimerSuccess -= dt;
+							if (bufferTimerSuccess <= 0) {
+								qteButtonUI->changeTextureDefault(QTETarget3);
+								startQTE(QTETarget3);
+								currentSeq++;
+								bufferTimerSuccess = 0.25f;
+							}
+						}
+
 					}
 					else if (ziz->getQTECorrect() == false) {
+						ziz->startShake(0.1f, 0.005f);
 						cout << "wrong 2nd" << endl;
+						qteButtonUI->changeTextureFailure(QTETarget2);
 						failedAny = true;
 					}
+					
 				}
 				if (timer2 <= 0) {
+					ziz->startShake(0.1f, 0.005f);
 					cout << "time ran out 2nd" << endl;
+					qteButtonUI->changeTextureFailure(QTETarget2);
 					failedAny = true;
 				}
 			}
@@ -101,16 +138,28 @@ void ZizQTEState::update(Boss* boss, float dt) {
 				if (ziz->getQTEInputReceieved() == true) {
 					if (ziz->getQTECorrect() == true) {
 						cout << "correct 3rd" << endl;
-						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-						currentSeq++;
+						qteButtonUI->changeTextureSuccess(QTETarget3);
+
+						if (bufferTimerSuccess > 0) {
+							cout << "buffering success" << endl;
+							bufferTimerSuccess -= dt;
+							if (bufferTimerSuccess <= 0) {
+								ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+							}
+						}
 					}
 					else if (ziz->getQTECorrect() == false) {
+						ziz->startShake(0.1f, 0.005f);
 						cout << "wrong 3rd" << endl;
+						qteButtonUI->changeTextureFailure(QTETarget3);
 						failedAny = true;
 					}
+					
 				}
 				if (timer2 <= 0) {
+					ziz->startShake(0.1f, 0.005f);
 					cout << "time ran out 3rd" << endl;
+					qteButtonUI->changeTextureFailure(QTETarget3);
 					failedAny = true;
 				}
 			}
@@ -121,8 +170,18 @@ void ZizQTEState::update(Boss* boss, float dt) {
 	}
 
 	if (failedAny == true) {
-		cout << "failed" << endl;
-		ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+		
+		
+		if (bufferTimerFailure > 0) {
+			bufferTimerFailure -= dt;
+			cout << "buffering" << endl;
+			if (bufferTimerFailure <= 0) {
+				
+				ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+			}
+		}
+
+		
 	}
 	
 
@@ -130,6 +189,7 @@ void ZizQTEState::update(Boss* boss, float dt) {
 }
 
 void ZizQTEState::exit(Boss* boss) {
+	qteButtonUI->expire();
 	ziz->endQTEMode();
 }
 
@@ -145,20 +205,5 @@ void ZizQTEState::randomQTESequence() {
 }
 
 void ZizQTEState::startQTE(int target) {
-	switch (target) {
-	case 0://w
-		ziz->startQTEMode('w');
-		break;
-	case 1://a
-		ziz->startQTEMode('a');
-		break;
-	case 2://s
-		ziz->startQTEMode('s');
-		break;
-	case 3://d
-		ziz->startQTEMode('d');
-		break;
-	default:
-		break;
-	}
+	ziz->startQTEMode(target);
 }

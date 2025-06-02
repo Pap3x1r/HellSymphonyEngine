@@ -26,7 +26,7 @@ void ZizUltState::enter(Boss* boss) {
 	isOffScreen = false;
 
 	flyUpTimer = 0.08f * 7;
-	activeLightning = 7.6f;
+	activeLightning = 7.6f + 2.0f;
 
 }
 
@@ -49,7 +49,7 @@ void ZizUltState::update(Boss* boss, float dt) {
 		activeLightning -= dt;
 		if (activeLightning <= 0) {
 			//qte
-			ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+			ziz->getStateMachine()->changeState(ZizQTEState::getInstance(), ziz);
 		}
 	}
 }

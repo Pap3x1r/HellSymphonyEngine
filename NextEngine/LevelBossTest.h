@@ -14,6 +14,7 @@
 #include "SwoopWarning.h"
 #include "UltZizOnBG.h"
 #include "Lightning.h"
+#include "QTEButtonUI.h"
 
 #include <list>
 
@@ -86,6 +87,7 @@ private:
 	Gust* gust;
 	StormRise* stormRise;
 	ChompTentacle* chompTentacle;
+	QTEButtonUI* qbui;
 
 	//ControlType
 	enum ControlType {
