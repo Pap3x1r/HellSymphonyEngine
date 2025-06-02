@@ -12,7 +12,7 @@ PlayerBigShieldUlt* PlayerBigShieldUlt::instance = nullptr;
 
 //Light Shield Attack 1
 void PlayerLightShieldAttack1::enter(Player* player) {
-    cout << "Player enters Shield Light Attack 1 state.\n";
+    //cout << "Player enters Shield Light Attack 1 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_lightAttack1_shield.png", 1, 16, 0);
     player->getAnimationComponent()->setState("lightAttack1Shield");
     currentPhase = STARTUP;
@@ -81,14 +81,14 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
 }
 
 void PlayerLightShieldAttack1::exit(Player* player) {
-    cout << "Player exits Shield Light Attack 1 state.\n";
+    //cout << "Player exits Shield Light Attack 1 state.\n";
     player->getShield()->setCurrentChainAttack(0);
     player->getShield()->setInChainAttack(false); // no longer in chain attack
 }
 
 //Light Shield Attack 2
 void PlayerLightShieldAttack2::enter(Player* player) {
-    cout << "Player enters Shield Light Attack 2 state.\n";
+    //cout << "Player enters Shield Light Attack 2 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_lightAttack2_shield.png", 1, 11, 0);
     player->getAnimationComponent()->setState("lightAttack2Shield");
     currentPhase = STARTUP;
@@ -147,14 +147,14 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
 }
 
 void PlayerLightShieldAttack2::exit(Player* player) {
-    cout << "Player exits Shield Light Attack 2 state.\n";
+    //cout << "Player exits Shield Light Attack 2 state.\n";
     player->getShield()->setInChainAttack(false);
     player->getShield()->setCurrentChainAttack(0);
 }
 
 //Shield Guard
 void PlayerShieldGuard::enter(Player* player) {
-    cout << "Player enters Shield Guard state.\n";
+    //cout << "Player enters Shield Guard state.\n";
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, 0.0f));
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_holding_shield.png", 1, 3, 0);
     player->getAnimationComponent()->setState("holdShield");
@@ -203,7 +203,7 @@ void PlayerShieldGuard::update(Player* player, float dt_) {
 }
 
 void PlayerShieldGuard::exit(Player* player) {
-    cout << "Player exits Shield Guard state.\n";
+    //cout << "Player exits Shield Guard state.\n";
     player->getAnimationComponent()->setLoop(true);
     player->getShield()->setIsBlocking(false);
 }
@@ -224,7 +224,7 @@ void PlayerShieldGuard::changeState(int phase) {
 
 //Player off shield
 void PlayerOffShield::enter(Player* player) {
-    cout << "Player enters Off Shield state.\n";
+    //cout << "Player enters Off Shield state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_off_shield.png", 1, 3, 0);
     player->getAnimationComponent()->setState("offShield");
     player->getAnimationComponent()->setLoop(false);
@@ -280,14 +280,14 @@ void PlayerOffShield::update(Player* player, float dt_) {
 
 void PlayerOffShield::exit(Player* player) {
     player->getAnimationComponent()->setLoop(true);
-    cout << "Player exits Off Shield state.\n";
+    //cout << "Player exits Off Shield state.\n";
     player->getShield()->setIsBlocking(false);
     player->getShield()->setIsHolding(false);
 }
 
 //Small Shield Ult
 void PlayerSmallShieldUlt::enter(Player* player) {
-    cout << "Player enters Shield Small Ult state.\n";
+    //cout << "Player enters Shield Small Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_smallUlt_shield.png", 1, 11, 0);
     player->getAnimationComponent()->setState("smallUltShield");
     currentPhase = STARTUP;
@@ -349,14 +349,14 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
 }
 
 void PlayerSmallShieldUlt::exit(Player* player) {
-    cout << "Player exits Shield Small Ult state.\n";
+    //cout << "Player exits Shield Small Ult state.\n";
     player->getShield()->setSmallUltReady(true);
 
 }
 
 //Shield Big Ult
 void PlayerBigShieldUlt::enter(Player* player) {
-    cout << "Player enters Shield Big Ult state.\n";
+    //cout << "Player enters Shield Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 24, 0);
     player->getAnimationComponent()->setState("bigUltShield");
     currentPhase = STARTUP;
@@ -417,6 +417,6 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
 }
 
 void PlayerBigShieldUlt::exit(Player* player) {
-    cout << "Player exits Shield Big Ult state.\n";
+    //cout << "Player exits Shield Big Ult state.\n";
     player->getShield()->setBigUltReady(true);
 }

@@ -84,7 +84,7 @@ void PlayerWalkState::exit(Player* player) {
 
 //Jump Up
 void PlayerJumpUpState::enter(Player* player) {
-    cout << "Player enters Jump Up state.\n";
+    //cout << "Player enters Jump Up state.\n";
 
     switch (player->getWeaponType()) {
     case None_:
@@ -119,13 +119,13 @@ void PlayerJumpUpState::update(Player* player, float dt_) {
 }
 
 void PlayerJumpUpState::exit(Player* player) {
-    cout << "Player exits Jump Up state.\n";
+    //cout << "Player exits Jump Up state.\n";
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 //Fall Down
 void PlayerFallDownState::enter(Player* player) {
-    cout << "Player enters Fall Down state.\n";
+    //cout << "Player enters Fall Down state.\n";
 
     switch (player->getWeaponType()) {
     case None_:
@@ -164,6 +164,6 @@ void PlayerFallDownState::update(Player* player, float dt_) {
 }
 
 void PlayerFallDownState::exit(Player* player) {
-    cout << "Player exits Fall Down state.\n";
+    //cout << "Player exits Fall Down state.\n";
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }

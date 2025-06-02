@@ -10,7 +10,7 @@ PlayerBigBowUlt* PlayerBigBowUlt::instance = nullptr;
 
 //Bow Light Attack
 void PlayerLightBowAttack::enter(Player* player) {
-    cout << "Player enters Bow Light Attack state.\n";
+    //cout << "Player enters Bow Light Attack state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteBow/dante_lightAttack_bow.png", 1, 7, 0); //set new texture ("path", row, column)
     player->getAnimationComponent()->setState("lightAttackBow");
     currentPhase = STARTUP; //reset back to startup
@@ -59,13 +59,13 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
 }
 
 void PlayerLightBowAttack::exit(Player* player) {
-    cout << "Player exits Bow Light Attack state.\n";
+    //cout << "Player exits Bow Light Attack state.\n";
     player->getBow()->setIsShooting(false);
 }
 
 //Bow Heavy Attack
 void PlayerHeavyBowAttack::enter(Player* player) {
-    cout << "Player enters Bow Heavy Attack state.\n";
+    //cout << "Player enters Bow Heavy Attack state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteBow/dante_heavyAttack_bow.png", 1, 16, 0);
     player->getAnimationComponent()->setState("heavyAttackBow");
     currentPhase = STARTUP;
@@ -113,13 +113,13 @@ void PlayerHeavyBowAttack::update(Player* player, float dt_) {
 }
 
 void PlayerHeavyBowAttack::exit(Player* player) {
-    cout << "Player exits Bow Heavy Attack state.\n";
+    //cout << "Player exits Bow Heavy Attack state.\n";
     player->getBow()->setIsShooting(false);
 }
 
 //Bow Small Ult
 void PlayerSmallBowUlt::enter(Player* player) {
-    cout << "Player enters Bow Small Ult state.\n";
+    //cout << "Player enters Bow Small Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png", 1, 13, 0);
     player->getAnimationComponent()->setState("smallUltBow");
     currentPhase = STARTUP;
@@ -186,13 +186,13 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
 }
 
 void PlayerSmallBowUlt::exit(Player* player) {
-    cout << "Player exits Bow Small Ult state.\n";
+    //cout << "Player exits Bow Small Ult state.\n";
     player->getBow()->setIsShooting(false);
 }
 
 //Bow Big Ultimate
 void PlayerBigBowUlt::enter(Player* player) {
-    cout << "Player enters Bow Big Ult state.\n";
+    //cout << "Player enters Bow Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png", 1, 18, 0);
     player->getAnimationComponent()->setState("bigUltBow");
     currentPhase = STARTUP;
@@ -261,6 +261,6 @@ void PlayerBigBowUlt::update(Player* player, float dt_) {
 }
 
 void PlayerBigBowUlt::exit(Player* player) {
-    cout << "Player exits Bow Big Ult state.\n";
+    //cout << "Player exits Bow Big Ult state.\n";
     player->getBow()->setIsShooting(false);
 }

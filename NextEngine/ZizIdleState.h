@@ -9,6 +9,7 @@
 #include "ZizClawSlashState.h"
 #include "ZizChompState.h"
 #include "ZizUltState.h"
+#include "ZizQTEState.h"
 #include <random>
 #include <chrono>
 

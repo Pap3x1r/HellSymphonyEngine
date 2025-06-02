@@ -10,7 +10,7 @@ Gust::Gust() {
     addColliderComponent();
     
     getColliderComponent()->setDimension(0.5f, 1.0f);
-    setDrawCollider(true);
+    
     addPhysicsComponent();
     getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
     getPhysicsComponent()->setEnableGravity(true);
@@ -31,7 +31,7 @@ Gust::Gust(bool facingRight) {
     speed = 8.0f; 
     hasHit = false;
     damage = 10;
-    setCanDrawColliderNew(true);
+    
     //cout << "Gust from Ziz created and moving\n";
 }
 

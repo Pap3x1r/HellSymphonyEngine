@@ -371,13 +371,13 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
 }
 
 void PlayerHeavySwordAttack::exit(Player* player) {
-    cout << "Player exits Sword Heavy Attack state.\n";
+    //cout << "Player exits Sword Heavy Attack state.\n";
     player->getSword()->setInChainAttack(false);
 }
 
 ////Small Sword Ult
 void PlayerSmallSwordUlt::enter(Player* player) {
-    cout << "Player enters Sword Small Ult state.\n";
+    //cout << "Player enters Sword Small Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_smallUlt_sword.png", 1, 10, 0);
     player->getAnimationComponent()->setState("smallUltSword");
     currentPhase = STARTUP;
@@ -440,7 +440,7 @@ void PlayerSmallSwordUlt::update(Player* player, float dt_) {
 }
 
 void PlayerSmallSwordUlt::exit(Player* player) {
-    cout << "Player exits Sword Small Ult state.\n";
+    //cout << "Player exits Sword Small Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
     player->getSword()->setSmallUltReady(true);
@@ -448,7 +448,7 @@ void PlayerSmallSwordUlt::exit(Player* player) {
 
 ////BigSwordUlt
 void PlayerBigSwordUlt::enter(Player* player) {
-    cout << "Player enters Sword Big Ult state.\n";
+    //cout << "Player enters Sword Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUlt_sword.png", 1, 25, 0);
     player->getAnimationComponent()->setState("bigUltSword");
     currentPhase = STARTUP;
@@ -504,7 +504,7 @@ void PlayerBigSwordUlt::update(Player* player, float dt_) {
 }
 
 void PlayerBigSwordUlt::exit(Player* player) {
-    cout << "Player exits Sword Big Ult state.\n";
+    //cout << "Player exits Sword Big Ult state.\n";
     player->getSword()->setInChainAttack(false); //Player is in chain attack
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
     player->getSword()->setBigUltReady(true);

@@ -48,6 +48,7 @@ void ZizUltState::update(Boss* boss, float dt) {
 	else if (hasFlew == true) {
 		activeLightning -= dt;
 		if (activeLightning <= 0) {
+			//qte
 			ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
 		}
 	}

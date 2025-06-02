@@ -205,7 +205,6 @@ int InputManager::getMouseY() const {
 bool InputManager::isMovementInputIdle() {
     return !(getButton(SDLK_a) ||
         getButton(SDLK_d) ||
-        getButton(SDLK_w) ||
         getButton(SDLK_s) ||
         getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) ||
         getControllerButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) ||

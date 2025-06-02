@@ -86,6 +86,15 @@ private:
 	Gust* gust;
 	StormRise* stormRise;
 	ChompTentacle* chompTentacle;
+
+	//ControlType
+	enum ControlType {
+		keyboard = 0,
+		controller
+	};
+
+	ControlType currentControlType = ControlType::keyboard;
+
 	//UI
 	SimpleObject* playerHealthBar;
 	SimpleObject* playerUltimateBar;
@@ -161,4 +170,6 @@ public:
 	void buttonsFree();
 
 	void UIUpdate();
+
+	void switchControlType(ControlType ct);
 };

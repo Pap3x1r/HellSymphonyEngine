@@ -29,6 +29,7 @@ void LevelBossTest::levelLoad() {
 }
 
 void LevelBossTest::levelInit() {
+	currentControlType = ControlType::keyboard;
 
 	TexturedObject* background = new TexturedObject("background");
 	background->setTexture("../Resource/Texture/Lust_Alpha.png");
@@ -307,6 +308,12 @@ void LevelBossTest::levelUpdate() {
 	updateSkillsIcon();
 
 	//std::cout << "Current cache size: " << GameEngine::getInstance()->getRenderer()->getTextureCache().size() << std::endl;
+	/*if (currentControlType == ControlType::controller) {
+		cout << "Current Control Scheme: Controller" << endl;
+	}
+	if (currentControlType == ControlType::keyboard) {
+		cout << "Current Control Scheme: Keyboard" << endl;
+	}*/
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
@@ -499,6 +506,24 @@ void LevelBossTest::isReceivingNoInputs() {
 	player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
+void LevelBossTest::switchControlType(ControlType ct) {
+	switch (ct) {
+	case ControlType::keyboard:
+		if (currentControlType != ControlType::keyboard) {
+			currentControlType = ControlType::keyboard;
+		}
+		break;
+	case ControlType::controller:
+		if (currentControlType != ControlType::controller) {
+			currentControlType = ControlType::controller;
+		}
+		break;
+	default:
+		break;
+	}
+
+}
+
 void LevelBossTest::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
@@ -517,7 +542,14 @@ void LevelBossTest::handleKey(char key) {
 		return;
 	}
 
-
+	if (ziz->getQTEMode() == true) {
+		if (key != 'I') {
+			if ((key == 'w') || (key == 'a') || (key == 's') || (key == 'd')) {
+				ziz->handleQTEInput(key);
+				return;
+			}
+		}
+	}
 
 	//Jump -> higher priority
 
@@ -532,23 +564,24 @@ void LevelBossTest::handleKey(char key) {
 
 	switch (key) {
 	case 'w':
-		//player->getTransform().translate(glm::vec3(0, player->getMovementSpeed() * dt, 0));
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+
+		switchControlType(keyboard);
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
 			player->getPhysicsComponent()->addForce(glm::vec2(0.0f, player->getJumpPower()));
 		}
-		//player->getAnimationComponent()->setState("up");
+
 		break;
 	case 's':
-		//player->getTransform().translate(glm::vec3(0, -player->getMovementSpeed() * dt, 0));
-		/*player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		playerIsMoving = true;*/
-		//player->getAnimationComponent()->setState("down");
+		switchControlType(keyboard);
 		break;
 	case 'a':
 		if (player->getIsDashing() == true) return;
 		if (player->getIsStunned() == true) return;
+		switchControlType(keyboard);
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 
@@ -569,6 +602,7 @@ void LevelBossTest::handleKey(char key) {
 	case 'd':
 		if (player->getIsDashing() == true) return;
 		if (player->getIsStunned() == true) return;
+		switchControlType(keyboard);
 
 		
 
@@ -589,6 +623,10 @@ void LevelBossTest::handleKey(char key) {
 		ziz->interruptDeath();
 		break;
 	case 'q':
+		if (player->getIsGrounded() == false) return;
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(keyboard);
 		playerUltimateInput();
 		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
@@ -623,10 +661,9 @@ void LevelBossTest::handleKey(char key) {
 		
 		break;
 	case 'S': //Spacebar -> Jump
-		if (player->getIsDashing() == true) { //Prevent air attack
-			return;
-		}
-
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(keyboard);
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
@@ -634,7 +671,9 @@ void LevelBossTest::handleKey(char key) {
 		}
 		break;
 	case 'P': // dash
-
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(keyboard);
 		if (player->getTransform().getPosition().x > -7.4f && player->getTransform().getPosition().x < 7.4f) {
 			if (player->getCanDash()) {
 				player->setMovementSpeed(player->getMovementSpeed() * 5);
@@ -647,14 +686,14 @@ void LevelBossTest::handleKey(char key) {
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		//player->increaseUltimateGauge(100.0f);
+		player->increaseUltimateGauge(100.0f);
 		//ziz->interruptPhaseChange();
-		currentMenuState = MenuState::MAIN;
+		//currentMenuState = MenuState::MAIN;
 		break;
 		
 	case 'l':
 
-		currentMenuState = MenuState::PAUSE;
+		//currentMenuState = MenuState::PAUSE;
 		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
 		addObject(ultZizOnBG_);
 		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
@@ -667,6 +706,8 @@ void LevelBossTest::handleKey(char key) {
 
 		/*DrawableObject* newGust = ziz->createGust();
 		addObject(newGust);*/
+
+		ziz->interruptIntoPhase();
 
 		//ziz->startShake(0.2f, 0.005f);
 		//ziz->interruptPhaseChange();
@@ -702,6 +743,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 			return;
 		}
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(controller);
+
 		player->getPhysicsComponent()->setVelocity(glm::vec2(-player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(-player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(false);
@@ -718,6 +763,10 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 			return;
 		}
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(controller);
+
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 		//player->getTransform().translate(glm::vec3(player->getMovementSpeed() * dt, 0, 0));
 		player->setFacingRight(true);
@@ -730,15 +779,15 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		//player->getAnimationComponent()->setState("right");
 		break;
 	case SDL_CONTROLLER_BUTTON_X:
-		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
-			return;
-		}
+		if (player->getIsGrounded() == false) return;
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		switchControlType(controller);
 
 		if (player->getWeaponType() == Bow_) {
+			if (player->getBow()->getIsShooting() == true) return;
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
-					/*DrawableObject* newArrow = bow->arrowShot(10, player, 25);
-					objectsList.push_back(newArrow);*/
 					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
 				}
 			}
@@ -777,11 +826,13 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 
 		break;
 	case SDL_CONTROLLER_BUTTON_Y:
-		if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
-			return;
-		}
+		if (player->getIsGrounded() == false) return;
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		
 
 		if (player->getWeaponType() == Bow_) {
+			if (player->getBow()->getIsShooting() == true) return;
 			player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
 		}
 		else if (player->getWeaponType() == Sword_) {
@@ -800,13 +851,13 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		break;
 
 	case SDL_CONTROLLER_BUTTON_A:
-		if (player->getIsDashing() == true) { //Prevent air attack
-			return;
-		}
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
 		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 			return;
 		}
 
+		switchControlType(controller);
 		if (player->getIsGrounded()) {
 			player->setIsGrounded(false);
 			player->getPhysicsComponent()->setVelocity(glm::vec2(player->getPhysicsComponent()->getVelocity().x, 0.0f)); //Set y velocity to 0 before jump to ensure player jump at the same height every time
@@ -814,6 +865,13 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		}
 		break;
 	case SDL_CONTROLLER_BUTTON_B:
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+			return;
+		}
+		switchControlType(controller);
+
 		if (player->getTransform().getPosition().x > -7.4f && player->getTransform().getPosition().x < 7.4f) {
 			if (player->getCanDash()) {
 				player->setMovementSpeed(player->getMovementSpeed() * 4);
@@ -824,7 +882,13 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		
 		break;
 	case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
-
+		if (player->getIsGrounded() == false) return;
+		if (player->getIsDashing() == true) return;
+		if (player->getIsStunned() == true) return;
+		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+			return;
+		}
+		switchControlType(controller);
 		playerUltimateInput();
 
 		break;
@@ -864,18 +928,16 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	// assume type = bow first
 
 	if (player->getIsDead()) return;
-
-	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
-		return;
-	}
-
+	if (player->getIsGrounded() == false) return;
+	if (player->getIsDashing() == true) return;
 	if (player->getIsStunned() == true) return;
-
+	
+	
 	if (player->getWeaponType() == Bow_) {
-		if (player->getBow()->getIsShooting() == true) {
-			return;
-		}
+		if (player->getBow()->getIsShooting() == true) return;
+		
 		if (type == 0) {
+			switchControlType(keyboard);
 			if (player->getBow()->getIsOverheat() == false) {
 				if (player->getBow()->getRapidShotReady()) {
 					player->getStateMachine()->changeState(PlayerLightBowAttack::getInstance(), player);
@@ -883,6 +945,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 			}
 		}
 		else if (type == 1) {
+			switchControlType(keyboard);
 			if (player->getBow()->getIsOverheat() == false) {
 				player->getStateMachine()->changeState(PlayerHeavyBowAttack::getInstance(), player);
 			}
@@ -891,23 +954,17 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	else if (player->getWeaponType() == Sword_) {
 		if (type == 0) {
 			//enter first attack of the chain
-
+			
 			if (player->getSword()->getInChainAttack()) {
 				//input buffer
 				player->getSword()->setInputBuffer(true);
 				return;
 			}
-
+			switchControlType(keyboard);
 			switch (player->getSword()->getCurrentChainAttack()) {
 			case 0:
 				player->getStateMachine()->changeState(PlayerLightSwordAttack1::getInstance(), player);
 				break;
-				/*case 1:
-					player->getStateMachine()->changeState(PlayerLightSwordAttack2::getInstance(), player);
-					break;
-				case 2:
-					player->getStateMachine()->changeState(PlayerLightSwordAttack3::getInstance(), player);
-					break;*/
 			}
 
 
@@ -916,7 +973,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 			if (player->getSword()->getInChainAttack()) {
 				return;
 			}
-
+			switchControlType(keyboard);
 			player->getStateMachine()->changeState(PlayerHeavySwordAttack::getInstance(), player);
 		}
 
@@ -935,7 +992,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 			}
 
 			
-
+			switchControlType(keyboard);
 			switch (player->getShield()->getCurrentChainAttack()) {
 			case 0:
 				player->getStateMachine()->changeState(PlayerLightShieldAttack1::getInstance(), player);
@@ -954,11 +1011,11 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 			if (player->getShield()->getInChainAttack()) {
 				return;
 			}
-
+			switchControlType(keyboard);
 			player->getStateMachine()->changeState(PlayerShieldGuard::getInstance(), player);
 		}
 		else if (type == 3) {
-
+			switchControlType(keyboard);
 			if (player->getShield()->getIsBlocking()) {
 				player->getStateMachine()->changeState(PlayerOffShield::getInstance(), player);
 			}
@@ -983,8 +1040,8 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 		return;
 	}
 	
-
 	if (type == 0) {//x axis
+		switchControlType(controller);
 		switch (key) {
 		case 'l':
 			//cout << "Tilt Left" << endl;

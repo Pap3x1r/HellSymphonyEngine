@@ -89,6 +89,7 @@ Ziz::Ziz() {
 	instance = this;
 
 	//cout << "ziz created" << endl;
+	qteInputReceieved = false;
 	
 }
 
@@ -278,11 +279,15 @@ void Ziz::changePhase() {
 }
 
 void Ziz::interruptPhaseChange() {
-	getStateMachine()->interrupt(this);
+	getStateMachine()->interruptPhaseChange(this);
 }
 
 void Ziz::interruptDeath() {
 	getStateMachine()->interruptDeath(this);
+}
+
+void Ziz::interruptIntoPhase() {
+	getStateMachine()->interruptIntoPhase(this);
 }
 
 bool Ziz::getIsInvincible() {
@@ -292,6 +297,8 @@ bool Ziz::getIsInvincible() {
 void Ziz::setIsInvincible(bool val) {
 	isInvincible = val;
 }
+
+
 
 void Ziz::startShake(float duration, float intensity) {
 	isShaking = true;
@@ -364,6 +371,43 @@ void Ziz::resetCam() {
 	else {
 		std::cerr << "Error: Could not get GameEngine instance in handleKey." << std::endl;
 	}
+}
+
+void Ziz::updateQTEMode(float dt) {
+	
+}
+
+void Ziz::handleQTEInput(char c) {
+	QTEInput = c;
+	cout << "ziz receieved qte input: " << c << endl;
+	QTECorrect = (QTEInput == QTETarget);
+	qteInputReceieved = true;
+}
+
+void Ziz::startQTEMode(char c) {
+	qteInputReceieved = false;
+	QTETarget = c;
+	QTECorrect = false;
+	cout << "QTE Mode Started, target: " << c << endl;
+	qteMode = true;
+}
+
+void Ziz::endQTEMode() {
+	QTECorrect = false;
+	qteMode = false;
+	//cout << "end qte mode" << endl;
+}
+
+bool Ziz::getQTECorrect() {
+	return QTECorrect;
+}
+
+bool Ziz::getQTEMode() {
+	return qteMode;
+}
+
+bool Ziz::getQTEInputReceieved() {
+	return qteInputReceieved;
 }
 
 

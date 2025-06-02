@@ -11,6 +11,7 @@
 #include "UltZizOnBG.h"
 #include "ChompTentacle.h"
 #include "Lightning.h"
+#include <vector>
 #include <random>
 
 enum zizPhase {
@@ -37,6 +38,7 @@ private:
     float shakeIntensity = 15.0f; // Adjust for desired intensity
     bool shakeInterval;
     bool shakeIntervalTimer;
+    
     std::random_device rd;
     std::mt19937 gen;
     std::uniform_real_distribution<> shakeOffsetX;
@@ -50,6 +52,14 @@ private:
     Player* player;
 
     vector<string> texturePaths;
+
+    //qte
+    bool qteMode;
+    bool qteInputReceieved;
+    char QTETarget;
+    char QTEInput;
+    bool QTECorrect;
+
 
 public:
     static Ziz* getInstance();
@@ -72,6 +82,13 @@ public:
     bool getIsInvincible();
     void setIsInvincible(bool val);
 
+    bool getQTECorrect();
+    bool getQTEMode();
+    bool getQTEInputReceieved();
+    void handleQTEInput(char c);
+    void startQTEMode(char c);
+    void endQTEMode();
+
     
 
     BossStateMachine* getStateMachine() const;
@@ -90,11 +107,14 @@ public:
     void interruptDeath();
     void startShake(float duration, float intensity);
     void updateShake(float deltaTime);
+    void updateQTEMode(float dt);
     void stopShake();
+    void interruptIntoPhase();
 
     void resetCam();
 
     Health* getHealth() const;
+
 
     
 

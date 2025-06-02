@@ -36,6 +36,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossStateMachine.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="BowUltimateCollider.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChompTentacle.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="LevelAnimTest.cpp" />
     <ClCompile Include="LevelBossTest.cpp" />
     <ClCompile Include="LevelCollisionTest.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LevelMainMenu.cpp" />
     <ClCompile Include="LevelMapEditorTest.cpp" />
     <ClCompile Include="LevelParallax.cpp" />
@@ -79,6 +81,7 @@
     <ClCompile Include="PlayerSwordState.cpp" />
     <ClCompile Include="QTEManager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="SimpleObject.cpp" />
     <ClCompile Include="SliderObject.cpp" />
     <ClCompile Include="SquareBorderMesh.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="ZizGroundSlamState.cpp" />
     <ClCompile Include="ZizGustState.cpp" />
     <ClCompile Include="ZizIdleState.cpp" />
+    <ClCompile Include="ZizQTEState.cpp" />
     <ClCompile Include="ZizStormRiseState.cpp" />
     <ClCompile Include="ZizSwoopState.cpp" />
     <ClCompile Include="ZizTransitionState.cpp" />
@@ -147,6 +151,7 @@
     <ClInclude Include="LevelAnimTest.h" />
     <ClInclude Include="LevelBossTest.h" />
     <ClInclude Include="LevelCollisionTest.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LevelMainMenu.h" />
     <ClInclude Include="LevelMapEditorTest.h" />
     <ClInclude Include="LevelParallax.h" />
@@ -195,6 +200,7 @@
     <ClInclude Include="ZizGroundSlamState.h" />
     <ClInclude Include="ZizGustState.h" />
     <ClInclude Include="ZizIdleState.h" />
+    <ClInclude Include="ZizQTEState.h" />
     <ClInclude Include="ZizStormRiseState.h" />
     <ClInclude Include="ZizSwoopState.h" />
     <ClInclude Include="ZizTransitionState.h" />

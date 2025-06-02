@@ -190,7 +190,7 @@ void Player::selfUpdate(float dt_) {
 		
 		if (stunTimer > 0) {
 			stunTimer -= dt_;
-			//cout << "stunTimer: " << stunTimer << endl;
+			cout << "stunTimer: " << stunTimer << endl;
 			getPhysicsComponent()->setVelocity(glm::vec2(0.0f, getPhysicsComponent()->getVelocity().y));
 			if (stunTimer <= 0) {
 				isStunned = false;
