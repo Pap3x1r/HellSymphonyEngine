@@ -33,6 +33,7 @@ private:
 
 	//Not for draw list
 	list<UIButton*> mainButtons;
+	list<UIButton*> pauseButtons;
 	list<UIButton*> optionsButtons;
 	list<UIButton*> audioButtons;
 	list<UIButton*> controllerButtons;
@@ -176,4 +177,6 @@ public:
 	void UIUpdate();
 
 	void switchControlType(ControlType ct);
+
+	void createPauseUI();
 };
