@@ -113,6 +113,11 @@ void handleObjectCollision(list<DrawableObject*>& objects) {
 				collided = false;
 			}
 			else if (phys1 != nullptr) {
+
+				if (shouldResolveCollision(obj1, obj2)) {
+					continue;
+				}
+
 				Collider tempCol = *col1; // shallow copy
 				glm::vec3 dir = t1.getPosition() - phys1->getLastPosition();
 				dir /= (float)COLLISION_RESOLUTION;
@@ -255,6 +260,21 @@ bool shouldIgnoreCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	Tag tag2 = obj2->getTag();
 
 	if ((tag1 == Tag::Player && tag2 == Tag::GroundChecker) || (tag1 == Tag::GroundChecker && tag2 == Tag::Player)) {
+		return true;
+	}
+
+	return false;
+}
+
+bool shouldResolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
+	Tag tag1 = obj1->getTag();
+	Tag tag2 = obj2->getTag();
+
+	if ((tag1 == Tag::Player && tag2 == Tag::Enemy) || (tag1 == Tag::GroundChecker && tag2 == Tag::Enemy)) {
+		return true;
+	}
+
+	if ((tag1 == Tag::Player && tag2 == Tag::EnemyAttack) || (tag1 == Tag::GroundChecker && tag2 == Tag::EnemyAttack)) {
 		return true;
 	}
 
