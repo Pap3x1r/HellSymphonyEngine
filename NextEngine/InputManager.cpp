@@ -17,6 +17,7 @@ InputManager::~InputManager() {
 }
 
 void InputManager::updateInput() {
+    lastFrameChange = false;
     // Reset key states
     for (auto& pair : keyStates) {
         auto& key = pair.first;
@@ -104,12 +105,18 @@ void InputManager::updateInput() {
         }
 
         if (event.type == SDL_CONTROLLERAXISMOTION) {
-            setLastInput(InputDevice::CONTROLLER);
+            const float DEADZONE = 0.2f;
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
                 analogStick.first = event.caxis.value / 32768.0f; // Capture left stick x-axis
+                if (fabs(analogStick.first) > DEADZONE) {
+                    setLastInput(InputDevice::CONTROLLER);
+                }
             }
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
                 analogStick.second = event.caxis.value / 32768.0f; // Capture left stick y-axis
+                if (fabs(analogStick.second) > DEADZONE) {
+                    setLastInput(InputDevice::CONTROLLER);
+                }
             }
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
                 // Normalize the trigger value to 0.0f - 1.0f range
@@ -117,6 +124,9 @@ void InputManager::updateInput() {
                 // You might want to clamp the value to ensure it's within the range
                 if (leftTrigger < 0.0f) leftTrigger = 0.0f;
                 if (leftTrigger > 1.0f) leftTrigger = 1.0f;
+                if (leftTrigger > 0.1f) {
+                    setLastInput(InputDevice::CONTROLLER);
+                }
                 // std::cout << "L2 Trigger Value: " << leftTrigger << std::endl; // For debugging
             }
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
@@ -125,6 +135,9 @@ void InputManager::updateInput() {
                 // You might want to clamp the value to ensure it's within the range
                 if (rightTrigger < 0.0f) rightTrigger = 0.0f;
                 if (rightTrigger > 1.0f) rightTrigger = 1.0f;
+                if (rightTrigger > 0.1f) {
+                    setLastInput(InputDevice::CONTROLLER);
+                }
                 // std::cout << "R2 Trigger Value: " << rightTrigger << std::endl; // For debugging
             }
         }
@@ -214,9 +227,31 @@ bool InputManager::isMovementInputIdle() {
 }
 
 void InputManager::setLastInput(InputDevice device) {
-    lastInput = device;
+    if (!lastFrameChange) {
+        if (lastInput != device) {
+            lastInput = device;
+            switch (device) {
+            case InputDevice::KEYBOARD:
+                cout << "LastInput: Keyboard\n";
+                cout << "Is now: " << to_string(int(device)) << endl;
+                break;
+            case InputDevice::CONTROLLER:
+                cout << "LastInput: Controller\n";
+                cout << "Is now: " << to_string(int(device)) << endl;
+                break;
+            default:
+                cout << "LastInput: Unknown\n";
+                cout << "Is now: " << to_string(int(device)) << endl;
+                break;
+            }
+
+         
+        }
+
+        lastFrameChange = true;
+    }
 }
 
-InputDevice InputManager::getLastInput() const {
+InputDevice InputManager::getLastInput() {
     return lastInput;
 }

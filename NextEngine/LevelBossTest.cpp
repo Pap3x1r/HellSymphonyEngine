@@ -176,107 +176,7 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Bow Skills Icon
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	TexturedObject* bowSmallUltIconOff_ = new TexturedObject("Bow Small Ultimate Icon Off");
-	bowSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_Off.png");
-	bowSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	bowSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(bowSmallUltIconOff_);
-	bowSmallUltIconOff = bowSmallUltIconOff_;
-
-	TexturedObject* bowSmallUltIconOn_ = new TexturedObject("Bow Small Ultimate Icon On");
-	bowSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_On.png");
-	bowSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	bowSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(bowSmallUltIconOn_);
-	bowSmallUltIconOn = bowSmallUltIconOn_;
-
-	TexturedObject* bowBigUltIconOff_ = new TexturedObject("Bow Big Ultimate Icon Off");
-	bowBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_Off.png");
-	bowBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	bowBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(bowBigUltIconOff_);
-	bowBigUltIconOff = bowBigUltIconOff_;
-
-	TexturedObject* bowBigUltIconOn_ = new TexturedObject("Bow Big Ultimate Icon On");
-	bowBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_On.png");
-	bowBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	bowBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(bowBigUltIconOn_);
-	bowBigUltIconOn = bowBigUltIconOn_;
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Sword Skills Icon
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	TexturedObject* swordSmallUltIconOff_ = new TexturedObject("Sword Small Ultimate Icon Off");
-	swordSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_Off.png");
-	swordSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	swordSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(swordSmallUltIconOff_);
-	swordSmallUltIconOff = swordSmallUltIconOff_;
-
-	TexturedObject* swordSmallUltIconOn_ = new TexturedObject("Sword Small Ultimate Icon On");
-	swordSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_On.png");
-	swordSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	swordSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(swordSmallUltIconOn_);
-	swordSmallUltIconOn = swordSmallUltIconOn_;
-
-	TexturedObject* swordBigUltIconOff_ = new TexturedObject("Sword Big Ultimate Icon Off");
-	swordBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_Off.png");
-	swordBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	swordBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(swordBigUltIconOff_);
-	swordBigUltIconOff = swordBigUltIconOff_;
-
-	TexturedObject* swordBigUltIconOn_ = new TexturedObject("Sword Big Ultimate Icon On");
-	swordBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_On.png");
-	swordBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	swordBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(swordBigUltIconOn_);
-	swordBigUltIconOn = swordBigUltIconOn_;
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Shield Skills Icon
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	TexturedObject* shieldSmallUltIconOff_ = new TexturedObject("Shield Small Ultimate Icon Off");
-	shieldSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_Off.png");
-	shieldSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	shieldSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(shieldSmallUltIconOff_);
-	shieldSmallUltIconOff = shieldSmallUltIconOff_;
-
-	TexturedObject* shieldSmallUltIconOn_ = new TexturedObject("Shield Small Ultimate Icon On");
-	shieldSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_On.png");
-	shieldSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	shieldSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
-	objectsList.push_back(shieldSmallUltIconOn_);
-	shieldSmallUltIconOn = shieldSmallUltIconOn_;
-
-	TexturedObject* shieldBigUltIconOff_ = new TexturedObject("Shield Big Ultimate Icon Off");
-	shieldBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_Off.png");
-	shieldBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	shieldBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(shieldBigUltIconOff_);
-	shieldBigUltIconOff = shieldBigUltIconOff_;
-
-	TexturedObject* shieldBigUltIconOn_ = new TexturedObject("Shield Big Ultimate Icon On");
-	shieldBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_On.png");
-	shieldBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
-	shieldBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
-	objectsList.push_back(shieldBigUltIconOn_);
-	shieldBigUltIconOn = shieldBigUltIconOn_;
+	createSkillsIcon();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -321,14 +221,14 @@ void LevelBossTest::levelUpdate() {
 	ImGui::Begin("Debug Panel");
 	
 
-	if (inputManager) {
+	/*if (inputManager) {
 		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
 			cout << "inputmanager last Keyboard" << endl;
 		}
 		else {
 			cout << "inputmanager last controller" << endl;
 		}
-	}
+	}*/
 
 
 	if (firstStart) {

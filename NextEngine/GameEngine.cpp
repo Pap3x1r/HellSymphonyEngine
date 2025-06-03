@@ -44,8 +44,8 @@ void GameEngine::init(int width, int height) {
 	setBackgroundColor(95.0f / 255, 110.0f / 255, 133.0f / 255);
 
 	stateController = new GameStateController();
-	//stateController->init(GameState::GS_MAINMENU);
-	stateController->init(GameState::GS_ZIZ);
+	stateController->init(GameState::GS_MAINMENU);
+	//stateController->init(GameState::GS_ZIZ);
 
 	time = new Time();
 	inputHandler = new InputManager();  

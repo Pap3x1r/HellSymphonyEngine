@@ -55,7 +55,7 @@ public:
     bool isMovementInputIdle();                 // Is Receiving Input
 
     void setLastInput(InputDevice device);
-    InputDevice getLastInput() const;
+    InputDevice getLastInput();
 
 
 private:
@@ -68,7 +68,8 @@ private:
     float leftTrigger;
     float rightTrigger;
     
-    InputDevice lastInput = InputDevice::KEYBOARD;
+    InputDevice lastInput = InputDevice::CONTROLLER;
+    bool lastFrameChange = false;
 };
 
 #endif
