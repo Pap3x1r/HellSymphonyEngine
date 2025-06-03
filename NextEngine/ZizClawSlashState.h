@@ -35,6 +35,7 @@ private:
     float pauseTimer3;
 
     float recoveryTimer;
+    float mapXLimit;
 
 
     Ziz* ziz;

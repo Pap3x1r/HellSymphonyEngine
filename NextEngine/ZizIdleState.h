@@ -10,8 +10,7 @@
 #include "ZizChompState.h"
 #include "ZizUltState.h"
 #include "ZizQTEState.h"
-#include <random>
-#include <chrono>
+#include "ZizImpaleState.h"
 
 class Ziz;
 
@@ -24,9 +23,6 @@ private:
 
     Ziz* ziz;
     Player* player;
-
-    std::mt19937 gen;
-    std::uniform_real_distribution<> randomX;
 
 public:
     static ZizIdleState* getInstance();

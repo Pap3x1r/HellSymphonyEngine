@@ -38,7 +38,7 @@ void ZizGustState::update(Boss* boss, float dt) {
             startupTimer -= dt;
         }
         else {
-            cout << "active gust" << endl;
+            //cout << "active gust" << endl;
             currentState = 1;
             DrawableObject* newGust = ziz->createGust();
             ziz->getLevel()->addObject(newGust);
@@ -50,7 +50,7 @@ void ZizGustState::update(Boss* boss, float dt) {
         }
         else {
             
-            cout << "recovery gust" << endl;
+            //cout << "recovery gust" << endl;
             currentState = 2;
         }
         break;
@@ -59,7 +59,7 @@ void ZizGustState::update(Boss* boss, float dt) {
             recoveryTimer -= dt;
         }
         else {
-            cout << "change back to idle from gust" << endl;
+            //cout << "change back to idle from gust" << endl;
             currentState = 3;
         }
         break;

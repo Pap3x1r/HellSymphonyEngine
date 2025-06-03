@@ -81,8 +81,6 @@ void ZizClawSlashState::enter(Boss* boss) {
 }
 
 void ZizClawSlashState::update(Boss* boss, float dt) {
-	
-
 
 	if (slashCount < 3) {
 
@@ -100,7 +98,6 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 			switch (slashCount) {
 				case 0:
 					startUpTimer1 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(-5.0f * facingDirection * dt, 0.0f, 0.0f));
 					if (startUpTimer1 <= 0) {
 						isPreparing = false;
@@ -115,7 +112,6 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					break;
 				case 1:
 					startUpTimer2 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(-5.0f * facingDirection * dt, 0.0f, 0.0f));
 					if (startUpTimer2 <= 0) {
 						isPreparing = false;
@@ -130,7 +126,6 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					break;
 				case 2:
 					startUpTimer3 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(-5.0f * facingDirection * dt, 0.0f, 0.0f));
 					if (startUpTimer3 <= 0) {
 						isPreparing = false;
@@ -151,8 +146,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 			switch (slashCount) {
 				case 0:
 					activeTimer1 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(15.0f * facingDirection * dt, 0.0f, 0.0f));
+					
 					attackCollider1->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f,0.0f));
 					if (activeTimer1 <= 0) {
 						isSlashing = false;
@@ -165,8 +160,8 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					break;
 				case 1:
 					activeTimer2 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(15.0f * facingDirection * dt, 0.0f, 0.0f));
+					
 					attackCollider2->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 					if (activeTimer2 <= 0) {
 						isSlashing = false;
@@ -179,7 +174,6 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 					break;
 				case 2:
 					activeTimer3 -= dt;
-
 					ziz->getTransform().translate(glm::vec3(10.0f * facingDirection * dt, 0.0f, 0.0f));
 					attackCollider3->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (attackOffSet * facingDirection), ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 					if (activeTimer3 <= 0) {
@@ -238,7 +232,18 @@ void ZizClawSlashState::update(Boss* boss, float dt) {
 		recoveryTimer -= dt;
 		//cout << "recovering" << endl;
 		if (recoveryTimer <= 0) {
-			ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+			if (ziz->getDistanceFromPlayer() < 3.0f) {
+				if ((rand() % 2) == 0) {
+					ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+				}
+				else {
+					ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
+				}
+
+			}
+			else {
+				ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+			}
 		}
 	}
 

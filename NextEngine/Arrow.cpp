@@ -72,7 +72,7 @@ void Arrow::onTriggerEnter(Collider* collider) {
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
 	if (enemy) {
-		//cout << "Arrow hit Enemy for " << damage << " damage." << endl;
+		cout << "Arrow hit Enemy for " << damage << " damage." << endl;
 		if (player) {
 			player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
 			//cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;

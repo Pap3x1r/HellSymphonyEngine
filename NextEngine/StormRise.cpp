@@ -27,7 +27,7 @@ StormRise::StormRise() {
 	isBuffering = false;
 	isRecovering = false;
 	speed = 4.0f;
-	damage = 10.0f;
+	damage = 5.0f;
 	countdownTimer = 0.08f * 25;
 	bufferTimer = 0.08f * 1;
 	activeTimer = 0.08f * 26;

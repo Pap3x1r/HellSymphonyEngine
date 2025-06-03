@@ -15,6 +15,7 @@
 #include "UltZizOnBG.h"
 #include "Lightning.h"
 #include "QTEButtonUI.h"
+#include "Impale.h"
 
 #include <list>
 

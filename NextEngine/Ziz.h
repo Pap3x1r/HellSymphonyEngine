@@ -11,6 +11,7 @@
 #include "UltZizOnBG.h"
 #include "ChompTentacle.h"
 #include "Lightning.h"
+#include "Impale.h"
 #include "QTEButtonUI.h"
 #include <vector>
 #include <random>
@@ -61,6 +62,8 @@ private:
     int QTEInput;
     bool QTECorrect;
 
+    float distanceFromPlayer;
+
 
 public:
     static Ziz* getInstance();
@@ -79,6 +82,8 @@ public:
     DrawableObject* createSwoopWarning(int side);
     DrawableObject* createChompTentacle();
     DrawableObject* createLightning();
+    DrawableObject* createLightning(float x);
+    DrawableObject* createImpale();
     DrawableObject* createBGZiz();
     QTEButtonUI* createQTEButtonUI();
     bool getIsInvincible();
@@ -90,7 +95,8 @@ public:
     void handleQTEInput(int input);
     void startQTEMode(int target);
     void endQTEMode();
-
+    float getDistanceFromPlayer();
+    void update(float dt);
     
 
     BossStateMachine* getStateMachine() const;
@@ -98,7 +104,7 @@ public:
     void setPlayer(Player* playr);
     Player* getPlayer();
 
-    zizPhase getPhase() const;
+    zizPhase getCurrentPhase() const;
 
     void phaseChangeTracker();
     float getCurrentHealth();

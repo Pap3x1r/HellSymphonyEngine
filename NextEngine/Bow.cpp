@@ -7,7 +7,7 @@ Bow::Bow() {
 	float scaling1 = 1.4f;
 	float scaling2 = 1.75f;
 
-	BowUltimateCollider* attack1 = new BowUltimateCollider(300, 0, 6); //Change damage and ult gain percentage here
+	BowUltimateCollider* attack1 = new BowUltimateCollider(200, 0, 6); //Change damage and ult gain percentage here
 	attack1->setName("BowSmallUlt");
 	attack1->setDraw(false);
 	attack1->initAnimation(0, 0);
@@ -26,7 +26,7 @@ Bow::Bow() {
 	attack1->setDrawCollider(false);
 	chainAttackList.push_back(attack1);
 
-	BowUltimateCollider* attack2 = new BowUltimateCollider(1500, 0, 7.5f);
+	BowUltimateCollider* attack2 = new BowUltimateCollider(825, 0, 7.5f);
 	attack2->setName("BowBigUlt");
 	attack2->setDraw(false);
 	attack2->initAnimation(0, 0);

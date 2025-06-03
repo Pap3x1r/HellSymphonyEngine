@@ -24,7 +24,7 @@ void PlayerAttackCollider::onCollisionEnter(Collider* collider) {
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
 	if (enemy) {
-		cout << "hit enemy attack" << endl;
+		//cout << "hit enemy attack" << endl;
 	}
 }
 
@@ -46,7 +46,7 @@ void PlayerAttackCollider::onTriggerEnter(Collider* collider) {
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
 	if (enemy) {
-		cout << "hit enemy" << endl;
+		//cout << "hit enemy" << endl;
 	}
 }
 
@@ -59,9 +59,9 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 	if (enemy) {
 		//playerInside = true;
 		if (!hasHit) {
-			//cout << "Player Hit Enemy test for " << damage << " damage." << endl;
+			cout << "Player Hit Enemy test for " << damage << " damage." << endl;
 			if (player) {
-				player->increaseUltimateGauge(damage * ultGainPercentage / 100.0f);
+				player->increaseUltimateGauge(ultGainPercentage);
 
 				if (shieldParent) {
 					player->getHealth()->healWither(damage / 25.0f);

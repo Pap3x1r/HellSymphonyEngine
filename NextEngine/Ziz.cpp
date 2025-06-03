@@ -27,7 +27,7 @@ Ziz::Ziz() {
 	//getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
 	getTransform().setPosition(glm::vec3(2.0f, -0.25f, 0.0f));
 	setDrawCollider(true);
-	//setCanDrawColliderNew(true);
+	setCanDrawColliderNew(true);
 	getColliderComponent()->setTrigger(true);
 
 
@@ -101,6 +101,10 @@ Ziz::Ziz() {
 Ziz::~Ziz() {
 	delete health;
 
+}
+
+void Ziz::update(float dt) {
+	(distanceFromPlayer = abs(getTransform().getPosition().x - getPlayer()->getTransform().getPosition().x));
 }
 
 void Ziz::setLevel(Level* newLevel) {
@@ -218,6 +222,7 @@ DrawableObject* Ziz::createSwoopWarning(int side) {
 
 QTEButtonUI* Ziz::createQTEButtonUI(){
 	QTEButtonUI* qteButtonUI = new QTEButtonUI(QTETarget);
+	qteButtonUI->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, 0, 0));
 	return qteButtonUI;
 }
 
@@ -244,6 +249,16 @@ DrawableObject* Ziz::createChompTentacle() {
 DrawableObject* Ziz::createLightning() {
 	Lightning* lightning = new Lightning(this);
 	return lightning;
+}
+
+DrawableObject* Ziz::createLightning(float x) {
+	Lightning* lightning = new Lightning(this, x);
+	return lightning;
+}
+
+DrawableObject* Ziz::createImpale() {
+	Impale* impale = new Impale(this);
+	return impale;
 }
 
 void Ziz::setIdleState(){
@@ -426,7 +441,12 @@ bool Ziz::getQTEInputReceieved() {
 	return qteInputReceieved;
 }
 
+float Ziz::getDistanceFromPlayer() {
+	return distanceFromPlayer;
+}
 
-zizPhase Ziz::getPhase() const {
+
+zizPhase Ziz::getCurrentPhase() const {
 	return currentPhase;
 }
+

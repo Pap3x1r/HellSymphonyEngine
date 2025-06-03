@@ -1,7 +1,7 @@
 #include "Shield.h"
 
 Shield::Shield() {
-	PlayerAttackCollider* attack1 = new PlayerAttackCollider(15, 100); //Change damage and ult gain percentage here
+	PlayerAttackCollider* attack1 = new PlayerAttackCollider(40, 25); //Change damage and ult gain percentage here
 	attack1->setName("Attack1");
 	attack1->setDraw(false);
 	attack1->addColliderComponent();
@@ -13,7 +13,7 @@ Shield::Shield() {
 	attack1->setShieldParent(this);
 	chainAttackList.push_back(attack1);
 
-	PlayerAttackCollider* attack2 = new PlayerAttackCollider(15, 100);
+	PlayerAttackCollider* attack2 = new PlayerAttackCollider(65, 30);
 	attack2->setName("Attack2");
 	attack2->setDraw(false);
 	attack2->addColliderComponent();
@@ -25,7 +25,7 @@ Shield::Shield() {
 	attack2->setShieldParent(this);
 	chainAttackList.push_back(attack2);
 
-	PlayerAttackCollider* attack3 = new PlayerAttackCollider(500, 0);
+	PlayerAttackCollider* attack3 = new PlayerAttackCollider(170, 0);
 	attack3->initAnimation(0, 0);
 	attack3->getAnimationComponent()->addState("explosion", 0, 10);
 	attack3->getAnimationComponent()->setLoop(false);
@@ -41,7 +41,7 @@ Shield::Shield() {
 	attack3->setShieldParent(this);
 	chainAttackList.push_back(attack3);
 
-	PlayerAttackCollider* attack4 = new PlayerAttackCollider(1850, 0);
+	PlayerAttackCollider* attack4 = new PlayerAttackCollider(660, 0);
 	attack4->initAnimation(0, 0);
 	attack4->getAnimationComponent()->addState("explosion", 0, 12);
 	attack4->getAnimationComponent()->setLoop(false);

@@ -37,6 +37,8 @@ void ZizStormRiseState::enter(Boss* boss) {
 
     state = 1;
 
+    
+
 
     ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.015f, 0, 0));
     ziz->setTexture("../Resource/Texture/FinalZiz/stormrise/1_Zyzz_StormRise_StartUp_1.png", 1, 8, 0);
@@ -104,7 +106,26 @@ void ZizStormRiseState::update(Boss* boss, float dt) {
             recoveryTimer3 -= dt;
             if (recoveryTimer3 <= 0) {
                 state++;
-                ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+                if (ziz->getDistanceFromPlayer() < 3.0f) {
+                    if ((rand() % 2) == 0) {
+                        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+                    }
+                    else {
+                        ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
+                    }
+
+                }
+                else {
+                    if ((rand() % 11) <= 2) {
+                        ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+                    }
+                    else if ((rand() % 11) <= 5){
+                        ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+                    }
+                    else {
+                        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+                    }
+                }
             }
         }
         break;

@@ -5,26 +5,24 @@
 #include "Ziz.h"
 #include "EnemyAttackCollider.h"
 #include <random>
-#include <chrono>
 
-class Lightning : public TexturedObject {
+class Impale : public TexturedObject {
 private:
 	bool hasStruck;
 	bool deletedAtk;
 
 	float timer;
 	float attackTimer;
+	float hitboxTimer;
 	float attackDurationTimer;
 	EnemyAttackCollider* attackCollider;
 	Ziz* ziz;
-	std::mt19937 gen;
-	std::uniform_real_distribution<> randomX;
+
 
 public:
 
-	Lightning();
-	Lightning(Ziz* boss);
-	Lightning(Ziz* boss, float x);
+	Impale();
+	Impale(Ziz* boss);
 	void update(float dt);
 
 };

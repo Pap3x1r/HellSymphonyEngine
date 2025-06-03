@@ -170,14 +170,12 @@ void ZizQTEState::update(Boss* boss, float dt) {
 	}
 
 	if (failedAny == true) {
-		
-		
 		if (bufferTimerFailure > 0) {
 			bufferTimerFailure -= dt;
 			cout << "buffering" << endl;
 			if (bufferTimerFailure <= 0) {
 				
-				ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+				ziz->getStateMachine()->changeState(ZizImpaleState::getInstance(), ziz);
 			}
 		}
 

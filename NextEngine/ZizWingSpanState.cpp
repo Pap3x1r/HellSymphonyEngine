@@ -73,7 +73,13 @@ void ZizWingSpanState::update(Boss* boss, float dt) {
 
             recoveryTimer -= dt;
             if (recoveryTimer <= 0) {
-                ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+				if (ziz->getDistanceFromPlayer() < 3.0f) {
+					ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+
+				}
+				else {
+					ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+				}
             }
         }
 	}

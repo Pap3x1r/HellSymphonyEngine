@@ -55,7 +55,7 @@ void ZizSwoopState::enter(Boss* boss) {
 	endPosUp = glm::vec3(ziz->getTransform().getPosition().x, ziz->getTransform().getPosition().y + 5.0f, 0.0f);
 
 
-	attackCollider = new EnemyAttackCollider(5);
+	attackCollider = new EnemyAttackCollider(7);
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
 	attackCollider->addColliderComponent();
@@ -63,15 +63,15 @@ void ZizSwoopState::enter(Boss* boss) {
 	attackCollider->setActive(true);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(1.0f, 6.0f);
-	attackCollider->getTransform().setPosition(glm::vec3(0.0f,-10.0f,0.0f));
-	
+	attackCollider->getTransform().setPosition(glm::vec3(0.0f, -10.0f, 0.0f));
+
 	ziz->getLevel()->addObject(attackCollider);
 
 	//cout << "Ziz entered swoop" << endl;
 }
 
 void ZizSwoopState::update(Boss* boss, float dt) {
-	
+
 	if (ziz) {
 		if (!hasFlew) {
 			if (!isOffScreen) {
@@ -80,7 +80,7 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					flyUpTimer -= dt;
 				}
 				else {
-					ziz->getTransform().setPosition(glm::vec3(0.0f, 9.0f,1.0f));
+					ziz->getTransform().setPosition(glm::vec3(0.0f, 9.0f, 1.0f));
 					isOffScreen = true;
 					if (!hasFlew) {
 						hasFlew = true;
@@ -88,15 +88,15 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 				}
 
 			}
-			
+
 		}
-		else if (hasFlew){
+		else if (hasFlew) {
 			if (isOffScreen && !hasDisplayedWarning && !isDisplayingWarning) {
 				beforeWarningTimer -= dt;
-				
+
 				//cout << "BWT: " << beforeWarningTimer << endl;
 				if (beforeWarningTimer <= 0) {
-					
+
 					ziz->getLevel()->addObject(newSwoopWarning);
 					ziz->facePlayer();
 					hasDisplayedWarning = true;
@@ -132,15 +132,15 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					// Calculate interpolation factor (0 to 1 over 0.5s)
 					t = swoopTimer / swoopDuration;
 					t = glm::clamp(t, 0.0f, 1.0f);
-					
+
 
 					// Lerp between positions
 					newPos = glm::mix(startPos, endPos, t);
 					ziz->getTransform().setPosition(newPos);
 					//attack collider
-					
+
 					attackCollider->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + (swoopDirection * -2.0f), ziz->getTransform().getPosition().y - 1.0f, 0.0f));
-					
+
 
 					// Reach player
 					if (t >= 1.0f) {
@@ -152,13 +152,28 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 					}
 				}
 
-				if (hasReachedTarget == true){
+				if (hasReachedTarget == true) {
 					recoveryTimer -= dt;
 					if (recoveryTimer <= 0) {
-						//ziz->getPhysicsComponent()->setEnableGravity(true);
-						//DrawableObject::destroyObject(attackCollider);
-						//ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
-						ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+						if (ziz->getDistanceFromPlayer() < 3.0f) {
+							if ((rand() % 2) == 0){
+								ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
+							}
+							else {
+								ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
+							}
+							
+						}
+						else {
+							if ((rand() % 2) == 0) {
+								ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
+							}
+							else {
+								ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+							}
+							
+						}
+						
 					}
 				}
 			}
@@ -169,5 +184,5 @@ void ZizSwoopState::update(Boss* boss, float dt) {
 
 void ZizSwoopState::exit(Boss* boss) {
 	//std::cout << "Ziz exiting Swoop State." << endl;
-	//DrawableObject::destroyObject(attackCollider);
+	DrawableObject::destroyObject(attackCollider);
 }

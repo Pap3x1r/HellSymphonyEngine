@@ -9,6 +9,7 @@
 
 class Gust : public EnemyAttackCollider {
 private:
+
     bool isMovingRight;
     float speed;
     bool hasHit;

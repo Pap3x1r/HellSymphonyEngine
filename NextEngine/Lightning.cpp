@@ -32,7 +32,7 @@ Lightning::Lightning(Ziz* boss) {
 	getAnimationComponent()->setState("thunder");
 	//cout << "Lightning Spawned" << endl;
 
-	attackCollider = new EnemyAttackCollider(10);
+	attackCollider = new EnemyAttackCollider(3);
 	attackCollider->addColliderComponent();
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
@@ -47,6 +47,40 @@ Lightning::Lightning(Ziz* boss) {
 	attackDurationTimer = 0.08 * 2;
 }
 
+Lightning::Lightning(Ziz* boss, float x) {
+	ziz = dynamic_cast<Ziz*>(boss);
+	if (ziz) {
+		//cout << "Found Ziz in Lightning" << endl;
+	}
+
+
+	setName("Lightning");
+	deletedAtk = false;
+	hasStruck = false;
+	getTransform().setScale(glm::vec3(4.0f, 8.0f, 1.0f));
+	getTransform().setPosition(glm::vec3(x, 0.5f, 0.0f));
+
+
+	initAnimation(13, 1);
+	getAnimationComponent()->addState("thunder", 0, 13);
+	setTexture("../Resource/Texture/FinalZiz/VFX/lightning effect.png", 1, 13, 0);
+	getAnimationComponent()->setState("thunder");
+	//cout << "Lightning Spawned" << endl;
+
+	attackCollider = new EnemyAttackCollider(3);
+	attackCollider->addColliderComponent();
+	attackCollider->setDraw(false);
+	attackCollider->setDrawCollider(true);
+	//attackCollider->setCanDrawColliderNew(true);
+	attackCollider->setActive(false);
+	attackCollider->getColliderComponent()->setTrigger(true);
+	attackCollider->getColliderComponent()->setDimension(1.5f, 3.0f);
+	attackCollider->getTransform().setPosition(glm::vec3(getTransform().getPosition().x, -1.25f, 0.0f));
+
+	timer = 0.08 * 13;
+	attackTimer = 0.08 * 8;
+	attackDurationTimer = 0.08 * 2;
+}
 
 
 void Lightning::update(float dt) {

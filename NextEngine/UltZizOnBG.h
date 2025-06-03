@@ -1,6 +1,9 @@
 #pragma once
 #include "DrawableObject.h"
 #include <iostream>
+#include <vector>
+#include <unordered_set>
+#include <cmath>
 #include "Ziz.h"
 
 class UltZizOnBG : public TexturedObject {
@@ -29,6 +32,10 @@ private:
 	glm::vec3 newPos2;
 
 	Ziz* ziz;
+
+	unordered_set<int> usedXPositions;
+
+	float generateUniqueXPosition(float minX, float maxX, float step);
 public:
 	
 	UltZizOnBG();

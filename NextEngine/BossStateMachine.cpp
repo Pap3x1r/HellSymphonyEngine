@@ -9,6 +9,7 @@
 #include "ZizClawSlashState.h"
 #include "ZizChompState.h"
 #include "ZizTransitionState.h"
+#include "ZizImpaleState.h"
 #include "ZizQTEState.h"
 
 BossStateMachine::BossStateMachine() {}
@@ -69,7 +70,7 @@ void BossStateMachine::interruptIntoPhase(Boss* boss) {
 
         currentState->exit(boss);
     }
-    currentState = ZizQTEState::getInstance();
+    currentState = ZizImpaleState::getInstance();
     if (currentState) {
         currentState->enter(boss);
     }

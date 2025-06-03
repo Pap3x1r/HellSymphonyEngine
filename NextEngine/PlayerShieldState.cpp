@@ -177,15 +177,17 @@ void PlayerShieldGuard::update(Player* player, float dt_) {
             currentPhase = ACTIVE;
             time = 0;
             player->getShield()->setIsPerfect(true);
+            //cout << "perfect" << endl;
         }
         break;
     case ACTIVE:
         //do something
         //change phase
 
-        if (time >= 0.5f) {
+        if (time >= 0.1f) {
             time = 0;
             player->getShield()->setIsPerfect(false);
+            //cout << "not perfect" << endl;
         }
         break;
     }

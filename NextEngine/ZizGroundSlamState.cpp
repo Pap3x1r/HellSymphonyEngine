@@ -120,8 +120,21 @@ void ZizGroundSlamState::update(Boss* boss, float dt) {
     else if (hasImpacted) {
         recoverTime -= dt;
         if (recoverTime <= 0.0f) {
-            ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-            DrawableObject::destroyObject(attackCollider);
+
+            if (ziz->getDistanceFromPlayer() < 3.0f) {
+                if ((rand() % 2) == 0) {
+                    ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+                }
+                else {
+                    ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
+                }
+
+            }
+            else {
+                ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+
+            }
+            
         }
     }
 }

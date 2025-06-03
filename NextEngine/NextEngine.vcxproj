@@ -52,6 +52,7 @@
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="GroundChecker.cpp" />
     <ClCompile Include="Gust.cpp" />
+    <ClCompile Include="Impale.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelAnimTest.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="ZizGroundSlamState.cpp" />
     <ClCompile Include="ZizGustState.cpp" />
     <ClCompile Include="ZizIdleState.cpp" />
+    <ClCompile Include="ZizImpaleState.cpp" />
     <ClCompile Include="ZizQTEState.cpp" />
     <ClCompile Include="ZizStormRiseState.cpp" />
     <ClCompile Include="ZizSwoopState.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="GroundChecker.h" />
     <ClInclude Include="Gust.h" />
     <ClInclude Include="Health.h" />
+    <ClInclude Include="Impale.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelAnimTest.h" />
@@ -202,6 +205,7 @@
     <ClInclude Include="ZizGroundSlamState.h" />
     <ClInclude Include="ZizGustState.h" />
     <ClInclude Include="ZizIdleState.h" />
+    <ClInclude Include="ZizImpaleState.h" />
     <ClInclude Include="ZizQTEState.h" />
     <ClInclude Include="ZizStormRiseState.h" />
     <ClInclude Include="ZizSwoopState.h" />

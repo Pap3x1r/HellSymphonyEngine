@@ -39,7 +39,7 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
             currentPhase = RECOVERY;
             time = 0;
 
-            DrawableObject* newArrow = player->getBow()->arrowShot(7, 100, player, 25); //Change damage and ult gain percentage here
+            DrawableObject* newArrow = player->getBow()->arrowShot(40, 30, player, 25); //Change damage and ult gain percentage here
             player->getLevel()->addObject(newArrow);
         }
         break;
@@ -93,7 +93,7 @@ void PlayerHeavyBowAttack::update(Player* player, float dt_) {
         if (time >= 0.0f) {
             currentPhase = RECOVERY;
             time = 0;
-            DrawableObject* newArrow = player->getBow()->arrowShot(25, 100, player, 75, 50); //Change damage and ult gain percentage here
+            DrawableObject* newArrow = player->getBow()->arrowShot(75, 50, player, 75, 50); //Change damage and ult gain percentage here
             player->getLevel()->addObject(newArrow);
         }
         break;

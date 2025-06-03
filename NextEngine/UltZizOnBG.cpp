@@ -83,15 +83,16 @@ void UltZizOnBG::update(float dt) {
 		
 		if (delayBeforeLightning <= 0) {
 			
-			for (int i = 0; i < 7; i++) {
-				DrawableObject* lightning_ = ziz->createLightning();
+			usedXPositions.clear();
+			for (int i = 0; i < 5; i++) {
+				float x = generateUniqueXPosition(-8.0f, 8.0f, 1.0f);
+				DrawableObject* lightning_ = ziz->createLightning(x);
 				ziz->getLevel()->addObject(lightning_);
-				cout << "summonlighting" << endl;
 			}
 
 			if (timesSummonedLightining > 0) {
 				timesSummonedLightining--;
-				delayBeforeLightning = 1.5;
+				delayBeforeLightning = 1.0;
 			}
 			else {
 				hasSummonedLightning = true;
@@ -131,3 +132,21 @@ void UltZizOnBG::update(float dt) {
 	}
 
 }
+
+float UltZizOnBG::generateUniqueXPosition(float minX, float maxX, float step) {
+	float x;
+	int xKey;
+	int attempts = 0;
+	const int maxAttempts = 100;
+
+	do {
+		x = minX + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maxX - minX)));
+		x = std::round(x / step) * step;
+		xKey = static_cast<int>(x * 100); // Scale to avoid float precision issues
+		attempts++;
+	} while (usedXPositions.count(xKey) > 0 && attempts < maxAttempts);
+
+	usedXPositions.insert(xKey);
+	return x;
+}
+

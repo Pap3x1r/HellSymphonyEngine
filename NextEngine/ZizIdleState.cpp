@@ -20,11 +20,6 @@ void ZizIdleState::enter(Boss* boss) {
         //cout << "found Player" << endl;
     }
 
-    unsigned seed = std::chrono::system_clock::now()
-        .time_since_epoch()
-        .count();
-    gen.seed(seed);
-
     
 
     idleTimer = 0.08f * 10;
@@ -43,8 +38,8 @@ void ZizIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        //ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
-        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+        ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
+        //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
         //pickState();
     }
 }
@@ -54,44 +49,47 @@ void ZizIdleState::exit(Boss* boss) {
 }
 
 void ZizIdleState::pickState() {
-    float distance = abs(ziz->getTransform().getPosition().x - player->getTransform().getPosition().x);
-
-    randomX = std::uniform_real_distribution<>(0, 1.0f);
-    float randValue = randomX(gen);
+    float randValue = (rand() % 11);
     cout << "Rand In Idle: " << randValue << endl;
 
-    //float randValue = static_cast<float>(rand()) / RAND_MAX;
 
-    if (ziz->getPhase() == 1) {//phase 1
-        if (distance > 4.0f) { // **Far Distance Attacks**
-            if (randValue < 0.30f) {
+    if (ziz->getCurrentPhase() == 1) {//phase 1
+        if (ziz->getDistanceFromPlayer() > 4.0f) { // **Far Distance Attacks**
+            if (randValue < 3.0f) {
+                cout << "gust" << endl;
                 ziz->getStateMachine()->changeState(ZizGustState::getInstance(), ziz);
             }
-            else if (randValue < 0.60f) {
+            else if (randValue < 6.0f) {
+                cout << "swoop" << endl;
                 ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
             }
-            else if (randValue < 0.80f) {
+            else if (randValue < 8.0f) {
+                cout << "slam" << endl;
                 ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
             }
             else {
+                cout << "stormrise" << endl;
                 ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
             }
         }
         else { // **Close Distance Attacks**
-            if (randValue < 0.45f) {
+            if (randValue < 4.5f) {
+                cout << "clawslash" << endl;
                 ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
             }
-            else if (randValue < 0.60f){
+            else if (randValue < 6.0f){
+                cout << "swoop" << endl;
                 ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
             }
             else {
+                cout << "wingspan" << endl;
                 ziz->getStateMachine()->changeState(ZizWingSpanState::getInstance(), ziz);
             }
         }
     }
-    else if (ziz->getPhase() == 2) {
-        if (distance > 4.0f) { // **Far Distance Attacks**
-            if (randValue < 0.60f) {
+    else if (ziz->getCurrentPhase() == 2) {
+        if (ziz->getDistanceFromPlayer() > 4.0f) { // **Far Distance Attacks**
+            if (randValue < 6.0f) {
                 ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
             }
             else {
@@ -99,10 +97,10 @@ void ZizIdleState::pickState() {
             }
         }
         else { // **Close Distance Attacks**
-            if (randValue < 0.35f) {
+            if (randValue < 3.5f) {
                 ziz->getStateMachine()->changeState(ZizClawSlashState::getInstance(), ziz);
             }
-            else if (randValue < 0.65f) {
+            else if (randValue < 6.5f) {
                 ziz->getStateMachine()->changeState(ZizGroundSlamState::getInstance(), ziz);
             }
             else {

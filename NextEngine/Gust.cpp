@@ -1,4 +1,5 @@
 #include "Gust.h"
+#include "Ziz.h"
 
 
 Gust::Gust() {
@@ -18,8 +19,8 @@ Gust::Gust() {
     isMovingRight = false;
     speed = 3.0f;  // Adjust speed of the tornado
     hasHit = false;
-    damage = 100;
-    
+    damage = 5;
+
 
 
     std::cout << "Gust test created and moving\n";
@@ -30,7 +31,8 @@ Gust::Gust(bool facingRight) {
     isMovingRight = facingRight;
     speed = 8.0f; 
     hasHit = false;
-    damage = 10;
+    damage = 5;
+
     
     //cout << "Gust from Ziz created and moving\n";
 }
@@ -75,6 +77,10 @@ void Gust::onCollisionEnter(Collider* collider) {
                     player->setHitEffectStrength(1.0f);
                     player->getHealth()->takeDamage(damage, 30);
                     player->increaseUltimateGauge(damage / 2); // increase by withered damage.
+                    Ziz* ziz = Ziz::getInstance();
+                    if (ziz) {
+                        ziz->startShake(0.05f, 0.0015f);
+                    }
                     hasHit = true;
                 }
             }
@@ -83,6 +89,10 @@ void Gust::onCollisionEnter(Collider* collider) {
                 player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                 player->setHitEffectStrength(1.0f);
                 player->getHealth()->takeDamage(damage);
+                Ziz* ziz = Ziz::getInstance();
+                if (ziz) {
+                    ziz->startShake(0.05f, 0.0015f);
+                }
                 hasHit = true;
             }
         }
