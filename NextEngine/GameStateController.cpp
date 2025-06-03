@@ -8,6 +8,7 @@
 #include "LevelMapEditorTest.h"
 #include "LevelPrototype.h"
 #include "LevelBossTest.h"
+#include "LevelLucifer.h"
 #include "LevelMainMenu.h"
 #include "LevelLoader.h"
 
@@ -43,6 +44,9 @@ void GameStateController::loadLevel() {
 			break;
 		case GameState::GS_ZIZ:
 			currentLevel = new LevelBossTest();
+			break;
+		case GameState::GS_LUCIFER:
+			currentLevel = new LevelLucifer();
 			break;
 		default:
 			cout << "gameStateCurr : invalid state!!" << endl;

@@ -27,7 +27,7 @@ Impale::Impale(Ziz* boss) {
 	attackCollider->addColliderComponent();
 	attackCollider->setDraw(false);
 	attackCollider->setDrawCollider(true);
-	attackCollider->setCanDrawColliderNew(true);
+	//attackCollider->setCanDrawColliderNew(true);
 	attackCollider->setActive(false);
 	attackCollider->getColliderComponent()->setTrigger(true);
 	attackCollider->getColliderComponent()->setDimension(0.75f, 7.0f);

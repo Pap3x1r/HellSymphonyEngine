@@ -1,7 +1,6 @@
-#include "LevelBossTest.h"
+#include "LevelLucifer.h"
 #include "CollisionHandler.h"
 #include "Bow.h"
-#include "ZizGroundSlamState.h"
 #include "GameEngine.h" // Include GameEngine header
 #include "GLRenderer.h" // Include GLRenderer header
 #include <iostream>
@@ -9,10 +8,7 @@
 #include <fstream>
 using namespace std;
 
-
-
-
-void LevelBossTest::levelLoad() {
+void LevelLucifer::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
 	GameEngine::getInstance()->addMesh(SquareMeshVbo::MESH_NAME, square);
@@ -22,21 +18,26 @@ void LevelBossTest::levelLoad() {
 	GameEngine::getInstance()->addMesh(SquareBorderMesh::MESH_NAME, border);
 }
 
-void LevelBossTest::levelInit() {
+void LevelLucifer::levelInit() {
 	currentControlType = ControlType::keyboard;
 
 	TexturedObject* background = new TexturedObject("background");
-	background->setTexture("../Resource/Texture/Lust_Alpha.png");
+	background->setTexture("../Resource/Texture/Lucifer/LuciferBG_ColowLucifer1.png");
 	background->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
 	objectsList.push_back(background);
-	
 
+	Lucifer* lucifer_ = new Lucifer();
+	objectsList.push_back(lucifer_);
+	lucifer = lucifer_;
+	lucifer->setLevel(this);
+	
 	Player* player_ = GameEngine::getInstance()->loadPlayerData("../Resource/Saves/PlayerData/playerData.txt");
 	objectsList.push_back(player_);
 	player = player_;
 	player->setLevel(this);
-	player->getTransform().setPosition(glm::vec3(-5.0,-0.8f,0.0f));
+	player->getTransform().setPosition(glm::vec3(-5.0, -0.8f, 0.0f));
 	objectsList.push_back(player->getGroundChecker());
+	lucifer->setPlayer(player);
 
 	player->setWeaponType(Bow_);
 	player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
@@ -68,41 +69,16 @@ void LevelBossTest::levelInit() {
 	}
 
 
-	Ziz* ziz_ = new Ziz();
-	objectsList.push_back(ziz_);
-	ziz = ziz_;
-	ziz->setLevel(this);
-	ziz->setPlayer(player);
-
-
-	/*Gust* gust_ = new Gust();
-	objectsList.push_back(gust_);
-	gust = gust_;
-	gust->getTransform().setPosition(glm::vec3(0.0f, -2.0f, 0.0f));*/
-
-	/*StormRise* stormRise_ = new StormRise();
-	objectsList.push_back(stormRise_);
-	stormRise = stormRise_;
-	stormRise->getTransform().setPosition(glm::vec3(0.0f,-2.0f,0.0f));
-	stormRise->setPlayer(player);*/
-
-
-	/*SwoopWarning* warning = new SwoopWarning();
-	objectsList.push_back(warning);*/
 	
-	
-
-	/*ChompTentacle* chompTentacle_ = new ChompTentacle();
-	objectsList.push_back(chompTentacle_);
-	chompTentacle = chompTentacle_;*/
 
 	SimpleObject* floor = new SimpleObject();
-	floor->getTransform().setPosition(glm::vec3(0.0f, -3.7f, 0.0f));
+	floor->getTransform().setPosition(glm::vec3(0.0f, -4.0f, 0.0f));
 	floor->getTransform().setScale(glm::vec3(18.0f, 2.0f, 0.0f));
 	floor->addColliderComponent();
 	floor->setName("Floor");
-	//floor->setDrawCollider(true);
 	floor->setDraw(false);
+	//floor->setDrawCollider(true);
+	//floor->setCanDrawColliderNew(true);
 	objectsList.push_back(floor);
 
 	//Overheat
@@ -189,7 +165,7 @@ void LevelBossTest::levelInit() {
 	inputManager = GameEngine::getInstance()->getInputHandler();
 }
 
-void LevelBossTest::levelUpdate() {
+void LevelLucifer::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float playerDT = dt * playerTimeScale;
 	timeK += dt;
@@ -212,7 +188,6 @@ void LevelBossTest::levelUpdate() {
 
 	ImGui::SetWindowSize(ImVec2(400, 300));
 	ImGui::Begin("Debug Panel");
-	
 
 	/*if (inputManager) {
 		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
@@ -222,7 +197,6 @@ void LevelBossTest::levelUpdate() {
 			cout << "inputmanager last controller" << endl;
 		}
 	}*/
-
 
 	if (firstStart) {
 		if (blackFade) {
@@ -253,22 +227,20 @@ void LevelBossTest::levelUpdate() {
 
 	stateMachineUpdate(playerDT);
 
-	if (ziz) {
-		ziz->phaseChangeTracker();
-		ziz->updateShake(dt);
-		ziz->update(dt);
-		
+	if (lucifer) {
+		lucifer->update(dt);
 	}
+
+
 
 	if (player) {
 		player->updateShake(dt);
-		cout << player->getHealth()->getCurrentHP() << endl;
 	}
-		
+
 
 
 	for (DrawableObject* obj : objectsList) {
-		
+
 		Gust* gust = dynamic_cast<Gust*>(obj);
 		if (gust) {
 			gust->update(dt);
@@ -300,39 +272,19 @@ void LevelBossTest::levelUpdate() {
 			arrow->selfUpdate(dt);
 		}
 
-		SwoopWarning* swoopWarning = dynamic_cast<SwoopWarning*>(obj);
-		if (swoopWarning) {
-			swoopWarning->update(dt);
-		}
-
 		QTEButtonUI* qteButtonUI = dynamic_cast<QTEButtonUI*>(obj);
 		if (qteButtonUI) {
 			qteButtonUI->update(dt);
 		}
 
-		UltZizOnBG* ultZizOnBG = dynamic_cast<UltZizOnBG*>(obj);
-		if (ultZizOnBG) {
-			ultZizOnBG->update(dt);
-		}
-
-		Lightning* lightning = dynamic_cast<Lightning*>(obj);
-		if (lightning) {
-			//cout << "lightning found" << endl;
-			lightning->update(dt);
-			lightning->getAnimationComponent()->updateCurrentState(dt);
-		}
-
-		Impale* impale = dynamic_cast<Impale*>(obj);
-		if (impale) {
-			impale->update(dt);
-			impale->getAnimationComponent()->updateCurrentState(dt);
-		}
+		
+		
 
 		BowUltimateCollider* bowUltCol = dynamic_cast<BowUltimateCollider*>(obj);
 		if (bowUltCol) {
 			bowUltCol->update(dt);
 		}
-		
+
 		PlayerAttackCollider* playerAttackCol = dynamic_cast<PlayerAttackCollider*>(obj);
 		if (playerAttackCol) {
 			if (playerAttackCol->isAnimated()) {
@@ -357,7 +309,7 @@ void LevelBossTest::levelUpdate() {
 		player->setIsDead(true);
 		player->setTexture("../Resource/Texture/Dante/dante_Death.png", 1, 1, 0);
 		player->getAnimationComponent()->setState("death");
-		float xDiff = player->getTransform().getPosition().x - ziz->getTransform().getPosition().x;
+		float xDiff = player->getTransform().getPosition().x - lucifer->getTransform().getPosition().x;
 		if (xDiff >= 0) {
 			//vel+
 			player->getPhysicsComponent()->setVelocity(glm::vec2(1.5 * playerTimeScale, 0.8f * playerTimeScale));
@@ -372,14 +324,14 @@ void LevelBossTest::levelUpdate() {
 		playerTimeScale = newScale;
 	}
 
-	if (ziz->getHealth()->getCurrentHP() <= 0) {
+	if (lucifer->getHealth()->getCurrentHP() <= 0) {
 		player->setIsDead(true);
 		float targetScale = 0.0f;
 		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
 		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
 		playerTimeScale = newScale;
 	}
-	
+
 	updateUIBar();
 
 	player->selfUpdate(playerDT);
@@ -388,20 +340,20 @@ void LevelBossTest::levelUpdate() {
 	player->getShield()->update(playerDT, player);
 
 	player->getAnimationComponent()->updateCurrentState(playerDT);
-	ziz->getAnimationComponent()->updateCurrentState(playerDT);
-	
+	//lucifer->getAnimationComponent()->updateCurrentState(playerDT);
+
 
 	handleObjectCollision(objectsList);
 
 	ImGui::End();
 }
 
-void LevelBossTest::levelDraw() {
+void LevelLucifer::levelDraw() {
 	GameEngine::getInstance()->render(objectsList);
 	//cout << "Draw Level" << endl;
 }
 
-void LevelBossTest::levelFree() {
+void LevelLucifer::levelFree() {
 	//savePlayerData(player, "../Resource/Saves/PlayerData/playerData.txt");
 
 	for (DrawableObject* obj : objectsList) {
@@ -411,21 +363,12 @@ void LevelBossTest::levelFree() {
 	buttonsFree();
 }
 
-void LevelBossTest::levelUnload() {
+void LevelLucifer::levelUnload() {
 	GameEngine::getInstance()->clearMesh();
 	//cout << "Unload Level" << endl;
 }
 
-void LevelBossTest::isReceivingNoInputs() {
-	cout << "not receieving input" << endl;
-
-	if (player->getIsGrounded()) {
-		player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
-	}
-	player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
-}
-
-void LevelBossTest::switchControlType(ControlType ct) {
+void LevelLucifer::switchControlType(ControlType ct) {
 	switch (ct) {
 	case ControlType::keyboard:
 		if (currentControlType != ControlType::keyboard) {
@@ -443,7 +386,7 @@ void LevelBossTest::switchControlType(ControlType ct) {
 
 }
 
-void LevelBossTest::handleKey(char key) {
+void LevelLucifer::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
@@ -461,31 +404,9 @@ void LevelBossTest::handleKey(char key) {
 		return;
 	}
 
-	
 
-	if (ziz->getQTEMode() == true) {
-		if (key != 'I') {
-			if ((key == 'w') || (key == 'a') || (key == 's') || (key == 'd')) {
-				switch (key) {
-				case 'w':
-					ziz->handleQTEInput(0);
-					break;
-				case 'a':
-					ziz->handleQTEInput(1);
-					break;
-				case 's':
-					ziz->handleQTEInput(2);
-					break;
-				case 'd':
-					ziz->handleQTEInput(3);
-					break;
-				default:
-					break;
-				}
-				return;
-			}
-		}
-	}
+
+	
 
 	//Jump -> higher priority
 
@@ -496,7 +417,7 @@ void LevelBossTest::handleKey(char key) {
 	}
 
 
-	
+
 
 	switch (key) {
 	case 'w':
@@ -532,7 +453,7 @@ void LevelBossTest::handleKey(char key) {
 			player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		}
 
-		
+
 		//player->getAnimationComponent()->setState("left");
 		break;
 	case 'd':
@@ -540,7 +461,7 @@ void LevelBossTest::handleKey(char key) {
 		if (player->getIsStunned() == true) return;
 		switchControlType(keyboard);
 
-		
+
 
 		player->getPhysicsComponent()->setVelocity(glm::vec2(player->getMovementSpeed(), player->getPhysicsComponent()->getVelocity().y));
 
@@ -556,7 +477,7 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'm':
 		//cout << "M pressed" << endl;
-		ziz->interruptDeath();
+
 		break;
 	case 'q':
 		if (player->getIsGrounded() == false) return;
@@ -566,25 +487,25 @@ void LevelBossTest::handleKey(char key) {
 		playerUltimateInput();
 		break;
 	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
-	//case 'f': //player->getBow()->setEnableDebug(); break;
-		//player->getHealth()->takeDamage(99);
-		//player->increaseUltimateSlot(1);
+		//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
+		//case 'f': //player->getBow()->setEnableDebug(); break;
+			//player->getHealth()->takeDamage(99);
+			//player->increaseUltimateSlot(1);
 		break;
-	case 'h': 
-		player->setWeaponType(Bow_); 
+	case 'h':
+		player->setWeaponType(Bow_);
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		break;
 	case 'j':
-		player->setWeaponType(Sword_); 
+		player->setWeaponType(Sword_);
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		break;
-	case 'g': 
+	case 'g':
 		player->setWeaponType(Shield_);
 		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 		break;
 	case 'I': //No Movement Input -> Idle
-		
+
 		if (player->getIsDashing() == false) {
 			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 		}
@@ -592,9 +513,9 @@ void LevelBossTest::handleKey(char key) {
 		if (player->getIsGrounded()) {
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 		}
-		
-		
-		
+
+
+
 		break;
 	case 'S': //Spacebar -> Jump
 		if (player->getIsDashing() == true) return;
@@ -617,44 +538,27 @@ void LevelBossTest::handleKey(char key) {
 				player->setCanDash(false);
 			}
 		}
-		
+
 		break;
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
-		//ziz->startShake(0.2f, 0.005f);
+
 		player->increaseUltimateGauge(100.0f);
-		//ziz->interruptPhaseChange();
+
 		//currentMenuState = MenuState::MAIN;
 		/*qbui = new QTEButtonUI(0);
 		objectsList.push_back(qbui);*/
-		//ziz->interruptIntoPhase();
+
 
 		break;
-		
+
 	case 'l':
 
 		//currentMenuState = MenuState::PAUSE;
-		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
-		addObject(ultZizOnBG_);
-		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
 
-		/*DrawableObject* lightning_ = ziz->createLightning();
-		addObject(lightning_);*/
-		
-		/*DrawableObject* newStormRise = ziz->createStormRise();
-		addObject(newStormRise);*/
 
-		/*DrawableObject* newGust = ziz->createGust();
-		addObject(newGust);*/
-		//qbui->expire();
-		
-		ziz->interruptIntoPhase();
-		//ziz->interruptPhaseChange();
 
-		//ziz->startShake(0.2f, 0.005f);
-		
-		//ziz->createChompTentacle();
-		//ziz->resetCam();
+
 		break;
 	}
 
@@ -664,7 +568,7 @@ void LevelBossTest::handleKey(char key) {
 	}*/
 }
 
-void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
+void LevelLucifer::handleControllerButton(SDL_GameControllerButton button) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
@@ -678,31 +582,11 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 	if (player->getIsDead()) return;
 
 
-	if (ziz->getQTEMode() == true) {
-		if ((button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) || (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || (button == SDL_CONTROLLER_BUTTON_DPAD_UP) || (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
-			switch (button) {
-			case SDL_CONTROLLER_BUTTON_DPAD_UP:
-				ziz->handleQTEInput(0);
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-				ziz->handleQTEInput(1);
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-				ziz->handleQTEInput(2);
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-				ziz->handleQTEInput(3);
-				break;
-			default:
-				break;
-			}
-			return;
-		}
-	}
 
-	
 
-	switch (button){
+
+
+	switch (button) {
 
 	case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
@@ -768,7 +652,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 			case 0:
 				player->getStateMachine()->changeState(PlayerLightSwordAttack1::getInstance(), player);
 				break;
-				
+
 			}
 
 
@@ -784,7 +668,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 			case 0:
 				player->getStateMachine()->changeState(PlayerLightShieldAttack1::getInstance(), player);
 				break;
-				
+
 			}
 		}
 
@@ -794,7 +678,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 		if (player->getIsGrounded() == false) return;
 		if (player->getIsDashing() == true) return;
 		if (player->getIsStunned() == true) return;
-		
+
 
 		if (player->getWeaponType() == Bow_) {
 			if (player->getBow()->getIsShooting() == true) return;
@@ -846,7 +730,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 				player->setCanDash(false);
 			}
 		}
-		
+
 		break;
 	case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
 		if (player->getIsGrounded() == false) return;
@@ -856,7 +740,6 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 			return;
 		}
 		switchControlType(controller);
-		//ziz->interruptIntoPhase();
 		playerUltimateInput();
 
 		break;
@@ -867,7 +750,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 }
 
 
-void LevelBossTest::handleMouse(int type, int x, int y) {
+void LevelLucifer::handleMouse(int type, int x, int y) {
 	float realX, realY;
 
 	// Calculate Real X Y 
@@ -899,11 +782,11 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	if (player->getIsGrounded() == false) return;
 	if (player->getIsDashing() == true) return;
 	if (player->getIsStunned() == true) return;
-	
-	
+
+
 	if (player->getWeaponType() == Bow_) {
 		if (player->getBow()->getIsShooting() == true) return;
-		
+
 		if (type == 0) {
 			switchControlType(keyboard);
 			if (player->getBow()->getIsOverheat() == false) {
@@ -922,7 +805,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	else if (player->getWeaponType() == Sword_) {
 		if (type == 0) {
 			//enter first attack of the chain
-			
+
 			if (player->getSword()->getInChainAttack()) {
 				//input buffer
 				player->getSword()->setInputBuffer(true);
@@ -959,7 +842,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 				return;
 			}
 
-			
+
 			switchControlType(keyboard);
 			switch (player->getShield()->getCurrentChainAttack()) {
 			case 0:
@@ -991,7 +874,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	}
 }
 
-void LevelBossTest::handleAnalogStick(int type, char key) {
+void LevelLucifer::handleAnalogStick(int type, char key) {
 	float dt_ = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt_;
@@ -1007,7 +890,7 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 	if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
 		return;
 	}
-	
+
 	if (type == 0) {//x axis
 		switchControlType(controller);
 		switch (key) {
@@ -1044,15 +927,15 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 	}
 }
 
-void LevelBossTest::addObject(DrawableObject* obj) {
+void LevelLucifer::addObject(DrawableObject* obj) {
 	objectsList.push_back(obj);
 }
 
-void LevelBossTest::addPlayerToDebug(Player* player) {
+void LevelLucifer::addPlayerToDebug(Player* player) {
 
 }
 
-void LevelBossTest::createSkillsIcon() {
+void LevelLucifer::createSkillsIcon() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
 	//										Bow Skills Icon
@@ -1156,7 +1039,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldBigUltIconOn = shieldBigUltIconOn_;
 }
 
-void LevelBossTest::updateSkillsIcon() {
+void LevelLucifer::updateSkillsIcon() {
 
 	TexturedObject* smallUltOff = nullptr;
 	TexturedObject* smallUltOn = nullptr;
@@ -1188,36 +1071,36 @@ void LevelBossTest::updateSkillsIcon() {
 		WeaponType playerWeapon = player->getWeaponType();
 		if (playerWeapon) {
 			switch (playerWeapon) {
-				case None_:
-					return;
-					break;
-				case Sword_:
-					smallUltOff = swordSmallUltIconOff;
-					smallUltOn = swordSmallUltIconOn;
-					bigUltOff = swordBigUltIconOff;
-					bigUltOn = swordBigUltIconOn;
-					smallUltReady = player->getSword()->getSmallUltReady();
-					bigUltReady = player->getSword()->getBigUltReady();
-					break;
-				case Bow_:
-					smallUltOff = bowSmallUltIconOff;
-					smallUltOn = bowSmallUltIconOn;
-					bigUltOff = bowBigUltIconOff;
-					bigUltOn = bowBigUltIconOn;
-					smallUltReady = player->getBow()->getSmallUltReady();
-					bigUltReady = player->getBow()->getBigUltReady();
-					playerOverheatBarBackground->setDraw(true);
-					playerOverheatBar->setDraw(true);
-					playerOverheatBarFrame->setDraw(true);
-					break;
-				case Shield_:
-					smallUltOff = shieldSmallUltIconOff;
-					smallUltOn = shieldSmallUltIconOn;
-					bigUltOff = shieldBigUltIconOff;
-					bigUltOn = shieldBigUltIconOn;
-					smallUltReady = player->getShield()->getSmallUltReady();
-					bigUltReady = player->getShield()->getBigUltReady();
-					break;
+			case None_:
+				return;
+				break;
+			case Sword_:
+				smallUltOff = swordSmallUltIconOff;
+				smallUltOn = swordSmallUltIconOn;
+				bigUltOff = swordBigUltIconOff;
+				bigUltOn = swordBigUltIconOn;
+				smallUltReady = player->getSword()->getSmallUltReady();
+				bigUltReady = player->getSword()->getBigUltReady();
+				break;
+			case Bow_:
+				smallUltOff = bowSmallUltIconOff;
+				smallUltOn = bowSmallUltIconOn;
+				bigUltOff = bowBigUltIconOff;
+				bigUltOn = bowBigUltIconOn;
+				smallUltReady = player->getBow()->getSmallUltReady();
+				bigUltReady = player->getBow()->getBigUltReady();
+				playerOverheatBarBackground->setDraw(true);
+				playerOverheatBar->setDraw(true);
+				playerOverheatBarFrame->setDraw(true);
+				break;
+			case Shield_:
+				smallUltOff = shieldSmallUltIconOff;
+				smallUltOn = shieldSmallUltIconOn;
+				bigUltOff = shieldBigUltIconOff;
+				bigUltOn = shieldBigUltIconOn;
+				smallUltReady = player->getShield()->getSmallUltReady();
+				bigUltReady = player->getShield()->getBigUltReady();
+				break;
 			}
 
 
@@ -1254,7 +1137,7 @@ void LevelBossTest::updateSkillsIcon() {
 	}
 }
 
-void LevelBossTest::playerUltimateInput() {
+void LevelLucifer::playerUltimateInput() {
 	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
 		return;
 	}
@@ -1318,7 +1201,7 @@ void LevelBossTest::playerUltimateInput() {
 	}
 }
 
-void LevelBossTest::updateUIBar() {
+void LevelLucifer::updateUIBar() {
 	static float healthOriginalWidth = playerHealthBar->getTransform().getScale().x;
 	static float healthBaseX = playerHealthBar->getTransform().getPosition().x;
 
@@ -1362,8 +1245,8 @@ void LevelBossTest::updateUIBar() {
 	static float bossHealthOriginalWidth = bossHealthBar->getTransform().getScale().x;
 	static float bossHealthBaseX = bossHealthBar->getTransform().getPosition().x;
 
-	float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
-	//cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
+	float bossHealthPercentage = lucifer->getHealth()->getCurrentHP() / lucifer->getHealth()->getMaxHP();
+	//cout << lucifer->getHealth()->getCurrentHP() << " " << lucifer->getHealth()->getMaxHP() << endl;
 	bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
 
 	float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
@@ -1391,9 +1274,9 @@ void LevelBossTest::updateUIBar() {
 	}
 }
 
-void LevelBossTest::stateMachineUpdate(float dt) {
-	if (ziz->getStateMachine()) {
-		ziz->getStateMachine()->update(ziz, dt);
+void LevelLucifer::stateMachineUpdate(float dt) {
+	if (lucifer->getStateMachine()) {
+		lucifer->getStateMachine()->update(lucifer,dt);
 	}
 
 	if (player->getStateMachine()) {
@@ -1408,7 +1291,7 @@ void LevelBossTest::stateMachineUpdate(float dt) {
 	}
 }
 
-bool LevelBossTest::isPausing(float dt) {
+bool LevelLucifer::isPausing(float dt) {
 	if (currentMenuState == MenuState::MAIN) { // isnt Pausing
 
 
@@ -1418,7 +1301,7 @@ bool LevelBossTest::isPausing(float dt) {
 	return true;
 }
 
-void LevelBossTest::changeMenuState(MenuState targetState) {
+void LevelLucifer::changeMenuState(MenuState targetState) {
 	if (targetState == currentMenuState || transitioning) return;
 
 	selectedIndex = -1;
@@ -1428,11 +1311,11 @@ void LevelBossTest::changeMenuState(MenuState targetState) {
 	transitioning = true;
 }
 
-MenuState LevelBossTest::getMenuState() const {
+MenuState LevelLucifer::getMenuState() const {
 	return currentMenuState;
 }
 
-void LevelBossTest::mouseUIHandling(int type, float x, float y) {
+void LevelLucifer::mouseUIHandling(int type, float x, float y) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	list<UIButton*>* currentList = nullptr;
 
@@ -1535,7 +1418,7 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 	}
 }
 
-void LevelBossTest::keyboardUIHandling(char key) {
+void LevelLucifer::keyboardUIHandling(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 
 	list<UIButton*>* currentList = nullptr;
@@ -1706,7 +1589,7 @@ void LevelBossTest::keyboardUIHandling(char key) {
 	}
 }
 
-glm::vec2 LevelBossTest::convertMouseToGameSpace(int mouseX, int mouseY) {
+glm::vec2 LevelLucifer::convertMouseToGameSpace(int mouseX, int mouseY) {
 	int windowWidth = GameEngine::getInstance()->getWindowWidth();
 	int windowHeight = GameEngine::getInstance()->getWindowHeight();
 
@@ -1745,7 +1628,7 @@ glm::vec2 LevelBossTest::convertMouseToGameSpace(int mouseX, int mouseY) {
 	return glm::vec2(gameX, gameY);
 }
 
-void LevelBossTest::changeSelection(int direction) {
+void LevelLucifer::changeSelection(int direction) {
 
 	list<UIButton*>* currentList = nullptr;
 
@@ -1816,7 +1699,7 @@ void LevelBossTest::changeSelection(int direction) {
 	//cout << focusedButton->getName() << endl;
 }
 
-void LevelBossTest::buttonsFree() {
+void LevelLucifer::buttonsFree() {
 	for (UIButton*& button : buttonsList) {
 		button = nullptr;
 	}
@@ -1854,7 +1737,7 @@ void LevelBossTest::buttonsFree() {
 	creditsButton.clear();
 }
 
-void LevelBossTest::UIUpdate() {
+void LevelLucifer::UIUpdate() {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	bool anyButtonHovered = false;
 	int mouseX;

@@ -1,5 +1,6 @@
 #include "PlayerAttackCollider.h"
 #include "Ziz.h"
+#include "Lucifer.h"
 
 PlayerAttackCollider::PlayerAttackCollider() {
 	damage = 0;
@@ -55,6 +56,8 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
 
 	Ziz* ziz = Ziz::getInstance();
+	Lucifer* lucifer = Lucifer::getInstance();
+
 
 	if (enemy) {
 		//playerInside = true;
@@ -75,6 +78,13 @@ void PlayerAttackCollider::onTriggerStay(Collider* collider) {
 					ziz->setHitEffectStrength(1.0f);
 				}
 				
+			}
+
+			if (lucifer) {
+				if (lucifer->getIsInvincible() == false) {
+					lucifer->getHealth()->takeDamage(damage);
+					lucifer->setHitEffectStrength(1.0f);
+				}
 			}
 
 			hasHit = true;

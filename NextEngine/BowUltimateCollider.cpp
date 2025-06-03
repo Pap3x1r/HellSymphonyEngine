@@ -66,10 +66,10 @@ void BowUltimateCollider::onTriggerEnter(Collider* collider) {
 
 void BowUltimateCollider::onTriggerStay(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
-	DrawableObject* obj2 = collider->getObject();
 
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
-	Ziz* ziz = dynamic_cast<Ziz*>(obj2);
+	Ziz* ziz = Ziz::getInstance();
+	Lucifer* lucifer = Lucifer::getInstance();
 
 	if (enemy) {
 		//playerInside = true;
@@ -81,9 +81,17 @@ void BowUltimateCollider::onTriggerStay(Collider* collider) {
 			}
 
 			if (ziz) {
-				//cout << "ult hit ziz" << endl;
-				ziz->getHealth()->takeDamage(damage);
-				//cout << "ziz health from ult: " << ziz->getCurrentHealth() << endl;
+				if (ziz->getIsInvincible() == false) {
+					ziz->getHealth()->takeDamage(damage);
+					ziz->setHitEffectStrength(1.0f);
+				}
+			}
+
+			if (lucifer) {
+				if (lucifer->getIsInvincible() == false) {
+					lucifer->getHealth()->takeDamage(damage);
+					lucifer->setHitEffectStrength(1.0f);
+				}
 			}
 
 			hasHit = true;

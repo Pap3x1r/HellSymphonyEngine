@@ -17,7 +17,7 @@ private:
     glm::vec3 attack1Offset = { 0.85f, -1.0f, 0.0f };
     glm::vec3 attack2Offset = { 1.55f, -1.0f, 0.0f };
     glm::vec3 attack3Offset = { 2.05f, -1.0f, 0.0f };
-    glm::vec3 heavyAttackOffset = { 2.05f, -1.0f, 0.0f };
+    glm::vec3 heavyAttackOffset = { 1.05f, -1.0f, 0.0f };
     glm::vec3 smallUltOffset = { -1.0f, -1.0f, 0.0f };
     glm::vec3 bigUltOffset = { 0.0f, -1.0f, 0.0f };
 

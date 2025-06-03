@@ -45,7 +45,8 @@ void GameEngine::init(int width, int height) {
 
 	stateController = new GameStateController();
 	//stateController->init(GameState::GS_MAINMENU);
-	stateController->init(GameState::GS_ZIZ);
+	//stateController->init(GameState::GS_ZIZ);
+	stateController->init(GameState::GS_LUCIFER);
 
 	time = new Time();
 	inputHandler = new InputManager();  

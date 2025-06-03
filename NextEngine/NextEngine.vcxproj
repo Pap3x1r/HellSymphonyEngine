@@ -59,6 +59,7 @@
     <ClCompile Include="LevelBossTest.cpp" />
     <ClCompile Include="LevelCollisionTest.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="LevelLucifer.cpp" />
     <ClCompile Include="LevelMainMenu.cpp" />
     <ClCompile Include="LevelMapEditorTest.cpp" />
     <ClCompile Include="LevelParallax.cpp" />
@@ -67,6 +68,9 @@
     <ClCompile Include="LevelUITest.cpp" />
     <ClCompile Include="Lightning.cpp" />
     <ClCompile Include="LivingEntity.cpp" />
+    <ClCompile Include="Lucifer.cpp" />
+    <ClCompile Include="LuciferIdleState.cpp" />
+    <ClCompile Include="LuciferStateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
@@ -106,6 +110,7 @@
     <ClCompile Include="ZizGustState.cpp" />
     <ClCompile Include="ZizIdleState.cpp" />
     <ClCompile Include="ZizImpaleState.cpp" />
+    <ClCompile Include="ZizIntroState.cpp" />
     <ClCompile Include="ZizQTEState.cpp" />
     <ClCompile Include="ZizStormRiseState.cpp" />
     <ClCompile Include="ZizSwoopState.cpp" />
@@ -156,6 +161,7 @@
     <ClInclude Include="LevelBossTest.h" />
     <ClInclude Include="LevelCollisionTest.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="LevelLucifer.h" />
     <ClInclude Include="LevelMainMenu.h" />
     <ClInclude Include="LevelMapEditorTest.h" />
     <ClInclude Include="LevelParallax.h" />
@@ -165,6 +171,10 @@
     <ClInclude Include="Lightning.h" />
     <ClInclude Include="LightningWarning.h" />
     <ClInclude Include="LivingEntity.h" />
+    <ClInclude Include="Lucifer.h" />
+    <ClInclude Include="LuciferIdleState.h" />
+    <ClInclude Include="LuciferStateM.h" />
+    <ClInclude Include="LuciferStateMachine.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="ParallaxObject.h" />
@@ -206,6 +216,7 @@
     <ClInclude Include="ZizGustState.h" />
     <ClInclude Include="ZizIdleState.h" />
     <ClInclude Include="ZizImpaleState.h" />
+    <ClInclude Include="ZizIntroState.h" />
     <ClInclude Include="ZizQTEState.h" />
     <ClInclude Include="ZizStormRiseState.h" />
     <ClInclude Include="ZizSwoopState.h" />

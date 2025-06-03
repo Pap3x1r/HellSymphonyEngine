@@ -392,7 +392,7 @@ void PlayerSmallSwordUlt::update(Player* player, float dt_) {
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(4);
-    cout << collider->getName() << endl;
+    //cout << collider->getName() << endl;
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
 
     switch (currentPhase) {

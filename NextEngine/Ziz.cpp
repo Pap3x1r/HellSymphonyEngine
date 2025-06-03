@@ -1,5 +1,6 @@
 #pragma once
 #include "Ziz.h"
+#include "ZizIntroState.h"
 
 Ziz* Ziz::instance = nullptr;
 
@@ -27,7 +28,7 @@ Ziz::Ziz() {
 	//getColliderComponent()->getTransform().translate(glm::vec3(-0.5f, 0.0f, 0.0f));
 	getTransform().setPosition(glm::vec3(2.0f, -0.25f, 0.0f));
 	setDrawCollider(true);
-	setCanDrawColliderNew(true);
+	//setCanDrawColliderNew(true);
 	getColliderComponent()->setTrigger(true);
 
 
@@ -95,6 +96,9 @@ Ziz::Ziz() {
 	QTETarget = 0;
 	QTEInput = 0;
 	QTECorrect = false;
+
+	currentState->changeState(ZizIdleState::getInstance(), this);
+	//currentState->changeState(ZizIntroState::getInstance(), this);
 	
 }
 

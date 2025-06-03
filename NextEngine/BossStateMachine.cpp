@@ -70,7 +70,7 @@ void BossStateMachine::interruptIntoPhase(Boss* boss) {
 
         currentState->exit(boss);
     }
-    currentState = ZizImpaleState::getInstance();
+    currentState = ZizQTEState::getInstance();
     if (currentState) {
         currentState->enter(boss);
     }

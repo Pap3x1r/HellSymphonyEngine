@@ -1,5 +1,6 @@
 #include "Arrow.h"
 #include "Ziz.h"
+#include "Lucifer.h"
 
 Arrow::Arrow(float damage_, float ultPercentage_, bool face, float speed, Player* p) {
 	arrowSpeed = speed;
@@ -67,9 +68,10 @@ void Arrow::onCollisionExit(Collider* collider) {
 
 void Arrow::onTriggerEnter(Collider* collider) {
 	DrawableObject* obj = collider->getObject();
-	DrawableObject* obj2 = collider->getObject();
-
 	Enemy* enemy = dynamic_cast<Enemy*>(obj);
+
+	Ziz* ziz = Ziz::getInstance();
+	Lucifer* lucifer = Lucifer::getInstance();
 
 	if (enemy) {
 		cout << "Arrow hit Enemy for " << damage << " damage." << endl;
@@ -78,7 +80,7 @@ void Arrow::onTriggerEnter(Collider* collider) {
 			//cout << "Ult gauge increased by " << damage * ultGainPercentage / 100.0f << endl;
 		}
 
-		Ziz* ziz = dynamic_cast<Ziz*>(obj2);
+		
 		if (ziz) {
 			if (ziz->getIsInvincible() == false) {
 				ziz->getHealth()->takeDamage(damage);
@@ -86,8 +88,13 @@ void Arrow::onTriggerEnter(Collider* collider) {
 			}
 		}
 
-		//DrawableObject::destroyObject(this, objectsListRef);
-		//setReadyToDestroy(true);
+		if (lucifer) {
+			if (lucifer->getIsInvincible() == false) {
+				lucifer->getHealth()->takeDamage(damage);
+				lucifer->setHitEffectStrength(1.0f);
+			}
+		}
+
 		DrawableObject::destroyObject(this);
 	}
 }

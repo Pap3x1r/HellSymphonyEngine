@@ -14,7 +14,6 @@
 
 class Ziz;
 
-
 class ZizIdleState : public BossStateM {
 private:
 

@@ -12,23 +12,19 @@ ZizIdleState* ZizIdleState::getInstance() {
 }
 
 void ZizIdleState::enter(Boss* boss) {
-    ziz = dynamic_cast<Ziz*>(boss);
-    if (!ziz) return;
+    ziz = Ziz::getInstance();
 
     player = ziz->getPlayer();
-    if (player) {
-        //cout << "found Player" << endl;
-    }
 
     
 
     idleTimer = 0.08f * 10;
-    //ziz->setTexture("../Resource/Ziz/Idle.png");
+    
     ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Idle-Sheet.png", 1, 10, 0);
-    //ziz->setTexture("../Resource/Texture/Ziz/Ziz_Idle.png", 1, 10, 0);
+    
     ziz->getAnimationComponent()->setState("idle");
     ziz->facePlayer();
-    //cout << "Ziz entered Idle State.\n";
+    
 }
 
 void ZizIdleState::update(Boss* boss, float dt) {
@@ -38,9 +34,9 @@ void ZizIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
+        //ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
         //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-        //pickState();
+        pickState();
     }
 }
 

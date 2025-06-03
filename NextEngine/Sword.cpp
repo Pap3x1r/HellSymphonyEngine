@@ -31,7 +31,7 @@ Sword::Sword() {
     lightAttack3Sword->addColliderComponent();
     lightAttack3Sword->getColliderComponent()->setTrigger(true);
     lightAttack3Sword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    lightAttack3Sword->getColliderComponent()->setDimension(3.4f, 2.0f); // Set collider dimension
+    lightAttack3Sword->getColliderComponent()->setDimension(2.2f, 1.5f); // Set collider dimension
     lightAttack3Sword->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
     lightAttack3Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack3Sword);
@@ -42,7 +42,7 @@ Sword::Sword() {
     heavyAttackSword->addColliderComponent();
     heavyAttackSword->getColliderComponent()->setTrigger(true);
     heavyAttackSword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    heavyAttackSword->getColliderComponent()->setDimension(4.0f, 3.0f); // Set collider dimension
+    heavyAttackSword->getColliderComponent()->setDimension(2.0f, 1.5f); // Set collider dimension
     heavyAttackSword->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
     heavyAttackSword->setDrawCollider(false);
     chainAttackList.push_back(heavyAttackSword);

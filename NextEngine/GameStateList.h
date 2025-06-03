@@ -6,6 +6,7 @@ enum GameState {
 	GS_LOADINGSCREEN,
 	GS_LIMBO,
 	GS_ZIZ,
+	GS_LUCIFER,
 
 	// special game state. Do not change
 	GS_RESTART,
