@@ -195,13 +195,8 @@ DrawableObject* Ziz::createGust() {
 	
 
 	gust->addColliderComponent();
-	gust->getColliderComponent()->setTrigger(false);
+	gust->getColliderComponent()->setTrigger(true);
 	gust->getColliderComponent()->setDimension(0.5f, 1.0f);
-	gust->setDrawCollider(true);
-	gust->addPhysicsComponent();
-	gust->getPhysicsComponent()->setGravity(glm::vec2(0.0f, -0.02f));
-	gust->getPhysicsComponent()->setEnableGravity(true);
-	
 	
 	return gust;
 	
