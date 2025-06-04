@@ -4,20 +4,30 @@ SideStaff::SideStaff() {
 
     setName("SideStaff");
 
-    initAnimation(33, 1);
-    getAnimationComponent()->addState("beamradiant", 0, 33);
+    initAnimation(11, 1);
+    getAnimationComponent()->addState("sidestaff1", 0, 10);
+    getAnimationComponent()->addState("sidestaff2", 0, 10);
+    getAnimationComponent()->addState("sidestaff3", 0, 13);
+
 
     getTransform().setScale(glm::vec3(20.0f, 3.125f, 1.0f));
     getTransform().setPosition(glm::vec3(-1, -1.5, 0));
 
-    setTexture("../Resource/Texture/Lucifer/VFX/Laser side.png", 1, 33, 0);
-    getAnimationComponent()->setState("beamradiant");
+    setTexture("../Resource/Texture/Lucifer/VFX/sidelaser1.png", 1, 10, 0);
+    getAnimationComponent()->setState("sidestaff1");
 
     lucifer = Lucifer::getInstance();
 
     timer = 0.08f * 33;
     spawnLaser = 0.08f * 14;
     spawnedLaser = false;
+
+
+    currentAnim = 0;
+    animTimer1 = 0.08f * 10;
+    animTimer2 = 0.08f * 10;
+    animTimer3 = 0.08f * 13;
+
 
     atk = new EnemyAttackCollider(5);
     atk->setDraw(false);
@@ -30,6 +40,28 @@ SideStaff::SideStaff() {
 }
 
 void SideStaff::update(float dt) {
+
+    if (currentAnim == 0) {
+        animTimer1 -= dt;
+        if (animTimer1 <= 0) {
+            setTexture("../Resource/Texture/Lucifer/VFX/sidelaser2.png", 1, 10, 0);
+            getAnimationComponent()->setState("sidestaff2");
+            currentAnim++;
+        }
+    }
+    else if (currentAnim == 1) {
+        animTimer2 -= dt;
+        if (animTimer2 <= 0) {
+            setTexture("../Resource/Texture/Lucifer/VFX/sidelaser3.png", 1, 13, 0);
+            getAnimationComponent()->setState("sidestaff3");
+            currentAnim++;
+        }
+    }else if (currentAnim == 2) {
+        animTimer3 -= dt;
+        if (animTimer3 <= 0) {
+            currentAnim++;
+        }
+    }
 
     if (spawnedLaser == false) {
         spawnLaser -= dt;
