@@ -398,7 +398,7 @@ void LevelBossTest::levelUpdate() {
 	ziz->getAnimationComponent()->updateCurrentState(playerDT);
 
 
-	handleObjectCollision(objectsList);
+	//handleObjectCollision(objectsList);
 
 	ImGui::End();
 }
@@ -2563,6 +2563,7 @@ void LevelBossTest::createPauseUI() {
 	continueButton->setDraw(false);
 	continueButton->setLabel(continueText); // Link continueText
 	continueButton->setMenuState(MenuState::PAUSE);
+	continueButton->setFunction([this]() { changeMenuState(MenuState::MAIN);});
 	continueButton->drawLayer = 999;
 	objectsList.push_back(continueButton);
 	buttonsList.push_back(continueButton);

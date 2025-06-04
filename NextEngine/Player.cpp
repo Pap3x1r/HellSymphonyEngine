@@ -6,7 +6,7 @@
 #include "GameEngine.h"
 
 Player::Player(float currentHealth, float witherHealth, int life) {
-	health = new Health(currentHealth, witherHealth);
+	health = new Health(currentHealth, witherHealth, 100.0f);
 	playerLives = life;
 	setName("Player"); //--new
 	setTag(Tag::Player);

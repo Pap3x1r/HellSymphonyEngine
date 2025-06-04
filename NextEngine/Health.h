@@ -12,6 +12,14 @@ class Health {
     bool destroyOnDead;
 
 public:
+
+    Health(float health, float wither, float maxHealth_)
+    {   
+        maxHealth = maxHealth_;
+        realHealth = currentHealth = health;
+        witherHealth = wither;
+    }
+
     Health(float health, float wither)
     {
         realHealth = currentHealth = health;

@@ -11,7 +11,7 @@ Lucifer* Lucifer::getInstance() {
 
 Lucifer::Lucifer() {
 	setName("Lucifer");
-	health = new Health(7500);
+	health = new Health(7500, 0, 7500);
 	setTexture("../Resource/Texture/Lucifer/LuciferPhase1.png");
 	getTransform().setScale(glm::vec3(20.0f, 10.0f, 1.0f));
 	getTransform().setPosition(glm::vec3(0.0f, 0.0f, 0.0f));

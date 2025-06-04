@@ -22,6 +22,8 @@ enum MenuState {
 	CREDITS,
 	QUITCONFIRM,
 	SAVECONFIRM,
+	DEATH,
+	VICTORY,
 	IGNORE
 };
 

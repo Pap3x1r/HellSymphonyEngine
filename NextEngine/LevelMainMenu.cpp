@@ -1195,7 +1195,7 @@ void LevelMainMenu::levelUpdate() {
 
 	//cout << "SelectedIndex: " << selectedIndex << " HoveredIndex: " << hoveredIndex << endl;
 
-	handleObjectCollision(objectsList);
+	//handleObjectCollision(objectsList);
 
 	ImGui::End();
 }

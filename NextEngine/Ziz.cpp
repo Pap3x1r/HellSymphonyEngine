@@ -14,7 +14,7 @@ Ziz* Ziz::getInstance() {
 
 Ziz::Ziz() {
 	setName("Ziz");
-	health = new Health(10000);
+	health = new Health(10000, 0, 10000);
 	currentPhase = firstPhase;
 
 	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Ziz");
