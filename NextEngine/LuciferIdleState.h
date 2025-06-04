@@ -2,6 +2,16 @@
 #include "BossStateM.h"
 #include "Lucifer.h"
 #include "Player.h"
+#include "LuciferHeartBeat.h"
+#include "LuciferVerticalBarrageState.h"
+#include "LuciferHorizontalBarrageState.h"
+#include "LuciferHomingSpearState.h"
+#include "LuciferIceBombState.h"
+#include "LuciferVerticalBeamState.h"
+#include "LuciferBeamRadiantState.h"
+#include "LuciferQTEState.h"
+#include "LuciferIceFloorState.h"
+#include "Level.h"
 
 class Lucifer;
 
@@ -13,6 +23,7 @@ private:
 
     Lucifer* lucifer;
     Player* player;
+    LuciferHeartBeat* luciferHeartBeat;
 
 public:
     static LuciferIdleState* getInstance();

@@ -1,7 +1,6 @@
 #include "LuciferIdleState.h"
 #include "Lucifer.h"
 
-
 LuciferIdleState* LuciferIdleState::instance = nullptr;
 
 LuciferIdleState* LuciferIdleState::getInstance() {
@@ -13,16 +12,14 @@ LuciferIdleState* LuciferIdleState::getInstance() {
 
 void LuciferIdleState::enter(Boss* boss) {
     lucifer = Lucifer::getInstance();
-
     player = lucifer->getPlayer();
+    luciferHeartBeat = LuciferHeartBeat::getInstance();
+    
 
 
+    idleTimer = 0.08f * 24;
 
-    idleTimer = 0.08f * 10;
-
-    //ziz->setTexture("../Resource/Texture/FinalZiz/Zyzz_Idle-Sheet.png", 1, 10, 0);
-    //ziz->getAnimationComponent()->setState("idle");
-
+    cout << "Lucifer Idle Enter" << endl;
 }
 
 void LuciferIdleState::update(Boss* boss, float dt) {
@@ -31,22 +28,44 @@ void LuciferIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        //ziz->getStateMachine()->changeState(ZizStormRiseState::getInstance(), ziz);
-        //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+        lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);
+        //lucifer->getStateMachine()->changeState(LuciferIdleState::getInstance(), lucifer);
         //pickState();
     }
 }
 
 void LuciferIdleState::exit(Boss* boss) {
-    //cout << "Ziz exiting Idle State.\n";
+    
 }
 
 void LuciferIdleState::pickState() {
-    float randValue = (rand() % 11);
+    //lucifer has 7 moves
+    int randValue = (rand() % 8);
     cout << "Rand In Idle: " << randValue << endl;
-
-
-    
-
+    switch (randValue) {
+    case 0:
+        lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);
+        break;
+    case 1:
+        lucifer->getStateMachine()->changeState(LuciferHomingSpearState::getInstance(), lucifer);
+        break;
+    case 2:
+        lucifer->getStateMachine()->changeState(LuciferHorizontalBarrageState::getInstance(), lucifer);
+        break;
+    case 3:
+        lucifer->getStateMachine()->changeState(LuciferVerticalBarrageState::getInstance(), lucifer);
+        break;
+    case 4:
+        lucifer->getStateMachine()->changeState(LuciferIceFloorState::getInstance(), lucifer);
+        break;
+    case 5:
+        lucifer->getStateMachine()->changeState(LuciferIceBombState::getInstance(), lucifer);
+        break;
+    case 6:
+        lucifer->getStateMachine()->changeState(LuciferQTEState::getInstance(), lucifer);
+        break;
+    default:
+        break;
+    }
 
 }

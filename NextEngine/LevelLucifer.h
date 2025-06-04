@@ -8,6 +8,17 @@
 #include "Shield.h"
 
 #include "Lucifer.h"
+#include "LuciferHeartBeat.h"
+#include "IceSpear.h"
+#include "IceBomb.h"
+#include "VerticalIceBeam.h"
+#include "BeamRadiant.h"
+#include "RadiantLaser.h"
+#include "SideStaff.h"
+#include "IceFloor.h"
+#include "IceFloorWarning.h"
+
+#include "QTEButtonUI.h"
 
 #include <list>
 
@@ -31,6 +42,7 @@ private:
 	list<UIButton*> controllerButtons;
 	list<UIButton*> keyboardButtons;
 	list<UIButton*> creditsButton;
+	list<UIButton*> quitConfirmButtons;
 
 	//Slider List
 	list<SliderObject*> slidersList;
@@ -48,7 +60,7 @@ private:
 	TexturedObject* kbOverlay = nullptr;
 
 	float transitionTime = 0.0f;
-	float transitionDuration = 0.5f;
+	float transitionDuration = 0.2f;
 	bool transitioning = false;
 	float holdButtonTimer = 0.0f;
 	float holdButtonThreshold = 0.5f;
@@ -64,6 +76,8 @@ private:
 
 	bool isHolding;
 
+	QTEButtonUI* qbui;
+
 	////////////////////////////////////////////////////////////////
 
 
@@ -76,6 +90,7 @@ private:
 
 	Lucifer* lucifer;
 	Player* player;
+	LuciferHeartBeat* luciferHeartBeat;
 
 	//ControlType
 	InputManager* inputManager;
@@ -165,4 +180,17 @@ public:
 	void switchControlType(ControlType ct);
 
 	void createPauseUI();
+
+	void toLoadingScreen() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_MAINMENU;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
 };

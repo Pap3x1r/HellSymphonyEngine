@@ -89,6 +89,7 @@ void BowUltimateCollider::onTriggerStay(Collider* collider) {
 
 			if (lucifer) {
 				if (lucifer->getIsInvincible() == false) {
+					lucifer->startShake(0.1f, 0.002f);
 					lucifer->getHealth()->takeDamage(damage);
 					lucifer->setHitEffectStrength(1.0f);
 				}
