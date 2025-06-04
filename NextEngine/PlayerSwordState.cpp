@@ -13,10 +13,10 @@ PlayerBigSwordUlt* PlayerBigSwordUlt::instance = nullptr;
 //Light Sword Attack 1
 void PlayerLightSwordAttack1::enter(Player* player) {
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(5.4f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-5.4f, 3.75f, 1.0f));
     }
     
     //cout << "Player enters Sword Light Attack 1 state.\n";
@@ -107,10 +107,10 @@ void PlayerLightSwordAttack1::exit(Player* player) {
     player->getSword()->setCurrentChainAttack(0);
     player->getSword()->setInChainAttack(false); // no longer in chain attack
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-3.75f, 3.75f, 1.0f));
     }
     player->getSword()->setInputBuffer(false);
     time = 0;
@@ -123,10 +123,10 @@ void PlayerLightSwordAttack1::exit(Player* player) {
 //Light Sword Attack 2
 void PlayerLightSwordAttack2::enter(Player* player) {
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(5.4f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-5.4f, 3.75f, 1.0f));
     }
     //cout << "Player enters Sword Light Attack 2 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png", 1, 5, 0);
@@ -185,10 +185,10 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
 
         if (time >= 0.167f) { //time's up
             if (player->getFacingRight()) {
-                player->getTransform().setScale(glm::vec3(4.0f, 4.0f, 1.0f));
+                player->getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
             }
             else {
-                player->getTransform().setScale(glm::vec3(-4.0f, 4.0f, 1.0f));
+                player->getTransform().setScale(glm::vec3(-3.75f, 3.75f, 1.0f));
             }
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
@@ -208,10 +208,10 @@ void PlayerLightSwordAttack2::exit(Player* player) {
     player->getSword()->setCurrentChainAttack(0);
     player->getSword()->setInChainAttack(false); // no longer in chain attack
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-3.75f, 3.75f, 1.0f));
     }
     player->getSword()->setInputBuffer(false);
     time = 0;
@@ -224,10 +224,10 @@ void PlayerLightSwordAttack2::exit(Player* player) {
 //Light Sword Attack 3
 void PlayerLightSwordAttack3::enter(Player* player) {
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(5.4f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-5.76f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-5.4f, 3.75f, 1.0f));
     }
     //cout << "Player enters Sword Light Attack 3 state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png", 1, 5, 0);
@@ -280,10 +280,10 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
 
         if (time >= 0.167f) { //time's up
             if (player->getFacingRight()) {
-                player->getTransform().setScale(glm::vec3(4.0f, 4.0f, 1.0f));
+                player->getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
             }
             else {
-                player->getTransform().setScale(glm::vec3(-4.0f, 4.0f, 1.0f));
+                player->getTransform().setScale(glm::vec3(-3.75f, 3.75f, 1.0f));
             }
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
             player->getSword()->setCurrentChainAttack(0);
@@ -303,10 +303,10 @@ void PlayerLightSwordAttack3::exit(Player* player) {
     player->getSword()->setCurrentChainAttack(0);
     player->getSword()->setInChainAttack(false); // no longer in chain attack
     if (player->getFacingRight()) {
-        player->getTransform().setScale(glm::vec3(4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
     }
     else {
-        player->getTransform().setScale(glm::vec3(-4.0f, 4.0f, 1.0f));
+        player->getTransform().setScale(glm::vec3(-3.75f, 3.75f, 1.0f));
     }
     time = 0;
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -452,18 +452,71 @@ void PlayerBigSwordUlt::enter(Player* player) {
     player->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUlt_sword.png", 1, 25, 0);
     player->getAnimationComponent()->setState("bigUltSword");
     currentPhase = STARTUP;
+    currentPhase2 = ONE;
     player->getSword()->setInChainAttack(true); //Player is in chain attack
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
-    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.125f, -0.165f, 0.0f));
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.125f, -0.2f, 0.0f));
     player->getSword()->setBigUltReady(false);
 }
 
 void PlayerBigSwordUlt::update(Player* player, float dt_) {
     time += dt_;
+    time2 += dt_;
     //cout << "Player Idle State: " << time << " (total dt)\n";
 
     DrawableObject* collider = player->getSword()->getChainAttackObject(5);
     PlayerAttackCollider* attackCollider = dynamic_cast<PlayerAttackCollider*>(collider);
+
+
+    switch (currentPhase2) {
+    case ONE:
+        if (time2 >= 0.083f * 4) {
+            currentPhase2 = TWO;
+            time2 = 0;
+            attackCollider->setDraw(true);
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUltEffect_sword1.png", 1, 5, 0);
+            attackCollider->getAnimationComponent()->setState("BigUlt1");
+            attackCollider->getAnimationComponent()->setLoop(false);
+        }
+        break;
+    case TWO:
+        //do something
+        //change phase
+
+        if (time2 >= 0.083f * 5) {
+            currentPhase2 = THREE;
+            time2 = 0;
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUltEffect_sword2.png", 1, 5, 0);
+            attackCollider->getAnimationComponent()->setState("BigUlt2");
+
+        }
+        break;
+    case THREE:
+        
+        if (time2 >= 0.083f * 5) {
+            time2 = 0;
+            currentPhase2 = FOUR;
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUltEffect_sword3.png", 1, 5, 0);
+            attackCollider->getAnimationComponent()->setState("BigUlt3");
+        }
+        break;
+    case FOUR:
+
+        if (time2 >= 0.083f * 5) {
+            time2 = 0;
+            currentPhase2 = FIVE;
+            attackCollider->setTexture("../Resource/Texture/Dante/DanteSword/dante_bigUltEffect_sword4.png", 1, 3, 0);
+            attackCollider->getAnimationComponent()->setState("BigUlt4");
+        }
+        break;
+    case FIVE:
+
+        if (time2 >= 0.083f * 3) {
+            time2 = 0;
+            attackCollider->setDraw(false);
+        }
+        break;
+    };
 
     switch (currentPhase) {
     case STARTUP:
@@ -486,6 +539,7 @@ void PlayerBigSwordUlt::update(Player* player, float dt_) {
             time = 0;
             collider->setDrawCollider(false);
             collider->getColliderComponent()->setEnableCollision(false);
+            attackCollider->setDraw(false);
         }
         break;
     case RECOVERY:

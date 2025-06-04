@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "Player.h"
 #include <fstream>
+#include <filesystem>
 
 GameEngine* GameEngine::instance = nullptr;
 
@@ -44,8 +45,8 @@ void GameEngine::init(int width, int height) {
 	setBackgroundColor(95.0f / 255, 110.0f / 255, 133.0f / 255);
 
 	stateController = new GameStateController();
-	stateController->init(GameState::GS_MAINMENU);
-	//stateController->init(GameState::GS_ZIZ);
+	//stateController->init(GameState::GS_MAINMENU);
+	stateController->init(GameState::GS_ZIZ);
 	//stateController->init(GameState::GS_LUCIFER);
 
 	time = new Time();
@@ -122,15 +123,14 @@ void GameEngine::savePlayerData(const Player* player, const std::string& filenam
 }
 
 Player* GameEngine::loadPlayerData(const std::string& filepath) {
-	ifstream inFile(filepath);
 	float hp = 100.0f;
 	float wither = 0.0f;
 	int lives = 3;
 
+	ifstream inFile(filepath);
 	if (!inFile) {
 		cerr << "Player data file not found. Creating new file with default values.\n";
 
-		// Create file with default values
 		ofstream outFile(filepath);
 		if (outFile) {
 			outFile << "Player Health: " << hp << endl;
@@ -145,31 +145,34 @@ Player* GameEngine::loadPlayerData(const std::string& filepath) {
 		return new Player(hp, wither, lives);
 	}
 
-	// If file exists, extract values
-	auto extractValue = [&inFile](const std::string& label, auto& value) {
-		std::string line;
-		if (std::getline(inFile, line)) {
-			size_t pos = line.find(label);
-			if (pos != std::string::npos) {
-				try {
-					std::string numberStr = line.substr(pos + label.length());
-					if constexpr (std::is_same_v<decltype(value), float>) {
-						value = std::stof(numberStr);
-					}
-					else if constexpr (std::is_same_v<decltype(value), int>) {
-						value = std::stoi(numberStr);
-					}
-				}
-				catch (...) {
-					std::cerr << "Error reading " << label << endl;
-				}
+	// Parse all lines once
+	std::string line;
+	while (std::getline(inFile, line)) {
+		if (line.find("Player Health:") != std::string::npos) {
+			try {
+				hp = std::stof(line.substr(line.find(":") + 1));
+			}
+			catch (...) {
+				cerr << "Failed to parse Player Health\n";
 			}
 		}
-		};
-
-	extractValue("Player Health:", hp);
-	extractValue("Player Wither Health:", wither);
-	extractValue("Player Lives:", lives);
+		else if (line.find("Player Wither Health:") != std::string::npos) {
+			try {
+				wither = std::stof(line.substr(line.find(":") + 1));
+			}
+			catch (...) {
+				cerr << "Failed to parse Player Wither Health\n";
+			}
+		}
+		else if (line.find("Player Lives:") != std::string::npos) {
+			try {
+				lives = std::stoi(line.substr(line.find(":") + 1));
+			}
+			catch (...) {
+				cerr << "Failed to parse Player Lives\n";
+			}
+		}
+	}
 
 	inFile.close();
 
@@ -197,6 +200,15 @@ GameState GameEngine::loadGameState(const std::string& filename, bool newGame) {
 	if (!inFile || newGame) {
 		if (newGame) {
 			cout << "Creating new game state file" << endl;
+
+			string playerDataFile = "../Resource/Saves/PlayerData/playerData.txt";
+			if (filesystem::exists(playerDataFile)) {
+				filesystem::remove(playerDataFile);
+				cout << "Deleted " << playerDataFile << "\n";
+			}
+			else {
+				cout << "No player data file to delete.\n";
+			}
 		}
 		else {
 			cerr << "Game state file not found. Creating new file with default state (GS_MAINMENU)." << endl;

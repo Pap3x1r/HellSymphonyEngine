@@ -38,7 +38,7 @@ void LevelBossTest::levelInit() {
 	player->getTransform().setPosition(glm::vec3(-5.0, -0.8f, 0.0f));
 	objectsList.push_back(player->getGroundChecker());
 
-	player->setWeaponType(Bow_);
+	player->setWeaponType(Sword_);
 	player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 
 	playerTimeScale = 1.0f;
@@ -594,11 +594,13 @@ void LevelBossTest::handleKey(char key) {
 
 		if (player->getIsDashing() == false) {
 			player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+
+			if (player->getIsGrounded()) {
+				player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
+			}
 		}
 
-		if (player->getIsGrounded()) {
-			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
-		}
+		
 
 
 
@@ -622,6 +624,7 @@ void LevelBossTest::handleKey(char key) {
 				player->setMovementSpeed(player->getMovementSpeed() * 5);
 				player->setIsDashing(true);
 				player->setCanDash(false);
+				player->getStateMachine()->changeState(PlayerDashState::getInstance(), player);
 			}
 		}
 
@@ -851,6 +854,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 				player->setMovementSpeed(player->getMovementSpeed() * 4);
 				player->setIsDashing(true);
 				player->setCanDash(false);
+				player->getStateMachine()->changeState(PlayerDashState::getInstance(), player);
 			}
 		}
 
@@ -1151,6 +1155,19 @@ void LevelBossTest::createSkillsIcon() {
 	shieldBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
 	objectsList.push_back(shieldBigUltIconOn_);
 	shieldBigUltIconOn = shieldBigUltIconOn_;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Shield Skills Icon
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* dashIcon_ = new TexturedObject("Shield Small Ultimate Icon Off");
+	dashIcon_->setTexture("../Resource/Texture/UI/Dash/Dash_On.png");
+	dashIcon_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
+	dashIcon_->getTransform().setPosition(glm::vec3(7.4f, -3.6f, 1.0f));
+	objectsList.push_back(dashIcon_);
+	dashIcon = dashIcon_;
 }
 
 void LevelBossTest::updateSkillsIcon() {
@@ -1247,6 +1264,13 @@ void LevelBossTest::updateSkillsIcon() {
 				bigUltOff->setDraw(true);
 				bigUltOn->setDraw(false);
 			}
+		}
+
+		if (player->getCanDash()) {
+			dashIcon->setTexture("../Resource/Texture/UI/Dash/Dash_On.png");
+		}
+		else {
+			dashIcon->setTexture("../Resource/Texture/UI/Dash/Dash_Off.png");
 		}
 	}
 }
@@ -1401,6 +1425,15 @@ void LevelBossTest::stateMachineUpdate(float dt) {
 		}
 		if (player->getTransform().getPosition().x < -7.5f) {
 			player->getTransform().setPosition(glm::vec3(-7.5f, player->getTransform().getPosition().y, 0.0f));
+		}
+
+		if (player->getSword()) {
+			DrawableObject* obj = player->getSword()->getChainAttackObject(5);
+
+			PlayerAttackCollider* pAttack = dynamic_cast<PlayerAttackCollider*>(obj);
+			if (pAttack) {
+				pAttack->getAnimationComponent()->updateCurrentState(dt);
+			}
 		}
 	}
 }

@@ -75,3 +75,21 @@ public:
     void update(Player* player, float dt_) override;
     void exit(Player* player) override;
 };
+
+//FallDown
+class PlayerDashState : public StateM {
+    float time;
+    static PlayerDashState* instance;
+public:
+    static PlayerDashState* getInstance() {
+        if (instance == nullptr) {
+            instance = new PlayerDashState();
+        }
+
+        return instance;
+    }
+
+    void enter(Player* player) override;
+    void update(Player* player, float dt_) override;
+    void exit(Player* player) override;
+};

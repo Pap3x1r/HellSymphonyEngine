@@ -9,7 +9,7 @@ Sword::Sword() {
     lightAttack1Sword->addColliderComponent();
     lightAttack1Sword->getColliderComponent()->setTrigger(true);
     lightAttack1Sword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    lightAttack1Sword->getColliderComponent()->setDimension(1.4f, 0.6f); // Set collider dimension
+    lightAttack1Sword->getColliderComponent()->setDimension(1.8f, 0.6f); // Set collider dimension
     lightAttack1Sword->getTransform().setPosition(glm::vec3(0.85f, -1.0f, 0.0f));
     lightAttack1Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack1Sword);
@@ -20,7 +20,7 @@ Sword::Sword() {
     lightAttack2Sword->addColliderComponent();
     lightAttack2Sword->getColliderComponent()->setTrigger(true);
     lightAttack2Sword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    lightAttack2Sword->getColliderComponent()->setDimension(2.4f, 1.0f); // Set collider dimension
+    lightAttack2Sword->getColliderComponent()->setDimension(1.8f, 1.0f); // Set collider dimension
     lightAttack2Sword->getTransform().setPosition(glm::vec3(1.55f, -1.0f, 0.0f));
     lightAttack2Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack2Sword);
@@ -31,7 +31,7 @@ Sword::Sword() {
     lightAttack3Sword->addColliderComponent();
     lightAttack3Sword->getColliderComponent()->setTrigger(true);
     lightAttack3Sword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    lightAttack3Sword->getColliderComponent()->setDimension(2.2f, 1.5f); // Set collider dimension
+    lightAttack3Sword->getColliderComponent()->setDimension(1.9f, 1.25f); // Set collider dimension
     lightAttack3Sword->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
     lightAttack3Sword->setDrawCollider(false);
     chainAttackList.push_back(lightAttack3Sword);
@@ -42,7 +42,7 @@ Sword::Sword() {
     heavyAttackSword->addColliderComponent();
     heavyAttackSword->getColliderComponent()->setTrigger(true);
     heavyAttackSword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    heavyAttackSword->getColliderComponent()->setDimension(2.0f, 1.5f); // Set collider dimension
+    heavyAttackSword->getColliderComponent()->setDimension(2.0f, 1.75f); // Set collider dimension
     heavyAttackSword->getTransform().setPosition(glm::vec3(2.05f, -1.0f, 0.0f));
     heavyAttackSword->setDrawCollider(false);
     chainAttackList.push_back(heavyAttackSword);
@@ -53,7 +53,7 @@ Sword::Sword() {
     smallUltSword->addColliderComponent();
     smallUltSword->getColliderComponent()->setTrigger(true);
     smallUltSword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    smallUltSword->getColliderComponent()->setDimension(5.5f, 1.0f); // Set collider dimension
+    smallUltSword->getColliderComponent()->setDimension(5.5f, 2.5f); // Set collider dimension
     smallUltSword->setDrawCollider(false);
     chainAttackList.push_back(smallUltSword);
 
@@ -63,7 +63,14 @@ Sword::Sword() {
     bigUltSword->addColliderComponent();
     bigUltSword->getColliderComponent()->setTrigger(true);
     bigUltSword->getColliderComponent()->setEnableCollision(false); // Set collision to false at the start
-    bigUltSword->getColliderComponent()->setDimension(21.0f, 10.0f); // Set collider dimension
+    bigUltSword->initAnimation(0, 0);
+    bigUltSword->getAnimationComponent()->addState("BigUlt1", 0, 5);
+    bigUltSword->getAnimationComponent()->addState("BigUlt2", 0, 5);
+    bigUltSword->getAnimationComponent()->addState("BigUlt3", 0, 5);
+    bigUltSword->getAnimationComponent()->addState("BigUlt4", 0, 3);
+    bigUltSword->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1));
+    bigUltSword->drawLayer = 1;
+    //bigUltSword->getColliderComponent()->setDimension(21.0f, 10.0f); // Set collider dimension
     bigUltSword->setDrawCollider(false);
     chainAttackList.push_back(bigUltSword);
 }
@@ -108,10 +115,10 @@ void Sword::update(float dt, Player* playerObject) {
             obj->getTransform().setPosition(playerPos + smallUltOffset);
             flipOffset(obj, playerObject);
         }
-        else if (obj->getName() == "bigUltSword") {
+        /*else if (obj->getName() == "bigUltSword") {
             obj->getTransform().setPosition(playerPos + bigUltOffset);
             flipOffset(obj, playerObject);
-        }
+        }*/
     }
 }
 

@@ -11,44 +11,6 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	setName("Player"); //--new
 	setTag(Tag::Player);
 
-	//texturePaths = { //vector holding paths (might create something that automatically load files into map for easier use)
-	//	//Sword
-	//	"../Resource/Texture/Dante/DanteSword/dante_idle_sword.png", //path
-	//	"../Resource/Texture/Dante/DanteSword/dante_walking_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_dash_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack1_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack2_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_lightAttack3_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_heavyAttack_sword.png",
-	//	"../Resource/Texture/Dante/DanteSword/dante_smallUlt_sword.png",
-	//	//Shield
-	//	"../Resource/Texture/Dante/DanteShield/dante_idle_shield.png", //path
-	//	"../Resource/Texture/Dante/DanteShield/dante_walking_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_jumping_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_falling_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_dash_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_lightAttack1_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_lightAttack2_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_holding_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_off_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_smallUlt_shield.png",
-	//	"../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png",
-	//	//Bow
-	//	"../Resource/Texture/Dante/DanteBow/dante_idle_bow.png", //path
-	//	"../Resource/Texture/Dante/DanteBow/dante_walking_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_jumping_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_falling_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_dash_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_lightAttack_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_heavyAttack_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_smallUlt_bow.png",
-	//	"../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png",
-	//};
-
-	//GameEngine::getInstance()->getRenderer()->preloadTextures(texturePaths); //preload all paths
-	//GameEngine::getInstance()->getRenderer()->loadTextureFromDir("../Resource/Texture/Dante");
-
 	setTexture("../Resource/Texture/Dante/DanteSword/dante_idle_sword.png");
 	getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
 	//Anim

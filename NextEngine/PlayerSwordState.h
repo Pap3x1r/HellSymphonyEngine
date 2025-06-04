@@ -118,11 +118,12 @@ public:
 //Big Sword Ult
 class PlayerBigSwordUlt : public StateM {
     float time;
-
+    float time2;
     static PlayerBigSwordUlt* instance;
 
-    enum Phase { STARTUP, ACTIVE, RECOVERY };
+    enum Phase { STARTUP, ACTIVE, RECOVERY, ONE, TWO, THREE, FOUR, FIVE };
     Phase currentPhase;
+    Phase currentPhase2;
 public:
     static PlayerBigSwordUlt* getInstance() {
         if (instance == nullptr) {

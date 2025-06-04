@@ -128,6 +128,8 @@ private:
 	TexturedObject* shieldBigUltIconOff = nullptr;
 	TexturedObject* shieldBigUltIconOn = nullptr;
 
+	TexturedObject* dashIcon = nullptr;
+
 	void createSkillsIcon();
 	void updateSkillsIcon();
 	void playerUltimateInput();

@@ -41,6 +41,16 @@ Collider::~Collider() {
 }
 
 void Collider::setEnableCollision(bool value) {
+
+	if (!value) {
+		for (auto& [other, state] : collisionMap) {
+			if (other && !other->isDestroyed) {
+				other->getCollisionMap().erase(this);
+			}
+		}
+		collisionMap.clear();
+	}
+
 	enableCollision = value;
 }
 

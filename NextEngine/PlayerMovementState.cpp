@@ -5,6 +5,8 @@ PlayerIdleState* PlayerIdleState::instance = nullptr;
 PlayerWalkState* PlayerWalkState::instance = nullptr;
 PlayerJumpUpState* PlayerJumpUpState::instance = nullptr;
 PlayerFallDownState* PlayerFallDownState::instance = nullptr;
+PlayerDashState* PlayerDashState::instance = nullptr;
+
 
 //Idle
 void PlayerIdleState::enter(Player* player) {
@@ -164,6 +166,51 @@ void PlayerFallDownState::update(Player* player, float dt_) {
 }
 
 void PlayerFallDownState::exit(Player* player) {
+    //cout << "Player exits Fall Down state.\n";
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+}
+
+//Fall Down
+void PlayerDashState::enter(Player* player) {
+    //cout << "Player enters Fall Down state.\n";
+
+    switch (player->getWeaponType()) {
+    case None_:
+        break;
+    case Sword_:
+        player->setTexture("../Resource/Texture/Dante/DanteSword/dante_dash_sword.png", 1, 1, 0); //set new texture ("path", row, column)
+        player->getAnimationComponent()->setState("dashSword"); //set state
+        break;
+    case Shield_:
+        player->setTexture("../Resource/Texture/Dante/DanteShield/dante_dash_shield.png", 1, 1, 0);
+        player->getAnimationComponent()->setState("dashShield");
+        break;
+    case Bow_:
+        player->setTexture("../Resource/Texture/Dante/DanteBow/dante_dash_bow.png", 1, 1, 0);
+        player->getAnimationComponent()->setState("dashBow");
+        break;
+    default:
+        cerr << "Weapon Type does not match any types" << endl;
+    }
+
+    player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, -0.1f, 0.0f));
+}
+
+void PlayerDashState::update(Player* player, float dt_) {
+    time += dt_;
+    //cout << "Player Idle State: " << time << " (total dt)\n";
+
+
+    if (player->getTransform().getPosition().y < -1.1375) {
+        //player->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, -1.13f, 0.0f));
+    }
+    /*if (time > 0.12f) {
+        player->getAnimationComponent()->updateCurrentState();
+        time = 0;
+    }*/
+}
+
+void PlayerDashState::exit(Player* player) {
     //cout << "Player exits Fall Down state.\n";
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, 0.0f, 0.0f));
 }
