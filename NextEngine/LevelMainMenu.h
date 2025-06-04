@@ -1,6 +1,6 @@
 #pragma once
 #include "Level.h"
-
+#include <fstream>
 
 #include <list>
 
@@ -53,6 +53,8 @@ private:
 	bool firstStart = true;
 	TexturedObject* blackFade = nullptr;
 
+	UIButton* continueButton = nullptr;
+
 	MenuState currentMenuState = MenuState::MAIN;
 	MenuState nextMenuState = MenuState::MAIN;
 
@@ -89,17 +91,37 @@ public:
 
 	void changeSelection(int direction);
 
-	void toLoadingScreen() {
+	void newGame() {
 		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
-
+		GameState targetGameState = GameEngine::getInstance()->loadGameState("../Resource/Saves/PlayerData/playerGameState.txt", 1);
 		//Inserting directories to load and level destination
-		gameStateController->pendingLoad.textureDirs = {
+		if (targetGameState == GameState::GS_ZIZ) {
+			gameStateController->pendingLoad.textureDirs = {
 			"../Resource/Texture/Dante",
 			"../Resource/Texture/Ziz",
 			"../Resource/Texture/FinalZiz",
 			"../Resource/Texture/FinalZiz/VFX"
-		};
-		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
+			};
+			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
+		}
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void loadGame() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+		GameState targetGameState = GameEngine::getInstance()->loadGameState("../Resource/Saves/PlayerData/playerGameState.txt", 0);
+		//Inserting directories to load and level destination
+		if (targetGameState == GameState::GS_ZIZ) {
+			gameStateController->pendingLoad.textureDirs = {
+			"../Resource/Texture/Dante",
+			"../Resource/Texture/Ziz",
+			"../Resource/Texture/FinalZiz",
+			"../Resource/Texture/FinalZiz/VFX"
+			};
+			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
+		}
 
 		//Change to loading screen
 		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
@@ -110,4 +132,9 @@ public:
 	}
 
 	glm::vec2 convertMouseToGameSpace(int mouseX, int mouseY);
+
+	bool fileExists(const std::string& filename) {
+		std::ifstream file(filename);
+		return file.good();
+	}
 };

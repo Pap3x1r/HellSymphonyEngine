@@ -1,5 +1,5 @@
 #include "Time.h"
-
+#include <algorithm>
 
 
 Time::Time() : tickCounter(0), timeScale(1.0f) {}
@@ -8,7 +8,7 @@ void Time::updateTick(uint64_t time) {
     //uint64_t endCounter = SDL_GetTicks();
     uint64_t elapsedTime = time - tickCounter;
     //deltaTime = (float)elapsedTime / 1000.0f;
-    deltaTime = elapsedTime * 0.001f; // to  make it seconds
+    deltaTime = std::min(elapsedTime * 0.001f, 0.05f); // to  make it seconds
     tickCounter = time;
 }
 

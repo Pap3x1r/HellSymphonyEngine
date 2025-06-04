@@ -56,12 +56,23 @@ DrawableObject::DrawableObject(string name) {
 }
 
 DrawableObject::~DrawableObject() {
+	//std::cout << "Destroying DrawableObject: " << name << std::endl;
+
 	if (physics != nullptr) {
 		delete physics;
+		physics = nullptr;
 	}
 
-	if (collider != nullptr) {
+	if (collider) {
+		for (auto& [other, state] : collider->getCollisionMap()) {
+			if (other && !other->isDestroyed) {
+				other->getCollisionMap().erase(collider);
+			}
+		}
+		collider->getCollisionMap().clear();
+
 		delete collider;
+		collider = nullptr;
 	}
 }
 
@@ -147,6 +158,9 @@ void DrawableObject::processCollider() {
 
 	for (pair<Collider*, Collider::CollisionState> pair : colliderMap) {
 		Collider* col = pair.first;
+
+		if (!col) continue;
+
 		Collider::CollisionState state = pair.second;
 		switch (state) {
 		case Collider::ENTER:

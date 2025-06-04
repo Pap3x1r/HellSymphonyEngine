@@ -8,6 +8,7 @@
 class SliderObject;
 
 class UIButton : public TexturedObject {
+	bool active = true;
 	bool isEnable = true;
 	bool mouseOver = false;
 	function<void()> func;
@@ -27,14 +28,18 @@ class UIButton : public TexturedObject {
 public:
 	
 	UIButton() {
+		DrawableObject::setName(name);
 		setDrawCollider(true);
 		setCanDrawColliderNew(false);
+		setTag(Tag::UI);
 	};
 
 	UIButton(string name) {
 		this->name = name;
+		DrawableObject::setName(this->name);
 		setDrawCollider(true);
 		setCanDrawColliderNew(false);
+		setTag(Tag::UI);
 	};
 
 	~UIButton() {
@@ -93,5 +98,13 @@ public:
 
 	SliderObject* getSlider() const {
 		return slider;
+	}
+
+	void setActive(bool a) {
+		active = a;
+	}
+
+	bool getActive() const {
+		return active;
 	}
 };

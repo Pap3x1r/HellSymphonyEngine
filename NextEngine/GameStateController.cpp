@@ -39,7 +39,10 @@ void GameStateController::loadLevel() {
 			currentLevel = loader;
 			break;
 		}
-		case GameState::GS_LIMBO:
+		case GameState::GS_LIMBO1:
+			currentLevel = new LevelPrototype();
+			break;
+		case GameState::GS_LIMBO2:
 			currentLevel = new LevelPrototype();
 			break;
 		case GameState::GS_ZIZ:

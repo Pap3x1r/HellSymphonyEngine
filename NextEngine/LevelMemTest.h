@@ -20,7 +20,7 @@
 #include <list>
 
 
-class LevelBossTest : public Level
+class LevelMemTest : public Level
 {
 private:
 
@@ -40,7 +40,6 @@ private:
 	list<UIButton*> controllerButtons;
 	list<UIButton*> keyboardButtons;
 	list<UIButton*> creditsButton;
-	list<UIButton*> quitConfirmButtons;
 
 	//Slider List
 	list<SliderObject*> slidersList;
@@ -58,7 +57,7 @@ private:
 	TexturedObject* kbOverlay = nullptr;
 
 	float transitionTime = 0.0f;
-	float transitionDuration = 0.2f;
+	float transitionDuration = 0.5f;
 	bool transitioning = false;
 	float holdButtonTimer = 0.0f;
 	float holdButtonThreshold = 0.5f;
@@ -152,10 +151,10 @@ public:
 	virtual void handleMouse(int type, int x, int y);
 	virtual void handleAnalogStick(int type, char key);
 	virtual void isReceivingNoInputs();
-	
+
 
 	virtual void addObject(DrawableObject* obj) override;
-	
+
 	void addPlayerToDebug(Player* player);
 
 	void resetLevel() {
@@ -181,17 +180,4 @@ public:
 	void switchControlType(ControlType ct);
 
 	void createPauseUI();
-
-	void toLoadingScreen() {
-		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
-
-		GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
-
-		//Inserting directories to load and level destination
-		gameStateController->pendingLoad.textureDirs = {};
-		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_MAINMENU;
-
-		//Change to loading screen
-		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
-	}
 };

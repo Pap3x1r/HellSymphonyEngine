@@ -14,12 +14,12 @@ class Health {
 public:
     Health(float health, float wither)
     {
-        realHealth = currentHealth = maxHealth = health;
+        realHealth = currentHealth = health;
         witherHealth = wither;
     }
 
     Health(float health) {
-        realHealth = currentHealth = maxHealth = health;
+        realHealth = currentHealth = health;
         witherHealth = 0;
     }
 

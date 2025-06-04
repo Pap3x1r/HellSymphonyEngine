@@ -45,4 +45,6 @@ public:
 	void freezeGameForSecond(float duration);
 	void savePlayerData(const Player* player, const std::string& filename);
 	Player* loadPlayerData(const string& filepath);
+	void saveGameState(GameState state, const std::string& filename);
+	GameState loadGameState(const std::string& filename, bool newGame);
 };

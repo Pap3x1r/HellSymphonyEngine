@@ -57,6 +57,11 @@ void InputManager::updateInput() {
     // Poll events
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+
+        if (event.type == SDL_QUIT) {
+            GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT;
+        }
+
         // Resizing window
         if (event.type == SDL_WINDOWEVENT) {
             if (event.window.event == SDL_WINDOWEVENT_RESIZED) {

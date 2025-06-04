@@ -34,20 +34,29 @@ void UIButton::update(float dt) {
 	yScale = scale.y;
 
 
-	
+
 	if (label) {
 		if (mouseOver) {
 			SDL_Color color = { 121, 155, 242, 255 };
 			label->setColor(color);
-		}	
+		}
 		else {
 			SDL_Color color = { 255, 255, 255, 255 };
 			label->setColor(color);
 		}
 	}
+	
+	if (!active) {
+		if (label) {
+			SDL_Color color = { 100, 100, 100, 255 };
+			label->setColor(color);
+		}
+	}
+	
+
 
 	if (mouseOver) {
-		cout << "Hovered" << endl;
+		//cout << "Hovered" << endl;
 	}
 }
 

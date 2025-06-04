@@ -3,12 +3,14 @@
 SliderObject::SliderObject() {
 	sliderBackground = new SimpleObject("SliderBackground");
 	sliderBackground->setColor(1.0f, 1.0f, 1.0f);
+	sliderBackground->setTag(Tag::UI);
 	//sliderBackground->setMenuState(MenuState::MAIN);
 	objectsList.push_back(sliderBackground);
 
 
 	sliderFill = new SimpleObject("SliderFill");
 	sliderFill->setColor(1.0f, 1.0f, 1.0f);
+	sliderFill->setTag(Tag::UI);
 	//sliderFill->setMenuState(MenuState::MAIN);
 	objectsList.push_back(sliderFill);
 
@@ -20,6 +22,7 @@ SliderObject::SliderObject() {
 	sliderHandle->setCanDrawColliderNew(false);
 	sliderHandle->setDraw(true);
 	sliderHandle->setHandle(true);
+	sliderHandle->setTag(Tag::UI);
 	//sliderHandle->setMenuState(MenuState::MAIN);
 	sliderHandle->setSlider(this);
 	cout << "Handle Slider: " << sliderHandle->getSlider()->getName() << endl;
@@ -30,12 +33,14 @@ SliderObject::SliderObject(string name) {
 	this->name = name;
 	sliderBackground = new SimpleObject("SliderBackground");
 	sliderBackground->setColor(1.0f, 1.0f, 1.0f);
+	sliderBackground->setTag(Tag::UI);
 	//sliderBackground->setMenuState(MenuState::MAIN);
 	objectsList.push_back(sliderBackground);
 
 
 	sliderFill = new SimpleObject("SliderFill");
 	sliderFill->setColor(1.0f, 1.0f, 1.0f);
+	sliderFill->setTag(Tag::UI);
 	//sliderFill->setMenuState(MenuState::MAIN);
 	objectsList.push_back(sliderFill);
 
@@ -47,6 +52,7 @@ SliderObject::SliderObject(string name) {
 	sliderHandle->setCanDrawColliderNew(false);
 	sliderHandle->setDraw(true);
 	sliderHandle->setHandle(true);
+	sliderHandle->setTag(Tag::UI);
 	//sliderHandle->setMenuState(MenuState::MAIN);
 	sliderHandle->setSlider(this);
 	cout << "Handle Slider: " << sliderHandle->getSlider()->getName() << endl;
@@ -54,9 +60,11 @@ SliderObject::SliderObject(string name) {
 }
 
 SliderObject::~SliderObject() {
-	delete sliderBackground;
-	delete sliderFill;
-	delete sliderHandle;
+	sliderBackground = nullptr;
+	sliderFill = nullptr;
+	sliderHandle = nullptr;
+
+	objectsList.clear();
 }
 
 void SliderObject::update(float dt) {

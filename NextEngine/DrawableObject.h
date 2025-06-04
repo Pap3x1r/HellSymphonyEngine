@@ -20,6 +20,8 @@ enum MenuState {
 	CONTROLLER,
 	KEYBOARD,
 	CREDITS,
+	QUITCONFIRM,
+	SAVECONFIRM,
 	IGNORE
 };
 
@@ -30,6 +32,7 @@ enum class Tag {
 	EnemyAttack,
 	Floor,
 	GroundChecker,
+	UI,
 	Default
 };
 
@@ -46,9 +49,10 @@ private:
 	MenuState menuState = MenuState::NONE;
 	vector<MenuState> menuStateVec;
 	float alpha = 1.0f; // Default alpha (visible)
+	float maximumAlpha = 1.0f;
 
 protected:
-	string name;
+	string name = "Object";
 	Tag tag;
 	Transform transform;
 	Physics* physics;
@@ -140,4 +144,12 @@ public:
 	virtual float getAlpha() const;
 
 	static void destroyObject(DrawableObject* obj);
+
+	void setMaximumAlpha(float alpha) {
+		maximumAlpha = alpha;
+	}
+
+	float getMaximumAlpha() const {
+		return maximumAlpha;
+	}
 };

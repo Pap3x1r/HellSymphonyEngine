@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Ziz.h"
+#include "Lucifer.h"
 #include "Bow.h"
 
 class BowUltimateCollider : public PlayerAttackCollider {

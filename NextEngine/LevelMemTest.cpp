@@ -1,4 +1,4 @@
-#include "LevelBossTest.h"
+#include "LevelMemTest.h"
 #include "CollisionHandler.h"
 #include "Bow.h"
 #include "ZizGroundSlamState.h"
@@ -12,7 +12,7 @@ using namespace std;
 
 
 
-void LevelBossTest::levelLoad() {
+void LevelMemTest::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
 	GameEngine::getInstance()->addMesh(SquareMeshVbo::MESH_NAME, square);
@@ -22,7 +22,7 @@ void LevelBossTest::levelLoad() {
 	GameEngine::getInstance()->addMesh(SquareBorderMesh::MESH_NAME, border);
 }
 
-void LevelBossTest::levelInit() {
+void LevelMemTest::levelInit() {
 	currentControlType = ControlType::keyboard;
 
 	TexturedObject* background = new TexturedObject("background");
@@ -68,12 +68,12 @@ void LevelBossTest::levelInit() {
 	}
 
 
-	Ziz* ziz_ = new Ziz();
-	objectsList.push_back(ziz_);
-	ziz = ziz_;
-	ziz->setLevel(this);
-	ziz->setPlayer(player);
-	ziz->setIdleState();
+	//Ziz* ziz_ = new Ziz();
+	//objectsList.push_back(ziz_);
+	//ziz = ziz_;
+	//ziz->setLevel(this);
+	//ziz->setPlayer(player);
+	//ziz->setIdleState();
 
 
 	/*Gust* gust_ = new Gust();
@@ -107,21 +107,21 @@ void LevelBossTest::levelInit() {
 	objectsList.push_back(floor);
 
 	//Overheat
-	TexturedObject* overheatBarBackground = new TexturedObject();
+	TexturedObject* overheatBarBackground = new TexturedObject("Overheat Background");
 	overheatBarBackground->setTexture("../Resource/Texture/UI/Bow/Overheat_Empty_BG.png");
 	overheatBarBackground->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
 	overheatBarBackground->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
 	objectsList.push_back(overheatBarBackground);
 	playerOverheatBarBackground = overheatBarBackground;
 
-	SimpleObject* overheatBar = new SimpleObject();
+	SimpleObject* overheatBar = new SimpleObject("Overheat Bar");
 	overheatBar->setColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f);
 	overheatBar->getTransform().setScale(glm::vec3(3.665f, 0.08f, 0.0f));
 	overheatBar->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
 	objectsList.push_back(overheatBar);
 	playerOverheatBar = overheatBar;
 
-	TexturedObject* overheatBarFrame = new TexturedObject();
+	TexturedObject* overheatBarFrame = new TexturedObject("Overheat Frame");
 	overheatBarFrame->setTexture("../Resource/Texture/UI/Bow/Overheat_Frame.png");
 	overheatBarFrame->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
 	overheatBarFrame->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
@@ -130,40 +130,40 @@ void LevelBossTest::levelInit() {
 
 	//Health & Ult UI
 	//cout << "Init Level" << endl;
-	TexturedObject* healthBarBackground = new TexturedObject();
+	TexturedObject* healthBarBackground = new TexturedObject("Health Background");
 	healthBarBackground->setTexture("../Resource/Texture/UI/Healthbar_BG.png");
 	healthBarBackground->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
 	healthBarBackground->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
 	objectsList.push_back(healthBarBackground);
 
-	SimpleObject* witherHealthBar_ = new SimpleObject();
+	SimpleObject* witherHealthBar_ = new SimpleObject("Wither Health Bar");
 	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
 	witherHealthBar_->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
 	witherHealthBar_->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
 	objectsList.push_back(witherHealthBar_);
 	witherHealthBar = witherHealthBar_;
 
-	SimpleObject* healthBar = new SimpleObject();
+	SimpleObject* healthBar = new SimpleObject("Health Bar");
 	healthBar->setColor(1.0f, 0.0f, 0.0f);
 	healthBar->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
 	healthBar->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
 	objectsList.push_back(healthBar);
 	playerHealthBar = healthBar;
 
-	SimpleObject* ultimateBar = new SimpleObject();
+	SimpleObject* ultimateBar = new SimpleObject("Ultimate Bar");
 	ultimateBar->setColor(235.0f / 255.0f, 168.0f / 255.0f, 52.0f / 255.0f);
 	ultimateBar->getTransform().setScale(glm::vec3(3.18f, 0.25f, 0.0f));
 	ultimateBar->getTransform().setPosition(glm::vec3(-6.165f, -4.225f, 0.0f));
 	objectsList.push_back(ultimateBar);
 	playerUltimateBar = ultimateBar;
 
-	TexturedObject* healthBarFrame = new TexturedObject();
+	TexturedObject* healthBarFrame = new TexturedObject("Health Frame");
 	healthBarFrame->setTexture("../Resource/Texture/UI/Healthbar_Frame.png");
 	healthBarFrame->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
 	healthBarFrame->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
 	objectsList.push_back(healthBarFrame);
 
-	SimpleObject* bossHealthBar_ = new SimpleObject();
+	SimpleObject* bossHealthBar_ = new SimpleObject("Boss Health Bar");
 	bossHealthBar_->setColor(0.0f, 1.0f, 0.0f);
 	bossHealthBar_->getTransform().setScale(glm::vec3(9.0f, 0.25f, 0.0f));
 	bossHealthBar_->getTransform().setPosition(glm::vec3(0.0f, 4.0f, 0.0f));
@@ -192,7 +192,7 @@ void LevelBossTest::levelInit() {
 	inputManager = GameEngine::getInstance()->getInputHandler();
 }
 
-void LevelBossTest::levelUpdate() {
+void LevelMemTest::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float playerDT = dt * playerTimeScale;
 	timeK += dt;
@@ -257,15 +257,16 @@ void LevelBossTest::levelUpdate() {
 
 	stateMachineUpdate(playerDT);
 
-	if (ziz) {
-		ziz->phaseChangeTracker();
-		ziz->updateShake(dt);
-		ziz->update(dt);
+	//if (ziz) {
+	//	ziz->phaseChangeTracker();
+	//	ziz->updateShake(dt);
+	//	ziz->update(dt);
 
-	}
+	//}
 
 	if (player) {
 		player->updateShake(dt);
+		//cout << player->getHealth()->getCurrentHP() << endl;
 	}
 
 
@@ -351,10 +352,6 @@ void LevelBossTest::levelUpdate() {
 		UIButton* button = dynamic_cast<UIButton*>(obj);
 		if (button) {
 			button->update(dt);
-
-			if (button->getMouseOver()) {
-				button->setMouseOver(false);
-			}
 		}
 	}
 
@@ -364,7 +361,7 @@ void LevelBossTest::levelUpdate() {
 		player->setIsDead(true);
 		player->setTexture("../Resource/Texture/Dante/dante_Death.png", 1, 1, 0);
 		player->getAnimationComponent()->setState("death");
-		float xDiff = player->getTransform().getPosition().x - ziz->getTransform().getPosition().x;
+		float xDiff = player->getTransform().getPosition().x;
 		if (xDiff >= 0) {
 			//vel+
 			player->getPhysicsComponent()->setVelocity(glm::vec2(1.5 * playerTimeScale, 0.8f * playerTimeScale));
@@ -379,13 +376,13 @@ void LevelBossTest::levelUpdate() {
 		playerTimeScale = newScale;
 	}
 
-	if (ziz->getHealth()->getCurrentHP() <= 0) {
-		player->setIsDead(true);
-		float targetScale = 0.0f;
-		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
-		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
-		playerTimeScale = newScale;
-	}
+	//if (ziz->getHealth()->getCurrentHP() <= 0) {
+	//	player->setIsDead(true);
+	//	float targetScale = 0.0f;
+	//	float slowdownSpeed = 1.0f; // adjust for faster/slower transition
+	//	float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
+	//	playerTimeScale = newScale;
+	//}
 
 	updateUIBar();
 
@@ -395,7 +392,7 @@ void LevelBossTest::levelUpdate() {
 	player->getShield()->update(playerDT, player);
 
 	player->getAnimationComponent()->updateCurrentState(playerDT);
-	ziz->getAnimationComponent()->updateCurrentState(playerDT);
+	//ziz->getAnimationComponent()->updateCurrentState(playerDT);
 
 
 	handleObjectCollision(objectsList);
@@ -403,12 +400,12 @@ void LevelBossTest::levelUpdate() {
 	ImGui::End();
 }
 
-void LevelBossTest::levelDraw() {
+void LevelMemTest::levelDraw() {
 	GameEngine::getInstance()->render(objectsList);
 	//cout << "Draw Level" << endl;
 }
 
-void LevelBossTest::levelFree() {
+void LevelMemTest::levelFree() {
 	//savePlayerData(player, "../Resource/Saves/PlayerData/playerData.txt");
 
 	for (DrawableObject* obj : objectsList) {
@@ -418,12 +415,12 @@ void LevelBossTest::levelFree() {
 	buttonsFree();
 }
 
-void LevelBossTest::levelUnload() {
+void LevelMemTest::levelUnload() {
 	GameEngine::getInstance()->clearMesh();
 	//cout << "Unload Level" << endl;
 }
 
-void LevelBossTest::isReceivingNoInputs() {
+void LevelMemTest::isReceivingNoInputs() {
 	cout << "not receieving input" << endl;
 
 	if (player->getIsGrounded()) {
@@ -432,7 +429,7 @@ void LevelBossTest::isReceivingNoInputs() {
 	player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 }
 
-void LevelBossTest::switchControlType(ControlType ct) {
+void LevelMemTest::switchControlType(ControlType ct) {
 	switch (ct) {
 	case ControlType::keyboard:
 		if (currentControlType != ControlType::keyboard) {
@@ -450,7 +447,7 @@ void LevelBossTest::switchControlType(ControlType ct) {
 
 }
 
-void LevelBossTest::handleKey(char key) {
+void LevelMemTest::handleKey(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
@@ -458,19 +455,19 @@ void LevelBossTest::handleKey(char key) {
 	bool playerIsMoving = false;
 
 	if (currentMenuState != MenuState::MAIN) {
-		if (key == 'E') {
+		if (key == 't') {
 			changeMenuState(MenuState::MAIN);
+		}
+		else if (key == 'l') {
+			changeMenuState(MenuState::PAUSE);
 		}
 		keyboardUIHandling(key);
 		return;
 	}
 
-	if (key == 'E') {
-		changeMenuState(MenuState::PAUSE);
-	}
 
 
-	if (ziz->getQTEMode() == true) {
+	/*if (ziz->getQTEMode() == true) {
 		if (key != 'I') {
 			if ((key == 'w') || (key == 'a') || (key == 's') || (key == 'd')) {
 				switch (key) {
@@ -492,7 +489,7 @@ void LevelBossTest::handleKey(char key) {
 				return;
 			}
 		}
-	}
+	}*/
 
 	//Jump -> higher priority
 
@@ -563,7 +560,7 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'm':
 		//cout << "M pressed" << endl;
-		ziz->interruptDeath();
+		//ziz->interruptDeath();
 		break;
 	case 'q':
 		if (player->getIsGrounded() == false) return;
@@ -671,7 +668,7 @@ void LevelBossTest::handleKey(char key) {
 	}*/
 }
 
-void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
+void LevelMemTest::handleControllerButton(SDL_GameControllerButton button) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt;
@@ -685,7 +682,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 	if (player->getIsDead()) return;
 
 
-	if (ziz->getQTEMode() == true) {
+	/*if (ziz->getQTEMode() == true) {
 		if ((button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) || (button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || (button == SDL_CONTROLLER_BUTTON_DPAD_UP) || (button == SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
 			switch (button) {
 			case SDL_CONTROLLER_BUTTON_DPAD_UP:
@@ -705,7 +702,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 			}
 			return;
 		}
-	}
+	}*/
 
 
 
@@ -874,7 +871,7 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 }
 
 
-void LevelBossTest::handleMouse(int type, int x, int y) {
+void LevelMemTest::handleMouse(int type, int x, int y) {
 	float realX, realY;
 
 	// Calculate Real X Y 
@@ -887,6 +884,16 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	if (currentMenuState != MenuState::MAIN) {
 		mouseUIHandling(type, x, y);
 		return;
+	}
+
+	//cout << "X : " << realX << " Y : " << realY << endl;
+
+	for (UIButton* button : buttonsList) {
+		if (button->getMouseOver()) {
+			if (type == 0) {
+				GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART;
+			}
+		}
 	}
 
 	//Check player weapon
@@ -988,7 +995,7 @@ void LevelBossTest::handleMouse(int type, int x, int y) {
 	}
 }
 
-void LevelBossTest::handleAnalogStick(int type, char key) {
+void LevelMemTest::handleAnalogStick(int type, char key) {
 	float dt_ = GameEngine::getInstance()->getTime()->getDeltaTime();
 	float speed = 20.0f;
 	speed *= dt_;
@@ -1041,15 +1048,15 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 	}
 }
 
-void LevelBossTest::addObject(DrawableObject* obj) {
+void LevelMemTest::addObject(DrawableObject* obj) {
 	objectsList.push_back(obj);
 }
 
-void LevelBossTest::addPlayerToDebug(Player* player) {
+void LevelMemTest::addPlayerToDebug(Player* player) {
 
 }
 
-void LevelBossTest::createSkillsIcon() {
+void LevelMemTest::createSkillsIcon() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
 	//										Bow Skills Icon
@@ -1153,7 +1160,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldBigUltIconOn = shieldBigUltIconOn_;
 }
 
-void LevelBossTest::updateSkillsIcon() {
+void LevelMemTest::updateSkillsIcon() {
 
 	TexturedObject* smallUltOff = nullptr;
 	TexturedObject* smallUltOn = nullptr;
@@ -1251,7 +1258,7 @@ void LevelBossTest::updateSkillsIcon() {
 	}
 }
 
-void LevelBossTest::playerUltimateInput() {
+void LevelMemTest::playerUltimateInput() {
 	if (player->getIsGrounded() == false || player->getIsDashing() == true) { //Prevent air attack and attack while dashing
 		return;
 	}
@@ -1315,7 +1322,7 @@ void LevelBossTest::playerUltimateInput() {
 	}
 }
 
-void LevelBossTest::updateUIBar() {
+void LevelMemTest::updateUIBar() {
 	static float healthOriginalWidth = playerHealthBar->getTransform().getScale().x;
 	static float healthBaseX = playerHealthBar->getTransform().getPosition().x;
 
@@ -1355,20 +1362,20 @@ void LevelBossTest::updateUIBar() {
 	playerUltimateBar->getTransform().setScale(glm::vec3(ultimateWidth, playerUltimateBar->getTransform().getScale().y, playerUltimateBar->getTransform().getScale().z));
 	playerUltimateBar->getTransform().setPosition(glm::vec3(ultimateX, playerUltimateBar->getTransform().getPosition().y, playerUltimateBar->getTransform().getPosition().z));
 
-	//Boss Health Bar
-	static float bossHealthOriginalWidth = bossHealthBar->getTransform().getScale().x;
-	static float bossHealthBaseX = bossHealthBar->getTransform().getPosition().x;
+	////Boss Health Bar
+	//static float bossHealthOriginalWidth = bossHealthBar->getTransform().getScale().x;
+	//static float bossHealthBaseX = bossHealthBar->getTransform().getPosition().x;
 
-	float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
-	//cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
-	bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
+	//float bossHealthPercentage = ziz->getHealth()->getCurrentHP() / ziz->getHealth()->getMaxHP();
+	////cout << ziz->getHealth()->getCurrentHP() << " " << ziz->getHealth()->getMaxHP() << endl;
+	//bossHealthPercentage = glm::clamp(bossHealthPercentage, 0.0f, 1.0f);
 
-	float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
+	//float bossHealthWidth = bossHealthPercentage * bossHealthOriginalWidth;
 
-	float bossHealthX = bossHealthBaseX - (bossHealthOriginalWidth * 0.5f) + (bossHealthWidth * 0.5f);
+	//float bossHealthX = bossHealthBaseX - (bossHealthOriginalWidth * 0.5f) + (bossHealthWidth * 0.5f);
 
-	bossHealthBar->getTransform().setScale(glm::vec3(bossHealthWidth, bossHealthBar->getTransform().getScale().y, bossHealthBar->getTransform().getScale().z));
-	bossHealthBar->getTransform().setPosition(glm::vec3(bossHealthX, 4.0f, 0.0f));
+	//bossHealthBar->getTransform().setScale(glm::vec3(bossHealthWidth, bossHealthBar->getTransform().getScale().y, bossHealthBar->getTransform().getScale().z));
+	//bossHealthBar->getTransform().setPosition(glm::vec3(bossHealthX, 4.0f, 0.0f));
 
 	if (player->getWeaponType() == WeaponType::Bow_) {
 		//Overheat Bar
@@ -1388,10 +1395,10 @@ void LevelBossTest::updateUIBar() {
 	}
 }
 
-void LevelBossTest::stateMachineUpdate(float dt) {
-	if (ziz->getStateMachine()) {
+void LevelMemTest::stateMachineUpdate(float dt) {
+	/*if (ziz->getStateMachine()) {
 		ziz->getStateMachine()->update(ziz, dt);
-	}
+	}*/
 
 	if (player->getStateMachine()) {
 		player->getStateMachine()->update(player, dt);
@@ -1405,7 +1412,7 @@ void LevelBossTest::stateMachineUpdate(float dt) {
 	}
 }
 
-bool LevelBossTest::isPausing(float dt) {
+bool LevelMemTest::isPausing(float dt) {
 	if (currentMenuState == MenuState::MAIN) { // isnt Pausing
 
 
@@ -1415,7 +1422,7 @@ bool LevelBossTest::isPausing(float dt) {
 	return true;
 }
 
-void LevelBossTest::changeMenuState(MenuState targetState) {
+void LevelMemTest::changeMenuState(MenuState targetState) {
 	if (targetState == currentMenuState || transitioning) return;
 
 	selectedIndex = -1;
@@ -1425,11 +1432,11 @@ void LevelBossTest::changeMenuState(MenuState targetState) {
 	transitioning = true;
 }
 
-MenuState LevelBossTest::getMenuState() const {
+MenuState LevelMemTest::getMenuState() const {
 	return currentMenuState;
 }
 
-void LevelBossTest::mouseUIHandling(int type, float x, float y) {
+void LevelMemTest::mouseUIHandling(int type, float x, float y) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	list<UIButton*>* currentList = nullptr;
 
@@ -1442,9 +1449,6 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 		break;
 	case MenuState::PAUSE:
 		currentList = &pauseButtons;
-		if (type == 1) {
-			changeMenuState(MenuState::MAIN);
-		}
 		break;
 	case MenuState::AUDIO:
 		currentList = &audioButtons;
@@ -1468,12 +1472,6 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 		currentList = &creditsButton;
 		if (type == 1) {
 			changeMenuState(MenuState::MAIN);
-		}
-		break;
-	case MenuState::QUITCONFIRM:
-		currentList = &quitConfirmButtons;
-		if (type == 1) {
-			changeMenuState(MenuState::PAUSE);
 		}
 		break;
 	default:
@@ -1544,7 +1542,7 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 	}
 }
 
-void LevelBossTest::keyboardUIHandling(char key) {
+void LevelMemTest::keyboardUIHandling(char key) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 
 	list<UIButton*>* currentList = nullptr;
@@ -1570,9 +1568,6 @@ void LevelBossTest::keyboardUIHandling(char key) {
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
-		break;
-	case MenuState::QUITCONFIRM:
-		currentList = &quitConfirmButtons;
 		break;
 	default:
 		return;
@@ -1715,7 +1710,7 @@ void LevelBossTest::keyboardUIHandling(char key) {
 	}
 }
 
-glm::vec2 LevelBossTest::convertMouseToGameSpace(int mouseX, int mouseY) {
+glm::vec2 LevelMemTest::convertMouseToGameSpace(int mouseX, int mouseY) {
 	int windowWidth = GameEngine::getInstance()->getWindowWidth();
 	int windowHeight = GameEngine::getInstance()->getWindowHeight();
 
@@ -1754,7 +1749,7 @@ glm::vec2 LevelBossTest::convertMouseToGameSpace(int mouseX, int mouseY) {
 	return glm::vec2(gameX, gameY);
 }
 
-void LevelBossTest::changeSelection(int direction) {
+void LevelMemTest::changeSelection(int direction) {
 
 	list<UIButton*>* currentList = nullptr;
 
@@ -1776,9 +1771,6 @@ void LevelBossTest::changeSelection(int direction) {
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
-		break;
-	case MenuState::QUITCONFIRM:
-		currentList = &quitConfirmButtons;
 		break;
 	default:
 		return;
@@ -1831,7 +1823,7 @@ void LevelBossTest::changeSelection(int direction) {
 	//cout << focusedButton->getName() << endl;
 }
 
-void LevelBossTest::buttonsFree() {
+void LevelMemTest::buttonsFree() {
 
 	for (SliderObject*& slider : slidersList) {
 		slider = nullptr;
@@ -1869,10 +1861,6 @@ void LevelBossTest::buttonsFree() {
 		button = nullptr;
 	}
 
-	for (UIButton*& button : quitConfirmButtons) {
-		button = nullptr;
-	}
-
 	slidersList.clear();
 	buttonsList.clear();
 	mainButtons.clear();
@@ -1882,10 +1870,9 @@ void LevelBossTest::buttonsFree() {
 	controllerButtons.clear();
 	keyboardButtons.clear();
 	creditsButton.clear();
-	quitConfirmButtons.clear();
 }
 
-void LevelBossTest::UIUpdate() {
+void LevelMemTest::UIUpdate() {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	bool anyButtonHovered = false;
 	int mouseX;
@@ -1915,9 +1902,6 @@ void LevelBossTest::UIUpdate() {
 		break;
 	case MenuState::CREDITS:
 		currentList = &creditsButton;
-		break;
-	case MenuState::QUITCONFIRM:
-		currentList = &quitConfirmButtons;
 		break;
 	default:
 		return;
@@ -2099,39 +2083,23 @@ void LevelBossTest::UIUpdate() {
 	}
 }
 
-void LevelBossTest::createPauseUI() {
+void LevelMemTest::createPauseUI() {
 	float audioSettingsOffsetY = 0.2f;
-
-	TexturedObject* blackDim = new TexturedObject("blackDim");
-	blackDim->setTexture("../Resource/Texture/blackFade.png");
-	blackDim->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
-	blackDim->setMaximumAlpha(0.875f);
-	blackDim->drawLayer = 999;
-	blackDim->setMenuState(MenuState::PAUSE);
-	blackDim->addMenuStateToVec(MenuState::OPTIONS);
-	blackDim->addMenuStateToVec(MenuState::AUDIO);
-	blackDim->addMenuStateToVec(MenuState::CREDITS);
-	blackDim->addMenuStateToVec(MenuState::CONTROLLER);
-	blackDim->addMenuStateToVec(MenuState::KEYBOARD);
-	blackDim->addMenuStateToVec(MenuState::QUITCONFIRM);
-	objectsList.push_back(blackDim);
 
 	TexturedObject* pauseBackground = new TexturedObject("pauseBackground");
 	pauseBackground->setTexture("../Resource/Texture/UI/pauseMenu.png");
 	pauseBackground->getTransform().setScale(glm::vec3(2.82f * 2.5f, 2.77f * 2.5f, 1.0f));
 	pauseBackground->setMenuState(MenuState::PAUSE);
-	pauseBackground->addMenuStateToVec(MenuState::QUITCONFIRM);
 	pauseBackground->drawLayer = 999;
 	objectsList.push_back(pauseBackground);
 
 	TexturedObject* background2 = new TexturedObject("Background2");
 	background2->setTexture("../Resource/Texture/newMainMenuBGOnly.png");
 	background2->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
-	background2->setMenuState(MenuState::OPTIONS);
-	background2->addMenuStateToVec(MenuState::AUDIO);
+	background2->setMenuState(MenuState::AUDIO);
 	background2->addMenuStateToVec(MenuState::CREDITS);
-	background2->addMenuStateToVec(MenuState::CONTROLLER);
-	background2->addMenuStateToVec(MenuState::KEYBOARD);
+	//background2->addMenuStateToVec(MenuState::CONTROLLER);
+	//background2->addMenuStateToVec(MenuState::KEYBOARD);
 	background2->drawLayer = 999;
 	objectsList.push_back(background2);
 
@@ -2155,32 +2123,28 @@ void LevelBossTest::createPauseUI() {
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	TexturedObject* overlayMKB = new TexturedObject();
+	TexturedObject* overlayMKB = new TexturedObject("overlay MKB");
 	overlayMKB->setTexture("../Resource/Texture/KB_Bundle.png");
 	overlayMKB->getTransform().setPosition(glm::vec3(-4.8f, -4.0f, 1.0f));
 	overlayMKB->getTransform().setScale(glm::vec3(2.382f * 2.2f, 0.277f * 2.2f, 1.0f));
 	overlayMKB->setMenuState(MenuState::PAUSE);
-	overlayMKB->addMenuStateToVec(MenuState::OPTIONS);
 	overlayMKB->addMenuStateToVec(MenuState::AUDIO);
 	overlayMKB->addMenuStateToVec(MenuState::CREDITS);
 	overlayMKB->addMenuStateToVec(MenuState::CONTROLLER);
 	overlayMKB->addMenuStateToVec(MenuState::KEYBOARD);
-	overlayMKB->addMenuStateToVec(MenuState::QUITCONFIRM);
 	overlayMKB->drawLayer = 999;
 	objectsList.push_back(overlayMKB);
 	kbOverlay = overlayMKB;
 
-	TexturedObject* overlayController = new TexturedObject();
+	TexturedObject* overlayController = new TexturedObject("overlay Controller");
 	overlayController->setTexture("../Resource/Texture/Controller_Bundle.png");
 	overlayController->getTransform().setPosition(glm::vec3(-4.8f, -4.0f, 1.0f));
 	overlayController->getTransform().setScale(glm::vec3(2.382f * 2.2f, 0.277f * 2.2f, 1.0f));
 	overlayController->setMenuState(MenuState::PAUSE);
-	overlayController->addMenuStateToVec(MenuState::OPTIONS);
 	overlayController->addMenuStateToVec(MenuState::AUDIO);
 	overlayController->addMenuStateToVec(MenuState::CREDITS);
 	overlayController->addMenuStateToVec(MenuState::CONTROLLER);
 	overlayController->addMenuStateToVec(MenuState::KEYBOARD);
-	overlayController->addMenuStateToVec(MenuState::QUITCONFIRM);
 	overlayController->drawLayer = 999;
 	objectsList.push_back(overlayController);
 	controllerOverlay = overlayController;
@@ -2191,7 +2155,7 @@ void LevelBossTest::createPauseUI() {
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	SimpleObject* line1 = new SimpleObject();
+	SimpleObject* line1 = new SimpleObject("Line1");
 	line1->setColor(1.0f, 1.0f, 1.0f);
 	line1->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));
 	line1->getTransform().setPosition(glm::vec3(0.0f, 3.3f, 0.0f));
@@ -2201,7 +2165,7 @@ void LevelBossTest::createPauseUI() {
 	line1->drawLayer = 999;
 	objectsList.push_back(line1);
 
-	SimpleObject* line2 = new SimpleObject();
+	SimpleObject* line2 = new SimpleObject("Line2");
 	line2->setColor(1.0f, 1.0f, 1.0f);
 	line2->getTransform().setScale(glm::vec3(14.0f, 0.01f, 0.0f));
 	line2->getTransform().setPosition(glm::vec3(0.0f, -3.5f, 0.0f));
@@ -2453,87 +2417,6 @@ void LevelBossTest::createPauseUI() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
-	//										Texts
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	UIText* staticPauseText = new UIText("Static Pause Text");
-	SDL_Color staticPauseTextColor = { 255,255,255,255 };
-	staticPauseText->loadText("PAUSED", staticPauseTextColor, 100, true);
-	staticPauseText->setText("PAUSED");
-	staticPauseText->setAlpha(1.0f);
-	staticPauseText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticPauseText->getTransform().setPosition(glm::vec3(0.425f, 1.5f, 0.0f));
-	staticPauseText->getTransform().setScale(glm::vec3(3.0f, 1.5f, 0.0f));
-	staticPauseText->addColliderComponent();
-	staticPauseText->setMenuState(MenuState::PAUSE);
-	staticPauseText->drawLayer = 999;
-	/*staticPauseText->setDrawCollider(true);
-	staticPauseText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(staticPauseText);
-
-	UIText* staticSettingsText = new UIText("Static Settings Text");
-	SDL_Color staticSettingsTextColor = { 255,255,255,255 };
-	staticSettingsText->loadText("SETTINGS", staticSettingsTextColor, 100, true);
-	staticSettingsText->setText("SETTINGS");
-	staticSettingsText->setAlpha(1.0f);
-	staticSettingsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticSettingsText->getTransform().setPosition(glm::vec3(0.05f, 3.6f, 0.0f));
-	staticSettingsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
-	staticSettingsText->addColliderComponent();
-	staticSettingsText->setMenuState(MenuState::OPTIONS);
-	staticSettingsText->drawLayer = 999;
-	/*staticSettingsText->setDrawCollider(true);
-	staticSettingsText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(staticSettingsText);
-
-	UIText* staticAudioText = new UIText("Static Audio Text");
-	SDL_Color staticAudioTextColor = { 255,255,255,255 };
-	staticAudioText->loadText("AUDIO", staticAudioTextColor, 100, true);
-	staticAudioText->setText("AUDIO");
-	staticAudioText->setAlpha(1.0f);
-	staticAudioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticAudioText->getTransform().setPosition(glm::vec3(0.29f, 3.6f, 0.0f));
-	staticAudioText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
-	staticAudioText->addColliderComponent();
-	staticAudioText->setMenuState(MenuState::AUDIO);
-	staticAudioText->drawLayer = 999;
-	/*staticAudioText->setDrawCollider(true);
-	staticAudioText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(staticAudioText);
-
-	UIText* staticQuitText = new UIText("Static Quit Text");
-	SDL_Color staticQuitTextColor = { 255,255,255,255 };
-	staticQuitText->loadText("QUIT TO MENU?", staticQuitTextColor, 100, true);
-	staticQuitText->setText("QUIT TO MENU?");
-	staticQuitText->setAlpha(1.0f);
-	staticQuitText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticQuitText->getTransform().setPosition(glm::vec3(0.45f, 1.5f, 0.0f));
-	staticQuitText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
-	staticQuitText->addColliderComponent();
-	staticQuitText->setMenuState(MenuState::QUITCONFIRM);
-	staticQuitText->drawLayer = 999;
-	/*staticQuitText->setDrawCollider(true);
-	staticQuitText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(staticQuitText);
-
-	UIText* staticSaveText = new UIText("Static Save Text");
-	SDL_Color staticSaveTextColor = { 255,255,255,255 };
-	staticSaveText->loadText("PROGRESS WILL BE SAVED.", staticSaveTextColor, 100, true);
-	staticSaveText->setText("PROGRESS WILL BE SAVED.");
-	staticSaveText->setAlpha(1.0f);
-	staticSaveText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	staticSaveText->getTransform().setPosition(glm::vec3(1.1f, -2.0f, 0.0f));
-	staticSaveText->getTransform().setScale(glm::vec3(6.0f, 0.75f, 0.0f));
-	staticSaveText->addColliderComponent();
-	staticSaveText->setMenuState(MenuState::QUITCONFIRM);
-	staticSaveText->drawLayer = 999;
-	/*staticSaveText->setDrawCollider(true);
-	staticSaveText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(staticSaveText);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
 	//										Continue Button
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2544,7 +2427,7 @@ void LevelBossTest::createPauseUI() {
 	continueText->setText("Continue");
 	continueText->setAlpha(1.0f);
 	continueText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	continueText->getTransform().setPosition(glm::vec3(0.25f, 0.6f, 0.0f));
+	continueText->getTransform().setPosition(glm::vec3(0.25f, 0.0f - 0.6f, 0.0f));
 	continueText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	continueText->addColliderComponent();
 	continueText->setMenuState(MenuState::PAUSE);
@@ -2555,11 +2438,11 @@ void LevelBossTest::createPauseUI() {
 
 	UIButton* continueButton = new UIButton("Continue Button");
 	//continueButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	continueButton->getTransform().setPosition(glm::vec3(0.0f, 0.85f, 0.0f));
+	continueButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
 	continueButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
 	continueButton->addColliderComponent();
 	continueButton->setDrawCollider(true);
-	continueButton->setCanDrawColliderNew(true);
+	continueButton->setCanDrawColliderNew(false);
 	continueButton->setDraw(false);
 	continueButton->setLabel(continueText); // Link continueText
 	continueButton->setMenuState(MenuState::PAUSE);
@@ -2581,7 +2464,7 @@ void LevelBossTest::createPauseUI() {
 	settingsText->setText("Settings");
 	settingsText->setAlpha(1.0f);
 	settingsText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	settingsText->getTransform().setPosition(glm::vec3(0.41f, -0.55f, 0.0f));
+	settingsText->getTransform().setPosition(glm::vec3(0.41f, -1.05f - 0.8f, 0.0f));
 	settingsText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
 	settingsText->addColliderComponent();
 	settingsText->setMenuState(MenuState::PAUSE);
@@ -2592,8 +2475,8 @@ void LevelBossTest::createPauseUI() {
 
 	UIButton* settingsButton = new UIButton("Settings Button");
 	//settingsButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	settingsButton->getTransform().setPosition(glm::vec3(0.0f, -0.3f, 0.0f));
-	settingsButton->getTransform().setScale(glm::vec3(1.2f, 0.35f, 0.0f));
+	settingsButton->getTransform().setPosition(glm::vec3(0.0f, -0.81f - 0.8f, 0.0f));
+	settingsButton->getTransform().setScale(glm::vec3(1.3f, 0.35f, 0.0f));
 	settingsButton->addColliderComponent();
 	settingsButton->setDrawCollider(true);
 	settingsButton->setCanDrawColliderNew(true);
@@ -2606,230 +2489,4 @@ void LevelBossTest::createPauseUI() {
 	buttonsList.push_back(settingsButton);
 
 	pauseButtons.push_back(settingsButton);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//										Quit Button
-//
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	UIText* quitText = new UIText("Quit Text");
-	SDL_Color quitTextColor = { 255,255,255,255 };
-	quitText->loadText("Quit To Menu", quitTextColor, 100);
-	quitText->setText("Quit To Menu");
-	quitText->setAlpha(1.0f);
-	quitText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	quitText->getTransform().setPosition(glm::vec3(0.9f, -1.7f, 0.0f));
-	quitText->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
-	quitText->addColliderComponent();
-	quitText->setMenuState(MenuState::PAUSE);
-	quitText->drawLayer = 999;
-	/*quitText->setDrawCollider(true);
-	quitText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(quitText);
-
-	UIButton* quitButton = new UIButton("Quit Button");
-	//creditsButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	quitButton->getTransform().setPosition(glm::vec3(0.0f, -1.45f, 0.0f));
-	quitButton->getTransform().setScale(glm::vec3(2.2f, 0.35f, 0.0f));
-	quitButton->addColliderComponent();
-	quitButton->setDrawCollider(true);
-	quitButton->setCanDrawColliderNew(true);
-	quitButton->setDraw(false);
-	quitButton->setLabel(quitText); // Link playText
-	quitButton->setMenuState(MenuState::PAUSE);
-	quitButton->setFunction([this]() { changeMenuState(MenuState::QUITCONFIRM);});
-	quitButton->drawLayer = 999;
-	objectsList.push_back(quitButton);
-	buttonsList.push_back(quitButton);
-
-	pauseButtons.push_back(quitButton);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Audio Button (Settings)
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	UIText* audioText = new UIText("Audio Text");
-	SDL_Color audioTextColor = { 255,255,255,255 };
-	audioText->loadText("Audio", audioTextColor, 100);
-	audioText->setText("Audio");
-	audioText->setAlpha(1.0f);
-	audioText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	audioText->getTransform().setPosition(glm::vec3(-5.5f, 2.15f, 0.0f));
-	audioText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
-	audioText->addColliderComponent();
-	audioText->setMenuState(MenuState::OPTIONS);
-	audioText->drawLayer = 999;
-	/*audioText->setDrawCollider(true);
-	audioText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(audioText);
-
-	UIButton* audioButton = new UIButton("Audio Button");
-	//audioButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	audioButton->getTransform().setPosition(glm::vec3(-5.5f, 2.4f, 0.0f));
-	audioButton->getTransform().setScale(glm::vec3(1.0f, 0.35f, 0.0f));
-	audioButton->addColliderComponent();
-	audioButton->setDrawCollider(true);
-	audioButton->setCanDrawColliderNew(false);
-	audioButton->setDraw(false);
-	audioButton->setLabel(audioText); // Link playText
-	audioButton->setMenuState(MenuState::OPTIONS);
-	audioButton->setFunction([this]() { changeMenuState(MenuState::AUDIO);});
-	audioButton->drawLayer = 999;
-	objectsList.push_back(audioButton);
-	buttonsList.push_back(audioButton);
-
-	optionsButtons.push_back(audioButton);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Controller Button (Settings)
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	UIText* controllerText = new UIText("Controller Text");
-	SDL_Color controllerTextColor = { 255,255,255,255 };
-	controllerText->loadText("Controller", controllerTextColor, 100);
-	controllerText->setText("Controller");
-	controllerText->setAlpha(1.0f);
-	controllerText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	controllerText->getTransform().setPosition(glm::vec3(-5.0f, 1.5f, 0.0f));
-	controllerText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
-	controllerText->addColliderComponent();
-	controllerText->setMenuState(MenuState::OPTIONS);
-	controllerText->drawLayer = 999;
-	/*controllerText->setDrawCollider(true);
-	controllerText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(controllerText);
-
-	UIButton* controllerButton = new UIButton("Controller Button");
-	//controllerButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	controllerButton->getTransform().setPosition(glm::vec3(-5.2f, 1.75f, 0.0f));
-	controllerButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
-	controllerButton->addColliderComponent();
-	controllerButton->setDrawCollider(true);
-	controllerButton->setCanDrawColliderNew(false);
-	controllerButton->setDraw(false);
-	controllerButton->setLabel(controllerText); // Link playText
-	controllerButton->setMenuState(MenuState::OPTIONS);
-	controllerButton->setFunction([this]() { changeMenuState(MenuState::CONTROLLER);});
-	controllerButton->drawLayer = 999;
-	objectsList.push_back(controllerButton);
-	buttonsList.push_back(controllerButton);
-
-	optionsButtons.push_back(controllerButton);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Keyboard Button (Settings)
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	UIText* keyboardText = new UIText("Keyboard Text");
-	SDL_Color keyboardTextColor = { 255,255,255,255 };
-	keyboardText->loadText("Keyboard", keyboardTextColor, 100);
-	keyboardText->setText("Keyboard");
-	keyboardText->setAlpha(1.0f);
-	keyboardText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	keyboardText->getTransform().setPosition(glm::vec3(-5.0f, 0.85f, 0.0f));
-	keyboardText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
-	keyboardText->addColliderComponent();
-	keyboardText->setMenuState(MenuState::OPTIONS);
-	keyboardText->drawLayer = 999;
-	/*keyboardText->setDrawCollider(true);
-	keyboardText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(keyboardText);
-
-	UIButton* keyboardButton = new UIButton("Keyboard Button");
-	//keyboardButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	keyboardButton->getTransform().setPosition(glm::vec3(-5.25f, 1.1f, 0.0f));
-	keyboardButton->getTransform().setScale(glm::vec3(1.5f, 0.35f, 0.0f));
-	keyboardButton->addColliderComponent();
-	keyboardButton->setDrawCollider(true);
-	keyboardButton->setCanDrawColliderNew(false);
-	keyboardButton->setDraw(false);
-	keyboardButton->setLabel(keyboardText); // Link playText
-	keyboardButton->setMenuState(MenuState::OPTIONS);
-	keyboardButton->setFunction([this]() { changeMenuState(MenuState::KEYBOARD);});
-	keyboardButton->drawLayer = 999;
-	objectsList.push_back(keyboardButton);
-	buttonsList.push_back(keyboardButton);
-
-	optionsButtons.push_back(keyboardButton);
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	//										Yes, No (Quit Confirm)
-	//
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	float quitConfirmOffset = 0.3f;
-
-
-	UIText* yesText = new UIText("Yes Text");
-	SDL_Color yesTextColor = { 255,255,255,255 };
-	yesText->loadText("YES", yesTextColor, 100);
-	yesText->setText("YES");
-	yesText->setAlpha(1.0f);
-	yesText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	yesText->getTransform().setPosition(glm::vec3(0.18f, 0.4f - quitConfirmOffset, 0.0f));
-	yesText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
-	yesText->addColliderComponent();
-	yesText->setMenuState(MenuState::QUITCONFIRM);
-	yesText->drawLayer = 999;
-	/*yesText->setDrawCollider(true);
-	yesText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(yesText);
-
-	UIButton* yesButton = new UIButton("Yes Button");
-	//yesButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	yesButton->getTransform().setPosition(glm::vec3(0.0f, 0.65f - quitConfirmOffset, 0.0f));
-	yesButton->getTransform().setScale(glm::vec3(0.7f, 0.35f, 0.0f));
-	yesButton->addColliderComponent();
-	yesButton->setDrawCollider(true);
-	yesButton->setCanDrawColliderNew(true);
-	yesButton->setDraw(false);
-	yesButton->setLabel(yesText); // Link playText
-	yesButton->setMenuState(MenuState::QUITCONFIRM);
-	yesButton->setFunction([this]() { toLoadingScreen();});
-	yesButton->drawLayer = 999;
-	objectsList.push_back(yesButton);
-	buttonsList.push_back(yesButton);
-
-	quitConfirmButtons.push_back(yesButton);
-
-	///////////////////////////////////////////////////
-
-	UIText* noText = new UIText("No Text");
-	SDL_Color noTextColor = { 255,255,255,255 };
-	noText->loadText("NO", yesTextColor, 100);
-	noText->setText("NO");
-	noText->setAlpha(1.0f);
-	noText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
-	noText->getTransform().setPosition(glm::vec3(0.2f, -0.25f - quitConfirmOffset, 0.0f));
-	noText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
-	noText->addColliderComponent();
-	noText->setMenuState(MenuState::QUITCONFIRM);
-	noText->drawLayer = 999;
-	/*noText->setDrawCollider(true);
-	noText->setCanDrawColliderNew(true);*/
-	objectsList.push_back(noText);
-
-	UIButton* noButton = new UIButton("No Button");
-	//noButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	noButton->getTransform().setPosition(glm::vec3(0.0f, 0.0f - quitConfirmOffset, 0.0f));
-	noButton->getTransform().setScale(glm::vec3(0.6f, 0.35f, 0.0f));
-	noButton->addColliderComponent();
-	noButton->setDrawCollider(true);
-	noButton->setCanDrawColliderNew(true);
-	noButton->setDraw(false);
-	noButton->setLabel(noText); // Link playText
-	noButton->setMenuState(MenuState::QUITCONFIRM);
-	noButton->setFunction([this]() { changeMenuState(MenuState::PAUSE);});
-	noButton->drawLayer = 999;
-	objectsList.push_back(noButton);
-	buttonsList.push_back(noButton);
-
-	quitConfirmButtons.push_back(noButton);
 }

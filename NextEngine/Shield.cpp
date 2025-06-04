@@ -59,9 +59,10 @@ Shield::Shield() {
 }
 
 Shield::~Shield() {
-	for (auto obj : chainAttackList) {
+	/*for (auto obj : chainAttackList) {
 		delete obj;
-	}
+	}*/
+	chainAttackList.clear();
 }
 
 void Shield::update(float dt, Player* playerObject) {

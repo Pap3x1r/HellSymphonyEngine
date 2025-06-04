@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
 #include "Transform.h"
 #include <map>
+#include <unordered_map>
 
 class DrawableObject; // forward declaration
 
@@ -23,6 +25,8 @@ private:
 	Transform transform;
 	float width, height;
 
+	
+
 public:
 	enum CollisionState {
 		ENTER,
@@ -30,6 +34,8 @@ public:
 		EXIT,
 		NONE
 	};
+
+	bool isDestroyed = false;
 
 	Collider(DrawableObject* object);
 	Collider(DrawableObject* object, float width, float height);
@@ -53,4 +59,5 @@ public:
 	COLLISION_FLAG getCollisionFlag() const;
 
 	DrawableObject* getObject();
+	void breakLinksSafely();
 };

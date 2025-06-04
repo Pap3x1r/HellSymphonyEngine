@@ -27,6 +27,7 @@ private:
 public:
     UIText(string name) {
         this->name = name;
+        setTag(Tag::UI);
     }
 
     ~UIText() {}

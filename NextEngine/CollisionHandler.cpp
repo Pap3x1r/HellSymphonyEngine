@@ -263,6 +263,10 @@ bool shouldIgnoreCollision(DrawableObject* obj1, DrawableObject* obj2) {
 		return true;
 	}
 
+	if ((tag1 == Tag::Player && tag2 == Tag::UI) || (tag1 == Tag::GroundChecker && tag2 == Tag::UI)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -270,11 +274,15 @@ bool shouldResolveCollision(DrawableObject* obj1, DrawableObject* obj2) {
 	Tag tag1 = obj1->getTag();
 	Tag tag2 = obj2->getTag();
 
-	if ((tag1 == Tag::Player && tag2 == Tag::Enemy) || (tag1 == Tag::GroundChecker && tag2 == Tag::Enemy)) {
+	if ((tag1 == Tag::Player && tag2 == Tag::Enemy) || (tag1 == Tag::Enemy && tag2 == Tag::Player)) {
 		return true;
 	}
 
-	if ((tag1 == Tag::Player && tag2 == Tag::EnemyAttack) || (tag1 == Tag::GroundChecker && tag2 == Tag::EnemyAttack)) {
+	if ((tag1 == Tag::Player && tag2 == Tag::EnemyAttack) || (tag1 == Tag::EnemyAttack && tag2 == Tag::Player)) {
+		return true;
+	}
+
+	if ((tag1 == Tag::Player && tag2 == Tag::UI) || (tag1 == Tag::UI && tag2 == Tag::Player)) {
 		return true;
 	}
 

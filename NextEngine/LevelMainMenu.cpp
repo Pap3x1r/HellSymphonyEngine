@@ -654,20 +654,32 @@ void LevelMainMenu::levelInit() {
 	continueText->setCanDrawColliderNew(true);*/
 	objectsList.push_back(continueText);
 
-	UIButton* continueButton = new UIButton("Continue Button");
-	//continueButton->setTexture("../Resource/Texture/UI/UIButton.png");
-	continueButton->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
-	continueButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
-	continueButton->addColliderComponent();
-	continueButton->setDrawCollider(true);
-	continueButton->setCanDrawColliderNew(false);
-	continueButton->setDraw(false);
-	continueButton->setLabel(continueText); // Link continueText
-	continueButton->setMenuState(MenuState::MAIN);
-	objectsList.push_back(continueButton);
-	buttonsList.push_back(continueButton);
+	UIButton* continueButton_ = new UIButton("Continue Button");
+	//continueButton_->setTexture("../Resource/Texture/UI/UIButton.png");
+	continueButton_->getTransform().setPosition(glm::vec3(0.0f, 0.25f - 0.6f, 0.0f));
+	continueButton_->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	continueButton_->addColliderComponent();
+	continueButton_->setDrawCollider(true);
+	continueButton_->setCanDrawColliderNew(false);
+	continueButton_->setDraw(false);
+	continueButton_->setLabel(continueText); // Link continueText
+	continueButton_->setMenuState(MenuState::MAIN);
+	continueButton_->setFunction([this]() {
+		loadGame();
+		});
+	if (fileExists("../Resource/Saves/PlayerData/playerGameState.txt")) {
+		objectsList.push_back(continueButton_);
+		buttonsList.push_back(continueButton_);
 
-	mainButtons.push_back(continueButton);
+		mainButtons.push_back(continueButton_);
+
+	}
+	else {
+		objectsList.push_back(continueButton_);
+		continueButton_->setActive(false);
+	}
+
+	continueButton = continueButton_;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -700,7 +712,7 @@ void LevelMainMenu::levelInit() {
 	playButton->setLabel(playText); // Link playText
 	playButton->setMenuState(MenuState::MAIN);
 	playButton->setFunction([this]() {
-		toLoadingScreen();
+		newGame();
 	});
 
 	objectsList.push_back(playButton);
@@ -936,6 +948,8 @@ void LevelMainMenu::levelInit() {
 	blackFade_->setMenuState(MenuState::IGNORE);
 	objectsList.push_back(blackFade_);
 	blackFade = blackFade_;
+	blackFade->setAlpha(1.0f);
+	firstStart = true;
 
 	isHolding = false;
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
@@ -956,6 +970,10 @@ void LevelMainMenu::levelUpdate() {
 	if (soundElapsed >= soundTimer) {
 		soundElapsed -= soundTimer;
 		GameEngine::getInstance()->getAudio()->playSoundEffectByName("Dante-Sword_LightAttack-1.wav");
+	}
+
+	if (!fileExists("../Resource/Saves/PlayerData/playerGameState.txt")) {
+		continueButton->setActive(false);
 	}
 
 	if (firstStart) {
@@ -1187,7 +1205,12 @@ void LevelMainMenu::levelDraw() {
 }
 
 void LevelMainMenu::levelFree() {
+	
 	for (DrawableObject* obj : objectsList) {
+		delete obj;
+	}
+
+	for (SliderObject*& obj : slidersList) {
 		delete obj;
 	}
 
@@ -1219,6 +1242,7 @@ void LevelMainMenu::levelFree() {
 		button = nullptr;
 	}
 
+	slidersList.clear();
 	objectsList.clear();
 	buttonsList.clear();
 	mainButtons.clear();
@@ -1304,15 +1328,7 @@ void LevelMainMenu::handleKey(char key) {
 	}*/
 
 	switch (key) {
-	case 'c':
-		if (currentMenuState == MAIN) {
-			changeMenuState(MenuState::AUDIO);
-		}
-		else if (currentMenuState == OPTIONS) {
-			changeMenuState(MenuState::AUDIO);
-		}
-
-		break;
+	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'a':
 		if (isHolding == false) {
 			if (focusedButton) {
@@ -1616,6 +1632,10 @@ void LevelMainMenu::changeSelection(int direction) {
 	advance(it, selectedIndex);
 
 	focusedButton = *it;
+
+	if (!focusedButton->getEnable()) {
+		selectedIndex += direction;
+	}
 
 	if (focusedButton->getHandle()) {
 		selectedIndex += direction;

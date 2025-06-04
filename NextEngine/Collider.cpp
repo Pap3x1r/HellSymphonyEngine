@@ -19,17 +19,25 @@ Collider::Collider(DrawableObject* object, float width, float height) : object(o
 	collisionFlag = 0;
 }
 
+//Collider::~Collider() {
+//	for (pair<Collider*, CollisionState> pair : collisionMap) {
+//		Collider* col = pair.first;
+//		std::map<Collider*, CollisionState>& otherMap = col->getCollisionMap();
+//
+//		if (otherMap.count(this) == 0) {
+//			continue;
+//		}
+//
+//		otherMap.erase(this);
+//	}
+//}
+
 Collider::~Collider() {
-	for (pair<Collider*, CollisionState> pair : collisionMap) {
-		Collider* col = pair.first;
-		std::map<Collider*, CollisionState>& otherMap = col->getCollisionMap();
+	//cout << "Destroying Collider for: " << (object ? object->getName() : "null") << endl;
 
-		if (otherMap.count(this) == 0) {
-			continue;
-		}
+	isDestroyed = true;
 
-		otherMap.erase(this);
-	}
+	breakLinksSafely();
 }
 
 void Collider::setEnableCollision(bool value) {
@@ -103,4 +111,13 @@ COLLISION_FLAG Collider::getCollisionFlag() const {
 
 DrawableObject* Collider::getObject() {
 	return object;
+}
+
+void Collider::breakLinksSafely() {
+	for (auto& [other, state] : collisionMap) {
+		if (other && !other->isDestroyed) {
+			other->getCollisionMap().erase(this);
+		}
+	}
+	collisionMap.clear();
 }

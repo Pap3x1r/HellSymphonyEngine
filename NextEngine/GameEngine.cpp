@@ -44,9 +44,9 @@ void GameEngine::init(int width, int height) {
 	setBackgroundColor(95.0f / 255, 110.0f / 255, 133.0f / 255);
 
 	stateController = new GameStateController();
-	//stateController->init(GameState::GS_MAINMENU);
+	stateController->init(GameState::GS_MAINMENU);
 	//stateController->init(GameState::GS_ZIZ);
-	stateController->init(GameState::GS_LUCIFER);
+	//stateController->init(GameState::GS_LUCIFER);
 
 	time = new Time();
 	inputHandler = new InputManager();  
@@ -102,19 +102,17 @@ void GameEngine::freezeGameForSecond(float duration) {
 }
 
 void GameEngine::savePlayerData(const Player* player, const std::string& filename) {
-	ofstream outFile(filename);
+	ofstream outFile(filename, ios::out | ios::trunc);  // Ensures file is created or overwritten
 	if (!outFile) {
 		cerr << "Error opening file for writing!" << endl;
 		return;
 	}
 
 	if (player) {
-		// Save player data with descriptions and line breaks
 		outFile << "Player Health: " << player->getHealth()->getCurrentHP() << endl;
 		outFile << "Player Wither Health: " << player->getHealth()->getWitherHP() << endl;
 		outFile << "Player Lives: " << player->getLives() << endl;
-
-		cout << "Saved Successful." << endl;
+		cout << "Saved Successfully." << endl;
 	}
 	else {
 		cerr << "Player is missing, save file does not write." << endl;
@@ -123,29 +121,47 @@ void GameEngine::savePlayerData(const Player* player, const std::string& filenam
 	outFile.close();
 }
 
-Player* GameEngine::loadPlayerData(const string& filepath) {
+Player* GameEngine::loadPlayerData(const std::string& filepath) {
 	ifstream inFile(filepath);
-	if (!inFile) {
-		cerr << "Error opening file for reading! Using default values.\n";
-		return new Player(100, 0, 3);
-	}
-
-	string line;
-
 	float hp = 100.0f;
 	float wither = 0.0f;
 	int lives = 3;
 
-	auto extractValue = [&inFile](const string& label, auto& value) {
-		string line;
-		if (getline(inFile, line)) {
+	if (!inFile) {
+		cerr << "Player data file not found. Creating new file with default values.\n";
+
+		// Create file with default values
+		ofstream outFile(filepath);
+		if (outFile) {
+			outFile << "Player Health: " << hp << endl;
+			outFile << "Player Wither Health: " << wither << endl;
+			outFile << "Player Lives: " << lives << endl;
+			outFile.close();
+		}
+		else {
+			cerr << "Failed to create player data file.\n";
+		}
+
+		return new Player(hp, wither, lives);
+	}
+
+	// If file exists, extract values
+	auto extractValue = [&inFile](const std::string& label, auto& value) {
+		std::string line;
+		if (std::getline(inFile, line)) {
 			size_t pos = line.find(label);
-			if (pos != string::npos) {
+			if (pos != std::string::npos) {
 				try {
-					value = stof(line.substr(pos + label.length()));  // Convert to float or int
+					std::string numberStr = line.substr(pos + label.length());
+					if constexpr (std::is_same_v<decltype(value), float>) {
+						value = std::stof(numberStr);
+					}
+					else if constexpr (std::is_same_v<decltype(value), int>) {
+						value = std::stoi(numberStr);
+					}
 				}
 				catch (...) {
-					cerr << "Error reading " << label << endl;
+					std::cerr << "Error reading " << label << endl;
 				}
 			}
 		}
@@ -155,18 +171,65 @@ Player* GameEngine::loadPlayerData(const string& filepath) {
 	extractValue("Player Wither Health:", wither);
 	extractValue("Player Lives:", lives);
 
+	inFile.close();
+
+	cout << "Player data loaded from file:\n";
+	cout << "Health: " << hp << ", Wither: " << wither << ", Lives: " << lives << endl;
+
+	return new Player(hp, wither, lives);
+}
+
+void GameEngine::saveGameState(GameState state, const std::string& filename) {
+	ofstream outFile(filename, ios::out | ios::trunc);
+	if (!outFile) {
+		cerr << "Error opening game state file for writing!" << endl;
+		return;
+	}
+
+	outFile << "Game State: " << static_cast<int>(state) << endl;
+	cout << "Game state saved successfully." << endl;
+
+	outFile.close();
+}
+
+GameState GameEngine::loadGameState(const std::string& filename, bool newGame) {
+	ifstream inFile(filename);
+	if (!inFile || newGame) {
+		if (newGame) {
+			cout << "Creating new game state file" << endl;
+		}
+		else {
+			cerr << "Game state file not found. Creating new file with default state (GS_MAINMENU)." << endl;
+		}
+
+		// Create a new file with default game state
+		ofstream outFile(filename, ios::out | ios::trunc);
+		if (outFile) {
+			outFile << "Game State: " << static_cast<int>(GameState::GS_ZIZ) << endl;
+			outFile.close();
+		}
+		else {
+			cerr << "Failed to create game state file." << endl;
+		}
+
+		return GameState::GS_ZIZ;
+	}
+
+	std::string line;
+	if (std::getline(inFile, line)) {
+		size_t pos = line.find("Game State:");
+		if (pos != std::string::npos) {
+			try {
+				int stateInt = stoi(line.substr(pos + std::string("Game State:").length()));
+				inFile.close();
+				return static_cast<GameState>(stateInt);
+			}
+			catch (...) {
+				cerr << "Error parsing game state. Using GS_MAINMENU." << endl;
+			}
+		}
+	}
 
 	inFile.close();
-	cout << "Data loaded from text file.\n";
-
-	cout << "Player health: " << hp << endl;
-	cout << "Player wither health: " << wither << endl;
-	cout << "Player lives: " << lives << endl;
-
-	Player* player_ = new Player(hp, wither, lives);
-	/*player_->getHealth()->setHP(hp);
-	player_->getHealth()->setWitherHP(wither);
-	player_->setLives(lives);*/
-
-	return player_;
+	return GameState::GS_MAINMENU;
 }
