@@ -181,7 +181,7 @@ void Lucifer::handleQTEInput(int input) {
 
 
 	QTEInput = input;
-	cout << "ziz receieved qte input: " << input << endl;
+	//cout << "ziz receieved qte input: " << input << endl;
 	QTECorrect = (QTEInput == QTETarget);
 	if (QTECorrect == true) {
 		startShake(0.05f, 0.0015f);
@@ -194,7 +194,7 @@ void Lucifer::startQTEMode(int target) {
 	qteInputReceieved = false;
 	QTETarget = target;
 	QTECorrect = false;
-	cout << "QTE Mode Started, target: " << target << endl;
+	//cout << "QTE Mode Started, target: " << target << endl;
 	qteMode = true;
 }
 

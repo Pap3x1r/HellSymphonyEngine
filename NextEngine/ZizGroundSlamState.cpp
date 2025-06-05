@@ -29,7 +29,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
     attackCollider->setDrawCollider(true);
     attackCollider->addColliderComponent();
     attackCollider->setActive(false);
-    attackCollider->setCanDrawColliderNew(true);
+    //attackCollider->setCanDrawColliderNew(true);
     attackCollider->getColliderComponent()->setTrigger(true);
     attackCollider->getColliderComponent()->setDimension(1.0f, 1.0f);
     attackCollider->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, -1.9f, 0.0f));

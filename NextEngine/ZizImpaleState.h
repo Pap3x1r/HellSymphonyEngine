@@ -15,6 +15,8 @@ private:
     bool hasImpaled;
     int timesSummonedImpale;
     float delayAfterImpale;
+    float poseTimer;
+    bool hasRecovered;
 
 public:
 

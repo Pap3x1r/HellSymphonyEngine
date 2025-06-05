@@ -19,7 +19,7 @@ UltZizOnBG::UltZizOnBG() {
 	startUpDuration = 0.08f * 36;
 	delayBeforeLightning = 10.0f;
 
-	cout << "made zizbg" << endl;
+	//cout << "made zizbg" << endl;
 }
 
 UltZizOnBG::UltZizOnBG(Ziz* boss) {
@@ -56,7 +56,7 @@ UltZizOnBG::UltZizOnBG(Ziz* boss) {
 	delayAfterLightning = 1.0f;
 	exitTimer = 0;
 	exitDuration = 1.5f;
-	cout << "made zizbg" << endl;
+	//cout << "made zizbg" << endl;
 }
 
 

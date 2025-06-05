@@ -17,9 +17,9 @@ void LuciferIdleState::enter(Boss* boss) {
     
 
 
-    idleTimer = 0.08f * 24;
+    idleTimer = 0.08f * 12;
 
-    cout << "Lucifer Idle Enter" << endl;
+    //cout << "Lucifer Idle Enter" << endl;
 }
 
 void LuciferIdleState::update(Boss* boss, float dt) {
@@ -28,7 +28,7 @@ void LuciferIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        //lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);
+        //lucifer->getStateMachine()->changeState(LuciferIceFloorState::getInstance(), lucifer);
         //lucifer->getStateMachine()->changeState(LuciferIdleState::getInstance(), lucifer);
         pickState();
     }
@@ -41,7 +41,7 @@ void LuciferIdleState::exit(Boss* boss) {
 void LuciferIdleState::pickState() {
     //lucifer has 7 moves
     int randValue = (rand() % 8);
-    cout << "Rand In Idle: " << randValue << endl;
+    //cout << "Rand In Idle: " << randValue << endl;
     switch (randValue) {
     case 0:
         lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);

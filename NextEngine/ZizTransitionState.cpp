@@ -38,12 +38,12 @@ void ZizTransitionState::update(Boss* boss, float dt) {
                     ziz->startShake(0.08f * 16, 0.005f);
                 }
 
-                cout << "transforming" << endl;
+                //cout << "transforming" << endl;
             }
             else {
                 transformed = true;
                 transforming = false;
-                cout << "transformed" << endl;
+                //cout << "transformed" << endl;
             }
         }
     }

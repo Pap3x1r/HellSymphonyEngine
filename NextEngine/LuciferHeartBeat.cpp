@@ -19,5 +19,5 @@ LuciferHeartBeat::LuciferHeartBeat() {
 	getAnimationComponent()->setState("heartbeat");
 
 
-	cout << "made heartbeat" << endl;
+	//cout << "made heartbeat" << endl;
 }

@@ -56,7 +56,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 						qteButtonUI->changeTextureSuccess(QTETarget1);
 
 						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
+							//cout << "buffering success" << endl;
 							bufferTimerSuccess -= dt;
 							if (bufferTimerSuccess <= 0) {
 								qteButtonUI->changeTextureDefault(QTETarget2);
@@ -69,7 +69,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 					}
 					else if (lucifer->getQTECorrect() == false) {
 						lucifer->startShake(0.1f, 0.005f);
-						cout << "wrong 1st" << endl;
+						//cout << "wrong 1st" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget1);
 						failedAny = true;
 					}
@@ -77,7 +77,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 				}
 				if (timer1 <= 0) {
 					lucifer->startShake(0.1f, 0.005f);
-					cout << "time ran out 1st" << endl;
+					//cout << "time ran out 1st" << endl;
 					qteButtonUI->changeTextureFailure(QTETarget1);
 					failedAny = true;
 				}
@@ -92,7 +92,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 						qteButtonUI->changeTextureSuccess(QTETarget2);
 
 						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
+							//cout << "buffering success" << endl;
 							bufferTimerSuccess -= dt;
 							if (bufferTimerSuccess <= 0) {
 								qteButtonUI->changeTextureDefault(QTETarget3);
@@ -105,7 +105,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 					}
 					else if (lucifer->getQTECorrect() == false) {
 						lucifer->startShake(0.1f, 0.005f);
-						cout << "wrong 2nd" << endl;
+						//cout << "wrong 2nd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget2);
 						failedAny = true;
 					}
@@ -113,7 +113,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 				}
 				if (timer2 <= 0) {
 					lucifer->startShake(0.1f, 0.005f);
-					cout << "time ran out 2nd" << endl;
+					//cout << "time ran out 2nd" << endl;
 					qteButtonUI->changeTextureFailure(QTETarget2);
 					failedAny = true;
 				}
@@ -124,11 +124,11 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 				timer3 -= dt;
 				if (lucifer->getQTEInputReceieved() == true) {
 					if (lucifer->getQTECorrect() == true) {
-						cout << "correct 3rd" << endl;
+						//cout << "correct 3rd" << endl;
 						qteButtonUI->changeTextureSuccess(QTETarget3);
 
 						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
+							//cout << "buffering success" << endl;
 							bufferTimerSuccess -= dt;
 							if (bufferTimerSuccess <= 0) {
 								IceSpear* is = new IceSpear(lucifer->getPlayer(), 0);
@@ -142,7 +142,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 					}
 					else if (lucifer->getQTECorrect() == false) {
 						lucifer->startShake(0.1f, 0.005f);
-						cout << "wrong 3rd" << endl;
+						//cout << "wrong 3rd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget3);
 						failedAny = true;
 					}
@@ -150,7 +150,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 				}
 				if (timer2 <= 0) {
 					lucifer->startShake(0.1f, 0.005f);
-					cout << "time ran out 3rd" << endl;
+					//cout << "time ran out 3rd" << endl;
 					qteButtonUI->changeTextureFailure(QTETarget3);
 					failedAny = true;
 				}
@@ -165,7 +165,7 @@ void LuciferQTEState::update(Boss* boss, float dt) {
 	if (failedAny == true) {
 		if (bufferTimerFailure > 0) {
 			bufferTimerFailure -= dt;
-			cout << "buffering" << endl;
+			//cout << "buffering" << endl;
 			if (bufferTimerFailure <= 0) {
 
 				lucifer->getStateMachine()->changeState(LuciferSideLaserState::getInstance(), lucifer);

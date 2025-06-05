@@ -20,6 +20,14 @@ private:
     float bufferTimerFailure;
     float bufferTimerSuccess;
 
+    bool posingBeforeQTE;
+    float timerbeforeQTE;
+
+    bool needToPose;
+
+    bool recoveryPosed;
+    float timerAfterQTE;
+
     float timer;
     float timer1;
     float timer2;

@@ -27,159 +27,198 @@ void ZizQTEState::enter(Boss* boss) {
 	failedAny = false;
 	currentSeq = 0;
 
+	posingBeforeQTE = false;
+	timerbeforeQTE = 0.08f * 8;
+
+	needToPose = false;
+	recoveryPosed = false;
+	timerAfterQTE = 0.08f * 10;
+
 	/*randomQTETarget();
 	startQTE(QTETarget);*/
 
 	randomQTESequence();
 
-	startQTE(QTETarget1);
-	qteButtonUI = ziz->createQTEButtonUI();
-	ziz->getLevel()->addObject(qteButtonUI);
+	
 
 	bufferTimerFailure = 0.25f;
 	bufferTimerSuccess = 0.25f;
+	ziz->setTexture("../Resource/Texture/FinalZiz/QTE/qtestart1.png", 1, 8, 0);
+
+	ziz->getAnimationComponent()->setState("qtestart1");
+	ziz->facePlayer();
 	
 }
 
 void ZizQTEState::update(Boss* boss, float dt) {
-	//if (timer > 0) {
-	//	timer -= dt;
-	//	if (timer <= 0) {//out of time
-	//		ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-	//	}
+	
+	if (posingBeforeQTE == false) {
+		if (timerbeforeQTE > 0) {
+			timerbeforeQTE -= dt;
+			if (timerbeforeQTE <= 0) {
+				startQTE(QTETarget1);
+				qteButtonUI = ziz->createQTEButtonUI();
+				ziz->getLevel()->addObject(qteButtonUI);
+				ziz->setTexture("../Resource/Texture/FinalZiz/QTE/qtestart2.png", 1, 16, 0);
+				ziz->getAnimationComponent()->setState("qtestart2");
+				posingBeforeQTE = true;
+			}
+		}
+	}
+	else {
+		if (failedAny == false) {
+			switch (currentSeq) {
+			case 0:
+				if (timer1 > 0) {
+					timer1 -= dt;
+					if (ziz->getQTEInputReceieved() == true) {
+						if (ziz->getQTECorrect() == true) {
+							qteButtonUI->changeTextureSuccess(QTETarget1);
 
-	//	if (ziz->getQTEInputReceieved() == true) {
-	//		if (ziz->getQTECorrect() == true) {
-	//			cout << "correct state" << endl;
-	//		}
-	//		else if(ziz->getQTECorrect() == false){
-	//			cout << "wrong state" << endl;
-	//		}
-	//		ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-	//	}
-	//}
-
-	if (failedAny == false) {
-		switch (currentSeq) {
-		case 0:
-			if (timer1 > 0) {
-				timer1 -= dt;
-				if (ziz->getQTEInputReceieved() == true) {
-					if (ziz->getQTECorrect() == true) {
-						qteButtonUI->changeTextureSuccess(QTETarget1);
-
-						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
-							bufferTimerSuccess -= dt;
-							if (bufferTimerSuccess <= 0) {
-								qteButtonUI->changeTextureDefault(QTETarget2);
-								startQTE(QTETarget2);
-								currentSeq++;
-								bufferTimerSuccess = 0.25f;
+							if (bufferTimerSuccess > 0) {
+								//cout << "buffering success" << endl;
+								bufferTimerSuccess -= dt;
+								if (bufferTimerSuccess <= 0) {
+									qteButtonUI->changeTextureDefault(QTETarget2);
+									startQTE(QTETarget2);
+									currentSeq++;
+									bufferTimerSuccess = 0.25f;
+								}
 							}
+
 						}
-						
+						else if (ziz->getQTECorrect() == false) {
+							ziz->startShake(0.1f, 0.005f);
+							//cout << "wrong 1st" << endl;
+							qteButtonUI->changeTextureFailure(QTETarget1);
+							
+							failedAny = true;
+						}
+
 					}
-					else if (ziz->getQTECorrect() == false) {
+					if (timer1 <= 0) {
 						ziz->startShake(0.1f, 0.005f);
-						cout << "wrong 1st" << endl;
+						//cout << "time ran out 1st" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget1);
+						
 						failedAny = true;
 					}
-					
 				}
-				if (timer1 <= 0) {
-					ziz->startShake(0.1f, 0.005f);
-					cout << "time ran out 1st" << endl;
-					qteButtonUI->changeTextureFailure(QTETarget1);
-					failedAny = true;
-				}
-			}
-			break;
-		case 1:
-			if (timer2 > 0) {
-				timer2 -= dt;
-				if (ziz->getQTEInputReceieved() == true) {
-					if (ziz->getQTECorrect() == true) {
+				break;
+			case 1:
+				if (timer2 > 0) {
+					timer2 -= dt;
+					if (ziz->getQTEInputReceieved() == true) {
+						if (ziz->getQTECorrect() == true) {
 
-						qteButtonUI->changeTextureSuccess(QTETarget2);
+							qteButtonUI->changeTextureSuccess(QTETarget2);
 
-						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
-							bufferTimerSuccess -= dt;
-							if (bufferTimerSuccess <= 0) {
-								qteButtonUI->changeTextureDefault(QTETarget3);
-								startQTE(QTETarget3);
-								currentSeq++;
-								bufferTimerSuccess = 0.25f;
+							if (bufferTimerSuccess > 0) {
+								//cout << "buffering success" << endl;
+								bufferTimerSuccess -= dt;
+								if (bufferTimerSuccess <= 0) {
+									qteButtonUI->changeTextureDefault(QTETarget3);
+									startQTE(QTETarget3);
+									currentSeq++;
+									bufferTimerSuccess = 0.25f;
+								}
 							}
+
+						}
+						else if (ziz->getQTECorrect() == false) {
+							ziz->startShake(0.1f, 0.005f);
+							//cout << "wrong 2nd" << endl;
+							qteButtonUI->changeTextureFailure(QTETarget2);
+							
+							failedAny = true;
 						}
 
 					}
-					else if (ziz->getQTECorrect() == false) {
+					if (timer2 <= 0) {
 						ziz->startShake(0.1f, 0.005f);
-						cout << "wrong 2nd" << endl;
+						//cout << "time ran out 2nd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget2);
+						
+						
 						failedAny = true;
 					}
-					
 				}
-				if (timer2 <= 0) {
-					ziz->startShake(0.1f, 0.005f);
-					cout << "time ran out 2nd" << endl;
-					qteButtonUI->changeTextureFailure(QTETarget2);
-					failedAny = true;
-				}
-			}
-			break;
-		case 2:
-			if (timer3 > 0) {
-				timer3 -= dt;
-				if (ziz->getQTEInputReceieved() == true) {
-					if (ziz->getQTECorrect() == true) {
-						cout << "correct 3rd" << endl;
-						qteButtonUI->changeTextureSuccess(QTETarget3);
+				break;
+			case 2:
+				if (timer3 > 0) {
+					timer3 -= dt;
+					if (ziz->getQTEInputReceieved() == true) {
+						if (ziz->getQTECorrect() == true) {
+							//cout << "correct 3rd" << endl;
+							qteButtonUI->changeTextureSuccess(QTETarget3);
 
-						if (bufferTimerSuccess > 0) {
-							cout << "buffering success" << endl;
-							bufferTimerSuccess -= dt;
-							if (bufferTimerSuccess <= 0) {
+							if (needToPose == false) {
+								ziz->setTexture("../Resource/Texture/FinalZiz/QTE/qtestart3.png", 1, 10, 0);
+								ziz->getAnimationComponent()->setState("qterecovery");
+								needToPose = true;
+							}
+
+
+							if (ziz->getTransform().getPosition().y < 8.0f) {
+								if (recoveryPosed == false) {
+									if (timerAfterQTE > 0) {
+										//cout << "timerafterqte" << endl;
+										timerAfterQTE -= dt;
+										if (timerAfterQTE <= 0) {
+											recoveryPosed = true;
+										}
+									}
+								}
+								else {
+									ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+								}
+							}
+							else {
 								ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
 							}
 						}
+						else if (ziz->getQTECorrect() == false) {
+							ziz->startShake(0.1f, 0.005f);
+							//cout << "wrong 3rd" << endl;
+							qteButtonUI->changeTextureFailure(QTETarget3);
+							
+							failedAny = true;
+						}
+
 					}
-					else if (ziz->getQTECorrect() == false) {
+					if (timer2 <= 0) {
 						ziz->startShake(0.1f, 0.005f);
-						cout << "wrong 3rd" << endl;
+						//cout << "time ran out 3rd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget3);
+						
 						failedAny = true;
 					}
-					
 				}
-				if (timer2 <= 0) {
-					ziz->startShake(0.1f, 0.005f);
-					cout << "time ran out 3rd" << endl;
-					qteButtonUI->changeTextureFailure(QTETarget3);
-					failedAny = true;
-				}
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
 	}
 
+
 	if (failedAny == true) {
-		if (bufferTimerFailure > 0) {
-			bufferTimerFailure -= dt;
-			cout << "buffering" << endl;
-			if (bufferTimerFailure <= 0) {
-				
+		if (ziz->getTransform().getPosition().y < 8.0f) {
+			if (recoveryPosed == false) {
+				if (timerAfterQTE > 0) {
+					timerAfterQTE -= dt;
+					if (timerAfterQTE <= 0) {
+						recoveryPosed = true;
+					}
+				}
+			}
+			else {
 				ziz->getStateMachine()->changeState(ZizImpaleState::getInstance(), ziz);
 			}
 		}
-
-		
+		else {
+			ziz->getStateMachine()->changeState(ZizImpaleState::getInstance(), ziz);
+		}
 	}
 	
 

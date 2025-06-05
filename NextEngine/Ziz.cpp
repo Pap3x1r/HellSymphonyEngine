@@ -6,7 +6,7 @@ Ziz* Ziz::instance = nullptr;
 
 Ziz* Ziz::getInstance() {
 	if (!instance) {
-		cout << "ziz created singleton" << endl;
+		//cout << "ziz created singleton" << endl;
 		instance = new Ziz();
 	}
 	return instance;
@@ -73,6 +73,12 @@ Ziz::Ziz() {
 
 	//chomp
 	getAnimationComponent()->addState("chomp", 0, 32);
+
+	//QTE;
+	getAnimationComponent()->addState("qtestart1", 0, 8);
+	getAnimationComponent()->addState("qtestart2", 0, 16);
+	getAnimationComponent()->addState("qterecovery", 0, 10);
+
 
 	
 	//Physics
@@ -209,7 +215,7 @@ DrawableObject* Ziz::createStormRise() {
 	stormRise->setPlayer(player);
 	stormRise->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x, 0.15f, 1.0f));
 	
-	cout << "Ziz Created Stormrise" << endl;
+	//cout << "Ziz Created Stormrise" << endl;
 	return stormRise;
 
 }
@@ -227,7 +233,7 @@ QTEButtonUI* Ziz::createQTEButtonUI(){
 
 DrawableObject* Ziz::createBGZiz() {
 	UltZizOnBG* ultZizOnBG = new UltZizOnBG(this);
-	cout << "creat bg from ziz" << endl;
+	//cout << "creat bg from ziz" << endl;
 
 	return ultZizOnBG;
 }
@@ -267,7 +273,7 @@ void Ziz::setIdleState(){
 void Ziz::phaseChangeTracker() {
 	if (this->health->getCurrentHP() < this->health->getRealHP()/2) {//if current health = half of realHP
 		if (hasTransformed == false) {
-			cout << "half Health" << endl;
+			//cout << "half Health" << endl;
 			interruptPhaseChange();
 			hasTransformed = true;
 			SoundManager::GetInstance()->StopAllSounds();
@@ -279,7 +285,7 @@ void Ziz::phaseChangeTracker() {
 	if (this->health->getCurrentHP() <= 0) {
 		dead = true;
 		interruptDeath();
-		cout << "ziz is dead" << endl;
+		//cout << "ziz is dead" << endl;
 	}
 }
 
@@ -295,11 +301,11 @@ void Ziz::changePhase() {
 
 	if (currentPhase == zizPhase::firstPhase) {
 		currentPhase = zizPhase::secondPhase;
-		cout << "Changed Phase to second" << endl;
+		//cout << "Changed Phase to second" << endl;
 	}
 	else {
 		currentPhase = zizPhase::firstPhase;
-		cout << "Changed Phase to first" << endl;
+		//cout << "Changed Phase to first" << endl;
 	}
 	
 }
@@ -408,7 +414,7 @@ void Ziz::handleQTEInput(int input) {
 
 
 	QTEInput = input;
-	cout << "ziz receieved qte input: " << input << endl;
+	//cout << "ziz receieved qte input: " << input << endl;
 	QTECorrect = (QTEInput == QTETarget);
 	if (QTECorrect == true) {
 		startShake(0.05f, 0.0015f);
@@ -421,7 +427,7 @@ void Ziz::startQTEMode(int target) {
 	qteInputReceieved = false;
 	QTETarget = target;
 	QTECorrect = false;
-	cout << "QTE Mode Started, target: " << target << endl;
+	//cout << "QTE Mode Started, target: " << target << endl;
 	qteMode = true;
 }
 

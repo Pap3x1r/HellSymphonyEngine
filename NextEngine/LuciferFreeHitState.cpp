@@ -17,7 +17,7 @@ void LuciferFreeHitState::enter(Boss* boss) {
 
     idleTimer = 3.0f;
 
-    cout << "Lucifer Idle Enter" << endl;
+    //cout << "Lucifer Idle Enter" << endl;
 }
 
 void LuciferFreeHitState::update(Boss* boss, float dt) {

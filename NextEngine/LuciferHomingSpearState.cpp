@@ -43,5 +43,5 @@ void LuciferHomingSpearState::update(Boss* boss, float dt) {
 }
 
 void LuciferHomingSpearState::exit(Boss* boss) {
-    cout << "out of homing" << endl;
+    //cout << "out of homing" << endl;
 }
