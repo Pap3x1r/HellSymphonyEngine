@@ -16,7 +16,12 @@ Music::~Music()
 
 void Music::Play(bool isLoop)
 {
-    Mix_PlayMusic(music, isLoop);
+    if (isLoop) {
+        Mix_PlayMusic(music, -1);
+    }
+    else {
+        Mix_PlayMusic(music, 0);
+    }
 }
 
 void Music::Stop() 

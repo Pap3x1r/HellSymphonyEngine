@@ -7,7 +7,7 @@ private:
 public:
 	IceFloorWarning() {
 		setTexture("../Resource/Texture/Lucifer/VFX/Warning.png");
-		getTransform().setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		getTransform().setPosition(glm::vec3(0.0f, -1.5f, 0.0f));
 		getTransform().setScale(glm::vec3(3.0f, 3.0f, 1.0f));
 	}
 

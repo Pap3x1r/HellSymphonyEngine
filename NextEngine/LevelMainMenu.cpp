@@ -989,9 +989,15 @@ void LevelMainMenu::levelUpdate() {
 			newGame();
 		}
 
+		selectedIndex = -1;
+		focusedButton = nullptr;
+
+		cout << "in" << endl;
+
 		return;
 	}
 
+	cout << "out" << endl;
 
 	updateObjects(objectsList);
 
