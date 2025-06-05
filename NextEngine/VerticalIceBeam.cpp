@@ -49,7 +49,7 @@ VerticalIceBeam::VerticalIceBeam(bool facingRight) {
     isMovingRight = facingRight;
     speed = 3.0f;
     hasHit = false;
-    damage = 5;
+    damage = 10;
     hasDelayed = false;
     delayBeforeStart = 0.08f * 5;
     timer = 0.08f * 28;

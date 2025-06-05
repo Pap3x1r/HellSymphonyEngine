@@ -21,7 +21,7 @@ IceFloor::IceFloor() {
 
     duration = 0.08f * 17;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     lucifer = Lucifer::getInstance();
 

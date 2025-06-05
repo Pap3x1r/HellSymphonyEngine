@@ -17,7 +17,7 @@ IceSpear::IceSpear() {
 
     speed = 10.0f;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 }
 
 IceSpear::IceSpear(FacingDirection fd) {
@@ -76,7 +76,7 @@ IceSpear::IceSpear(FacingDirection fd) {
 
     speed = 12.0f;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     isInPlace = false;
     prepareTimer = 1.0f;
@@ -147,7 +147,7 @@ IceSpear::IceSpear(FacingDirection fd, float pos) {
 
     speed = 12.0f;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     isInPlace = false;
     prepareTimer = 1.0f;
@@ -179,7 +179,7 @@ IceSpear::IceSpear(Player* playerTarget) {
 
     speed = 17.5f;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     isInPlace = false;
     prepareTimer = 1.0f;

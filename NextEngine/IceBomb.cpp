@@ -21,7 +21,7 @@ IceBomb::IceBomb() {
 
     duration = 0.08f * 13;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     isActive = false;
     startUpTimer = 0.08f * 6;
@@ -51,7 +51,7 @@ IceBomb::IceBomb(float pos) {
 
     duration = 0.08f * 13;
     hasHit = false;
-    damage = 5;
+    damage = 10;
 
     isActive = false;
     startUpTimer = 0.08f * 6;
