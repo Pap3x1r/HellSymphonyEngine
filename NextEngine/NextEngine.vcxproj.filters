@@ -103,6 +103,29 @@
     <ClCompile Include="ZizIntroState.cpp" />
     <ClCompile Include="ZizQTEState.cpp" />
     <ClCompile Include="PortalState.cpp" />
+    <ClCompile Include="BeamRadiant.cpp" />
+    <ClCompile Include="IceBomb.cpp" />
+    <ClCompile Include="IceFloor.cpp" />
+    <ClCompile Include="IceSpear.cpp" />
+    <ClCompile Include="LevelCredits.cpp" />
+    <ClCompile Include="LevelMemTest.cpp" />
+    <ClCompile Include="LuciferBeamRadiantState.cpp" />
+    <ClCompile Include="LuciferFreeHitState.cpp" />
+    <ClCompile Include="LuciferHeartBeat.cpp" />
+    <ClCompile Include="LuciferHomingSpearState.cpp" />
+    <ClCompile Include="LuciferHorizontalBarrageState.cpp" />
+    <ClCompile Include="LuciferIceBombState.cpp" />
+    <ClCompile Include="LuciferIceFloorState.cpp" />
+    <ClCompile Include="LuciferQTEState.cpp" />
+    <ClCompile Include="LuciferSideLaserState.cpp" />
+    <ClCompile Include="LuciferVerticalBarrageState.cpp" />
+    <ClCompile Include="LuciferVerticalBeamState.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="RadiantLaser.cpp" />
+    <ClCompile Include="SFX.cpp" />
+    <ClCompile Include="SideStaff.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="VerticalIceBeam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Resource\imgui\include\imconfig.h" />
@@ -219,6 +242,30 @@
     <ClInclude Include="ZizQTEState.h" />
     <ClInclude Include="WeaponType.h" />
     <ClInclude Include="PortalState.h" />
+    <ClInclude Include="BeamRadiant.h" />
+    <ClInclude Include="IceBomb.h" />
+    <ClInclude Include="IceFloor.h" />
+    <ClInclude Include="IceFloorWarning.h" />
+    <ClInclude Include="IceSpear.h" />
+    <ClInclude Include="LevelCredits.h" />
+    <ClInclude Include="LevelMemTest.h" />
+    <ClInclude Include="LuciferBeamRadiantState.h" />
+    <ClInclude Include="LuciferFreeHitState.h" />
+    <ClInclude Include="LuciferHeartBeat.h" />
+    <ClInclude Include="LuciferHomingSpearState.h" />
+    <ClInclude Include="LuciferHorizontalBarrageState.h" />
+    <ClInclude Include="LuciferIceBombState.h" />
+    <ClInclude Include="LuciferIceFloorState.h" />
+    <ClInclude Include="LuciferQTEState.h" />
+    <ClInclude Include="LuciferSideLaserState.h" />
+    <ClInclude Include="LuciferVerticalBarrageState.h" />
+    <ClInclude Include="LuciferVerticalBeamState.h" />
+    <ClInclude Include="Music.h" />
+    <ClInclude Include="RadiantLaser.h" />
+    <ClInclude Include="SFX.h" />
+    <ClInclude Include="SideStaff.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="VerticalIceBeam.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shader\fragment.shd" />
