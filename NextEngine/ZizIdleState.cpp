@@ -24,7 +24,7 @@ void ZizIdleState::enter(Boss* boss) {
     
     ziz->getAnimationComponent()->setState("idle");
     ziz->facePlayer();
-    
+    SoundManager::GetInstance()->PlaySFX("Ziz_Idle");
 }
 
 void ZizIdleState::update(Boss* boss, float dt) {
@@ -35,8 +35,8 @@ void ZizIdleState::update(Boss* boss, float dt) {
     }
     else {
         //ziz->getStateMachine()->changeState(ZizGustState::getInstance(), ziz);
-        ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
-        //pickState();
+        //ziz->getStateMachine()->changeState(ZizIdleState::getInstance(), ziz);
+        pickState();
     }
 }
 

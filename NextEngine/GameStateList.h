@@ -8,6 +8,7 @@ enum GameState {
 	GS_LIMBO2,
 	GS_ZIZ,
 	GS_LUCIFER,
+	GS_CREDITS,
 
 	// special game state. Do not change
 	GS_RESTART,

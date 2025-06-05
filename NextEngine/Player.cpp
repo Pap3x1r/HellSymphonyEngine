@@ -15,6 +15,13 @@ Player::Player(float currentHealth, float witherHealth, int life) {
 	getTransform().setScale(glm::vec3(3.75f, 3.75f, 1.0f));
 	//Anim
 	initAnimation(8, 1);
+	//None States
+	getAnimationComponent()->addState("idleNone", 0, 8);
+	getAnimationComponent()->addState("walkingNone", 0, 8);
+	getAnimationComponent()->addState("jumpingNone", 0, 1);
+	getAnimationComponent()->addState("fallingNone", 0, 1);
+	getAnimationComponent()->addState("dashNone", 0, 1);
+
 	//Sword States
 	getAnimationComponent()->addState("idleSword", 0, 8); 
 	getAnimationComponent()->addState("walkingSword", 0, 8);
@@ -184,41 +191,41 @@ void Player::selfUpdate(float dt_) {
 
 	int weaponIndex = static_cast<int>(currentWeapon);
 
-	if (ImGui::TreeNode("Player Object")) {
-		//Health
-		if (ImGui::TreeNode("Health")) {
-			ImGui::SliderFloat("Current Health:", health->getCurrentHPAddress(), 0, health->getMaxHP());
-			ImGui::TreePop();
-		}
+	//if (ImGui::TreeNode("Player Object")) {
+	//	//Health
+	//	if (ImGui::TreeNode("Health")) {
+	//		ImGui::SliderFloat("Current Health:", health->getCurrentHPAddress(), 0, health->getMaxHP());
+	//		ImGui::TreePop();
+	//	}
 
-		//Ultimate
-		if (ImGui::TreeNode("Ultimate")) {
-			ImGui::SliderFloat("Ultimate Gauge:", &currentUltimateGauge, 0, ultimateGaugeMax);
-			ImGui::SliderInt("Ultimate Slot:", &currentUltimateSlot, 0, ultimateSlotMax);
-			ImGui::TreePop();
-		}
+	//	//Ultimate
+	//	if (ImGui::TreeNode("Ultimate")) {
+	//		ImGui::SliderFloat("Ultimate Gauge:", &currentUltimateGauge, 0, ultimateGaugeMax);
+	//		ImGui::SliderInt("Ultimate Slot:", &currentUltimateSlot, 0, ultimateSlotMax);
+	//		ImGui::TreePop();
+	//	}
 
-		//General
-		if (ImGui::TreeNode("General")) {
-			ImGui::Text("Player Position; x:%.2f, y:%.2f", getTransform().getPosition().x, getTransform().getPosition().y);
-			ImGui::Checkbox("Can Jump", &isGrounded);
-			ImGui::Checkbox("Can Dash", &canDash);
-			if (ImGui::Combo("Weapon Type", &weaponIndex, weaponNames, IM_ARRAYSIZE(weaponNames))) {
-				currentWeapon = static_cast<WeaponType>(weaponIndex);
-			}
-			ImGui::TreePop();
-		}
+	//	//General
+	//	if (ImGui::TreeNode("General")) {
+	//		ImGui::Text("Player Position; x:%.2f, y:%.2f", getTransform().getPosition().x, getTransform().getPosition().y);
+	//		ImGui::Checkbox("Can Jump", &isGrounded);
+	//		ImGui::Checkbox("Can Dash", &canDash);
+	//		if (ImGui::Combo("Weapon Type", &weaponIndex, weaponNames, IM_ARRAYSIZE(weaponNames))) {
+	//			currentWeapon = static_cast<WeaponType>(weaponIndex);
+	//		}
+	//		ImGui::TreePop();
+	//	}
 
-		if (ImGui::TreeNode("Collider")) {
-			ImGui::Checkbox("Player Collider", getCanDrawColliderAddress());
-			ImGui::Checkbox("Ground Checker Collider", groundChecker->getCanDrawColliderAddress());
-			ImGui::Checkbox("Sword Collider", sword->getCanDrawColliderAddress());
-			ImGui::Checkbox("Shield Collider", shield->getCanDrawColliderAddress());
-			ImGui::TreePop();
-		}
+	//	if (ImGui::TreeNode("Collider")) {
+	//		ImGui::Checkbox("Player Collider", getCanDrawColliderAddress());
+	//		ImGui::Checkbox("Ground Checker Collider", groundChecker->getCanDrawColliderAddress());
+	//		ImGui::Checkbox("Sword Collider", sword->getCanDrawColliderAddress());
+	//		ImGui::Checkbox("Shield Collider", shield->getCanDrawColliderAddress());
+	//		ImGui::TreePop();
+	//	}
 
-		ImGui::TreePop();
-	}
+	//	ImGui::TreePop();
+	//}
 
 }
 

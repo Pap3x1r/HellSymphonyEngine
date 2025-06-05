@@ -22,6 +22,8 @@ void LevelMainMenu::levelLoad() {
 }
 
 void LevelMainMenu::levelInit() {
+
+	SoundManager::GetInstance()->StopAllSounds();
 	//Value
 	float audioSettingsOffsetY = 0.2f;
 
@@ -128,7 +130,7 @@ void LevelMainMenu::levelInit() {
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	masterVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
-	masterVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMasterVolume());
+	masterVolumeSlider->setValue(SoundManager::GetInstance()->getMasterVolume());
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -185,7 +187,7 @@ void LevelMainMenu::levelInit() {
 	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	musicVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	musicVolumeSlider->setMenuState(MenuState::AUDIO);
-	musicVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMusicVolume());
+	musicVolumeSlider->setValue(SoundManager::GetInstance()->getMusicVolume());
 	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -242,7 +244,7 @@ void LevelMainMenu::levelInit() {
 	effectVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	effectVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	effectVolumeSlider->setMenuState(MenuState::AUDIO);
-	effectVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getSoundEffectVolume());
+	effectVolumeSlider->setValue(SoundManager::GetInstance()->getSoundEffectVolume());
 	for (DrawableObject* obj : effectVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -299,7 +301,7 @@ void LevelMainMenu::levelInit() {
 	ambientVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	ambientVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	ambientVolumeSlider->setMenuState(MenuState::AUDIO);
-	ambientVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getAmbientVolume());
+	ambientVolumeSlider->setValue(SoundManager::GetInstance()->getAmbientVolume());
 	for (DrawableObject* obj : ambientVolumeSlider->getObjectsList()) {
 		objectsList.push_back(obj);
 	}
@@ -712,7 +714,7 @@ void LevelMainMenu::levelInit() {
 	playButton->setLabel(playText); // Link playText
 	playButton->setMenuState(MenuState::MAIN);
 	playButton->setFunction([this]() {
-		newGame();
+		startNewGameTransition();
 	});
 
 	objectsList.push_back(playButton);
@@ -936,6 +938,18 @@ void LevelMainMenu::levelInit() {
 
 	optionsButtons.push_back(keyboardButton);
 
+	TexturedObject* textMes = new TexturedObject("Intro");
+	textMes->setTexture("../Resource/Texture/IntroScreen.png");
+	textMes->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	textMes->setMenuState(MenuState::IGNORE);
+	textMes->setAlpha(0.0f);
+	textMes->drawLayer = 1;
+	objectsList.push_back(textMes);
+	TextMessage = textMes;
+	newGameTransitionTime = 0.0f;
+	newGameTransitioning = false;
+	newGameTransitioningComplete = false;
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//
 	//										Black Fading Transition
@@ -951,6 +965,8 @@ void LevelMainMenu::levelInit() {
 	blackFade->setAlpha(1.0f);
 	firstStart = true;
 
+	SoundManager::GetInstance()->PlayMusic("MainMenu-SoundTrack");
+
 	isHolding = false;
 	//GameEngine::getInstance()->freezeGameForSecond(1.6f);
 }
@@ -958,10 +974,26 @@ void LevelMainMenu::levelInit() {
 void LevelMainMenu::levelUpdate() {
 	dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 	timeK += dt;
-	updateObjects(objectsList);
 
-	ImGui::SetWindowSize(ImVec2(400, 300));
-	ImGui::Begin("Debug Panel");
+	if (newGameTransitioning) {
+		newGameTransitionTime += dt;
+		float t = newGameTransitionTime / newGameTransitionDurationFirst;
+
+		TextMessage->setAlpha(t);
+		blackFade->setAlpha(t);
+
+		if (newGameTransitionTime >= newGameTransitionDurationSecond) {
+			newGameTransitioningComplete = true;
+			newGameTransitioning = false;
+			newGameTransitionTime = 0.0f;
+			newGame();
+		}
+
+		return;
+	}
+
+
+	updateObjects(objectsList);
 
 	static float soundElapsed = 0.0f;
 	float soundTimer = 2.0f;
@@ -969,7 +1001,7 @@ void LevelMainMenu::levelUpdate() {
 
 	if (soundElapsed >= soundTimer) {
 		soundElapsed -= soundTimer;
-		GameEngine::getInstance()->getAudio()->playSoundEffectByName("Dante-Sword_LightAttack-1.wav");
+		//SoundManager::GetInstance()->playSoundEffectByName("Dante-Sword_LightAttack-1.wav");
 	}
 
 	if (!fileExists("../Resource/Saves/PlayerData/playerGameState.txt")) {
@@ -1161,20 +1193,18 @@ void LevelMainMenu::levelUpdate() {
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
 
-		AudioEngine* audio = GameEngine::getInstance()->getAudio();
-
-		if (audio) {
+		if (SoundManager::GetInstance()) {
 			if (obj == masterSlider) {
-				audio->setMasterVolume(masterSlider->getValue());
+				SoundManager::GetInstance()->setMasterVolume(masterSlider->getValue());
 			}
 			else if (obj == musicSlider) {
-				audio->setMusicVolume(musicSlider->getValue());
+				SoundManager::GetInstance()->setMusicVolume(musicSlider->getValue());
 			}
 			else if (obj == sfxSlider) {
-				audio->setSoundEffectVolume(sfxSlider->getValue());
+				SoundManager::GetInstance()->setSoundEffectVolume(sfxSlider->getValue());
 			}
 			else if (obj == ambientSlider) {
-				audio->setAmbientVolume(ambientSlider->getValue());
+				SoundManager::GetInstance()->setAmbientVolume(ambientSlider->getValue());
 			}
 		}
 	}
@@ -1197,7 +1227,6 @@ void LevelMainMenu::levelUpdate() {
 
 	//handleObjectCollision(objectsList);
 
-	ImGui::End();
 }
 
 void LevelMainMenu::levelDraw() {
@@ -1410,6 +1439,7 @@ void LevelMainMenu::handleKey(char key) {
 
 		if (focusedButton && focusedButton->getMouseOver()) {
 			focusedButton->OnClick();
+			SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
 		}
 
 		break;
@@ -1426,7 +1456,139 @@ void LevelMainMenu::handleKey(char key) {
 
 void LevelMainMenu::handleControllerButton(SDL_GameControllerButton button) {
 	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
+
+	bool input = false;
+
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		break;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	default:
+		return;
+	}
+
+	switch (button) {
+	case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+		if (isHolding == false) {
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() - 0.025f);
+				}
+			}
+			isHolding = true;
+			input = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() - 0.005f);
+					}
+				}
+			}
+			input = true;
+		}
+
+
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+
+		if (isHolding == false) {
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() + 0.025f);
+				}
+			}
+			isHolding = true;
+			input = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() + 0.005f);
+					}
+				}
+			}
+			input = true;
+		}
+
+
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_UP:
+		changeSelection(-1);
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+		changeSelection(1);
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_B:
+		if (currentMenuState == OPTIONS) {
+			changeMenuState(MenuState::MAIN);
+		}
+		else if (currentMenuState == AUDIO) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == CONTROLLER) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == KEYBOARD) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == CREDITS) {
+			changeMenuState(MenuState::MAIN);
+		}
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_A:
+		/*if (selectedButton && selectedButton->getMouseOver()) {
+			selectedButton->OnClick();
+		}*/
+
+		if (focusedButton && focusedButton->getMouseOver()) {
+			focusedButton->OnClick();
+			SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
+			input = true;
+		}
+
+		break;
+	}
 	
+
+	if (!input) {
+		if (isHolding == true) {
+			isHolding = false;
+		}
+		if (holdButtonTimer > 0) {
+			holdButtonTimer = 0;
+		}
+	}
 }
 
 
@@ -1503,6 +1665,9 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 				if (onButton->getHandle()) {
 					focusedHandle = *it;
 				}
+				else {
+					SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
+				}
 			}
 		}
 	}
@@ -1555,7 +1720,7 @@ void LevelMainMenu::handleMouse(int type, int x, int y) {
 }
 
 void LevelMainMenu::handleAnalogStick(int type, char key) {
-	float dt_ = GameEngine::getInstance()->getTime()->getDeltaTime();
+	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
 
 
 }

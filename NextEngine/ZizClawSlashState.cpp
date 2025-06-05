@@ -77,7 +77,7 @@ void ZizClawSlashState::enter(Boss* boss) {
 	attackCollider3->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x + attackOffSet, ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 
 	//cout << "Ziz Ready to ClawSlash" << endl;
-
+	SoundManager::GetInstance()->PlaySFX("Ziz_ClawSlash");
 }
 
 void ZizClawSlashState::update(Boss* boss, float dt) {

@@ -214,9 +214,6 @@ void LevelMemTest::levelUpdate() {
 		cout << "Current Control Scheme: Keyboard" << endl;
 	}*/
 
-	ImGui::SetWindowSize(ImVec2(400, 300));
-	ImGui::Begin("Debug Panel");
-
 
 	/*if (inputManager) {
 		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
@@ -2051,20 +2048,19 @@ void LevelMemTest::UIUpdate() {
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
 
-		AudioEngine* audio = GameEngine::getInstance()->getAudio();
 
-		if (audio) {
+		if (SoundManager::GetInstance()) {
 			if (obj == masterSlider) {
-				audio->setMasterVolume(masterSlider->getValue());
+				SoundManager::GetInstance()->setMasterVolume(masterSlider->getValue());
 			}
 			else if (obj == musicSlider) {
-				audio->setMusicVolume(musicSlider->getValue());
+				SoundManager::GetInstance()->setMusicVolume(musicSlider->getValue());
 			}
 			else if (obj == sfxSlider) {
-				audio->setSoundEffectVolume(sfxSlider->getValue());
+				SoundManager::GetInstance()->setSoundEffectVolume(sfxSlider->getValue());
 			}
 			else if (obj == ambientSlider) {
-				audio->setAmbientVolume(ambientSlider->getValue());
+				SoundManager::GetInstance()->setAmbientVolume(ambientSlider->getValue());
 			}
 		}
 	}
@@ -2189,7 +2185,7 @@ void LevelMemTest::createPauseUI() {
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	masterVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
-	masterVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMasterVolume());
+	masterVolumeSlider->setValue(SoundManager::GetInstance()->getMasterVolume());
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2249,7 +2245,7 @@ void LevelMemTest::createPauseUI() {
 	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	musicVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	musicVolumeSlider->setMenuState(MenuState::AUDIO);
-	musicVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMusicVolume());
+	musicVolumeSlider->setValue(SoundManager::GetInstance()->getMusicVolume());
 	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2309,7 +2305,7 @@ void LevelMemTest::createPauseUI() {
 	effectVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	effectVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	effectVolumeSlider->setMenuState(MenuState::AUDIO);
-	effectVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getSoundEffectVolume());
+	effectVolumeSlider->setValue(SoundManager::GetInstance()->getSoundEffectVolume());
 	for (DrawableObject* obj : effectVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2369,7 +2365,7 @@ void LevelMemTest::createPauseUI() {
 	ambientVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	ambientVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	ambientVolumeSlider->setMenuState(MenuState::AUDIO);
-	ambientVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getAmbientVolume());
+	ambientVolumeSlider->setValue(SoundManager::GetInstance()->getAmbientVolume());
 	for (DrawableObject* obj : ambientVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);

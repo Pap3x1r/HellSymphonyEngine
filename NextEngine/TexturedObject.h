@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 
+#include "VergilMovementState.h"
 
 class TexturedObject : public DrawableObject
 {	
@@ -17,6 +18,8 @@ class TexturedObject : public DrawableObject
 	float hitEffectStrength = 0;
 	float alpha = 1.0f; // Default alpha (visible)
 	glm::vec4 newColor = { 1.0f, 0.0f, 0.0f, 1.0f };
+
+
 	/*bool animated = false;
 	int rowCount;
 	int colCount;

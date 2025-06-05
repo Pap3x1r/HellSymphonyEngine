@@ -27,6 +27,7 @@ void ZizGustState::enter(Boss* boss) {
     
     //cout << "start up gust" << endl;
     ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.015f, 0, 0));
+    SoundManager::GetInstance()->PlaySFX("Ziz_ClawSlash");
     
 }
 

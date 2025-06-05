@@ -38,7 +38,7 @@ void PlayerLightBowAttack::update(Player* player, float dt_) {
         if (time >= 0.0f) {
             currentPhase = RECOVERY;
             time = 0;
-
+            SoundManager::GetInstance()->PlaySFX("Dante-Bow_LightAttack");
             DrawableObject* newArrow = player->getBow()->arrowShot(40, 30, player, 25); //Change damage and ult gain percentage here
             player->getLevel()->addObject(newArrow);
         }
@@ -72,6 +72,7 @@ void PlayerHeavyBowAttack::enter(Player* player) {
     time = 0.0f;
     player->getBow()->setIsShooting(true);
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
+    SoundManager::GetInstance()->PlaySFX("Dante-Bow_HeavyAttack");
 }
 
 void PlayerHeavyBowAttack::update(Player* player, float dt_) {
@@ -128,6 +129,7 @@ void PlayerSmallBowUlt::enter(Player* player) {
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     player->getBow()->setSmallUltReady(false);
+    SoundManager::GetInstance()->PlaySFX("Dante-Bow_UltSmall");
 }
 
 void PlayerSmallBowUlt::update(Player* player, float dt_) {
@@ -141,6 +143,7 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
+
         if (time >= 0.75f) {
             currentPhase = ACTIVE;
             time = 0;
@@ -163,8 +166,6 @@ void PlayerSmallBowUlt::update(Player* player, float dt_) {
             attackCollider->setTexture("../Resource/Texture/Dante/DanteBow/dante_smallUlt_effect.png", 1, 11, 0);
             attackCollider->getAnimationComponent()->setState("smallUlt");
             attackCollider->setDraw(true);
-            collider->setCanDrawColliderNew(true);
-            collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
             //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here
             //player->getLevel()->addObject(newArrow);
@@ -195,12 +196,14 @@ void PlayerBigBowUlt::enter(Player* player) {
     //cout << "Player enters Bow Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_bow.png", 1, 18, 0);
     player->getAnimationComponent()->setState("bigUltBow");
+    player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
     time = 0.0f;
     player->getBow()->setIsShooting(true);
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
 
     player->getBow()->setBigUltReady(false);
+    SoundManager::GetInstance()->PlaySFX("Dante-Bow_UltBig");
 }
 
 void PlayerBigBowUlt::update(Player* player, float dt_) {
@@ -214,7 +217,7 @@ void PlayerBigBowUlt::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 1.333f) {
+        if (time >= 2.0f) {
             currentPhase = ACTIVE;
             time = 0;
         }
@@ -238,8 +241,6 @@ void PlayerBigBowUlt::update(Player* player, float dt_) {
             attackCollider->setTexture("../Resource/Texture/Dante/DanteBow/dante_bigUlt_effect.png", 1, 15, 0);
             attackCollider->getAnimationComponent()->setState("bigUlt");
             attackCollider->setDraw(true);
-            collider->setCanDrawColliderNew(true);
-            collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
             //DrawableObject* newArrow = player->getBow()->arrowShot(100, 100, player, 75); //Change damage and ult gain percentage here
             //player->getLevel()->addObject(newArrow);
@@ -263,4 +264,5 @@ void PlayerBigBowUlt::update(Player* player, float dt_) {
 void PlayerBigBowUlt::exit(Player* player) {
     //cout << "Player exits Bow Big Ult state.\n";
     player->getBow()->setIsShooting(false);
+    player->getAnimationComponent()->setLoop(true);
 }

@@ -46,6 +46,7 @@ void Impale::update(float dt) {
 	if (hasStruck == false && deletedAtk == false) {
 		attackTimer -= dt;
 		if (attackTimer <= 0) {
+			SoundManager::GetInstance()->PlaySFX("Ziz_Impale");
 			ziz->getLevel()->addObject(attackCollider);
 			attackCollider->setActive(true);
 			ziz->startShake(0.08f * 3, 0.005f);

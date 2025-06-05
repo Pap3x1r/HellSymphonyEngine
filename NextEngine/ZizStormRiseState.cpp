@@ -38,7 +38,7 @@ void ZizStormRiseState::enter(Boss* boss) {
     state = 1;
 
     
-
+    SoundManager::GetInstance()->PlaySFX("Ziz_StormRise");
 
     ziz->getAnimationComponent()->setAnimOffset(glm::vec3(-0.015f, 0, 0));
     ziz->setTexture("../Resource/Texture/FinalZiz/stormrise/1_Zyzz_StormRise_StartUp_1.png", 1, 8, 0);

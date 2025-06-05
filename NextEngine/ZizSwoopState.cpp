@@ -67,6 +67,7 @@ void ZizSwoopState::enter(Boss* boss) {
 
 	ziz->getLevel()->addObject(attackCollider);
 
+	SoundManager::GetInstance()->PlaySFX("Ziz_FlyUp");
 	//cout << "Ziz entered swoop" << endl;
 }
 

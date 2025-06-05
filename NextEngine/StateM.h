@@ -2,6 +2,7 @@
 #include <iostream>
 
 class Player;
+class TexturedObject;
 
 using namespace std;
 

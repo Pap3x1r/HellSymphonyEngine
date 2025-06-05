@@ -44,6 +44,10 @@ private:
 	list<UIButton*> creditsButton;
 	list<UIButton*> quitConfirmButtons;
 
+	list<UIButton*> deathButtons;
+	list<UIButton*> victoryButtons;
+
+
 	//Slider List
 	list<SliderObject*> slidersList;
 
@@ -54,6 +58,11 @@ private:
 
 
 	UIButton* focusedHandle = nullptr;
+
+	TexturedObject* lifeIcon1 = nullptr;
+	TexturedObject* lifeIcon2 = nullptr;
+	TexturedObject* lifeIcon3 = nullptr;
+
 
 	//UI
 	TexturedObject* controllerOverlay = nullptr;
@@ -75,6 +84,8 @@ private:
 	MenuState nextMenuState = MenuState::MAIN;
 
 	bool isHolding;
+
+	bool levelEnd = false;
 
 	QTEButtonUI* qbui;
 
@@ -127,6 +138,9 @@ private:
 	TexturedObject* shieldSmallUltIconOn = nullptr;
 	TexturedObject* shieldBigUltIconOff = nullptr;
 	TexturedObject* shieldBigUltIconOn = nullptr;
+
+	TexturedObject* dashIcon = nullptr;
+
 
 	void createSkillsIcon();
 	void updateSkillsIcon();
@@ -181,10 +195,19 @@ public:
 
 	void createPauseUI();
 
-	void toLoadingScreen() {
+	void toLoadingScreenDeath() {
 		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
 
-		GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+		if (player->getLives() > 1) {
+			GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+			GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+			GameEngine::getInstance()->savePlayerData(100, 0, player->getLives() - 1, "../Resource/Saves/PlayerData/playerData.txt");
+		}
+		else {
+			GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+			GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+			GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+		}
 
 		//Inserting directories to load and level destination
 		gameStateController->pendingLoad.textureDirs = {};
@@ -193,4 +216,120 @@ public:
 		//Change to loading screen
 		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
 	}
+
+	void toLoadingScreenVictory() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_MAINMENU;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void toLoadingScreen() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(gameStateController->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, player->getLives(), "../Resource/Saves/PlayerData/playerData.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_MAINMENU;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void nextLevel() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_CREDITS;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void retryLevel() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, player->getLives() - 1, "../Resource/Saves/PlayerData/playerData.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameEngine::getInstance()->getStateController()->gameStateCurr;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void resurrect() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+
+		GameEngine::getInstance()->isNewGame = true;
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GS_LIMBO1;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
+	}
+
+	void exitDeath() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		if (player->getLives() - 1 <= 0) { // Reset
+			GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+			GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+			GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+		}
+		else {
+			GameEngine::getInstance()->saveGameState(GameEngine::getInstance()->getStateController()->gameStateCurr, "../Resource/Saves/PlayerData/playerGameState.txt");
+			GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+			GameEngine::getInstance()->savePlayerData(100, 0, player->getLives() - 1, "../Resource/Saves/PlayerData/playerData.txt");
+		}
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameEngine::getInstance()->getStateController()->gameStateCurr;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_QUIT;
+	}
+
+	void exitVictory() {
+		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
+
+		GameEngine::getInstance()->saveGameState(GS_LIMBO1, "../Resource/Saves/PlayerData/playerGameState.txt");
+		GameEngine::getInstance()->savePlayerWeaponType(player, "../Resource/Saves/PlayerData/playerWeaponTypeData.txt");
+		GameEngine::getInstance()->savePlayerData(100, 0, 3, "../Resource/Saves/PlayerData/playerData.txt");
+
+		//Inserting directories to load and level destination
+		gameStateController->pendingLoad.textureDirs = {};
+		gameStateController->pendingLoad.nextStateAfterLoad = GameEngine::getInstance()->getStateController()->gameStateCurr;
+
+		//Change to loading screen
+		gameStateController->gameStateNext = GameState::GS_QUIT;
+	}
+
+	void controllerUIHandling(SDL_GameControllerButton button);
 };

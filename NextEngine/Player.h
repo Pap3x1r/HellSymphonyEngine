@@ -5,6 +5,7 @@
 #include "StateMachine.h"
 #include <imgui.h>
 #include <random>
+#include "WeaponType.h"
 
 //Movesets
 #include "PlayerMovementState.h"
@@ -16,13 +17,6 @@ class Bow;
 class Sword;
 class Shield;
 class Level;
-
-enum WeaponType {
-    None_,
-    Sword_,
-    Bow_,
-    Shield_
-};
 
 class Player : public TexturedObject {
     int playerLives = 3;

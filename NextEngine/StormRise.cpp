@@ -73,6 +73,7 @@ void StormRise::update(float dt) {
 			//setAnimStorm();
 			isBuffering = false;
 			isActive = true;
+			SoundManager::GetInstance()->PlaySFX("Ziz_Storm");
 		}
 	}
 
@@ -132,6 +133,7 @@ void StormRise::onCollisionStay(Collider* collider) {
 						cout << "Player perfect blocked" << endl;
 						player->increaseUltimateGauge(100.0f); //instant fill
 						hasHit = true;
+						SoundManager::GetInstance()->PlaySFX("Dante-Shield_BlockPerfect");
 					}
 					else { //if blocking but not perfectly
 						cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
@@ -140,6 +142,7 @@ void StormRise::onCollisionStay(Collider* collider) {
 						player->getHealth()->takeDamage(damage, 30);
 						player->increaseUltimateGauge(damage / 2); // increase by withered damage.
 						hasHit = true;
+						SoundManager::GetInstance()->PlaySFX("Dante-Shield_Block");
 					}
 				}
 				else { //is not blocking

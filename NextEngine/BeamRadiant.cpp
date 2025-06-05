@@ -30,6 +30,8 @@ void BeamRadiant::update(float dt) {
             RadiantLaser* rs = new RadiantLaser();
             lucifer->getLevel()->addObject(rs);
             spawnedLaser = true;
+            SoundManager::GetInstance()->PlaySFX("Lucifer-BeamRadiant_Beam");
+            SoundManager::GetInstance()->PlaySFX("Lucifer_CloseoutBeams");
         }
     }
 

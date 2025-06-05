@@ -11,10 +11,10 @@ float timeK = 0;
 float dt = 0;
 
 void LevelAnimTest::levelInit() {
-	AudioEngine* auds = new AudioEngine();
-	auds->init("../Resource/Audio/SoundEffect", "../Resource/Audio/Music");
-	audio = auds;
-	audio->playMusicByIndex(0, -1);
+	//AudioEngine* auds = new AudioEngine();
+	//auds->init("../Resource/Audio/SoundEffect", "../Resource/Audio/Music");
+	//audio = auds;
+	//audio->playMusicByIndex(0, -1);
 
 	TexturedObject * obj = new TexturedObject();	
 	obj->setTexture("../Resource/Texture/dog.png");
@@ -50,7 +50,7 @@ void LevelAnimTest::levelDraw() {
 }
 
 void LevelAnimTest::levelFree() {
-	audio->stopMusic();
+	//audio->stopMusic();
 	//audio->destroy();
 	for (DrawableObject* obj : objectsList) {
 		delete obj;
@@ -72,19 +72,19 @@ void LevelAnimTest::handleKey(char key) {
 		case 'w': 
 			player->getTransform().translate(glm::vec3(0, speed, 0));
 			player->getAnimationComponent()->setState("up"); 
-			audio->playSoundEffectByIndex(0, 0); 
+			//audio->playSoundEffectByIndex(0, 0); 
 			break;
 		case 's': player->getTransform().translate(glm::vec3(0, -speed, 0));
 			player->getAnimationComponent()->setState("down"); 
-			audio->playSoundEffectByIndex(1, 0); 
+			//audio->playSoundEffectByIndex(1, 0); 
 			break;
 		case 'a': player->getTransform().translate(glm::vec3(-speed, 0, 0));
 			player->getAnimationComponent()->setState("left"); 
-			audio->playSoundEffectByIndex(2, 0); 
+			//audio->playSoundEffectByIndex(2, 0); 
 			break;
 		case 'd': player->getTransform().translate(glm::vec3(speed, 0, 0));
 			player->getAnimationComponent()->setState("right"); 
-			audio->playSoundEffectByIndex(3, 0); 
+			//audio->playSoundEffectByIndex(3, 0); 
 			break;
 		case 'q': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 		case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;

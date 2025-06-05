@@ -17,6 +17,8 @@ void LuciferSideLaserState::enter(Boss* boss) {
     lucifer->getLevel()->addObject(ss);
 
     timer = 0.08f * 33;
+
+    SoundManager::GetInstance()->PlaySFX("Lucifer-HorizontalBeam");
 }
 
 void LuciferSideLaserState::update(Boss* boss, float dt) {

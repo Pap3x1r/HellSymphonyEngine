@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngine.h"
+#include "SoundManager.h"
 #include "SquareMeshVbo.h"
 #include "SquareBorderMesh.h"
 #include "SimpleObject.h"

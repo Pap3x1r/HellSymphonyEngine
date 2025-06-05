@@ -15,7 +15,7 @@ void LuciferBeamRadiantState::enter(Boss* boss) {
 
     BeamRadiant* bm = new BeamRadiant();
     lucifer->getLevel()->addObject(bm);
-
+    SoundManager::GetInstance()->PlaySFX("Lucifer-BeamRadiant_Summon");
     timer = 0.08f * 33;
 }
 

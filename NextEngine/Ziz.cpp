@@ -270,6 +270,8 @@ void Ziz::phaseChangeTracker() {
 			cout << "half Health" << endl;
 			interruptPhaseChange();
 			hasTransformed = true;
+			SoundManager::GetInstance()->StopAllSounds();
+			SoundManager::GetInstance()->PlayMusic("Ziz_Gluttony-Soundtrack");
 		}
 		//currentPhase = zizPhase::secondPhase;
 	}
@@ -415,6 +417,7 @@ void Ziz::handleQTEInput(int input) {
 }
 
 void Ziz::startQTEMode(int target) {
+	SoundManager::GetInstance()->PlaySFX("Dante-QTE_Parry");
 	qteInputReceieved = false;
 	QTETarget = target;
 	QTECorrect = false;

@@ -47,6 +47,13 @@ private:
 	float holdButtonTimer = 0.0f;
 	float holdButtonThreshold = 0.5f;
 
+	float newGameTransitionTime = 0.0f;
+	float newGameTransitionDurationFirst = 2.0f;
+	float newGameTransitionDurationSecond = 7.5f;
+	bool newGameTransitioning = false;
+	bool newGameTransitioningComplete = false;
+
+	TexturedObject* TextMessage = nullptr;
 
 	float blackFadeTransitionTime = 0.0f;
 	float blackFadeTransitionDuration = 1.0f;
@@ -91,20 +98,24 @@ public:
 
 	void changeSelection(int direction);
 
+	void startNewGameTransition() {
+		newGameTransitioning = true;
+		newGameTransitioningComplete = false;
+		newGameTransitionTime = 0.0f;
+	}
+
 	void newGame() {
 		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
 		GameState targetGameState = GameEngine::getInstance()->loadGameState("../Resource/Saves/PlayerData/playerGameState.txt", 1);
 		//Inserting directories to load and level destination
-		if (targetGameState == GameState::GS_ZIZ) {
+		if (targetGameState == GameState::GS_LIMBO1) {
 			gameStateController->pendingLoad.textureDirs = {
 			"../Resource/Texture/Dante",
-			"../Resource/Texture/Ziz",
-			"../Resource/Texture/FinalZiz",
-			"../Resource/Texture/FinalZiz/VFX"
 			};
-			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
+			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_LIMBO1;
 		}
 
+		GameEngine::getInstance()->isNewGame = true;
 		//Change to loading screen
 		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
 	}
@@ -113,7 +124,13 @@ public:
 		GameStateController* gameStateController = GameEngine::getInstance()->getStateController();
 		GameState targetGameState = GameEngine::getInstance()->loadGameState("../Resource/Saves/PlayerData/playerGameState.txt", 0);
 		//Inserting directories to load and level destination
-		if (targetGameState == GameState::GS_ZIZ) {
+		if (targetGameState == GameState::GS_LIMBO1) {
+			gameStateController->pendingLoad.textureDirs = {
+			"../Resource/Texture/Dante",
+			};
+			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_LIMBO1;
+		}
+		else if (targetGameState == GameState::GS_ZIZ) {
 			gameStateController->pendingLoad.textureDirs = {
 			"../Resource/Texture/Dante",
 			"../Resource/Texture/Ziz",
@@ -122,7 +139,14 @@ public:
 			};
 			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_ZIZ;
 		}
-
+		else if (targetGameState == GameState::GS_LUCIFER) {
+			gameStateController->pendingLoad.textureDirs = {
+			"../Resource/Texture/Dante",
+			"../Resource/Texture/Lucifer",
+			};
+			gameStateController->pendingLoad.nextStateAfterLoad = GameState::GS_LUCIFER;
+		}
+		GameEngine::getInstance()->isNewGame = false;
 		//Change to loading screen
 		gameStateController->gameStateNext = GameState::GS_LOADINGSCREEN;
 	}

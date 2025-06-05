@@ -11,6 +11,9 @@
 #include "LevelLucifer.h"
 #include "LevelMainMenu.h"
 #include "LevelLoader.h"
+#include "LevelLimbo1.h"
+#include "LevelLimbo2.h"
+#include "LevelCredits.h"
 
 GameStateController::GameStateController() {
 	// set the initial game state
@@ -40,16 +43,19 @@ void GameStateController::loadLevel() {
 			break;
 		}
 		case GameState::GS_LIMBO1:
-			currentLevel = new LevelPrototype();
+			currentLevel = new LevelLimbo1();
 			break;
 		case GameState::GS_LIMBO2:
-			currentLevel = new LevelPrototype();
+			currentLevel = new LevelLimbo2();
 			break;
 		case GameState::GS_ZIZ:
 			currentLevel = new LevelBossTest();
 			break;
 		case GameState::GS_LUCIFER:
 			currentLevel = new LevelLucifer();
+			break;
+		case GameState::GS_CREDITS:
+			currentLevel = new LevelCredits();
 			break;
 		default:
 			cout << "gameStateCurr : invalid state!!" << endl;

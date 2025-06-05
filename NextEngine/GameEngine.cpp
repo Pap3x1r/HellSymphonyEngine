@@ -28,9 +28,9 @@ Time* GameEngine::getTime() {
 	return this->time;
 }
 
-AudioEngine* GameEngine::getAudio() {
-	return this->audio;
-}
+//AudioEngine* GameEngine::getAudio() {
+//	return this->audio;
+//}
 
 InputManager* GameEngine::getInputHandler() {
 	return inputHandler;
@@ -45,14 +45,12 @@ void GameEngine::init(int width, int height) {
 	setBackgroundColor(95.0f / 255, 110.0f / 255, 133.0f / 255);
 
 	stateController = new GameStateController();
-	//stateController->init(GameState::GS_MAINMENU);
-	stateController->init(GameState::GS_ZIZ);
-	//stateController->init(GameState::GS_LUCIFER);
+	stateController->init(GameState::GS_MAINMENU);
 
 	time = new Time();
 	inputHandler = new InputManager();  
-	audio = new AudioEngine();
-	audio->init("../Resource/Audio/SoundEffect", "../Resource/Audio/Music");
+	//audio = new AudioEngine();
+	//audio->init("../Resource/Audio/SoundEffect", "../Resource/Audio/Music");
 	TTF_Init();
 }
 
@@ -118,6 +116,23 @@ void GameEngine::savePlayerData(const Player* player, const std::string& filenam
 	else {
 		cerr << "Player is missing, save file does not write." << endl;
 	}
+
+	outFile.close();
+}
+
+void GameEngine::savePlayerData(int currentHP, int witherHP, int lives, const std::string& filename) {
+	std::ofstream outFile(filename, std::ios::out | std::ios::trunc);  // Overwrites file
+
+	if (!outFile) {
+		std::cerr << "Error opening file for writing!" << std::endl;
+		return;
+	}
+
+	outFile << "Player Health: " << currentHP << std::endl;
+	outFile << "Player Wither Health: " << witherHP << std::endl;
+	outFile << "Player Lives: " << lives << std::endl;
+
+	std::cout << "Saved Successfully." << std::endl;
 
 	outFile.close();
 }
@@ -199,6 +214,7 @@ GameState GameEngine::loadGameState(const std::string& filename, bool newGame) {
 	ifstream inFile(filename);
 	if (!inFile || newGame) {
 		if (newGame) {
+			if (inFile.is_open()) inFile.close();
 			cout << "Creating new game state file" << endl;
 
 			string playerDataFile = "../Resource/Saves/PlayerData/playerData.txt";
@@ -217,14 +233,14 @@ GameState GameEngine::loadGameState(const std::string& filename, bool newGame) {
 		// Create a new file with default game state
 		ofstream outFile(filename, ios::out | ios::trunc);
 		if (outFile) {
-			outFile << "Game State: " << static_cast<int>(GameState::GS_ZIZ) << endl;
+			outFile << "Game State: " << static_cast<int>(GameState::GS_LIMBO1) << endl;
 			outFile.close();
 		}
 		else {
 			cerr << "Failed to create game state file." << endl;
 		}
 
-		return GameState::GS_ZIZ;
+		return GameState::GS_LIMBO1;
 	}
 
 	std::string line;
@@ -243,5 +259,74 @@ GameState GameEngine::loadGameState(const std::string& filename, bool newGame) {
 	}
 
 	inFile.close();
-	return GameState::GS_MAINMENU;
+	return GameState::GS_LIMBO1;
+}
+
+void GameEngine::savePlayerWeaponType(Player* player, const std::string& filepath) {
+	if (!player) return;
+
+	std::ofstream outFile(filepath, std::ios::out | std::ios::trunc);
+	if (!outFile) {
+		std::cerr << "Failed to open weapon type save file.\n";
+		return;
+	}
+
+	WeaponType currentWeapon = player->getWeaponType();
+	outFile << "Weapon Type: " << static_cast<int>(currentWeapon) << std::endl;
+
+	std::cout << "Weapon type saved: " << static_cast<int>(currentWeapon) << std::endl;
+	outFile.close();
+}
+
+WeaponType GameEngine::loadPlayerWeaponType(const std::string& filename, bool newGame) {
+	ifstream inFile(filename);
+
+	if (!inFile || newGame) {
+		if (newGame) {
+			if (inFile.is_open()) inFile.close();
+			std::cout << "Creating new weapon type save file\n";
+
+			// Delete existing file if it exists
+			if (filesystem::exists(filename)) {
+				filesystem::remove(filename);
+				std::cout << "Deleted " << filename << "\n";
+			}
+			else {
+				std::cout << "No weapon type file to delete.\n";
+			}
+		}
+		else {
+			std::cerr << "Weapon type file not found. Creating new file with default (NONE).\n";
+		}
+
+		// Create a new file with default weapon type
+		ofstream outFile(filename, ios::out | ios::trunc);
+		if (outFile) {
+			outFile << "Weapon Type: " << static_cast<int>(WeaponType::None_) << endl;
+			outFile.close();
+		}
+		else {
+			std::cerr << "Failed to create weapon type file.\n";
+		}
+
+		return WeaponType::None_;
+	}
+
+	std::string line;
+	if (std::getline(inFile, line)) {
+		size_t pos = line.find("Weapon Type:");
+		if (pos != std::string::npos) {
+			try {
+				int typeInt = std::stoi(line.substr(pos + std::string("Weapon Type:").length()));
+				inFile.close();
+				return static_cast<WeaponType>(typeInt);
+			}
+			catch (...) {
+				std::cerr << "Error parsing weapon type. Using None_.\n";
+			}
+		}
+	}
+
+	inFile.close();
+	return WeaponType::None_;
 }

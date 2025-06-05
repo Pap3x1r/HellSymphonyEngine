@@ -14,6 +14,8 @@ void PlayerIdleState::enter(Player* player) {
 
     switch (player->getWeaponType()) {
     case None_:
+        player->setTexture("../Resource/Texture/Dante/DanteNone/dante_unarmed_idle.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("idleNone");
         break;
     case Sword_:
         player->setTexture("../Resource/Texture/Dante/DanteSword/dante_idle_sword.png", 1, 8, 0);
@@ -52,6 +54,8 @@ void PlayerWalkState::enter(Player* player) {
 
     switch (player->getWeaponType()) {
     case None_:
+        player->setTexture("../Resource/Texture/Dante/DanteNone/dante_unarmed_walk.png", 1, 8, 0);
+        player->getAnimationComponent()->setState("walkingNone");
         break;
     case Sword_:
         player->setTexture("../Resource/Texture/Dante/DanteSword/dante_walking_sword.png", 1, 8, 0); //set new texture ("path", row, column)
@@ -90,6 +94,8 @@ void PlayerJumpUpState::enter(Player* player) {
 
     switch (player->getWeaponType()) {
     case None_:
+        player->setTexture("../Resource/Texture/Dante/DanteNone/dante_unarmed_jump.png", 1, 2, 0);
+        player->getAnimationComponent()->setState("jumpingNone");
         break;
     case Sword_:
         player->setTexture("../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png", 1, 2, 0); //set new texture ("path", row, column, starting anim)
@@ -108,6 +114,7 @@ void PlayerJumpUpState::enter(Player* player) {
     }
 
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, -0.165f, 0.0f));
+    SoundManager::GetInstance()->PlaySFX("Dante-Jump");
 }
 
 void PlayerJumpUpState::update(Player* player, float dt_) {
@@ -131,6 +138,8 @@ void PlayerFallDownState::enter(Player* player) {
 
     switch (player->getWeaponType()) {
     case None_:
+        player->setTexture("../Resource/Texture/Dante/DanteNone/dante_unarmed_jump.png", 1, 2, 1);
+        player->getAnimationComponent()->setState("fallingNone");
         break;
     case Sword_:
         player->setTexture("../Resource/Texture/Dante/DanteSword/dante_jumping_sword.png", 1, 2, 1); //set new texture ("path", row, column)
@@ -176,6 +185,8 @@ void PlayerDashState::enter(Player* player) {
 
     switch (player->getWeaponType()) {
     case None_:
+        player->setTexture("../Resource/Texture/Dante/DanteNone/dante_unarmed_dash.png", 1, 1, 0);
+        player->getAnimationComponent()->setState("dashNone");
         break;
     case Sword_:
         player->setTexture("../Resource/Texture/Dante/DanteSword/dante_dash_sword.png", 1, 1, 0); //set new texture ("path", row, column)
@@ -194,6 +205,7 @@ void PlayerDashState::enter(Player* player) {
     }
 
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.0f, -0.1f, 0.0f));
+    SoundManager::GetInstance()->PlaySFX("Dante-Dash");
 }
 
 void PlayerDashState::update(Player* player, float dt_) {

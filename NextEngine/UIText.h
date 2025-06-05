@@ -84,34 +84,6 @@ public:
 
         int stateIndex = static_cast<int>(getMenuState());
 
-        if (ImGui::TreeNode(name.c_str())) {
-            if (ImGui::TreeNode("Position")) {
-                bool changed = false;
-                changed |= ImGui::InputFloat("x Position", &xPosition);
-                changed |= ImGui::InputFloat("y Position", &yPosition);
-                if (changed) {
-                    getTransform().setPosition(glm::vec3(xPosition, yPosition, getTransform().getPosition().z));
-                }
-                ImGui::TreePop();
-            }
-
-            if (ImGui::TreeNode("Scale")) {
-                bool changed = false;
-                changed |= ImGui::InputFloat("x Scale", &xScale);
-                changed |= ImGui::InputFloat("y Scale", &yScale);
-                if (changed) {
-                    getTransform().setScale(glm::vec3(xScale, yScale, getTransform().getScale().z));
-                }
-                ImGui::TreePop();
-            }
-
-            if (ImGui::Combo("Menu State", &stateIndex, stateNames, IM_ARRAYSIZE(stateNames))) {
-                //currentWeapon = static_cast<WeaponType>(weaponIndex);
-            }
-
-            ImGui::TreePop();
-        }
-
         glm::vec3 pos = getTransform().getPosition();
         xPosition = pos.x;
         yPosition = pos.y;

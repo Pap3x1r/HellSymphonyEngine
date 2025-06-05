@@ -47,6 +47,7 @@ void PlayerLightShieldAttack1::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Shield_Attack-1");
         }
         break;
     case ACTIVE:
@@ -116,6 +117,7 @@ void PlayerLightShieldAttack2::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Shield_Attack-2");
         }
         break;
     case ACTIVE:
@@ -321,6 +323,7 @@ void PlayerSmallShieldUlt::update(Player* player, float dt_) {
             attackCollider->setTexture("../Resource/Texture/Dante/DanteShield/dante_shield_smallUlt_explosion.png", 1, 10, 0);
             attackCollider->getAnimationComponent()->setState("explosion");
             attackCollider->setDraw(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Shield_UltSmall");
         }
         break;
     case ACTIVE:
@@ -361,12 +364,14 @@ void PlayerBigShieldUlt::enter(Player* player) {
     //cout << "Player enters Shield Big Ult state.\n";
     player->setTexture("../Resource/Texture/Dante/DanteShield/dante_bigUlt_shield.png", 1, 24, 0);
     player->getAnimationComponent()->setState("bigUltShield");
+    player->getAnimationComponent()->setLoop(false);
     currentPhase = STARTUP;
     time = 0.0f;
     player->getShield()->setInChainAttack(true); //Player is in chain attack
     player->setInvincibleFloat(2.0f);
 
     player->getShield()->setBigUltReady(false);
+    SoundManager::GetInstance()->PlaySFX("Dante-Shield_UltBig");
 }
 
 void PlayerBigShieldUlt::update(Player* player, float dt_) {
@@ -381,7 +386,7 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
     case STARTUP:
         //do something
         //change phase
-        if (time >= 1.25f) {
+        if (time >= 1.7f) {
             currentPhase = ACTIVE;
             time = 0;
             attackCollider->resetHit();
@@ -405,7 +410,7 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
         }
         break;
     case RECOVERY:
-        if (time >= 0.5f) { //time's up
+        if (time >= 0.0f) { //time's up
             player->getShield()->setInChainAttack(false); // no longer in chain attack
             player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
         }
@@ -421,4 +426,5 @@ void PlayerBigShieldUlt::update(Player* player, float dt_) {
 void PlayerBigShieldUlt::exit(Player* player) {
     //cout << "Player exits Shield Big Ult state.\n";
     player->getShield()->setBigUltReady(true);
+    player->getAnimationComponent()->setLoop(false);
 }

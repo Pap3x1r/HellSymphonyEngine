@@ -59,6 +59,7 @@ void PlayerLightSwordAttack1::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Sword_LightAttack-1");
         }
         break;
     case ACTIVE:
@@ -162,6 +163,7 @@ void PlayerLightSwordAttack2::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Sword_LightAttack-2");
         }
         break;
     case ACTIVE:
@@ -262,6 +264,7 @@ void PlayerLightSwordAttack3::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Sword_LightAttack-3");
         }
         break;
     case ACTIVE:
@@ -342,6 +345,7 @@ void PlayerHeavySwordAttack::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+            SoundManager::GetInstance()->PlaySFX("Dante-Sword_HeavyAttack");
         }
         break;
     case ACTIVE:
@@ -385,6 +389,7 @@ void PlayerSmallSwordUlt::enter(Player* player) {
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.2f, 0.0f, 0.0f));
     player->getSword()->setSmallUltReady(false);
+    SoundManager::GetInstance()->PlaySFX("Dante-Sword_UltSmall");
 }
 
 void PlayerSmallSwordUlt::update(Player* player, float dt_) {
@@ -405,6 +410,7 @@ void PlayerSmallSwordUlt::update(Player* player, float dt_) {
             attackCollider->resetHit();
             collider->setDrawCollider(true);
             collider->getColliderComponent()->setEnableCollision(true);
+         
             if (player->getFacingRight()) {
                 player->getTransform().setPosition(glm::vec3(player->getTransform().getPosition().x + 4.0f, player->getTransform().getPosition().y, player->getTransform().getPosition().z));
             }
@@ -457,6 +463,8 @@ void PlayerBigSwordUlt::enter(Player* player) {
     player->getPhysicsComponent()->setVelocity(glm::vec2(0.0f, player->getPhysicsComponent()->getVelocity().y));
     player->getAnimationComponent()->setAnimOffset(glm::vec3(0.125f, -0.2f, 0.0f));
     player->getSword()->setBigUltReady(false);
+    player->setInvincibleFloat(2.5f);
+    SoundManager::GetInstance()->PlaySFX("Dante-Sword_UltBig");
 }
 
 void PlayerBigSwordUlt::update(Player* player, float dt_) {

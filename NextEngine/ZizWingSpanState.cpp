@@ -42,8 +42,6 @@ void ZizWingSpanState::enter(Boss* boss) {
 	attackCollider->getTransform().setPosition(glm::vec3(ziz->getTransform().getPosition().x, ziz->getTransform().getPosition().y - 1.5f, 0.0f));
 
 	ziz->getLevel()->addObject(attackCollider);
-
-
 	//cout << "Ziz entered wing span" << endl;
 }
 	
@@ -53,6 +51,7 @@ void ZizWingSpanState::update(Boss* boss, float dt) {
 
             startupTimer -= dt;
             if (startupTimer <= 0) {
+				SoundManager::GetInstance()->PlaySFX("Ziz_WingSweep");
                 isCurling = true;
                 //ziz->setTexture("../Resource/Ziz/WingSpan_2.png");
 				attackCollider->setActive(true);

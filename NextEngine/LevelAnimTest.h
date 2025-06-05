@@ -7,7 +7,7 @@ class LevelAnimTest : public Level
 private:
 	list<DrawableObject*> objectsList;
 	TexturedObject * player;
-	AudioEngine * audio;
+	//AudioEngine * audio;
 	int d = 0;
 	int row = 0;
 	int col = 0;

@@ -77,6 +77,7 @@ void IceBomb::update(float dt) {
         if (hasBombed == false) {
             activeTimer -= dt;
             if (activeTimer <= 0) {
+                SoundManager::GetInstance()->PlaySFX("Lucifer_SequenceExplosion");
                 hasBombed = true;
                 isActive = false;
             }
@@ -121,6 +122,7 @@ void IceBomb::onCollisionStay(Collider* collider) {
                     player->setNewColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
+                    SoundManager::GetInstance()->PlaySFX("Dante-Shield_BlockPerfect");
                 }
                 else { //if blocking but not perfectly
                     
@@ -130,6 +132,7 @@ void IceBomb::onCollisionStay(Collider* collider) {
                     player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
+                    SoundManager::GetInstance()->PlaySFX("Dante-Shield_Block");
                 }
             }
             else { //is not blocking

@@ -28,9 +28,9 @@ void LuciferIdleState::update(Boss* boss, float dt) {
         idleTimer -= dt;
     }
     else {
-        lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);
+        //lucifer->getStateMachine()->changeState(LuciferBeamRadiantState::getInstance(), lucifer);
         //lucifer->getStateMachine()->changeState(LuciferIdleState::getInstance(), lucifer);
-        //pickState();
+        pickState();
     }
 }
 

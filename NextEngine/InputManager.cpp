@@ -127,7 +127,7 @@ void InputManager::updateInput() {
                 // Normalize the trigger value to 0.0f - 1.0f range
                 leftTrigger = static_cast<float>(event.caxis.value) / 32767.0f;
                 // You might want to clamp the value to ensure it's within the range
-                if (leftTrigger < 0.0f) leftTrigger = 0.0f;
+                if (leftTrigger < 0.2f) leftTrigger = 0.0f;
                 if (leftTrigger > 1.0f) leftTrigger = 1.0f;
                 if (leftTrigger > 0.1f) {
                     setLastInput(InputDevice::CONTROLLER);
@@ -138,7 +138,7 @@ void InputManager::updateInput() {
                 // Normalize the trigger value to 0.0f - 1.0f range
                 rightTrigger = static_cast<float>(event.caxis.value) / 32767.0f;
                 // You might want to clamp the value to ensure it's within the range
-                if (rightTrigger < 0.0f) rightTrigger = 0.0f;
+                if (rightTrigger < 0.2f) rightTrigger = 0.0f;
                 if (rightTrigger > 1.0f) rightTrigger = 1.0f;
                 if (rightTrigger > 0.1f) {
                     setLastInput(InputDevice::CONTROLLER);

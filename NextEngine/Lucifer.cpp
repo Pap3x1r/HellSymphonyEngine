@@ -190,6 +190,7 @@ void Lucifer::handleQTEInput(int input) {
 }
 
 void Lucifer::startQTEMode(int target) {
+	SoundManager::GetInstance()->PlaySFX("Dante-QTE_Parry");
 	qteInputReceieved = false;
 	QTETarget = target;
 	QTECorrect = false;

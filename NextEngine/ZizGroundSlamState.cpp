@@ -43,7 +43,7 @@ void ZizGroundSlamState::enter(Boss* boss) {
     hasImpacted = false;
 
     // Timers
-    startupTime = 0.08f * 6;
+    startupTime = 0.08f * 8;
     flyupTime = 0.08f * 5;
     hoverTime = 0.08f * 3;
 
@@ -55,6 +55,8 @@ void ZizGroundSlamState::enter(Boss* boss) {
 
     ziz->setTexture("../Resource/Texture/FinalZiz/groundslam/1_Zyzz_GroundSlam_Startup.png", 1, 14, 0);
     ziz->getAnimationComponent()->setState("groundslamstartup");
+
+    SoundManager::GetInstance()->PlaySFX("Ziz_GroundSlam");
 }
 
 void ZizGroundSlamState::update(Boss* boss, float dt) {

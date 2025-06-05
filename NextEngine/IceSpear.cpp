@@ -273,7 +273,7 @@ void IceSpear::update(float dt) {
 
             if (delayBeforeLaunch <= 0.0f) {
                 hasLaunched = true;
-
+                SoundManager::GetInstance()->PlaySFX("Lucifer-Barrage_Release");
                 if (facingDirection == FacingDirection::tracking) {
                     glm::vec3 playerPos = targetPlayer->getTransform().getPosition();
                     direction = glm::normalize(playerPos - getTransform().getPosition());

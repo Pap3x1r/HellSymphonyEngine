@@ -88,6 +88,7 @@ void Lightning::update(float dt) {
 	if (hasStruck == false) {
 		attackTimer -= dt;
 		if (attackTimer <= 0) {
+			SoundManager::GetInstance()->PlaySFX("Ziz_Lightning");
 			ziz->getLevel()->addObject(attackCollider);
 			attackCollider->setActive(true);
 			ziz->startShake(0.08f * 3, 0.005f);

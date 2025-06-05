@@ -88,6 +88,21 @@
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="BowUltimateCollider.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Impale.cpp" />
+    <ClCompile Include="InteractableObject.cpp" />
+    <ClCompile Include="LevelLimbo1.cpp" />
+    <ClCompile Include="LevelLimbo2.cpp" />
+    <ClCompile Include="LevelLucifer.cpp" />
+    <ClCompile Include="Lucifer.cpp" />
+    <ClCompile Include="LuciferIdleState.cpp" />
+    <ClCompile Include="LuciferStateMachine.cpp" />
+    <ClCompile Include="QTEButtonUI.cpp" />
+    <ClCompile Include="VergilMovementState.cpp" />
+    <ClCompile Include="InteractStateMachine.cpp" />
+    <ClCompile Include="ZizImpaleState.cpp" />
+    <ClCompile Include="ZizIntroState.cpp" />
+    <ClCompile Include="ZizQTEState.cpp" />
+    <ClCompile Include="PortalState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Resource\imgui\include\imconfig.h" />
@@ -186,6 +201,24 @@
       <Filter>Animation</Filter>
     </ClInclude>
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Impale.h" />
+    <ClInclude Include="InteractableObject.h" />
+    <ClInclude Include="LevelLimbo1.h" />
+    <ClInclude Include="LevelLimbo2.h" />
+    <ClInclude Include="LevelLucifer.h" />
+    <ClInclude Include="Lucifer.h" />
+    <ClInclude Include="LuciferIdleState.h" />
+    <ClInclude Include="LuciferStateM.h" />
+    <ClInclude Include="LuciferStateMachine.h" />
+    <ClInclude Include="QTEButtonUI.h" />
+    <ClInclude Include="VergilMovementState.h" />
+    <ClInclude Include="InteractStateM.h" />
+    <ClInclude Include="InteractStateMachine.h" />
+    <ClInclude Include="ZizImpaleState.h" />
+    <ClInclude Include="ZizIntroState.h" />
+    <ClInclude Include="ZizQTEState.h" />
+    <ClInclude Include="WeaponType.h" />
+    <ClInclude Include="PortalState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shader\fragment.shd" />

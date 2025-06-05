@@ -81,22 +81,42 @@ void Arrow::onTriggerEnter(Collider* collider) {
 		}
 
 		
-		if (ziz) {
-			if (ziz->getIsInvincible() == false) {
-				ziz->getHealth()->takeDamage(damage);
-				ziz->setHitEffectStrength(1.0f);
+		if (GameEngine::getInstance()->getStateController()->gameStateCurr == GameState::GS_ZIZ) {
+			if (ziz) {
+				if (ziz->getIsInvincible() == false) {
+					ziz->getHealth()->takeDamage(damage);
+					ziz->setHitEffectStrength(1.0f);
+					SoundManager::GetInstance()->PlaySFX("Misc-HitEnemy");
+				}
 			}
 		}
 
-		if (lucifer) {
-			if (lucifer->getIsInvincible() == false) {
-				lucifer->startShake(0.1f, 0.002f);
-				lucifer->getHealth()->takeDamage(damage);
-				lucifer->setHitEffectStrength(1.0f);
+		if (GameEngine::getInstance()->getStateController()->gameStateCurr == GameState::GS_LUCIFER) {
+			if (lucifer) {
+				if (lucifer->getIsInvincible() == false) {
+					lucifer->startShake(0.1f, 0.002f);
+					lucifer->getHealth()->takeDamage(damage);
+					lucifer->setHitEffectStrength(1.0f);
+					SoundManager::GetInstance()->PlaySFX("Misc-HitEnemy");
+				}
 			}
+
 		}
+		
 
 		DrawableObject::destroyObject(this);
+	}
+
+	InteractableObject* dummy = dynamic_cast<InteractableObject*>(obj);
+	if (dummy) {
+		if (dummy->getCanHit()) {
+			if (player) {
+				player->increaseUltimateGauge(ultGainPercentage);
+			}
+			dummy->setHitEffectStrength(1.0f);
+			DrawableObject::destroyObject(this);
+			SoundManager::GetInstance()->PlaySFX("Misc-HitDummy");
+		}
 	}
 }
 

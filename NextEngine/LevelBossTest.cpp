@@ -9,9 +9,6 @@
 #include <fstream>
 using namespace std;
 
-
-
-
 void LevelBossTest::levelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->loadData();
@@ -23,6 +20,11 @@ void LevelBossTest::levelLoad() {
 }
 
 void LevelBossTest::levelInit() {
+
+	SoundManager::GetInstance()->StopAllSounds();
+	SoundManager::GetInstance()->PlayMusic("Ziz_Lust-Soundtrack");
+	SoundManager::GetInstance()->PlaySFX("Ziz_Lust-Ambient", true);
+
 	currentControlType = ControlType::keyboard;
 
 	TexturedObject* background = new TexturedObject("background");
@@ -38,7 +40,15 @@ void LevelBossTest::levelInit() {
 	player->getTransform().setPosition(glm::vec3(-5.0, -0.8f, 0.0f));
 	objectsList.push_back(player->getGroundChecker());
 
-	player->setWeaponType(Sword_);
+	if (GameEngine::getInstance()->isNewGame == true) {
+		player->setWeaponType(GameEngine::getInstance()->loadPlayerWeaponType("../Resource/Saves/PlayerData/playerWeaponTypeData.txt", true));
+		GameEngine::getInstance()->isNewGame = false;
+	}
+	else {
+		player->setWeaponType(GameEngine::getInstance()->loadPlayerWeaponType("../Resource/Saves/PlayerData/playerWeaponTypeData.txt", false));
+	}
+
+
 	player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
 
 	playerTimeScale = 1.0f;
@@ -111,6 +121,7 @@ void LevelBossTest::levelInit() {
 	overheatBarBackground->setTexture("../Resource/Texture/UI/Bow/Overheat_Empty_BG.png");
 	overheatBarBackground->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
 	overheatBarBackground->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	overheatBarBackground->drawLayer = 10;
 	objectsList.push_back(overheatBarBackground);
 	playerOverheatBarBackground = overheatBarBackground;
 
@@ -118,6 +129,7 @@ void LevelBossTest::levelInit() {
 	overheatBar->setColor(255.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f);
 	overheatBar->getTransform().setScale(glm::vec3(3.665f, 0.08f, 0.0f));
 	overheatBar->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	overheatBar->drawLayer = 10;
 	objectsList.push_back(overheatBar);
 	playerOverheatBar = overheatBar;
 
@@ -125,6 +137,7 @@ void LevelBossTest::levelInit() {
 	overheatBarFrame->setTexture("../Resource/Texture/UI/Bow/Overheat_Frame.png");
 	overheatBarFrame->getTransform().setScale(glm::vec3(1.37f * 2.75f, 0.02f * 4.5f, 1.0f));
 	overheatBarFrame->getTransform().setPosition(glm::vec3(-4.1f, -3.55f, 0.0f));
+	overheatBarFrame->drawLayer = 10;
 	objectsList.push_back(overheatBarFrame);
 	playerOverheatBarFrame = overheatBarFrame;
 
@@ -134,12 +147,14 @@ void LevelBossTest::levelInit() {
 	healthBarBackground->setTexture("../Resource/Texture/UI/Healthbar_BG.png");
 	healthBarBackground->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
 	healthBarBackground->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
+	healthBarBackground->drawLayer = 10;
 	objectsList.push_back(healthBarBackground);
 
 	SimpleObject* witherHealthBar_ = new SimpleObject();
 	witherHealthBar_->setColor(106.0f / 255.0f, 109.0f / 255.0f, 115.0f / 255.0f);
 	witherHealthBar_->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
 	witherHealthBar_->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
+	witherHealthBar_->drawLayer = 10;
 	objectsList.push_back(witherHealthBar_);
 	witherHealthBar = witherHealthBar_;
 
@@ -147,6 +162,7 @@ void LevelBossTest::levelInit() {
 	healthBar->setColor(1.0f, 0.0f, 0.0f);
 	healthBar->getTransform().setScale(glm::vec3(5.375f, 0.23f, 0.0f));
 	healthBar->getTransform().setPosition(glm::vec3(-5.05f, -3.95f, 0.0f));
+	healthBar->drawLayer = 10;
 	objectsList.push_back(healthBar);
 	playerHealthBar = healthBar;
 
@@ -154,6 +170,7 @@ void LevelBossTest::levelInit() {
 	ultimateBar->setColor(235.0f / 255.0f, 168.0f / 255.0f, 52.0f / 255.0f);
 	ultimateBar->getTransform().setScale(glm::vec3(3.18f, 0.25f, 0.0f));
 	ultimateBar->getTransform().setPosition(glm::vec3(-6.165f, -4.225f, 0.0f));
+	ultimateBar->drawLayer = 10;
 	objectsList.push_back(ultimateBar);
 	playerUltimateBar = ultimateBar;
 
@@ -161,14 +178,31 @@ void LevelBossTest::levelInit() {
 	healthBarFrame->setTexture("../Resource/Texture/UI/Healthbar_Frame.png");
 	healthBarFrame->getTransform().setScale(glm::vec3(2.42f * 2.5f, 0.5f * 2.5f, 1.0f));
 	healthBarFrame->getTransform().setPosition(glm::vec3(-5.0f, -4.0f, 0.0f));
+	healthBarFrame->drawLayer = 10;
 	objectsList.push_back(healthBarFrame);
 
+	//Overheat
+	TexturedObject* bossHealthBarBackground = new TexturedObject();
+	bossHealthBarBackground->setTexture("../Resource/Texture/UI/Boss_Healthbar_BG.png");
+	bossHealthBarBackground->getTransform().setScale(glm::vec3(4.13f * 1.5f, 0.62f * 1.5f, 1.0f));
+	bossHealthBarBackground->getTransform().setPosition(glm::vec3(0.0f, 4.0f, 0.0f));
+	bossHealthBarBackground->drawLayer = 10;
+	objectsList.push_back(bossHealthBarBackground);
+
 	SimpleObject* bossHealthBar_ = new SimpleObject();
-	bossHealthBar_->setColor(0.0f, 1.0f, 0.0f);
-	bossHealthBar_->getTransform().setScale(glm::vec3(9.0f, 0.25f, 0.0f));
-	bossHealthBar_->getTransform().setPosition(glm::vec3(0.0f, 4.0f, 0.0f));
+	bossHealthBar_->setColor(1.0f, 0.0f, 0.0f);
+	bossHealthBar_->getTransform().setScale(glm::vec3(5.1f, 0.25f, 0.0f));
+	bossHealthBar_->getTransform().setPosition(glm::vec3(-0.05f, 4.0f, 0.0f));
+	bossHealthBar_->drawLayer = 10;
 	objectsList.push_back(bossHealthBar_);
 	bossHealthBar = bossHealthBar_;
+
+	TexturedObject* bossHealthBarFrame = new TexturedObject();
+	bossHealthBarFrame->setTexture("../Resource/Texture/UI/Boss_Healthbar_Frame.png");
+	bossHealthBarFrame->getTransform().setScale(glm::vec3(4.13f * 1.5f, 0.62f * 1.5f, 1.0f));
+	bossHealthBarFrame->getTransform().setPosition(glm::vec3(0.0f, 4.0f, 0.0f));
+	bossHealthBarFrame->drawLayer = 10;
+	objectsList.push_back(bossHealthBarFrame);
 
 	createSkillsIcon();
 
@@ -185,6 +219,8 @@ void LevelBossTest::levelInit() {
 	blackFade = blackFade_;
 	blackFade->setAlpha(1.0f);
 	firstStart = true;
+
+	levelEnd = false;
 
 	createPauseUI();
 
@@ -213,10 +249,6 @@ void LevelBossTest::levelUpdate() {
 	if (currentControlType == ControlType::keyboard) {
 		cout << "Current Control Scheme: Keyboard" << endl;
 	}*/
-
-	ImGui::SetWindowSize(ImVec2(400, 300));
-	ImGui::Begin("Debug Panel");
-
 
 	/*if (inputManager) {
 		if (inputManager->getLastInput() == InputDevice::KEYBOARD) {
@@ -358,8 +390,6 @@ void LevelBossTest::levelUpdate() {
 		}
 	}
 
-
-
 	if (player->getHealth()->getCurrentHP() <= 0) {
 		player->setIsDead(true);
 		player->setTexture("../Resource/Texture/Dante/dante_Death.png", 1, 1, 0);
@@ -377,14 +407,39 @@ void LevelBossTest::levelUpdate() {
 		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
 		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
 		playerTimeScale = newScale;
-	}
 
-	if (ziz->getHealth()->getCurrentHP() <= 0) {
+		transitionDuration = 2.0f;
+
+		if (!levelEnd) {
+			levelEnd = true;
+			SoundManager::GetInstance()->StopAllSounds();
+			SoundManager::GetInstance()->PlaySFX("Misc-Die+DeathScreen");
+		}
+
+		if (playerTimeScale <= 0.5) {
+			changeMenuState(MenuState::DEATH);
+		}
+	}
+	else if (ziz->getHealth()->getCurrentHP() <= 0) {
 		player->setIsDead(true);
 		float targetScale = 0.0f;
 		float slowdownSpeed = 1.0f; // adjust for faster/slower transition
 		float newScale = glm::mix(playerTimeScale, targetScale, slowdownSpeed * dt);
 		playerTimeScale = newScale;
+		transitionDuration = 2.0f;
+
+		if (!levelEnd) {
+			levelEnd = true;
+			SoundManager::GetInstance()->PlaySFX("Misc-VictoryScreen");
+		}
+
+		if (playerTimeScale <= 0.5) {
+			changeMenuState(MenuState::VICTORY);
+		}
+	}
+	
+	if (player->getHealth()->getCurrentHP() > 0 && ziz->getHealth()->getCurrentHP() > 0) {
+		transitionDuration = 0.2f;
 	}
 
 	updateUIBar();
@@ -399,8 +454,6 @@ void LevelBossTest::levelUpdate() {
 
 
 	//handleObjectCollision(objectsList);
-
-	ImGui::End();
 }
 
 void LevelBossTest::levelDraw() {
@@ -458,7 +511,7 @@ void LevelBossTest::handleKey(char key) {
 	bool playerIsMoving = false;
 
 	if (currentMenuState != MenuState::MAIN) {
-		if (key == 'E') {
+		if (key == 'E' && currentMenuState != MenuState::DEATH && currentMenuState != MenuState::VICTORY) {
 			changeMenuState(MenuState::MAIN);
 		}
 		keyboardUIHandling(key);
@@ -563,7 +616,8 @@ void LevelBossTest::handleKey(char key) {
 		break;
 	case 'm':
 		//cout << "M pressed" << endl;
-		ziz->interruptDeath();
+		//ziz->interruptDeath();
+		ziz->getHealth()->takeDamage(10000.0f);
 		break;
 	case 'q':
 		if (player->getIsGrounded() == false) return;
@@ -572,24 +626,11 @@ void LevelBossTest::handleKey(char key) {
 		switchControlType(keyboard);
 		playerUltimateInput();
 		break;
-	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-		//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
-		//case 'f': //player->getBow()->setEnableDebug(); break;
-			//player->getHealth()->takeDamage(99);
-			//player->increaseUltimateSlot(1);
+	case 'r': 
+		player->getHealth()->takeDamage(100.0f);
+
 		break;
-	case 'h':
-		player->setWeaponType(Bow_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
-	case 'j':
-		player->setWeaponType(Sword_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
-	case 'g':
-		player->setWeaponType(Shield_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
+
 	case 'I': //No Movement Input -> Idle
 
 		if (player->getIsDashing() == false) {
@@ -632,39 +673,13 @@ void LevelBossTest::handleKey(char key) {
 	case 't':
 		//player->startShake(0.1f, 0.0025f);
 		//ziz->startShake(0.2f, 0.005f);
-		player->increaseUltimateGauge(100.0f);
+		//player->increaseUltimateGauge(100.0f);
 		//ziz->interruptPhaseChange();
 		//currentMenuState = MenuState::MAIN;
 		/*qbui = new QTEButtonUI(0);
 		objectsList.push_back(qbui);*/
 		//ziz->interruptIntoPhase();
 
-		break;
-
-	case 'l':
-
-		changeMenuState(MenuState::PAUSE);
-		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
-		addObject(ultZizOnBG_);
-		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
-
-		/*DrawableObject* lightning_ = ziz->createLightning();
-		addObject(lightning_);*/
-
-		/*DrawableObject* newStormRise = ziz->createStormRise();
-		addObject(newStormRise);*/
-
-		/*DrawableObject* newGust = ziz->createGust();
-		addObject(newGust);*/
-		//qbui->expire();
-
-		//ziz->interruptIntoPhase();
-		//ziz->interruptPhaseChange();
-
-		//ziz->startShake(0.2f, 0.005f);
-
-		//ziz->createChompTentacle();
-		//ziz->resetCam();
 		break;
 	}
 
@@ -680,7 +695,16 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 	speed *= dt;
 
 	if (currentMenuState != MenuState::MAIN) {
+		if (button == SDL_CONTROLLER_BUTTON_START && currentMenuState != MenuState::DEATH && currentMenuState != MenuState::VICTORY) {
+			changeMenuState(MenuState::MAIN);
+		}
+
+		controllerUIHandling(button);
 		return;
+	}
+
+	if (button == SDL_CONTROLLER_BUTTON_START) {
+		changeMenuState(MenuState::PAUSE);
 	}
 
 
@@ -860,15 +884,6 @@ void LevelBossTest::handleControllerButton(SDL_GameControllerButton button) {
 
 		break;
 	case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
-		if (player->getIsGrounded() == false) return;
-		if (player->getIsDashing() == true) return;
-		if (player->getIsStunned() == true) return;
-		if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
-			return;
-		}
-		switchControlType(controller);
-		//ziz->interruptIntoPhase();
-		playerUltimateInput();
 
 		break;
 
@@ -1043,6 +1058,19 @@ void LevelBossTest::handleAnalogStick(int type, char key) {
 
 		}
 	}
+	else if (type == 5) {
+		if (key == '6') {
+			if (player->getIsGrounded() == false) return;
+			if (player->getIsDashing() == true) return;
+			if (player->getIsStunned() == true) return;
+			if (player->getSword()->getInChainAttack() || player->getShield()->getInChainAttack() || player->getShield()->getIsHolding() || player->getBow()->getIsShooting()) { //Prevent returning back to idle
+				return;
+			}
+			switchControlType(controller);
+			//ziz->interruptIntoPhase();
+			playerUltimateInput();
+		}
+	}
 }
 
 void LevelBossTest::addObject(DrawableObject* obj) {
@@ -1064,6 +1092,7 @@ void LevelBossTest::createSkillsIcon() {
 	bowSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_Off.png");
 	bowSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	bowSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	bowSmallUltIconOff_->drawLayer = 10;
 	objectsList.push_back(bowSmallUltIconOff_);
 	bowSmallUltIconOff = bowSmallUltIconOff_;
 
@@ -1071,6 +1100,7 @@ void LevelBossTest::createSkillsIcon() {
 	bowSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Min_On.png");
 	bowSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	bowSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	bowSmallUltIconOn_->drawLayer = 10;
 	objectsList.push_back(bowSmallUltIconOn_);
 	bowSmallUltIconOn = bowSmallUltIconOn_;
 
@@ -1078,6 +1108,7 @@ void LevelBossTest::createSkillsIcon() {
 	bowBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_Off.png");
 	bowBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	bowBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	bowBigUltIconOff_->drawLayer = 10;
 	objectsList.push_back(bowBigUltIconOff_);
 	bowBigUltIconOff = bowBigUltIconOff_;
 
@@ -1085,6 +1116,7 @@ void LevelBossTest::createSkillsIcon() {
 	bowBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Bow_Max_On.png");
 	bowBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	bowBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	bowBigUltIconOn_->drawLayer = 10;
 	objectsList.push_back(bowBigUltIconOn_);
 	bowBigUltIconOn = bowBigUltIconOn_;
 
@@ -1098,6 +1130,7 @@ void LevelBossTest::createSkillsIcon() {
 	swordSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_Off.png");
 	swordSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	swordSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	swordSmallUltIconOff_->drawLayer = 10;
 	objectsList.push_back(swordSmallUltIconOff_);
 	swordSmallUltIconOff = swordSmallUltIconOff_;
 
@@ -1105,6 +1138,7 @@ void LevelBossTest::createSkillsIcon() {
 	swordSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Min_On.png");
 	swordSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	swordSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	swordSmallUltIconOn_->drawLayer = 10;
 	objectsList.push_back(swordSmallUltIconOn_);
 	swordSmallUltIconOn = swordSmallUltIconOn_;
 
@@ -1112,6 +1146,7 @@ void LevelBossTest::createSkillsIcon() {
 	swordBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_Off.png");
 	swordBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	swordBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	swordBigUltIconOff_->drawLayer = 10;
 	objectsList.push_back(swordBigUltIconOff_);
 	swordBigUltIconOff = swordBigUltIconOff_;
 
@@ -1119,6 +1154,7 @@ void LevelBossTest::createSkillsIcon() {
 	swordBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Sword_Max_On.png");
 	swordBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	swordBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	swordBigUltIconOn_->drawLayer = 10;
 	objectsList.push_back(swordBigUltIconOn_);
 	swordBigUltIconOn = swordBigUltIconOn_;
 
@@ -1132,6 +1168,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldSmallUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_Off.png");
 	shieldSmallUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	shieldSmallUltIconOff_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	shieldSmallUltIconOff_->drawLayer = 10;
 	objectsList.push_back(shieldSmallUltIconOff_);
 	shieldSmallUltIconOff = shieldSmallUltIconOff_;
 
@@ -1139,6 +1176,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldSmallUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Min_On.png");
 	shieldSmallUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	shieldSmallUltIconOn_->getTransform().setPosition(glm::vec3(-7.4f, -3.375f, 1.0f));
+	shieldSmallUltIconOn_->drawLayer = 10;
 	objectsList.push_back(shieldSmallUltIconOn_);
 	shieldSmallUltIconOn = shieldSmallUltIconOn_;
 
@@ -1146,6 +1184,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldBigUltIconOff_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_Off.png");
 	shieldBigUltIconOff_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	shieldBigUltIconOff_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	shieldBigUltIconOff_->drawLayer = 10;
 	objectsList.push_back(shieldBigUltIconOff_);
 	shieldBigUltIconOff = shieldBigUltIconOff_;
 
@@ -1153,6 +1192,7 @@ void LevelBossTest::createSkillsIcon() {
 	shieldBigUltIconOn_->setTexture("../Resource/Texture/UI/Skills/Shield_Max_On.png");
 	shieldBigUltIconOn_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	shieldBigUltIconOn_->getTransform().setPosition(glm::vec3(-6.55f, -3.375f, 1.0f));
+	shieldBigUltIconOn_->drawLayer = 10;
 	objectsList.push_back(shieldBigUltIconOn_);
 	shieldBigUltIconOn = shieldBigUltIconOn_;
 
@@ -1166,8 +1206,33 @@ void LevelBossTest::createSkillsIcon() {
 	dashIcon_->setTexture("../Resource/Texture/UI/Dash/Dash_On.png");
 	dashIcon_->getTransform().setScale(glm::vec3(0.37f * 2.25f, 0.34f * 2.25f, 1.0f));
 	dashIcon_->getTransform().setPosition(glm::vec3(7.4f, -3.6f, 1.0f));
+	dashIcon_->drawLayer = 10;
 	objectsList.push_back(dashIcon_);
 	dashIcon = dashIcon_;
+
+	TexturedObject* lifeIcon1_ = new TexturedObject("Life Icon 1");
+	lifeIcon1_->setTexture("../Resource/Texture/UI/Dante-LifeIcon.png");
+	lifeIcon1_->getTransform().setScale(glm::vec3(0.48f * 2.25f, 0.48f * 2.25f, 1.0f));
+	lifeIcon1_->getTransform().setPosition(glm::vec3(-5.75f, -3.1f, 1.0f));
+	lifeIcon1_->drawLayer = 10;
+	objectsList.push_back(lifeIcon1_);
+	lifeIcon1 = lifeIcon1_;
+
+	TexturedObject* lifeIcon2_ = new TexturedObject("Life Icon 2");
+	lifeIcon2_->setTexture("../Resource/Texture/UI/Dante-LifeIcon.png");
+	lifeIcon2_->getTransform().setScale(glm::vec3(0.48f * 2.25f, 0.48f * 2.25f, 1.0f));
+	lifeIcon2_->getTransform().setPosition(glm::vec3(-5.75f + 0.45f, -3.1f, 1.0f));
+	lifeIcon2_->drawLayer = 10;
+	objectsList.push_back(lifeIcon2_);
+	lifeIcon2 = lifeIcon2_;
+
+	TexturedObject* lifeIcon3_ = new TexturedObject("Life Icon 3");
+	lifeIcon3_->setTexture("../Resource/Texture/UI/Dante-LifeIcon.png");
+	lifeIcon3_->getTransform().setScale(glm::vec3(0.48f * 2.25f, 0.48f * 2.25f, 1.0f));
+	lifeIcon3_->getTransform().setPosition(glm::vec3(-5.75f + 0.9f, -3.1f, 1.0f));
+	lifeIcon3_->drawLayer = 10;
+	objectsList.push_back(lifeIcon3_);
+	lifeIcon3 = lifeIcon3_;
 }
 
 void LevelBossTest::updateSkillsIcon() {
@@ -1212,6 +1277,9 @@ void LevelBossTest::updateSkillsIcon() {
 				bigUltOn = swordBigUltIconOn;
 				smallUltReady = player->getSword()->getSmallUltReady();
 				bigUltReady = player->getSword()->getBigUltReady();
+				lifeIcon1->getTransform().setPosition(glm::vec3(-5.75f, -3.3f, 1.0f));
+				lifeIcon2->getTransform().setPosition(glm::vec3(-5.75f + 0.45f, -3.3f, 1.0f));
+				lifeIcon3->getTransform().setPosition(glm::vec3(-5.75f + 0.9f, -3.3f, 1.0f));
 				break;
 			case Bow_:
 				smallUltOff = bowSmallUltIconOff;
@@ -1220,6 +1288,9 @@ void LevelBossTest::updateSkillsIcon() {
 				bigUltOn = bowBigUltIconOn;
 				smallUltReady = player->getBow()->getSmallUltReady();
 				bigUltReady = player->getBow()->getBigUltReady();
+				lifeIcon1->getTransform().setPosition(glm::vec3(-5.75f, -3.1f, 1.0f));
+				lifeIcon2->getTransform().setPosition(glm::vec3(-5.75f + 0.45f, -3.1f, 1.0f));
+				lifeIcon3->getTransform().setPosition(glm::vec3(-5.75f + 0.9f, -3.1f, 1.0f));
 				playerOverheatBarBackground->setDraw(true);
 				playerOverheatBar->setDraw(true);
 				playerOverheatBarFrame->setDraw(true);
@@ -1231,6 +1302,9 @@ void LevelBossTest::updateSkillsIcon() {
 				bigUltOn = shieldBigUltIconOn;
 				smallUltReady = player->getShield()->getSmallUltReady();
 				bigUltReady = player->getShield()->getBigUltReady();
+				lifeIcon1->getTransform().setPosition(glm::vec3(-5.75f, -3.3f, 1.0f));
+				lifeIcon2->getTransform().setPosition(glm::vec3(-5.75f + 0.45f, -3.3f, 1.0f));
+				lifeIcon3->getTransform().setPosition(glm::vec3(-5.75f + 0.9f, -3.3f, 1.0f));
 				break;
 			}
 
@@ -1271,6 +1345,27 @@ void LevelBossTest::updateSkillsIcon() {
 		}
 		else {
 			dashIcon->setTexture("../Resource/Texture/UI/Dash/Dash_Off.png");
+		}
+
+		if (player->getLives() == 3) {
+			lifeIcon1->setDraw(true);
+			lifeIcon2->setDraw(true);
+			lifeIcon3->setDraw(true);
+		}
+		else if (player->getLives() == 2) {
+			lifeIcon1->setDraw(true);
+			lifeIcon2->setDraw(true);
+			lifeIcon3->setDraw(false);
+		}
+		else if (player->getLives() == 1) {
+			lifeIcon1->setDraw(true);
+			lifeIcon2->setDraw(false);
+			lifeIcon3->setDraw(false);
+		}
+		else if (player->getLives() <= 0) {
+			lifeIcon1->setDraw(false);
+			lifeIcon2->setDraw(false);
+			lifeIcon3->setDraw(false);
 		}
 	}
 }
@@ -1509,6 +1604,12 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 			changeMenuState(MenuState::PAUSE);
 		}
 		break;
+	case MenuState::DEATH:
+		currentList = &deathButtons;
+		break;
+	case MenuState::VICTORY:
+		currentList = &victoryButtons;
+		break;
 	default:
 		return;
 	}
@@ -1525,6 +1626,9 @@ void LevelBossTest::mouseUIHandling(int type, float x, float y) {
 				onButton->OnClick();
 				if (onButton->getHandle()) {
 					focusedHandle = *it;
+				}
+				else {
+					SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
 				}
 			}
 		}
@@ -1606,6 +1710,12 @@ void LevelBossTest::keyboardUIHandling(char key) {
 		break;
 	case MenuState::QUITCONFIRM:
 		currentList = &quitConfirmButtons;
+		break;
+	case MenuState::DEATH:
+		currentList = &deathButtons;
+		break;
+	case MenuState::VICTORY:
+		currentList = &victoryButtons;
 		break;
 	default:
 		return;
@@ -1734,6 +1844,7 @@ void LevelBossTest::keyboardUIHandling(char key) {
 
 		if (focusedButton && focusedButton->getMouseOver()) {
 			focusedButton->OnClick();
+			SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
 		}
 
 		break;
@@ -1812,6 +1923,12 @@ void LevelBossTest::changeSelection(int direction) {
 		break;
 	case MenuState::QUITCONFIRM:
 		currentList = &quitConfirmButtons;
+		break;
+	case MenuState::DEATH:
+		currentList = &deathButtons;
+		break;
+	case MenuState::VICTORY:
+		currentList = &victoryButtons;
 		break;
 	default:
 		return;
@@ -1906,6 +2023,14 @@ void LevelBossTest::buttonsFree() {
 		button = nullptr;
 	}
 
+	for (UIButton*& button : deathButtons) {
+		button = nullptr;
+	}
+
+	for (UIButton*& button : victoryButtons) {
+		button = nullptr;
+	}
+
 	slidersList.clear();
 	buttonsList.clear();
 	mainButtons.clear();
@@ -1916,6 +2041,8 @@ void LevelBossTest::buttonsFree() {
 	keyboardButtons.clear();
 	creditsButton.clear();
 	quitConfirmButtons.clear();
+	deathButtons.clear();
+	victoryButtons.clear();
 }
 
 void LevelBossTest::UIUpdate() {
@@ -1951,6 +2078,12 @@ void LevelBossTest::UIUpdate() {
 		break;
 	case MenuState::QUITCONFIRM:
 		currentList = &quitConfirmButtons;
+		break;
+	case MenuState::DEATH:
+		currentList = &deathButtons;
+		break;
+	case MenuState::VICTORY:
+		currentList = &victoryButtons;
 		break;
 	default:
 		return;
@@ -2100,20 +2233,20 @@ void LevelBossTest::UIUpdate() {
 	for (SliderObject* obj : slidersList) {
 		obj->update(dt);
 
-		AudioEngine* audio = GameEngine::getInstance()->getAudio();
+		//AudioEngine* audio = GameEngine::getInstance()->getAudio();
 
-		if (audio) {
+		if (SoundManager::GetInstance()) {
 			if (obj == masterSlider) {
-				audio->setMasterVolume(masterSlider->getValue());
+				SoundManager::GetInstance()->setMasterVolume(masterSlider->getValue());
 			}
 			else if (obj == musicSlider) {
-				audio->setMusicVolume(musicSlider->getValue());
+				SoundManager::GetInstance()->setMusicVolume(musicSlider->getValue());
 			}
 			else if (obj == sfxSlider) {
-				audio->setSoundEffectVolume(sfxSlider->getValue());
+				SoundManager::GetInstance()->setSoundEffectVolume(sfxSlider->getValue());
 			}
 			else if (obj == ambientSlider) {
-				audio->setAmbientVolume(ambientSlider->getValue());
+				SoundManager::GetInstance()->setAmbientVolume(ambientSlider->getValue());
 			}
 		}
 	}
@@ -2258,7 +2391,7 @@ void LevelBossTest::createPauseUI() {
 	masterVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	masterVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	masterVolumeSlider->setMenuState(MenuState::AUDIO);
-	masterVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMasterVolume());
+	masterVolumeSlider->setValue(SoundManager::GetInstance()->getMasterVolume());
 	for (DrawableObject* obj : masterVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2318,7 +2451,7 @@ void LevelBossTest::createPauseUI() {
 	musicVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	musicVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	musicVolumeSlider->setMenuState(MenuState::AUDIO);
-	musicVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getMusicVolume());
+	musicVolumeSlider->setValue(SoundManager::GetInstance()->getMusicVolume());
 	for (DrawableObject* obj : musicVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2378,7 +2511,7 @@ void LevelBossTest::createPauseUI() {
 	effectVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	effectVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	effectVolumeSlider->setMenuState(MenuState::AUDIO);
-	effectVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getSoundEffectVolume());
+	effectVolumeSlider->setValue(SoundManager::GetInstance()->getSoundEffectVolume());
 	for (DrawableObject* obj : effectVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2438,7 +2571,7 @@ void LevelBossTest::createPauseUI() {
 	ambientVolumeSlider->setColor(glm::vec3(0.5f, 0.5f, 0.5f), -1);
 	ambientVolumeSlider->setColor(glm::vec3(0.75f, 0.75f, 0.75f), 1);
 	ambientVolumeSlider->setMenuState(MenuState::AUDIO);
-	ambientVolumeSlider->setValue(GameEngine::getInstance()->getAudio()->getAmbientVolume());
+	ambientVolumeSlider->setValue(SoundManager::GetInstance()->getAmbientVolume());
 	for (DrawableObject* obj : ambientVolumeSlider->getObjectsList()) {
 		obj->drawLayer = 999;
 		objectsList.push_back(obj);
@@ -2592,7 +2725,7 @@ void LevelBossTest::createPauseUI() {
 	continueButton->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
 	continueButton->addColliderComponent();
 	continueButton->setDrawCollider(true);
-	continueButton->setCanDrawColliderNew(true);
+	continueButton->setCanDrawColliderNew(false);
 	continueButton->setDraw(false);
 	continueButton->setLabel(continueText); // Link continueText
 	continueButton->setMenuState(MenuState::PAUSE);
@@ -2630,7 +2763,7 @@ void LevelBossTest::createPauseUI() {
 	settingsButton->getTransform().setScale(glm::vec3(1.2f, 0.35f, 0.0f));
 	settingsButton->addColliderComponent();
 	settingsButton->setDrawCollider(true);
-	settingsButton->setCanDrawColliderNew(true);
+	settingsButton->setCanDrawColliderNew(false);
 	settingsButton->setDraw(false);
 	settingsButton->setLabel(settingsText); // Link playText
 	settingsButton->setMenuState(MenuState::PAUSE);
@@ -2668,7 +2801,7 @@ void LevelBossTest::createPauseUI() {
 	quitButton->getTransform().setScale(glm::vec3(2.2f, 0.35f, 0.0f));
 	quitButton->addColliderComponent();
 	quitButton->setDrawCollider(true);
-	quitButton->setCanDrawColliderNew(true);
+	quitButton->setCanDrawColliderNew(false);
 	quitButton->setDraw(false);
 	quitButton->setLabel(quitText); // Link playText
 	quitButton->setMenuState(MenuState::PAUSE);
@@ -2822,7 +2955,7 @@ void LevelBossTest::createPauseUI() {
 	yesButton->getTransform().setScale(glm::vec3(0.7f, 0.35f, 0.0f));
 	yesButton->addColliderComponent();
 	yesButton->setDrawCollider(true);
-	yesButton->setCanDrawColliderNew(true);
+	yesButton->setCanDrawColliderNew(false);
 	yesButton->setDraw(false);
 	yesButton->setLabel(yesText); // Link playText
 	yesButton->setMenuState(MenuState::QUITCONFIRM);
@@ -2856,7 +2989,7 @@ void LevelBossTest::createPauseUI() {
 	noButton->getTransform().setScale(glm::vec3(0.6f, 0.35f, 0.0f));
 	noButton->addColliderComponent();
 	noButton->setDrawCollider(true);
-	noButton->setCanDrawColliderNew(true);
+	noButton->setCanDrawColliderNew(false);
 	noButton->setDraw(false);
 	noButton->setLabel(noText); // Link playText
 	noButton->setMenuState(MenuState::QUITCONFIRM);
@@ -2866,4 +2999,422 @@ void LevelBossTest::createPauseUI() {
 	buttonsList.push_back(noButton);
 
 	quitConfirmButtons.push_back(noButton);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//										Death
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	TexturedObject* background5 = new TexturedObject("Background5");
+	background5->setTexture("../Resource/Texture/DeathBG.png");
+	background5->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background5->setMenuState(MenuState::DEATH);
+	background5->drawLayer = 999;
+	objectsList.push_back(background5);
+
+	TexturedObject* background6 = new TexturedObject("Background6");
+	background6->setTexture("../Resource/Texture/VictoryBG.png");
+	background6->getTransform().setScale(glm::vec3(1.6f * 10, 0.9f * 10, 1.0f));
+	background6->setMenuState(MenuState::VICTORY);
+	background6->drawLayer = 999;
+	objectsList.push_back(background6);
+
+	float deathOffset = 0.3f;
+
+	//////////////////////////////////////////////////////////////
+
+	UIText* retryText = new UIText("Retry Text");
+	SDL_Color retryTextColor = { 255,255,255,255 };
+	retryText->loadText("Retry", retryTextColor, 100);
+	retryText->setText("Retry");
+	retryText->setAlpha(1.0f);
+	retryText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	retryText->getTransform().setPosition(glm::vec3(0.07f, -2.0f, 0.0f));
+	retryText->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
+	retryText->addColliderComponent();
+	retryText->setMenuState(MenuState::DEATH);
+	retryText->drawLayer = 999;
+	/*retryText->setDrawCollider(true);
+	retryText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(retryText);
+
+	UIButton* retryButton = new UIButton("Retry Button");
+	//retryButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	retryButton->getTransform().setPosition(glm::vec3(0.0f, -1.75f, 0.0f));
+	retryButton->getTransform().setScale(glm::vec3(0.9f, 0.35f, 0.0f));
+	retryButton->addColliderComponent();
+	retryButton->setDrawCollider(true);
+	retryButton->setCanDrawColliderNew(false);
+	retryButton->setDraw(false);
+	retryButton->setLabel(retryText); // Link playText
+	retryButton->setMenuState(MenuState::DEATH);
+	retryButton->setFunction([this]() { retryLevel();});
+	retryButton->drawLayer = 999;
+	if (player->getLives() <= 1) {
+		retryButton->setActive(false);
+		objectsList.push_back(retryButton);
+	}
+	else {
+		objectsList.push_back(retryButton);
+		buttonsList.push_back(retryButton);
+
+		deathButtons.push_back(retryButton);
+	}
+
+	///////////////////////////////////////////////////
+
+	UIText* resurrectText = new UIText("Resurrect Text");
+	SDL_Color resurrectTextColor = { 255,255,255,255 };
+	resurrectText->loadText("Resurrect", resurrectTextColor, 100);
+	resurrectText->setText("Resurrect");
+	resurrectText->setAlpha(1.0f);
+	resurrectText->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	resurrectText->getTransform().setPosition(glm::vec3(0.255f, -2.6f, 0.0f));
+	resurrectText->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	resurrectText->addColliderComponent();
+	resurrectText->setMenuState(MenuState::DEATH);
+	resurrectText->drawLayer = 999;
+	/*resurrectText->setDrawCollider(true);
+	resurrectText->setCanDrawColliderNew(true);*/
+	objectsList.push_back(resurrectText);
+
+	UIButton* resurrectButton = new UIButton("Resurrect Button");
+	//resurrectButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	resurrectButton->getTransform().setPosition(glm::vec3(0.0f, -2.35, 0.0f));
+	resurrectButton->getTransform().setScale(glm::vec3(1.5, 0.35f, 0.0f));
+	resurrectButton->addColliderComponent();
+	resurrectButton->setDrawCollider(true);
+	resurrectButton->setCanDrawColliderNew(false);
+	resurrectButton->setDraw(false);
+	resurrectButton->setLabel(resurrectText); // Link playText
+	resurrectButton->setMenuState(MenuState::DEATH);
+	resurrectButton->setFunction([this]() { resurrect();});
+	resurrectButton->drawLayer = 999;
+	objectsList.push_back(resurrectButton);
+	buttonsList.push_back(resurrectButton);
+
+	deathButtons.push_back(resurrectButton);
+
+	////////////////////////////////////////////////////////////
+
+	UIText* quitToText1 = new UIText("Quit To Text");
+	SDL_Color quitToText1Color = { 255,255,255,255 };
+	quitToText1->loadText("Quit To Title", quitToText1Color, 100);
+	quitToText1->setText("Quit To Title");
+	quitToText1->setAlpha(1.0f);
+	quitToText1->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	quitToText1->getTransform().setPosition(glm::vec3(0.98f, -3.2f, 0.0f));
+	quitToText1->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	quitToText1->addColliderComponent();
+	quitToText1->setMenuState(MenuState::DEATH);
+	quitToText1->drawLayer = 999;
+	/*quitToText1->setDrawCollider(true);
+	quitToText1->setCanDrawColliderNew(true);*/
+	objectsList.push_back(quitToText1);
+
+	UIButton* quitToButton1 = new UIButton("Quit To Button");
+	//quitToButton->setTexture("../Resource/Texture/UI/UIButton.png");
+	quitToButton1->getTransform().setPosition(glm::vec3(0.0f, -2.95f, 0.0f));
+	quitToButton1->getTransform().setScale(glm::vec3(2.1f, 0.35f, 0.0f));
+	quitToButton1->addColliderComponent();
+	quitToButton1->setDrawCollider(true);
+	quitToButton1->setCanDrawColliderNew(false);
+	quitToButton1->setDraw(false);
+	quitToButton1->setLabel(quitToText1); // Link playText
+	quitToButton1->setMenuState(MenuState::DEATH);
+	quitToButton1->setFunction([this]() { toLoadingScreenDeath();});
+	quitToButton1->drawLayer = 999;
+	objectsList.push_back(quitToButton1);
+	buttonsList.push_back(quitToButton1);
+
+	deathButtons.push_back(quitToButton1);
+
+	///////////////////////////////////////////////////
+
+	UIText* exitText1 = new UIText("Exit Text");
+	SDL_Color exitText1Color = { 255,255,255,255 };
+	exitText1->loadText("Exit", exitText1Color, 100);
+	exitText1->setText("Exit");
+	exitText1->setAlpha(1.0f);
+	exitText1->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	exitText1->getTransform().setPosition(glm::vec3(0.19f, -3.8f, 0.0f));
+	exitText1->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
+	exitText1->addColliderComponent();
+	exitText1->setMenuState(MenuState::DEATH);
+	exitText1->drawLayer = 999;
+	/*exitText1->setDrawCollider(true);
+	exitText1->setCanDrawColliderNew(true);*/
+	objectsList.push_back(exitText1);
+
+	UIButton* exitButton1 = new UIButton("Exit Button");
+	//exitButton1->setTexture("../Resource/Texture/UI/UIButton.png");
+	exitButton1->getTransform().setPosition(glm::vec3(0.0f, -3.55f, 0.0f));
+	exitButton1->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
+	exitButton1->addColliderComponent();
+	exitButton1->setDrawCollider(true);
+	exitButton1->setCanDrawColliderNew(false);
+	exitButton1->setDraw(false);
+	exitButton1->setLabel(exitText1); // Link playText
+	exitButton1->setMenuState(MenuState::DEATH);
+	exitButton1->setFunction([this]() { exitDeath();});
+	exitButton1->drawLayer = 999;
+	objectsList.push_back(exitButton1);
+	buttonsList.push_back(exitButton1);
+
+	deathButtons.push_back(exitButton1);
+
+	////////////////////////////////////////////////////////
+
+	UIText* continueText1 = new UIText("Continue Text 1");
+	SDL_Color continueText1Color = { 255,255,255,255 };
+	continueText1->loadText("Continue", continueText1Color, 100);
+	continueText1->setText("Continue");
+	continueText1->setAlpha(1.0f);
+	continueText1->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	continueText1->getTransform().setPosition(glm::vec3(0.26f, -2.0f, 0.0f));
+	continueText1->getTransform().setScale(glm::vec3(2.0f, 1.0f, 0.0f));
+	continueText1->addColliderComponent();
+	continueText1->setMenuState(MenuState::VICTORY);
+	continueText1->drawLayer = 999;
+	/*exitText1->setDrawCollider(true);
+	exitText1->setCanDrawColliderNew(true);*/
+	objectsList.push_back(continueText1);
+
+	UIButton* continueButton1 = new UIButton("Continue Button 1");
+	//exitButton1->setTexture("../Resource/Texture/UI/UIButton.png");
+	continueButton1->getTransform().setPosition(glm::vec3(0.0f, -1.75f, 0.0f));
+	continueButton1->getTransform().setScale(glm::vec3(1.6f, 0.35f, 0.0f));
+	continueButton1->addColliderComponent();
+	continueButton1->setDrawCollider(true);
+	continueButton1->setCanDrawColliderNew(false);
+	continueButton1->setDraw(false);
+	continueButton1->setLabel(continueText1); // Link playText
+	continueButton1->setMenuState(MenuState::VICTORY);
+	continueButton1->setFunction([this]() { nextLevel();});
+	continueButton1->drawLayer = 999;
+	objectsList.push_back(continueButton1);
+	buttonsList.push_back(continueButton1);
+
+	victoryButtons.push_back(continueButton1);
+
+	////////////////////////////////////////////////////////////
+
+	UIText* quitToText2 = new UIText("Quit To Text 2");
+	SDL_Color quitToText2Color = { 255,255,255,255 };
+	quitToText2->loadText("Quit To Title", quitToText1Color, 100);
+	quitToText2->setText("Quit To Title");
+	quitToText2->setAlpha(1.0f);
+	quitToText2->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	quitToText2->getTransform().setPosition(glm::vec3(0.98f, -2.6f, 0.0f));
+	quitToText2->getTransform().setScale(glm::vec3(4.0f, 1.0f, 0.0f));
+	quitToText2->addColliderComponent();
+	quitToText2->setMenuState(MenuState::VICTORY);
+	quitToText2->drawLayer = 999;
+	/*quitToText2->setDrawCollider(true);
+	quitToText2->setCanDrawColliderNew(true);*/
+	objectsList.push_back(quitToText2);
+
+	UIButton* quitToButton2 = new UIButton("Quit To Button 2");
+	//quitToButton2->setTexture("../Resource/Texture/UI/UIButton.png");
+	quitToButton2->getTransform().setPosition(glm::vec3(0.0f, -2.35f, 0.0f));
+	quitToButton2->getTransform().setScale(glm::vec3(2.1f, 0.35f, 0.0f));
+	quitToButton2->addColliderComponent();
+	quitToButton2->setDrawCollider(true);
+	quitToButton2->setCanDrawColliderNew(false);
+	quitToButton2->setDraw(false);
+	quitToButton2->setLabel(quitToText2); // Link playText
+	quitToButton2->setMenuState(MenuState::VICTORY);
+	quitToButton2->setFunction([this]() { toLoadingScreenVictory();});
+	quitToButton2->drawLayer = 999;
+	objectsList.push_back(quitToButton2);
+	buttonsList.push_back(quitToButton2);
+
+	victoryButtons.push_back(quitToButton2);
+
+	///////////////////////////////////////////////////
+
+	UIText* exitText2 = new UIText("Exit Text 2");
+	SDL_Color exitText2Color = { 255,255,255,255 };
+	exitText2->loadText("Exit", exitText2Color, 100);
+	exitText2->setText("Exit");
+	exitText2->setAlpha(1.0f);
+	exitText2->setOffset(glm::vec3(0.0f, 0.0f, 0.0f));
+	exitText2->getTransform().setPosition(glm::vec3(0.19f, -3.2f, 0.0f));
+	exitText2->getTransform().setScale(glm::vec3(1.0f, 1.0f, 0.0f));
+	exitText2->addColliderComponent();
+	exitText2->setMenuState(MenuState::VICTORY);
+	exitText2->drawLayer = 999;
+	/*exitText2->setDrawCollider(true);
+	exitText2->setCanDrawColliderNew(true);*/
+	objectsList.push_back(exitText2);
+
+	UIButton* exitButton2 = new UIButton("Exit Button 2");
+	//exitButton2->setTexture("../Resource/Texture/UI/UIButton.png");
+	exitButton2->getTransform().setPosition(glm::vec3(0.0f, -2.95f, 0.0f));
+	exitButton2->getTransform().setScale(glm::vec3(0.8f, 0.35f, 0.0f));
+	exitButton2->addColliderComponent();
+	exitButton2->setDrawCollider(true);
+	exitButton2->setCanDrawColliderNew(false);
+	exitButton2->setDraw(false);
+	exitButton2->setLabel(exitText2); // Link playText
+	exitButton2->setMenuState(MenuState::VICTORY);
+	exitButton2->setFunction([this]() { exitVictory();});
+	exitButton2->drawLayer = 999;
+	objectsList.push_back(exitButton2);
+	buttonsList.push_back(exitButton2);
+
+	victoryButtons.push_back(exitButton2);
+}
+
+void LevelBossTest::controllerUIHandling(SDL_GameControllerButton button) {
+	float dt = GameEngine::getInstance()->getTime()->getDeltaTime();
+
+	bool input = false;
+
+	list<UIButton*>* currentList = nullptr;
+
+	switch (currentMenuState) {
+	case MenuState::MAIN:
+		currentList = &mainButtons;
+		break;
+	case MenuState::OPTIONS:
+		currentList = &optionsButtons;
+		break;
+	case MenuState::PAUSE:
+		currentList = &pauseButtons;
+		break;
+	case MenuState::AUDIO:
+		currentList = &audioButtons;
+		break;
+	case MenuState::CONTROLLER:
+		currentList = &controllerButtons;
+		break;
+	case MenuState::KEYBOARD:
+		currentList = &keyboardButtons;
+		break;
+	case MenuState::CREDITS:
+		currentList = &creditsButton;
+		break;
+	case MenuState::QUITCONFIRM:
+		currentList = &quitConfirmButtons;
+		break;
+	case MenuState::DEATH:
+		currentList = &deathButtons;
+		break;
+	case MenuState::VICTORY:
+		currentList = &victoryButtons;
+		break;
+	default:
+		return;
+	}
+
+	switch (button) {
+	case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+		if (isHolding == false) {
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() - 0.025f);
+				}
+			}
+			isHolding = true;
+			input = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() - 0.005f);
+					}
+				}
+			}
+			input = true;
+		}
+
+
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+
+		if (isHolding == false) {
+			if (focusedButton) {
+				SliderObject* slider = focusedButton->getSlider();
+				if (slider) {
+					slider->setValue(slider->getValue() + 0.025f);
+				}
+			}
+			isHolding = true;
+			input = true;
+		}
+
+		if (isHolding == true) {
+			holdButtonTimer += dt;
+			if (holdButtonTimer >= holdButtonThreshold) {
+				if (focusedButton) {
+					SliderObject* slider = focusedButton->getSlider();
+					if (slider) {
+						slider->setValue(slider->getValue() + 0.005f);
+					}
+				}
+			}
+			input = true;
+		}
+
+
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_UP:
+		changeSelection(-1);
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+		changeSelection(1);
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_B:
+		if (currentMenuState == OPTIONS) {
+			changeMenuState(MenuState::PAUSE);
+		}
+		else if (currentMenuState == AUDIO) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == CONTROLLER) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == KEYBOARD) {
+			changeMenuState(MenuState::OPTIONS);
+		}
+		else if (currentMenuState == CREDITS) {
+			changeMenuState(MenuState::MAIN);
+		}
+		else if (currentMenuState == PAUSE) {
+			changeMenuState(MenuState::MAIN);
+		}
+		input = true;
+		break;
+	case SDL_CONTROLLER_BUTTON_A:
+		/*if (selectedButton && selectedButton->getMouseOver()) {
+			selectedButton->OnClick();
+		}*/
+
+		if (focusedButton && focusedButton->getMouseOver()) {
+			focusedButton->OnClick();
+			SoundManager::GetInstance()->PlaySFX("Misc-ButtonClick");
+			input = true;
+		}
+
+		break;
+	}
+
+
+	if (!input) {
+		if (isHolding == true) {
+			isHolding = false;
+		}
+		if (holdButtonTimer > 0) {
+			holdButtonTimer = 0;
+		}
+	}
 }

@@ -67,6 +67,7 @@ void Gust::onCollisionEnter(Collider* collider) {
                     player->setNewColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
+                    SoundManager::GetInstance()->PlaySFX("Dante-Shield_BlockPerfect");
                 }
                 else { //if blocking but not perfectly
                     cout << "Enemy Hit Player for " << damage / 2 << " damage and " << damage / 2 << "withered damage." << endl;
@@ -75,6 +76,7 @@ void Gust::onCollisionEnter(Collider* collider) {
                     player->setNewColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
                     player->setHitEffectStrength(1.0f);
                     hasHit = true;
+                    SoundManager::GetInstance()->PlaySFX("Dante-Shield_Block");
                 }
             }
             else { //is not blocking
@@ -85,7 +87,6 @@ void Gust::onCollisionEnter(Collider* collider) {
                 hasHit = true;
             }
         }
-
     }
 }
 

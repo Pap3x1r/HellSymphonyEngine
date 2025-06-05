@@ -29,6 +29,7 @@ void LuciferIceFloorState::update(Boss* boss, float dt) {
             IceFloor* iF = new IceFloor();
             lucifer->getLevel()->addObject(iF);
             hasSpawnedFloor = true;
+            SoundManager::GetInstance()->PlaySFX("Lucifer-DiamondDust");
         }
     }
     else {

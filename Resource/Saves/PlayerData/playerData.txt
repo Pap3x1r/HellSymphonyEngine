@@ -1,3 +1,0 @@
-Player Health: 100
-Player Wither Health: 0
-Player Lives: 3

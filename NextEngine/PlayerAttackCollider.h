@@ -2,6 +2,7 @@
 #include "TexturedObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "InteractableObject.h"
 
 class PlayerAttackCollider : public TexturedObject {
 	float damage;
