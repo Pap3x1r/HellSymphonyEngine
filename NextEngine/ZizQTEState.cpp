@@ -91,7 +91,7 @@ void ZizQTEState::update(Boss* boss, float dt) {
 							ziz->startShake(0.1f, 0.005f);
 							//cout << "wrong 1st" << endl;
 							qteButtonUI->changeTextureFailure(QTETarget1);
-							
+							ziz->endQTEMode();
 							failedAny = true;
 						}
 
@@ -100,7 +100,7 @@ void ZizQTEState::update(Boss* boss, float dt) {
 						ziz->startShake(0.1f, 0.005f);
 						//cout << "time ran out 1st" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget1);
-						
+						ziz->endQTEMode();
 						failedAny = true;
 					}
 				}
@@ -129,7 +129,7 @@ void ZizQTEState::update(Boss* boss, float dt) {
 							ziz->startShake(0.1f, 0.005f);
 							//cout << "wrong 2nd" << endl;
 							qteButtonUI->changeTextureFailure(QTETarget2);
-							
+							ziz->endQTEMode();
 							failedAny = true;
 						}
 
@@ -138,7 +138,7 @@ void ZizQTEState::update(Boss* boss, float dt) {
 						ziz->startShake(0.1f, 0.005f);
 						//cout << "time ran out 2nd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget2);
-						
+						ziz->endQTEMode();
 						
 						failedAny = true;
 					}
@@ -152,36 +152,13 @@ void ZizQTEState::update(Boss* boss, float dt) {
 							//cout << "correct 3rd" << endl;
 							qteButtonUI->changeTextureSuccess(QTETarget3);
 
-							if (needToPose == false) {
-								ziz->setTexture("../Resource/Texture/FinalZiz/QTE/qtestart3.png", 1, 10, 0);
-								ziz->getAnimationComponent()->setState("qterecovery");
-								needToPose = true;
-							}
-
-
-							if (ziz->getTransform().getPosition().y < 8.0f) {
-								if (recoveryPosed == false) {
-									if (timerAfterQTE > 0) {
-										//cout << "timerafterqte" << endl;
-										timerAfterQTE -= dt;
-										if (timerAfterQTE <= 0) {
-											recoveryPosed = true;
-										}
-									}
-								}
-								else {
-									ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
-								}
-							}
-							else {
-								ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
-							}
+							currentSeq++;
 						}
 						else if (ziz->getQTECorrect() == false) {
 							ziz->startShake(0.1f, 0.005f);
 							//cout << "wrong 3rd" << endl;
 							qteButtonUI->changeTextureFailure(QTETarget3);
-							
+							ziz->endQTEMode();
 							failedAny = true;
 						}
 
@@ -190,11 +167,40 @@ void ZizQTEState::update(Boss* boss, float dt) {
 						ziz->startShake(0.1f, 0.005f);
 						//cout << "time ran out 3rd" << endl;
 						qteButtonUI->changeTextureFailure(QTETarget3);
-						
+						ziz->endQTEMode();
 						failedAny = true;
 					}
 				}
 				break;
+
+			case 3:
+				if (needToPose == false) {
+					ziz->setTexture("../Resource/Texture/FinalZiz/QTE/qtestart3.png", 1, 10, 0);
+					ziz->getAnimationComponent()->setState("qterecovery");
+					ziz->endQTEMode();
+					qteButtonUI->expire();
+
+					needToPose = true;
+				}
+
+
+				if (ziz->getTransform().getPosition().y < 8.0f) {
+					if (recoveryPosed == false) {
+						if (timerAfterQTE > 0) {
+							//cout << "timerafterqte" << endl;
+							timerAfterQTE -= dt;
+							if (timerAfterQTE <= 0) {
+								recoveryPosed = true;
+							}
+						}
+					}
+					else {
+						ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+					}
+				}
+				else {
+					ziz->getStateMachine()->changeState(ZizSwoopState::getInstance(), ziz);
+				}
 			default:
 				break;
 			}
