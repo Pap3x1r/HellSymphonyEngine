@@ -74,6 +74,10 @@ void updateCollisionState(Collider* col1, Collider* col2, bool collided) {
 void handleObjectCollision(list<DrawableObject*>& objects) {
 	for (list<DrawableObject*>::iterator i = objects.begin(); i != objects.end(); i++) {
 
+		if (!(*i)->getColliderComponent()) continue;
+
+		if ((*i)->getTag() == Tag::UI) continue;
+
 		if ((*i)->getColliderComponent() != nullptr) {
 			(*i)->getColliderComponent()->setCollisionFlag(0);
 		}

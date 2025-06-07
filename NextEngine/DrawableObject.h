@@ -11,6 +11,10 @@ using namespace std;
 
 class Collider; // forward declaration
 
+/**
+ * @enum MenuState
+ * @brief Represents different UI or game menu states an object may be linked to.
+ */
 enum MenuState {
 	NONE,
 	MAIN,
@@ -27,6 +31,10 @@ enum MenuState {
 	IGNORE
 };
 
+/**
+ * @enum Tag
+ * @brief Represents categories/types for game objects (used for filtering logic).
+ */
 enum class Tag {
 	Player,
 	PlayerAttack,
@@ -38,6 +46,12 @@ enum class Tag {
 	Default
 };
 
+/**
+ * @class DrawableObject
+ * @brief Base class for any renderable and interactable game object.
+ *
+ * Contains logic for drawing, updating, collision, physics, and menu state tracking.
+ */
 class DrawableObject {
 private:
 	bool canDrawColliderNew;
@@ -60,6 +74,7 @@ protected:
 	Physics* physics;
 	Collider* collider;
 
+	// --- Collision Events ---
 	virtual void onCollisionEnter(Collider* collider);
 	virtual void onCollisionStay(Collider* collider);
 	virtual void onCollisionExit(Collider* collider);
@@ -69,8 +84,9 @@ protected:
 	virtual void onTriggerExit(Collider* collider);
 
 public:
-	int drawLayer = 0;
+	int drawLayer = 0; ///< Draw layer priority (higher = drawn first)
 
+	// --- Tag and Name ---
 	string getName();
 	void setName(string name);
 
@@ -82,6 +98,7 @@ public:
 		tag = newTag;
 	}
 
+	// --- Transform and Components ---
 	Transform& getTransform();
 	glm::mat4 getTransformMat4();
 
@@ -93,14 +110,24 @@ public:
 	void addColliderComponent();
 	void addColliderComponent(Collider& collider);
 
+	// --- Update ---
 	virtual void updateBehavior();
 	virtual void update();
 	void update(float dt);
 
+	/** @brief Default constructor */
 	DrawableObject();
+
+	/** @brief Constructor with name parameter */
 	DrawableObject(string name);
+
+	/** @brief Virtual destructor */
 	virtual ~DrawableObject();
+
+	/** @brief Abstract render function to be overridden by derived classes */
 	virtual void render(glm::mat4 globalModelTransform) = 0;
+
+	// --- Drawing ---
 	void setDrawCollider(bool value);
 	void setDraw(bool value);
 	void drawCollider();
@@ -124,6 +151,7 @@ public:
 		return &canDrawColliderNew;
 	}
 
+	// --- Menu State ---
 	void setMenuState(MenuState newMenuState) {
 		menuState = newMenuState;
 		menuStateVec.push_back(newMenuState);
@@ -141,11 +169,10 @@ public:
 		return menuStateVec;
 	}
 
+	// --- Alpha/Transparency ---
 	virtual void setAlpha(float value);
 
 	virtual float getAlpha() const;
-
-	static void destroyObject(DrawableObject* obj);
 
 	void setMaximumAlpha(float alpha) {
 		maximumAlpha = alpha;
@@ -154,4 +181,10 @@ public:
 	float getMaximumAlpha() const {
 		return maximumAlpha;
 	}
+
+	/**
+	 * @brief Marks the object for deletion and destroys it.
+	 * @param obj Pointer to DrawableObject to destroy.
+	 */
+	static void destroyObject(DrawableObject* obj);
 };

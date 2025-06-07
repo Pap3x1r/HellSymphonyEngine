@@ -614,11 +614,6 @@ void LevelBossTest::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
-	case 'm':
-		//cout << "M pressed" << endl;
-		//ziz->interruptDeath();
-		ziz->getHealth()->takeDamage(10000.0f);
-		break;
 	case 'q':
 		if (player->getIsGrounded() == false) return;
 		if (player->getIsDashing() == true) return;
@@ -626,11 +621,6 @@ void LevelBossTest::handleKey(char key) {
 		switchControlType(keyboard);
 		playerUltimateInput();
 		break;
-	case 'r': 
-		player->getHealth()->takeDamage(100.0f);
-
-		break;
-
 	case 'I': //No Movement Input -> Idle
 
 		if (player->getIsDashing() == false) {
@@ -668,17 +658,6 @@ void LevelBossTest::handleKey(char key) {
 				player->getStateMachine()->changeState(PlayerDashState::getInstance(), player);
 			}
 		}
-
-		break;
-	case 't':
-		//player->startShake(0.1f, 0.0025f);
-		//ziz->startShake(0.2f, 0.005f);
-		//player->increaseUltimateGauge(100.0f);
-		//ziz->interruptPhaseChange();
-		//currentMenuState = MenuState::MAIN;
-		/*qbui = new QTEButtonUI(0);
-		objectsList.push_back(qbui);*/
-		//ziz->interruptIntoPhase();
 
 		break;
 	}

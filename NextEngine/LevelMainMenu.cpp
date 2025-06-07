@@ -992,12 +992,8 @@ void LevelMainMenu::levelUpdate() {
 		selectedIndex = -1;
 		focusedButton = nullptr;
 
-		cout << "in" << endl;
-
 		return;
 	}
-
-	cout << "out" << endl;
 
 	updateObjects(objectsList);
 
@@ -1363,7 +1359,6 @@ void LevelMainMenu::handleKey(char key) {
 	}*/
 
 	switch (key) {
-	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'a':
 		if (isHolding == false) {
 			if (focusedButton) {

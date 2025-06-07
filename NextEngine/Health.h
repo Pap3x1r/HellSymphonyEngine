@@ -1,38 +1,49 @@
 #pragma once
 #include "GameEngine.h"
 
+/**
+ * @class Health
+ * @brief Manages health, wither health, and health-related mechanics such as healing and damage.
+ */
 class Health {
-    float realHealth;
-    float currentHealth;
-    float maxHealth = 100.0f;
-    float witherHealth;
-    float witherRecoverRate;
-    float witherDecreasePercent = 0.0f;
+    float realHealth;             ///< Real health = current - wither.
+    float currentHealth;          ///< Current visible health.
+    float maxHealth = 100.0f;     ///< Maximum health capacity.
+    float witherHealth;           ///< Wither health, representing delayed or persistent damage.
+    float witherRecoverRate;     ///< Rate at which wither health recovers.
+    float witherDecreasePercent = 0.0f; ///< Percentage of damage that affects wither health.
 
-    bool destroyOnDead;
+    bool destroyOnDead;          ///< Whether to destroy the object on death.
 
 public:
-
+    /**
+     * @brief Full constructor with health, wither health, and max health.
+     */
     Health(float health, float wither, float maxHealth_)
     {   
         maxHealth = maxHealth_;
         realHealth = currentHealth = health;
         witherHealth = wither;
     }
-
+    /**
+     * @brief Constructor with health and wither health.
+     */
     Health(float health, float wither)
     {
         realHealth = currentHealth = health;
         witherHealth = wither;
     }
-
+    /**
+     * @brief Constructor with only current health.
+     */
     Health(float health) {
         realHealth = currentHealth = health;
         witherHealth = 0;
     }
 
-    // Update is called once per frame
-
+    /**
+     * @brief Updates health status, handles recovery and health limits.
+     */
     void healthUpdate()
     {
         bool recovering = false;
@@ -71,6 +82,10 @@ public:
         checkHP();
     }
 
+    /**
+     * @brief Checks current health and handles death logic.
+     * @return Current health.
+     */
     float checkHP()
     {
         if (realHealth <= 0)
@@ -85,15 +100,21 @@ public:
         return currentHealth;
     }
 
+    /// Sets current health directly.
     void setHP(float value)
     {
         currentHealth = value;
     }
 
+    /// Sets wither health directly.
     void setWitherHP(float value) {
         witherHealth = value;
     }
 
+    /**
+     * @brief Applies damage and decreases wither health based on configured percentage.
+     * @param amount Amount of damage.
+     */
     void takeDamage(float amount)
     {
         float decreaseAmount = amount * (witherDecreasePercent / 100.0f);
@@ -117,6 +138,11 @@ public:
         }
     }
     
+    /**
+     * @brief Applies damage and adds wither damage based on wither percentage.
+     * @param amount Amount of damage.
+     * @param witherPercent Percent of damage converted to wither.
+     */
     void takeDamage(float amount, float witherPercent)
     {   
 
@@ -146,6 +172,10 @@ public:
         }
     }
 
+    /**
+     * @brief Heals current health and optionally reduces wither health.
+     * @param amount Amount to heal.
+     */
     void heal(float amount)
     {   
         if (currentHealth + amount > maxHealth)
@@ -170,6 +200,10 @@ public:
         }
     }
 
+    /**
+     * @brief Heals only wither health by converting it back to regular health.
+     * @param amount Amount to heal.
+     */
     void healWither(float amount)
     {
         if (witherHealth > 0)
@@ -198,9 +232,14 @@ public:
         }
     }
 
+    /// Returns real health (current - wither).
     float getRealHP() { return realHealth; }
+    /// Returns current visible health.
     float getCurrentHP() { return currentHealth; }
+    /// Returns pointer to current health (useful for ImGui binding).
     float* getCurrentHPAddress() { return &currentHealth; }
+    /// Returns max health.
     float getMaxHP() { return maxHealth; }
+    /// Returns wither health.
     float getWitherHP() { return witherHealth; }
 };

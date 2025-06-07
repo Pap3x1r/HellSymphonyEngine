@@ -9,6 +9,7 @@ Lightning::Lightning(Ziz* boss) {
 	if (ziz) {
 		//cout << "Found Ziz in Lightning" << endl;
 	}
+	SoundManager::GetInstance()->PlaySFX("Ziz_Lightning");
 
 	unsigned seed = std::chrono::system_clock::now()
 		.time_since_epoch()
@@ -52,7 +53,7 @@ Lightning::Lightning(Ziz* boss, float x) {
 	if (ziz) {
 		//cout << "Found Ziz in Lightning" << endl;
 	}
-
+	SoundManager::GetInstance()->PlaySFX("Ziz_Lightning");
 
 	setName("Lightning");
 	deletedAtk = false;
@@ -88,7 +89,6 @@ void Lightning::update(float dt) {
 	if (hasStruck == false) {
 		attackTimer -= dt;
 		if (attackTimer <= 0) {
-			SoundManager::GetInstance()->PlaySFX("Ziz_Lightning");
 			ziz->getLevel()->addObject(attackCollider);
 			attackCollider->setActive(true);
 			ziz->startShake(0.08f * 3, 0.005f);

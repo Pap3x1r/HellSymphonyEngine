@@ -605,21 +605,6 @@ void LevelLucifer::handleKey(char key) {
 		switchControlType(keyboard);
 		playerUltimateInput();
 		break;
-	case 'r': 
-		player->getHealth()->takeDamage(100.0f);
-		break;
-	case 'h':
-		player->setWeaponType(Bow_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
-	case 'j':
-		player->setWeaponType(Sword_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
-	case 'g':
-		player->setWeaponType(Shield_);
-		player->getStateMachine()->changeState(PlayerWalkState::getInstance(), player);
-		break;
 	case 'I': //No Movement Input -> Idle
 
 		if (player->getIsDashing() == false) {
@@ -629,8 +614,6 @@ void LevelLucifer::handleKey(char key) {
 		if (player->getIsGrounded()) {
 			player->getStateMachine()->changeState(PlayerIdleState::getInstance(), player);
 		}
-
-
 
 		break;
 	case 'S': //Spacebar -> Jump
@@ -654,52 +637,6 @@ void LevelLucifer::handleKey(char key) {
 				player->setCanDash(false);
 			}
 		}
-
-		break;
-	case 't':
-	
-
-
-		//player->increaseUltimateGauge(100.0f);
-		{
-		RadiantLaser* rl = new RadiantLaser();
-		addObject(rl);
-		}
-		
-
-		//currentMenuState = MenuState::MAIN;
-		/*qbui = new QTEButtonUI(0);
-		objectsList.push_back(qbui);*/
-
-	
-		break;
-
-	case 'l':
-
-		//changeMenuState(MenuState::PAUSE);
-		{
-			/*VerticalIceBeam* vib_ = new VerticalIceBeam(true);
-			addObject(vib_);*/
-
-			/*SideStaff* ss = new SideStaff();
-			addObject(ss);*/
-
-			/*IceFloor* iF = new IceFloor();
-			addObject(iF);*/
-
-			/*IceBomb* iceBomb_ = new IceBomb(3.0f);
-			addObject(iceBomb_);*/
-
-			IceSpear* iceSpearHoming = new IceSpear(player,-2.0f);
-			addObject(iceSpearHoming);
-		}
-		break;
-	case 'm':
-		/*IceSpear * iceSpearHor = lucifer->createIceSpear(FacingDirection::left);
-		lucifer->getLevel()->addObject(iceSpearHor);*/
-		//lucifer->startShake(0.1f, 0.0025f);
-
-		lucifer->getHealth()->takeDamage(10000.0f);
 
 		break;
 	}

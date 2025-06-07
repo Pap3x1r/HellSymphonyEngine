@@ -266,6 +266,7 @@
     <ClInclude Include="SideStaff.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="VerticalIceBeam.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shader\fragment.shd" />
@@ -275,5 +276,11 @@
     <Filter Include="Animation">
       <UniqueIdentifier>{a765ee8d-5070-408f-8783-cd6ec195749c}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HellSymphony.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\1411p\Downloads\HellSymphony.ico" />
   </ItemGroup>
 </Project>

@@ -597,22 +597,12 @@ void LevelLimbo1::handleKey(char key) {
 		playerIsMoving = true;
 		//player->getAnimationComponent()->setState("right");
 		break;
-	case 'm':
-		SoundManager::GetInstance()->LoadMusic("LimboMusic", "../Resource/Audio/Music/Limbo-Soundtrack.mp3", false);
-		SoundManager::GetInstance()->PlayMusic("LimboMusic", true);
-		break;
 	case 'q':
 		if (player->getIsGrounded() == false) return;
 		if (player->getIsDashing() == true) return;
 		if (player->getIsStunned() == true) return;
 		switchControlType(keyboard);
 		playerUltimateInput();
-		break;
-	case 'r': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-		//case 'e': GameEngine::getInstance()->getStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
-		//case 'f': //player->getBow()->setEnableDebug(); break;
-			//player->getHealth()->takeDamage(99);
-			//player->increaseUltimateSlot(1);
 		break;
 	case 'h':
 		player->setWeaponType(Bow_);
@@ -684,43 +674,6 @@ void LevelLimbo1::handleKey(char key) {
 			}
 		}
 
-		break;
-	case 't':
-		//player->startShake(0.1f, 0.0025f);
-		//ziz->startShake(0.2f, 0.005f);
-		player->increaseUltimateGauge(100.0f);
-		//ziz->interruptPhaseChange();
-		//currentMenuState = MenuState::MAIN;
-		/*qbui = new QTEButtonUI(0);
-		objectsList.push_back(qbui);*/
-		//ziz->interruptIntoPhase();
-
-		break;
-
-	case 'l':
-
-		changeMenuState(MenuState::PAUSE);
-		/*UltZizOnBG* ultZizOnBG_ = ziz->createBGZiz();
-		addObject(ultZizOnBG_);
-		ziz->startShake(0.08f * (12*3.75), 0.0025f);*/
-
-		/*DrawableObject* lightning_ = ziz->createLightning();
-		addObject(lightning_);*/
-
-		/*DrawableObject* newStormRise = ziz->createStormRise();
-		addObject(newStormRise);*/
-
-		/*DrawableObject* newGust = ziz->createGust();
-		addObject(newGust);*/
-		//qbui->expire();
-
-		//ziz->interruptIntoPhase();
-		//ziz->interruptPhaseChange();
-
-		//ziz->startShake(0.2f, 0.005f);
-
-		//ziz->createChompTentacle();
-		//ziz->resetCam();
 		break;
 	}
 

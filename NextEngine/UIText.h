@@ -9,6 +9,17 @@
 #include <SDL.h>
 #include "imgui.h"
 
+
+/**
+ * @class UIText
+ * @brief Renders text as a textured quad using SDL_ttf and OpenGL.
+ *
+ * This class handles loading a text string into an OpenGL texture,
+ * managing its color, font size, alpha transparency, and rendering
+ * it on screen using your engine's transformation system.
+ *
+ * It supports dynamic updates to text, color, font size, and alpha.
+ */
 class UIText :public DrawableObject
 {
 private:
@@ -25,13 +36,25 @@ private:
     float yScale;
 
 public:
+
+    /**
+     * @brief Constructor that initializes the UIText with a name.
+     * @param name The unique name for the UIText object.
+     */
     UIText(string name) {
         this->name = name;
         setTag(Tag::UI);
     }
 
+    /**
+     * @brief Destructor, cleans up OpenGL texture.
+     */
     ~UIText() {}
 
+    /**
+     * @brief Renders the text to the screen.
+     * @param globalModelTransform The global transformation matrix.
+     */
     void render(glm::mat4 globalModelTransform) {
         SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*>(
             GameEngine::getInstance()->getRenderer()->getMesh(SquareMeshVbo::MESH_NAME));
@@ -73,6 +96,10 @@ public:
         squareMesh->render();
     }
 
+    /**
+     * @brief Updates UIText properties, e.g., position and scale.
+     * @param dt Delta time since last update.
+     */
     void update(float dt) {
         //cout << "Alpha: " << alpha << endl;
         //cout << "scale x: " << getColliderComponent()->getTransform().getScale().x << " scale y: " << getColliderComponent()->getTransform().getScale().y << endl;
@@ -93,6 +120,13 @@ public:
         yScale = scale.y;
     }
 
+    /**
+     * @brief Loads the text and creates an OpenGL texture.
+     * @param text The string to display.
+     * @param textColor The SDL_Color specifying text color.
+     * @param fontSize Font size to use.
+     * @param bold Whether to use bold font style (default false).
+     */
     void loadText(string text, SDL_Color textColor, int fontSize, bool bold = false) {
         this->text = text;
         this->color = textColor;
@@ -164,28 +198,48 @@ public:
         TTF_CloseFont(font);
     }
 
+    /**
+     * @brief Updates the displayed text if different from current.
+     * @param newText New string to display.
+     */
     void setText(const string& newText) {
         if (newText != text) {
             loadText(newText, color, fontSize);
         }
     }
 
+    /**
+     * @brief Updates the text color and reloads the texture if changed.
+     * @param newColor New color for the text.
+     */
     void setColor(const SDL_Color& newColor) {
         if (newColor.r != color.r || newColor.g != color.g || newColor.b != color.b || newColor.a != color.a) {
             loadText(text, newColor, fontSize);
         }
     }
 
+    /**
+     * @brief Sets a new font size and reloads the texture if changed.
+     * @param newSize The new font size.
+     */
     void setFont(const int& newSize) {
         if (newSize != fontSize) {
             loadText(text, color, newSize);
         }
     }
 
+    /**
+     * @brief Sets the alpha transparency for the text.
+     * @param newAlpha Alpha value between 0.0 (transparent) and 1.0 (opaque).
+     */
     void setAlpha(float newAlpha) override {
         alpha = newAlpha;
     }
 
+    /**
+     * @brief Sets an offset to be applied to the text position during rendering.
+     * @param newVec Offset vector in 3D space.
+     */
     void setOffset(const glm::vec3& newVec) {
         textOffset = newVec;
     }

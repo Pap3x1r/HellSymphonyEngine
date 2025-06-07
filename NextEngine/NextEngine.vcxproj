@@ -244,6 +244,7 @@
     <ClInclude Include="QTEButtonUI.h" />
     <ClInclude Include="QTEManager.h" />
     <ClInclude Include="RadiantLaser.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SFX.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shield.h" />
@@ -284,6 +285,12 @@
     <ClInclude Include="ZizTransitionState.h" />
     <ClInclude Include="ZizUltState.h" />
     <ClInclude Include="ZizWingSpanState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HellSymphony.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\1411p\Downloads\HellSymphony.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
